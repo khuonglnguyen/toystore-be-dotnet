@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ToyStore.Data;
@@ -11,15 +12,23 @@ namespace ToyStore.Controllers
 {
     public class HomeController : Controller
     {
-        IProduct _product;
+        IProductCategory _productCategory;
         public HomeController()
         {
-            this._product = new ProductRepository(new ToyStoreDbContext());
+            this._productCategory = new ProductCategoryRepository(new ToyStoreDbContext());
         }
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var list = _product.GetAll().ToList();
-            return View(list);
+            //ViewBag.ProducerID = new SelectList(_product.Pro.OrderBy(n => n.TenNCC), "MaNCC", "TenNCC", sp.MaNCC);
+            ProductCategory productCategory = _productCategory.GetByID(id);
+            if (productCategory != null)
+            {
+                return View(productCategory);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         public ActionResult About()

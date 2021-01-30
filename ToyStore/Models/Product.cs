@@ -14,21 +14,38 @@ namespace ToyStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { set; get; }
 
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập vào tên sản phẩm.")]
+        [Display(Name = "Tên sản phẩm")]
         [MaxLength(256)]
         public string Name { set; get; }
 
-        [Required]
         public int CategoryID { set; get; }
 
         [MaxLength(256)]
-        public string Image { set; get; }
+        public string Image1 { set; get; }
+        [MaxLength(256)]
+        public string Image2 { set; get; }
+        [MaxLength(256)]
+        public string Image3 { set; get; }
+        [MaxLength(256)]
+        public string Image4 { set; get; }
 
+        public string ClipReview { set; get; }
+
+        [Required(ErrorMessage = "Vui lòng nhập vào giá bán.")]
+        [Display(Name = "Giá bán")]
         public decimal Price { set; get; }
 
+        [Required(ErrorMessage = "Vui lòng nhập vào giá khuyến mãi.")]
+        [Display(Name = "Giá khuyến mãi")]
         public decimal? PromotionPrice { set; get; }
+
+        [Required(ErrorMessage = "Vui lòng nhập vào số lượng.")]
+        [Display(Name = "Số lượng")]
         public int Quantity { set; get; }
 
+        [Required(ErrorMessage = "Vui lòng nhập vào mô tả sản phẩm.")]
+        [Display(Name = "Mô tả sản phẩm")]
         [MaxLength(500)]
         public string Description { set; get; }
 
@@ -41,8 +58,9 @@ namespace ToyStore.Models
         public int SupplierID { get; set; }
         [Required]
         public int ProducerID { get; set; }
-        public bool New { get; set; }
-        public bool Deleted { get; set; }
+        public bool IsNew { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
 
         [ForeignKey("CategoryID")]
         public virtual ProductCategory ProductCategory { set; get; }

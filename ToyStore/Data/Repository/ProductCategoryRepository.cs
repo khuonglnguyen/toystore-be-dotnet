@@ -3,41 +3,39 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Xml.Linq;
-using ToyStore.Data;
 using ToyStore.Models;
 
 namespace ToyStore.Data.Repository
 {
-    public class ProductRepository : IProduct
+    public class ProductCategoryRepository : IProductCategory
     {
         private ToyStoreDbContext DbContext;
-        public ProductRepository(ToyStoreDbContext objempcontext)
+        public ProductCategoryRepository(ToyStoreDbContext objempcontext)
         {
             this.DbContext = objempcontext;
         }
-        public void Insert(Product product)
+        public void Insert(ProductCategory productCategory)
         {
-            DbContext.Products.Add(product);
+            DbContext.ProductCategories.Add(productCategory);
             DbContext.SaveChanges();
         }
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<ProductCategory> GetAll()
         {
-            return (IEnumerable<Product>)DbContext.Products.ToList();
+            return (IEnumerable<ProductCategory>)DbContext.ProductCategories.ToList();
         }
-        public Product GetByID(int ID)
+        public ProductCategory GetByID(int ID)
         {
-            return DbContext.Products.Find(ID);
+            return DbContext.ProductCategories.Find(ID);
         }
-        public void Update(Product product)
+        public void Update(ProductCategory productCategory)
         {
-            DbContext.Entry(product).State = EntityState.Modified;
+            DbContext.Entry(productCategory).State = EntityState.Modified;
             DbContext.SaveChanges();
         }
         public void Delete(int ID)
         {
-            Product product = DbContext.Products.Find(ID);
-            DbContext.Products.Remove(product);
+            ProductCategory productCategory = DbContext.ProductCategories.Find(ID);
+            DbContext.ProductCategories.Remove(productCategory);
             DbContext.SaveChanges();
         }
         public void Save()

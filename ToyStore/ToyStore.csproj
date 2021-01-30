@@ -127,13 +127,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Data\Repository\IProductCategory.cs" />
+    <Compile Include="Data\Repository\ProductCategoryRepository.cs" />
     <Compile Include="Data\ToyStoreDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202101300816118_test.cs" />
-    <Compile Include="Migrations\202101300816118_test.designer.cs">
-      <DependentUpon>202101300816118_test.cs</DependentUpon>
+    <Compile Include="Migrations\202101301345562_updatefield.cs" />
+    <Compile Include="Migrations\202101301345562_updatefield.Designer.cs">
+      <DependentUpon>202101301345562_updatefield.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101301351244_up.cs" />
+    <Compile Include="Migrations\202101301351244_up.Designer.cs">
+      <DependentUpon>202101301351244_up.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Producer.cs" />
@@ -198,8 +204,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101300816118_test.resx">
-      <DependentUpon>202101300816118_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101301345562_updatefield.resx">
+      <DependentUpon>202101301345562_updatefield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101301351244_up.resx">
+      <DependentUpon>202101301351244_up.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

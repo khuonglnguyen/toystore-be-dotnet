@@ -1,9 +1,9 @@
-﻿namespace ToyStore.Migrations
+namespace ToyStore.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class test : DbMigration
+    public partial class updatefield : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,7 @@
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 256),
+                        Name = c.String(maxLength: 256),
                         Imfomation = c.String(maxLength: 256),
                         Logo = c.String(maxLength: 500),
                     })
@@ -23,9 +23,11 @@
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 256),
+                        Name = c.String(maxLength: 256),
                         Description = c.String(maxLength: 500),
                         Image = c.String(maxLength: 256),
+                        IsActive = c.Boolean(nullable: false),
+                        LastUpdatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -36,11 +38,15 @@
                         ID = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 256),
                         CategoryID = c.Int(nullable: false),
-                        Image = c.String(maxLength: 256),
+                        Image1 = c.String(maxLength: 256),
+                        Image2 = c.String(maxLength: 256),
+                        Image3 = c.String(maxLength: 256),
+                        Image4 = c.String(maxLength: 256),
+                        ClipReview = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        PromotionPrice = c.Decimal(precision: 18, scale: 2),
+                        PromotionPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Quantity = c.Int(nullable: false),
-                        Description = c.String(maxLength: 500),
+                        Description = c.String(nullable: false, maxLength: 500),
                         HomeFlag = c.Boolean(),
                         HotFlag = c.Boolean(),
                         ViewCount = c.Int(),
@@ -48,8 +54,9 @@
                         PurchasedCount = c.Int(),
                         SupplierID = c.Int(nullable: false),
                         ProducerID = c.Int(nullable: false),
-                        New = c.Boolean(nullable: false),
-                        Deleted = c.Boolean(nullable: false),
+                        IsNew = c.Boolean(nullable: false),
+                        IsActive = c.Boolean(nullable: false),
+                        LastUpdatedDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Producer", t => t.ProducerID, cascadeDelete: true)
@@ -64,10 +71,9 @@
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 256),
+                        Name = c.String(maxLength: 256),
                         Address = c.String(),
                         Phone = c.String(),
-                        Fax = c.String(),
                         Email = c.String(),
                     })
                 .PrimaryKey(t => t.ID);

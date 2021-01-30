@@ -14,7 +14,6 @@ namespace ToyStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { set; get; }
 
-        [Required]
         [MaxLength(256)]
         public string Name { set; get; }
 
@@ -23,6 +22,8 @@ namespace ToyStore.Models
 
         [MaxLength(256)]
         public string Image { set; get; }
+        public bool IsActive { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
 
         public virtual IEnumerable<Product> Products { set; get; }
     }
