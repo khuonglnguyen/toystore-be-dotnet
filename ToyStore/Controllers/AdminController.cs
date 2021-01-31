@@ -20,7 +20,12 @@ namespace ToyStore.Controllers
         }
         #endregion
         [HttpGet]
-        public ActionResult GetProductCategoryList()
+        public ActionResult Index()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult ProductCategory()
         {
             var listProductCategory = _productCategoryService.GetProductCategoryList();
             if (listProductCategory != null)
@@ -49,7 +54,7 @@ namespace ToyStore.Controllers
         public ActionResult EditProductCategory(ProductCategory productCategory)
         {
             _productCategoryService.UpdateProductCategory(productCategory);
-            return RedirectToAction("GetProductCategoryList");
+            return RedirectToAction("ProductCategory");
         }
         [HttpGet]
         public ActionResult DetailsProductCategory(int id)
@@ -79,7 +84,7 @@ namespace ToyStore.Controllers
             }
             _productCategoryService.DeleteProductCategory(productCategory);
             //ViewBag.Notification = "Xóa danh mục thành công!";
-            return RedirectToAction("GetProductCategoryList");
+            return RedirectToAction("ProductCategory");
         }
     }
 }
