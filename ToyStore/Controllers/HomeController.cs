@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ToyStore.Service;
 using ToyStore.Data;
 using ToyStore.Data.Repository;
 using ToyStore.Models;
@@ -12,37 +13,26 @@ namespace ToyStore.Controllers
 {
     public class HomeController : Controller
     {
-        IProductCategory _productCategory;
-        public HomeController()
+        #region Initialize
+        private IProductService _productService;
+
+        public HomeController(IProductService productService)
         {
-            this._productCategory = new ProductCategoryRepository(new ToyStoreDbContext());
+            this._productService = productService;
         }
-        public ActionResult Index(int id)
+        #endregion
+        public ActionResult Index()
         {
             //ViewBag.ProducerID = new SelectList(_product.Pro.OrderBy(n => n.TenNCC), "MaNCC", "TenNCC", sp.MaNCC);
-            ProductCategory productCategory = _productCategory.GetByID(id);
-            if (productCategory != null)
+            var listProduct= _productService.GetProductList();
+            if (listProduct != null)
             {
-                return View(productCategory);
+                return View(listProduct);
             }
             else
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
