@@ -29,6 +29,7 @@ namespace ToyStore.Models
         [Display(Name = "Kích hoạt")]
         public bool IsActive { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày cập nhật cuối")]
         public DateTime LastUpdatedDate { get; set; }
 

@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Home :: w3layouts</title>
+    <title>Trang quản trị</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -18,6 +18,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- Custom CSS -->
     <link href="~/Content/css/style.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="~/Content/css/morris.css" type="text/css" />
+
+    @*<link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js" rel="stylesheet" />
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"></script>*@
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+
     <!-- Graph CSS -->
     <link href="~/Content/css/font-awesome.css" rel="stylesheet">
     <!-- jQuery -->
@@ -87,14 +94,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <!--header start here-->
                 <div class="header-main">
                     <div class="logo-w3-agile">
-                        <h1><a href="index.html">Pooled</a></h1>
+                        <h1><a href="index.html">ToyStore</a></h1>
                     </div>
                     <div class="w3layouts-left">
-
                         <!--search-box-->
                         <div class="w3-search-box">
                             <form action="#" method="post">
-                                <input type="text" placeholder="Search..." required="">
+                                <input type="text" placeholder="Tìm kiếm..." required="">
                                 <input type="submit" value="">
                             </form>
                         </div><!--//end-search-box-->
@@ -269,7 +275,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <span class="prfil-img"><img src="~/Content/images/in4.jpg" alt=""> </span>
                                         <div class="user-name">
                                             <p>Malorum</p>
-                                            <span>Administrator</span>
+                                            <span>Quản trị viên</span>
                                         </div>
                                         <i class="fa fa-angle-down"></i>
                                         <i class="fa fa-angle-up"></i>
@@ -287,12 +293,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                     <div class="clearfix"> </div>
                 </div>
-                <!--heder end here-->
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a> <i class="fa fa-angle-right"></i></li>
-                </ol>
-                <!--four-grids here-->
                 @RenderBody()
+                <!--heder end here-->
+                <!--four-grids here-->
                 <!--//four-grids here-->
                 <!--agileinfo-grap-->
                 <!--<div class="agileinfo-grap">
@@ -331,8 +334,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>-->
                 <!--//agileinfo-grap-->
                 <!--photoday-section-->
-
-
                 <!--<div class="col-sm-4 wthree-crd">
                     <div class="card">
                         <div class="card-body">
@@ -515,29 +516,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </div>
                 </div>
                 <div class="clearfix"></div>-->
-
                 <!--//photoday-section-->
                 <!--w3-agileits-pane-->
                 <!--<div class="w3-agileits-pane">
-                    <div class="col-md-4 wthree-pan">
-                        <div class="panel panel-default">
-                            <div class="panel-heading"> <i class="fa fa-bell fa-fw"></i> Notifications Panel </div>-->
-                            <!-- /.panel-heading -->
-                            <!--<div class="panel-body">
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item"> <i class="fa fa-comment fa-fw"></i> New Comment <span class="pull-right text-muted small"><em>4 minutes ago</em> </span> </a>
-                                    <a href="#" class="list-group-item"> <i class="fa fa-twitter fa-fw"></i> 3 New Followers <span class="pull-right text-muted small"><em>12 minutes ago</em> </span> </a>
-                                    <a href="#" class="list-group-item"> <i class="fa fa-envelope fa-fw"></i> Message Sent <span class="pull-right text-muted small"><em>27 minutes ago</em> </span> </a>
-                                    <a href="#" class="list-group-item"> <i class="fa fa-tasks fa-fw"></i> New Task <span class="pull-right text-muted small"><em>43 minutes ago</em> </span> </a>
-                                    <a href="#" class="list-group-item"> <i class="fa fa-upload fa-fw"></i> Server Rebooted <span class="pull-right text-muted small"><em>11:32 AM</em> </span> </a>
-                                    <a href="#" class="list-group-item"> <i class="fa fa-bolt fa-fw"></i> Server Crashed! <span class="pull-right text-muted small"><em>11:13 AM</em> </span> </a>
-                                    <a href="#" class="list-group-item"> <i class="fa fa-tasks fa-fw"></i> New Task <span class="pull-right text-muted small"><em>43 minutes ago</em> </span> </a>
-                                </div>-->
-                                <!-- /.list-group -->
-
-                            <!--</div>-->
-                            <!-- /.panel-body -->
-                        <!--</div>
+                <div class="col-md-4 wthree-pan">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"> <i class="fa fa-bell fa-fw"></i> Notifications Panel </div>-->
+                <!-- /.panel-heading -->
+                <!--<div class="panel-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item"> <i class="fa fa-comment fa-fw"></i> New Comment <span class="pull-right text-muted small"><em>4 minutes ago</em> </span> </a>
+                    <a href="#" class="list-group-item"> <i class="fa fa-twitter fa-fw"></i> 3 New Followers <span class="pull-right text-muted small"><em>12 minutes ago</em> </span> </a>
+                    <a href="#" class="list-group-item"> <i class="fa fa-envelope fa-fw"></i> Message Sent <span class="pull-right text-muted small"><em>27 minutes ago</em> </span> </a>
+                    <a href="#" class="list-group-item"> <i class="fa fa-tasks fa-fw"></i> New Task <span class="pull-right text-muted small"><em>43 minutes ago</em> </span> </a>
+                    <a href="#" class="list-group-item"> <i class="fa fa-upload fa-fw"></i> Server Rebooted <span class="pull-right text-muted small"><em>11:32 AM</em> </span> </a>
+                    <a href="#" class="list-group-item"> <i class="fa fa-bolt fa-fw"></i> Server Crashed! <span class="pull-right text-muted small"><em>11:13 AM</em> </span> </a>
+                    <a href="#" class="list-group-item"> <i class="fa fa-tasks fa-fw"></i> New Task <span class="pull-right text-muted small"><em>43 minutes ago</em> </span> </a>
+                </div>-->
+                <!-- /.list-group -->
+                <!--</div>-->
+                <!-- /.panel-body -->
+                <!--</div>
                     </div>
                     <div class="col-md-8 agile-info-stat">
                         <div class="stats-info stats-last widget-shadow">
@@ -616,7 +615,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
                 <!--inner block end here-->
                 <!--copy rights start here-->
-                
                 <!--COPY rights end here-->
             </div>
         </div>
@@ -633,8 +631,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li id="menu-academico">
                         <a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i><span> Quản Lý</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                         <ul id="menu-academico-sub">
-                            <li id="menu-academico-avaliacoes"> @Html.ActionLink("Sản phẩm", "ProductCategory")</li>
-                            <li id="menu-academico-avaliacoes"><a href="typography.html">Danh mục</a></li>
+                            <li id="menu-academico-avaliacoes"> @Html.ActionLink("Sản phẩm", "ProductCategoryList")</li>
+                            <li id="menu-academico-avaliacoes">@Html.ActionLink("Danh mục", "ProductCategoryList")</li>
                             <li id="menu-academico-avaliacoes"><a href="faq.html">Nhà sản xuất</a></li>
                             <li id="menu-academico-avaliacoes"><a href="faq.html">Nhà cung cấp</a></li>
                             <li id="menu-academico-avaliacoes"><a href="faq.html">Khách hàng</a></li>
@@ -642,35 +640,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li id="menu-academico-avaliacoes"><a href="faq.html">Nhập hàng</a></li>
                         </ul>
                     </li>
-                    <li id="menu-academico"><a href="inbox.html"><i class="fa fa-envelope nav_icon"></i><span>Inbox</span><div class="clearfix"></div></a></li>
-                    <li><a href="gallery.html"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Gallery</span><div class="clearfix"></div></a></li>
-                    <li id="menu-academico"><a href="charts.html"><i class="fa fa-bar-chart"></i><span>Charts</span><div class="clearfix"></div></a></li>
-
-                    <li id="menu-academico"><a href="errorpage.html"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span>Error Page</span><div class="clearfix"></div></a></li>
+                    <li id="menu-academico"><a href="inbox.html"><i class="fa fa-envelope nav_icon"></i><span>Tin nhắn</span><div class="clearfix"></div></a></li>
+                    <li><a href="gallery.html"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Thư viện ảnh</span><div class="clearfix"></div></a></li>
+                    <li id="menu-academico"><a href="charts.html"><i class="fa fa-bar-chart"></i><span>Thống kê</span><div class="clearfix"></div></a></li>
+                    <li><a href="maps.html"><i class="fa fa-map-marker" aria-hidden="true"></i>  <span>Vị trí</span><div class="clearfix"></div></a></li>
                     <li id="menu-academico">
-                        <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i><span> UI Components</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
+                        <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i><span> Thiết lập</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
                         <ul id="menu-academico-sub">
-                            <li id="menu-academico-avaliacoes"><a href="button.html">Buttons</a></li>
-                            <li id="menu-academico-avaliacoes"><a href="grid.html">Grids</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="tabels.html"><i class="fa fa-table"></i>  <span>Tables</span><div class="clearfix"></div></a></li>
-                    <li><a href="maps.html"><i class="fa fa-map-marker" aria-hidden="true"></i>  <span>Maps</span><div class="clearfix"></div></a></li>
-                    <li id="menu-academico">
-                        <a href="#"><i class="fa fa-file-text-o"></i>  <span>Pages</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
-                        <ul id="menu-academico-sub">
-                            <li id="menu-academico-boletim"><a href="calendar.html">Calendar</a></li>
-                            <li id="menu-academico-avaliacoes"><a href="signin.html">Sign In</a></li>
-                            <li id="menu-academico-avaliacoes"><a href="signup.html">Sign Up</a></li>
-
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-check-square-o nav_icon"></i><span>Forms</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
-                        <ul>
-                            <li><a href="input.html"> Input</a></li>
-                            <li><a href="validation.html">Validation</a></li>
+                            <li id="menu-academico-avaliacoes"><a href="button.html">Phân quyền</a></li>
+                            <li id="menu-academico-avaliacoes"><a href="grid.html">Đổi mật khẩu</a></li>
                         </ul>
                     </li>
                 </ul>
