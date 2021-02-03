@@ -14,17 +14,17 @@ namespace ToyStore.Controllers
     public class HomeController : Controller
     {
         #region Initialize
-        private IProductService _productService;
+        private IProductCategoryService _productCategoryService;
 
-        public HomeController(IProductService productService)
+        public HomeController(IProductCategoryService productCategoryService)
         {
-            this._productService = productService;
+            this._productCategoryService = productCategoryService;
         }
         #endregion
         public ActionResult Index()
         {
             //ViewBag.ProducerID = new SelectList(_product.Pro.OrderBy(n => n.TenNCC), "MaNCC", "TenNCC", sp.MaNCC);
-            var listProduct= _productService.GetProductList();
+            var listProduct= _productCategoryService.GetProductCategoryList();
             if (listProduct != null)
             {
                 return View(listProduct);

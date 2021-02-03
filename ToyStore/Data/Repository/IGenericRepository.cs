@@ -10,9 +10,11 @@ namespace ToyStore.Data.Repository
 {
     interface IGenericRepository<T> where T : class
     {
-        void Insert(T Model); // C
+        void Insert(T Model); // 
 
         IEnumerable<T> GetAllData(); // R
+
+        IEnumerable<T> GetAllData(Expression<Func<T, bool>> where); // R
 
         T GetDataByID(int ID); // R
 

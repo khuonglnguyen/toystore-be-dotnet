@@ -276,11 +276,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ProductCategory\EditProductCategory.cshtml" />
+    <Content Include="Views\ProductCategory\Edit.cshtml" />
     <Content Include="Views\Layout\AdminLayout.cshtml" />
-    <Content Include="Views\ProductCategory\ProductCategoryList.cshtml" />
+    <Content Include="Views\ProductCategory\List.cshtml" />
     <Content Include="Views\ProductCategory\Index.cshtml" />
     <Content Include="Views\Sweet\Alert.cshtml" />
+    <Content Include="Views\ProductCategory\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

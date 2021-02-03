@@ -28,6 +28,10 @@ namespace ToyStore.Data.Repository
         {
             return (IEnumerable<T>)dbEntity.ToList();
         }
+        public IEnumerable<T> GetAllData(Expression<Func<T, bool>> where)
+        {
+            return (IEnumerable<T>)dbEntity.Where<T>(where).ToList();
+        }
         public T GetDataByID(int ID)
         {
             return dbEntity.Find(ID);

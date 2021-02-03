@@ -26,7 +26,7 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult ProductCategoryList()
+        public ActionResult List()
         {
             //Get proudct category list
             var listProductCategory = _productCategoryService.GetProductCategoryList();
@@ -42,8 +42,81 @@ namespace ToyStore.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
+        [HttpPost]
+        public ActionResult List(string keyword)
+        {
+            if (keyword == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            //Get proudct category list with keyword
+            var listProductCategory = _productCategoryService.GetProductCategoryList(keyword);
+            //Check null
+            if (listProductCategory != null)
+            {
+                //Return view
+                return View(listProductCategory);
+            }
+            else
+            {
+                //return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+       
         [HttpGet]
-        public ActionResult EditProductCategory(int id)
+        public ActionResult Create()
+        {
+            //Return view
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(ProductCategory productCategory, HttpPostedFileBase ImageUpload)
+        {
+            //Declare a errorCount
+            int errorCount = 0;
+            //Check content image
+            if (ImageUpload != null && ImageUpload.ContentLength > 0)
+            {
+                //Check format iamge
+                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
+                {
+                    //Set viewbag
+                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
+                    //increase by 1 unit errorCount
+                    errorCount++;
+                }
+                else
+                {
+                    //Get file name
+                    var fileName = Path.GetFileName(ImageUpload.FileName);
+                    //Get path
+                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                    //Check exitst
+                    if (!System.IO.File.Exists(path))
+                    {
+                        //Add image into folder
+                        ImageUpload.SaveAs(path);
+                    }
+                }
+                if (errorCount > 0)
+                {
+                    ViewBag.Messag = "Failed";
+                    return View(productCategory);
+                }
+                //Set new value image for productCategory
+                productCategory.Image = ImageUpload.FileName;
+            }
+            //Set TempData for checking in view to show swal
+            TempData["create"] = "Success";
+            //Create productCategory
+            _productCategoryService.AddProductCategory(productCategory);
+            //Return view
+            return RedirectToAction("List");
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
             //Get product catetgory
             var productCategory = _productCategoryService.GetByID(id);
@@ -60,7 +133,7 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult EditProductCategory(ProductCategory productCategory, HttpPostedFileBase ImageUpload)
+        public ActionResult Edit(ProductCategory productCategory, HttpPostedFileBase ImageUpload)
         {
             //Declare a errorCount
             int errorCount = 0;
@@ -96,15 +169,15 @@ namespace ToyStore.Controllers
                 //Set new value image for productCategory
                 productCategory.Image = ImageUpload.FileName;
             }
-            //Set viewbag
-            ViewBag.Message = "Cập nhật danh mục thành công!";
+            //Set TempData for checking in view to show swal
+            TempData["edit"] = "Success";
             //Update productCategory
             _productCategoryService.UpdateProductCategory(productCategory);
             //Return view
-            return View(productCategory);
+            return RedirectToAction("List");
         }
         [HttpGet]
-        public ActionResult DeleteProductCategory(int id)
+        public ActionResult Delete(int id)
         {
             //Check id null
             if (id == null)
@@ -123,9 +196,9 @@ namespace ToyStore.Controllers
             //Delete productCategory
             _productCategoryService.DeleteProductCategory(productCategory);
             //Set TempData for checking in view to show swal
-            TempData["message"] = "Xóa danh mục thành công!";
+            TempData["delete"] = "Success";
             //Return RedirectToAction
-            return RedirectToAction("ProductCategoryList");
+            return RedirectToAction("List");
         }
     }
 }

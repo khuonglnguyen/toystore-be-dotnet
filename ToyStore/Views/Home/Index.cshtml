@@ -1,136 +1,65 @@
-﻿@model IEnumerable<ToyStore.Models.Product>
+﻿@model ToyStore.Models.ProductCategory
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        </th>
-        <th>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ProductCategory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
             @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image4)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClipReview)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PromotionPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HomeFlag)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HotFlag)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ViewCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CommentCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PurchasedCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsNew)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.LastUpdatedDate)
-        </th>
-        <th></th>
-    </tr>
+        </dt>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image4)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClipReview)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PromotionPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HomeFlag)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HotFlag)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ViewCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CommentCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchasedCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsNew)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdatedDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedDate)
+        </dd>
 
-</table>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

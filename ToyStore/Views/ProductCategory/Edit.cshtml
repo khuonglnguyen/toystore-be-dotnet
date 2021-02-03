@@ -19,12 +19,12 @@
 }
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
-    <li class="breadcrumb-item"><a href="@Url.Action("ProductCategoryList")">Danh mục</a> <i class="fa fa-angle-right"></i></li>
-    <li class="breadcrumb-item"><a href="@Url.Action("EditProductCategory",new { id=Model.ID})">Chỉnh sửa</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Danh mục</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Edit",new { id=Model.ID})">Chỉnh sửa</a> <i class="fa fa-angle-right"></i></li>
 </ol>
 <div class="grid-form1">
     <h3>Danh mục: <b style="color:brown">@Model.Name</b></h3>
-    @using (Html.BeginForm("EditProductCategory", "ProductCategory", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "ProductCategory", FormMethod.Post, new { @enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -68,10 +68,9 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Lưu" class="btn btn-primary" />
-                    <a href="@Url.Action("ProductCategoryList")" class="btn btn-default">Hủy</a>
+                    <a href="@Url.Action("List")" class="btn btn-default">Hủy</a>
                 </div>
             </div>
         </div>
     }
-
 </div>

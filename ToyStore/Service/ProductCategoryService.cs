@@ -11,9 +11,11 @@ namespace ToyStore.Service
     {
         ProductCategory AddProductCategory(ProductCategory productCategory);
         IEnumerable<ProductCategory> GetProductCategoryList();
+        IEnumerable<ProductCategory> GetProductCategoryList(string keyWord);
         ProductCategory GetByID(int ID);
         void UpdateProductCategory(ProductCategory productCategory);
         void DeleteProductCategory(ProductCategory productCategory);
+        void MultiDeleteProductCategory(List<int> IDs);
         void Save();
     }
     public class ProductCategoryService : IProductCategoryService
@@ -25,6 +27,7 @@ namespace ToyStore.Service
         }
         public ProductCategory AddProductCategory(ProductCategory productCategory)
         {
+            productCategory.LastUpdatedDate = DateTime.Now;
             this.context.ProductCategoryRepository.Insert(productCategory);
             return productCategory;
         }
@@ -33,6 +36,15 @@ namespace ToyStore.Service
         {
             productCategory.IsActive = false;
             this.context.ProductCategoryRepository.Delete(productCategory);
+        }
+        public void MultiDeleteProductCategory(List<int> IDs)
+        {
+            foreach (int id in IDs)
+            {
+                ProductCategory productCategory = GetByID(id);
+                productCategory.IsActive = false;
+                UpdateProductCategory(productCategory);
+            }
         }
 
         public ProductCategory GetByID(int ID)
@@ -55,6 +67,12 @@ namespace ToyStore.Service
         {
             productCategory.LastUpdatedDate = DateTime.Now;
             this.context.ProductCategoryRepository.Update(productCategory);
+        }
+
+        public IEnumerable<ProductCategory> GetProductCategoryList(string keyWord)
+        {
+            IEnumerable<ProductCategory> listProductCategory = this.context.ProductCategoryRepository.GetAllData(x => x.Name.Contains(keyWord));
+            return listProductCategory;
         }
     }
 }
