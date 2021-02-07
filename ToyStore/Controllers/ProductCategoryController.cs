@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,10 +27,12 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult List()
+        public ActionResult List(int page = 1)
         {
+            int pageSize = 5;
             //Get proudct category list
-            var listProductCategory = _productCategoryService.GetProductCategoryList();
+            var productCategories = _productCategoryService.GetProductCategoryList();
+            PagedList<ProductCategory> listProductCategory = new PagedList<ProductCategory>(productCategories, page, pageSize);
             //Check null
             if (listProductCategory != null)
             {
@@ -41,6 +44,12 @@ namespace ToyStore.Controllers
                 //return 404
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+        }
+        [HttpPost]
+        public JsonResult ListName(string Prefix)
+        {
+            var listProductCategoryListName = _productCategoryService.GetProductCategoryListName(Prefix).ToList();
+            return Json(listProductCategoryListName, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult List(string keyword)
@@ -64,7 +73,7 @@ namespace ToyStore.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
-       
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -198,6 +207,15 @@ namespace ToyStore.Controllers
             //Set TempData for checking in view to show swal
             TempData["delete"] = "Success";
             //Return RedirectToAction
+            return RedirectToAction("List");
+        }
+        [HttpPost]
+        public ActionResult DeleteMulti(FormCollection formCollection)
+        {
+            string[] Ids = formCollection["IDDelete"].Split(new char[] { ',' });
+            _productCategoryService.MultiDeleteProductCategory(Ids);
+            //Set TempData for checking in view to show swal
+            TempData["deleteMulti"] = "Success";
             return RedirectToAction("List");
         }
     }
