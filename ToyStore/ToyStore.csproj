@@ -147,20 +147,24 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SweetController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\ToyStoreDbContext.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202101301345562_updatefield.cs" />
-    <Compile Include="Migrations\202101301345562_updatefield.Designer.cs">
-      <DependentUpon>202101301345562_updatefield.cs</DependentUpon>
+    <Compile Include="Migrations\202102091005414_addcol.cs" />
+    <Compile Include="Migrations\202102091005414_addcol.Designer.cs">
+      <DependentUpon>202102091005414_addcol.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202101301351244_up.cs" />
-    <Compile Include="Migrations\202101301351244_up.Designer.cs">
-      <DependentUpon>202101301351244_up.cs</DependentUpon>
+    <Compile Include="Migrations\202102091029226_addcoll.cs" />
+    <Compile Include="Migrations\202102091029226_addcoll.Designer.cs">
+      <DependentUpon>202102091029226_addcoll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102092222359_change-10-2.cs" />
+    <Compile Include="Migrations\202102092222359_change-10-2.Designer.cs">
+      <DependentUpon>202102092222359_change-10-2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Producer.cs" />
@@ -169,8 +173,10 @@
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
+    <Compile Include="Service\ProducerService.cs" />
     <Compile Include="Service\ProductCategoryService.cs" />
     <Compile Include="Service\ProductService.cs" />
+    <Compile Include="Service\SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -189,6 +195,112 @@
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\table-style.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\home\css\bootstrap.css" />
+    <Content Include="Content\home\css\easy-responsive-tabs.css" />
+    <Content Include="Content\home\css\flexslider.css" />
+    <Content Include="Content\home\css\font-awesome.css" />
+    <Content Include="Content\home\css\jquery-ui.css" />
+    <Content Include="Content\home\css\style.css" />
+    <Content Include="Content\home\css\team.css" />
+    <Content Include="Content\home\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\home\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\home\images\1.png" />
+    <Content Include="Content\home\images\2.png" />
+    <Content Include="Content\home\images\27f48d81f63cf8a5ba7e553f26a50055.jpg" />
+    <Content Include="Content\home\images\ab_pic.jpg" />
+    <Content Include="Content\home\images\arrow.png" />
+    <Content Include="Content\home\images\b1.jpg" />
+    <Content Include="Content\home\images\b2.jpg" />
+    <Content Include="Content\home\images\b3.jpg" />
+    <Content Include="Content\home\images\b4.jpg" />
+    <Content Include="Content\home\images\b5.jpg" />
+    <Content Include="Content\home\images\b6.jpg" />
+    <Content Include="Content\home\images\b7.jpg" />
+    <Content Include="Content\home\images\b8.jpg" />
+    <Content Include="Content\home\images\bac.jpg" />
+    <Content Include="Content\home\images\banner1.jpg" />
+    <Content Include="Content\home\images\banner2.jpg" />
+    <Content Include="Content\home\images\banner3.jpg" />
+    <Content Include="Content\home\images\banner4.jpg" />
+    <Content Include="Content\home\images\banner5.jpg" />
+    <Content Include="Content\home\images\bb1.jpg" />
+    <Content Include="Content\home\images\bb2.jpg" />
+    <Content Include="Content\home\images\bottom1.jpg" />
+    <Content Include="Content\home\images\bottom2.jpg" />
+    <Content Include="Content\home\images\bottom3.jpg" />
+    <Content Include="Content\home\images\bottom4.jpg" />
+    <Content Include="Content\home\images\bot_1.jpg" />
+    <Content Include="Content\home\images\bot_2.jpg" />
+    <Content Include="Content\home\images\btn_next.png" />
+    <Content Include="Content\home\images\btn_pause.png" />
+    <Content Include="Content\home\images\btn_play.png" />
+    <Content Include="Content\home\images\btn_prev.png" />
+    <Content Include="Content\home\images\close_1.png" />
+    <Content Include="Content\home\images\cr_banner.png" />
+    <Content Include="Content\home\images\d1.jpg" />
+    <Content Include="Content\home\images\d2.jpg" />
+    <Content Include="Content\home\images\d3.jpg" />
+    <Content Include="Content\home\images\DCTD.jpg" />
+    <Content Include="Content\home\images\do-choi-cho-be-3-6-thang-tuoi-6.jpg" />
+    <Content Include="Content\home\images\do-choi-cho-be-3-tuoi-11.jpg" />
+    <Content Include="Content\home\images\do-choi-cho-be-gai-0.jpg" />
+    <Content Include="Content\home\images\do-choi-cho-be-gai.jpg" />
+    <Content Include="Content\home\images\dochoivabe_full_27402015_124052.jpg" />
+    <Content Include="Content\home\images\images.jfif" />
+    <Content Include="Content\home\images\inner1.jpg" />
+    <Content Include="Content\home\images\inner2.jpg" />
+    <Content Include="Content\home\images\j8022robot-resize.jpg" />
+    <Content Include="Content\home\images\log_pic.jpg" />
+    <Content Include="Content\home\images\m1.jpg" />
+    <Content Include="Content\home\images\m2.jpg" />
+    <Content Include="Content\home\images\m3.jpg" />
+    <Content Include="Content\home\images\m4.jpg" />
+    <Content Include="Content\home\images\m5.jpg" />
+    <Content Include="Content\home\images\m6.jpg" />
+    <Content Include="Content\home\images\m7.jpg" />
+    <Content Include="Content\home\images\m8.jpg" />
+    <Content Include="Content\home\images\mark1.png" />
+    <Content Include="Content\home\images\mid.jpg" />
+    <Content Include="Content\home\images\s1.jpg" />
+    <Content Include="Content\home\images\s2.jpg" />
+    <Content Include="Content\home\images\s3.jpg" />
+    <Content Include="Content\home\images\s4.jpg" />
+    <Content Include="Content\home\images\s5.jpg" />
+    <Content Include="Content\home\images\s6.jpg" />
+    <Content Include="Content\home\images\s7.jpg" />
+    <Content Include="Content\home\images\s8.jpeg" />
+    <Content Include="Content\home\images\s8.jpg" />
+    <Content Include="Content\home\images\search.png" />
+    <Content Include="Content\home\images\t1.jpg" />
+    <Content Include="Content\home\images\t2.jpg" />
+    <Content Include="Content\home\images\t3.jpg" />
+    <Content Include="Content\home\images\t4.jpg" />
+    <Content Include="Content\home\images\tick-mark1.png" />
+    <Content Include="Content\home\images\top1.jpg" />
+    <Content Include="Content\home\images\top2.jpg" />
+    <Content Include="Content\home\images\up_arrow.png" />
+    <Content Include="Content\home\images\w1.jpg" />
+    <Content Include="Content\home\images\w2.jpg" />
+    <Content Include="Content\home\images\w3.jpg" />
+    <Content Include="Content\home\images\w4.jpg" />
+    <Content Include="Content\home\images\w5.jpg" />
+    <Content Include="Content\home\images\w6.jpg" />
+    <Content Include="Content\home\images\w7.jpg" />
+    <Content Include="Content\home\images\w8.jpg" />
+    <Content Include="Content\home\images\xe-nấu-ăn-be-gái-1.jpg" />
+    <Content Include="Content\home\js\bootstrap.js" />
+    <Content Include="Content\home\js\easy-responsive-tabs.js" />
+    <Content Include="Content\home\js\imagezoom.js" />
+    <Content Include="Content\home\js\jquery-2.1.4.min.js" />
+    <Content Include="Content\home\js\jquery-ui.js" />
+    <Content Include="Content\home\js\jquery.countup.js" />
+    <Content Include="Content\home\js\jquery.easing.min.js" />
+    <Content Include="Content\home\js\jquery.flexslider.js" />
+    <Content Include="Content\home\js\jquery.waypoints.min.js" />
+    <Content Include="Content\home\js\minicart.min.js" />
+    <Content Include="Content\home\js\modernizr.custom.js" />
+    <Content Include="Content\home\js\move-top.js" />
+    <Content Include="Content\home\js\responsiveslides.min.js" />
     <Content Include="Content\images\close.png" />
     <Content Include="Content\images\closew.gif" />
     <Content Include="Content\images\cross.png" />
@@ -260,6 +372,15 @@
     <Content Include="Content\sweetalert\sweet-alert-animations.less" />
     <Content Include="Content\bootstrap\variables.less" />
     <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\home\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\home\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\home\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\home\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\home\fonts\FontAwesome.otf" />
+    <Content Include="Content\home\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\home\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\home\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\home\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -287,8 +408,10 @@
     <Content Include="Views\Layout\AdminLayout.cshtml" />
     <Content Include="Views\ProductCategory\List.cshtml" />
     <Content Include="Views\ProductCategory\Index.cshtml" />
-    <Content Include="Views\Sweet\Alert.cshtml" />
     <Content Include="Views\ProductCategory\Create.cshtml" />
+    <Content Include="Views\Layout\HomeLayout.cshtml" />
+    <Content Include="Views\Product\List.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -307,11 +430,14 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101301345562_updatefield.resx">
-      <DependentUpon>202101301345562_updatefield.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102091005414_addcol.resx">
+      <DependentUpon>202102091005414_addcol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101301351244_up.resx">
-      <DependentUpon>202101301351244_up.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102091029226_addcoll.resx">
+      <DependentUpon>202102091029226_addcoll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102092222359_change-10-2.resx">
+      <DependentUpon>202102092222359_change-10-2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

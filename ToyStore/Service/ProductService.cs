@@ -11,10 +11,13 @@ namespace ToyStore.Service
     public interface IProductService
     {
         Product AddProduct(Product product);
-        List<Product> GetProductList();
+        IEnumerable<Product> GetProductList();
+        IEnumerable<Product> GetProductList(string keyWord);
         Product GetByID(int ID);
+        IEnumerable<Product> GetProductListName(string keyword);
         void UpdateProduct(Product product);
         void DeleteProduct(Product product);
+        void MultiDeleteProduct(string[] IDs);
         void Save();
     }
     public class ProductService : IProductService
@@ -32,17 +35,24 @@ namespace ToyStore.Service
 
         public void DeleteProduct(Product product)
         {
-            throw new NotImplementedException();
+            product.IsActive = false;
+            this.context.ProductRepository.Delete(product);
         }
 
         public Product GetByID(int ID)
         {
-            throw new NotImplementedException();
+            return this.context.ProductRepository.GetDataByID(ID);
         }
 
-        public List<Product> GetProductList()
+        public IEnumerable<Product> GetProductListName(string keyword)
         {
-            return this.context.ProductRepository.GetAllData().ToList();
+            IEnumerable<Product> listProductName = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyword));
+            return listProductName;
+        }
+
+        public IEnumerable<Product> GetProductList()
+        {
+            return this.context.ProductRepository.GetAllData();
         }
 
         public void Save()
@@ -52,7 +62,24 @@ namespace ToyStore.Service
 
         public void UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            product.LastUpdatedDate = DateTime.Now;
+            this.context.ProductRepository.Update(product);
+        }
+
+        public IEnumerable<Product> GetProductList(string keyWord)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyWord));
+            return listProduct;
+        }
+
+        public void MultiDeleteProduct(string[] IDs)
+        {
+            foreach (var id in IDs)
+            {
+                Product product = GetByID(int.Parse(id));
+                product.IsActive = false;
+                UpdateProduct(product);
+            }
         }
     }
 }

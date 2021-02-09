@@ -23,16 +23,7 @@ namespace ToyStore.Controllers
         #endregion
         public ActionResult Index()
         {
-            //ViewBag.ProducerID = new SelectList(_product.Pro.OrderBy(n => n.TenNCC), "MaNCC", "TenNCC", sp.MaNCC);
-            var listProduct= _productCategoryService.GetProductCategoryList();
-            if (listProduct != null)
-            {
-                return View(listProduct);
-            }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            return View();
         }
     }
 }

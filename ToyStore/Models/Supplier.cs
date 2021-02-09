@@ -22,6 +22,9 @@ namespace ToyStore.Models
         public string Phone { set; get; }
 
         public string Email { set; get; }
+        [Display(Name = "Kích hoạt")]
+        public bool IsActive { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
         public virtual IEnumerable<Product> Products { set; get; }
     }
 }

@@ -22,6 +22,9 @@ namespace ToyStore.Models
 
         [MaxLength(500)]
         public string Logo { set; get; }
+        [Display(Name = "Kích hoạt")]
+        public bool IsActive { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
         public virtual IEnumerable<Product> Products { set; get; }
     }
 }

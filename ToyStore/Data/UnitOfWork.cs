@@ -12,6 +12,8 @@ namespace ToyStore.Data
         private ToyStoreDbContext DbContext = new ToyStoreDbContext();
         private GenericRepository<Product> productRepository;
         private GenericRepository<ProductCategory> productCategoryRepository;
+        private GenericRepository<Supplier> supplierRepository;
+        private GenericRepository<Producer> producerRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -32,6 +34,28 @@ namespace ToyStore.Data
                     this.productCategoryRepository = new GenericRepository<ProductCategory>(DbContext);
                 }
                 return productCategoryRepository;
+            }
+        }
+        public GenericRepository<Supplier> SupplierRepository
+        {
+            get
+            {
+                if (this.supplierRepository == null)
+                {
+                    this.supplierRepository = new GenericRepository<Supplier>(DbContext);
+                }
+                return supplierRepository;
+            }
+        }
+        public GenericRepository<Producer> ProducerRepository
+        {
+            get
+            {
+                if (this.producerRepository == null)
+                {
+                    this.producerRepository = new GenericRepository<Producer>(DbContext);
+                }
+                return producerRepository;
             }
         }
         public void Save()

@@ -54,13 +54,15 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult List(string keyword)
         {
+            int pageSize = 5;
             if (keyword == null)
             {
                 Response.StatusCode = 404;
                 return null;
             }
             //Get proudct category list with keyword
-            var listProductCategory = _productCategoryService.GetProductCategoryList(keyword);
+            var ProductCategories = _productCategoryService.GetProductCategoryList(keyword);
+            PagedList<ProductCategory> listProductCategory = new PagedList<ProductCategory>(ProductCategories, 1, pageSize);
             //Check null
             if (listProductCategory != null)
             {

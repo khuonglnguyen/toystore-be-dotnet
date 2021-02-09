@@ -19,14 +19,19 @@ namespace ToyStore.Models
         [MaxLength(256)]
         public string Name { set; get; }
 
+        [Display(Name = "Danh mục")]
         public int CategoryID { set; get; }
 
+        [Display(Name = "Hình ảnh 1")]
         [MaxLength(256)]
         public string Image1 { set; get; }
+        [Display(Name = "Hình ảnh 2")]
         [MaxLength(256)]
         public string Image2 { set; get; }
+        [Display(Name = "Hình ảnh 3")]
         [MaxLength(256)]
         public string Image3 { set; get; }
+        [Display(Name = "Hình ảnh 4")]
         [MaxLength(256)]
         public string Image4 { set; get; }
 
@@ -49,17 +54,24 @@ namespace ToyStore.Models
         [MaxLength(500)]
         public string Description { set; get; }
 
-        public bool? HomeFlag { set; get; }
-        public bool? HotFlag { set; get; }
+        [Display(Name = "Hiển thị trang chủ")]
+        public bool HomeFlag { set; get; }
+        [Display(Name = "Sản phẩm bán chạy")]
+        public bool HotFlag { set; get; }
         public int? ViewCount { set; get; }
         public int? CommentCount { get; set; }
         public int? PurchasedCount { get; set; }
         [Required]
+        [Display(Name = "Nhà cung cấp")]
         public int SupplierID { get; set; }
         [Required]
+        [Display(Name = "Hãng sản xuất")]
         public int ProducerID { get; set; }
+        [Display(Name = "Sản phẩm mới")]
         public bool IsNew { get; set; }
+        [Display(Name = "Kích hoạt")]
         public bool IsActive { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime LastUpdatedDate { get; set; }
 
         [ForeignKey("CategoryID")]
