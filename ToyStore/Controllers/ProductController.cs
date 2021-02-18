@@ -33,7 +33,7 @@ namespace ToyStore.Controllers
         {
             int pageSize = 5;
             //Get proudct category list
-            var products = _productService.GetProductList();
+            var products = _productService.GetProductList().OrderBy(x=>x.Name);
             PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
             //Check null
             if (listProduct != null)
@@ -77,6 +77,60 @@ namespace ToyStore.Controllers
                 //return 404
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+        }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            //Get data for DropdownList
+            ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name");
+            //Return view
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(Product product, HttpPostedFileBase ImageUpload)
+        {
+            //Declare a errorCount
+            int errorCount = 0;
+            //Check content image
+            if (ImageUpload != null && ImageUpload.ContentLength > 0)
+            {
+                //Check format iamge
+                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
+                {
+                    //Set viewbag
+                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
+                    //increase by 1 unit errorCount
+                    errorCount++;
+                }
+                else
+                {
+                    //Get file name
+                    var fileName = Path.GetFileName(ImageUpload.FileName);
+                    //Get path
+                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                    //Check exitst
+                    if (!System.IO.File.Exists(path))
+                    {
+                        //Add image into folder
+                        ImageUpload.SaveAs(path);
+                    }
+                }
+                if (errorCount > 0)
+                {
+                    ViewBag.Messag = "Failed";
+                    return View(product);
+                }
+                //Set new value image for productCategory
+                product.Image1 = ImageUpload.FileName;
+            }
+            //Set TempData for checking in view to show swal
+            TempData["create"] = "Success";
+            //Create productCategory
+            _productService.AddProduct(product);
+            //Return view
+            return RedirectToAction("List");
         }
         [HttpGet]
         public ActionResult Edit(int id)

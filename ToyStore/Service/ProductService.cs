@@ -29,6 +29,7 @@ namespace ToyStore.Service
         }
         public Product AddProduct(Product product)
         {
+            product.LastUpdatedDate = DateTime.Now;
             this.context.ProductRepository.Insert(product);
             return product;
         }
