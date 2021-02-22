@@ -145,9 +145,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="Controllers\ProductCategoryController.cs" />
+    <Compile Include="Controllers\ProductCategoryManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\ToyStoreDbContext.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
@@ -166,13 +167,31 @@
     <Compile Include="Migrations\202102092222359_change-10-2.Designer.cs">
       <DependentUpon>202102092222359_change-10-2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102211114033_changeTableProduct.cs" />
+    <Compile Include="Migrations\202102211114033_changeTableProduct.Designer.cs">
+      <DependentUpon>202102211114033_changeTableProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102220249062_AddTableAges.cs" />
+    <Compile Include="Migrations\202102220249062_AddTableAges.Designer.cs">
+      <DependentUpon>202102220249062_AddTableAges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102220253332_AddColTableProduct.cs" />
+    <Compile Include="Migrations\202102220253332_AddColTableProduct.Designer.cs">
+      <DependentUpon>202102220253332_AddColTableProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102220254328_AddForeignKeyTableProduct.cs" />
+    <Compile Include="Migrations\202102220254328_AddForeignKeyTableProduct.Designer.cs">
+      <DependentUpon>202102220254328_AddForeignKeyTableProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Ages.cs" />
     <Compile Include="Models\Producer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
+    <Compile Include="Service\AgeService.cs" />
     <Compile Include="Service\ProducerService.cs" />
     <Compile Include="Service\ProductCategoryService.cs" />
     <Compile Include="Service\ProductService.cs" />
@@ -207,6 +226,7 @@
     <Content Include="Content\home\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\home\images\1.png" />
     <Content Include="Content\home\images\2.png" />
+    <Content Include="Content\home\images\5de137d57a471_thumb900.jpg" />
     <Content Include="Content\home\images\a1.jpg" />
     <Content Include="Content\home\images\a10.jpg" />
     <Content Include="Content\home\images\a11.jpg" />
@@ -411,15 +431,20 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ProductCategory\Edit.cshtml" />
+    <Content Include="Views\ProductCategoryManage\Edit.cshtml" />
     <Content Include="Views\Layout\AdminLayout.cshtml" />
-    <Content Include="Views\ProductCategory\List.cshtml" />
-    <Content Include="Views\ProductCategory\Index.cshtml" />
-    <Content Include="Views\ProductCategory\Create.cshtml" />
+    <Content Include="Views\ProductCategoryManage\List.cshtml" />
+    <Content Include="Views\ProductCategoryManage\Index.cshtml" />
+    <Content Include="Views\ProductCategoryManage\Create.cshtml" />
     <Content Include="Views\Layout\HomeLayout.cshtml" />
+    <Content Include="Views\ProductManage\List.cshtml" />
+    <Content Include="Views\ProductManage\Edit.cshtml" />
+    <Content Include="Views\ProductManage\Create.cshtml" />
+    <Content Include="Views\Home\HeaderTopPartial.cshtml" />
+    <Content Include="Views\Home\MenuPartial.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\List.cshtml" />
-    <Content Include="Views\Product\Edit.cshtml" />
-    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Layout\ProductLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -446,6 +471,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102092222359_change-10-2.resx">
       <DependentUpon>202102092222359_change-10-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102211114033_changeTableProduct.resx">
+      <DependentUpon>202102211114033_changeTableProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102220249062_AddTableAges.resx">
+      <DependentUpon>202102220249062_AddTableAges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102220253332_AddColTableProduct.resx">
+      <DependentUpon>202102220253332_AddColTableProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102220254328_AddForeignKeyTableProduct.resx">
+      <DependentUpon>202102220254328_AddForeignKeyTableProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

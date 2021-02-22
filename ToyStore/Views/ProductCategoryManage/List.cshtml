@@ -13,7 +13,7 @@
         $("#keyword").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "/ProductCategory/ListName",
+                    url: "/ProductCategoryManagement/ListName",
                     type: "POST",
                     dataType: "json",
                     data: { Prefix: request.term },
@@ -111,7 +111,7 @@
             </ul>
             <hr />
             <div class="w3-search-box">
-                <form action="~/ProductCategory/List" method="post">
+                <form action="~/ProductCategoryManage/List" method="post">
                     <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
                     <input type="submit" value="">
                 </form>
@@ -119,7 +119,7 @@
             <div class="clearfix"> </div>
             <hr />
             <h2>Danh sách danh mục</h2>
-            @using (Html.BeginForm("DeleteMulti", "ProductCategory", FormMethod.Post))
+            @using (Html.BeginForm("DeleteMulti", "ProductCategoryManage", FormMethod.Post))
             {
                 <input type="submit" value="Xóa mục đã chọn" class="btn btn-default" id="btnDeleteMulti" />
                 <table id="table">

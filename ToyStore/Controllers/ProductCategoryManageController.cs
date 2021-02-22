@@ -11,12 +11,12 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
-    public class ProductCategoryController : Controller
+    public class ProductCategoryManageController : Controller
     {
         #region Initialize
         private IProductCategoryService _productCategoryService;
 
-        public ProductCategoryController(IProductCategoryService productCategoryService)
+        public ProductCategoryManageController(IProductCategoryService productCategoryService)
         {
             this._productCategoryService = productCategoryService;
         }

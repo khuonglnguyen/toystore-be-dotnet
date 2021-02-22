@@ -18,7 +18,9 @@ namespace ToyStore.Models
         [Display(Name = "Tên sản phẩm")]
         [MaxLength(256)]
         public string Name { set; get; }
-
+        [Required]
+        [Display(Name = "Độ tuổi")]
+        public int AgeID { set; get; }
         [Display(Name = "Danh mục")]
         public int CategoryID { set; get; }
 
@@ -51,7 +53,6 @@ namespace ToyStore.Models
 
         [Required(ErrorMessage = "Vui lòng nhập vào mô tả sản phẩm.")]
         [Display(Name = "Mô tả sản phẩm")]
-        [MaxLength(500)]
         public string Description { set; get; }
 
         [Display(Name = "Hiển thị trang chủ")]
@@ -74,6 +75,8 @@ namespace ToyStore.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime LastUpdatedDate { get; set; }
 
+        [ForeignKey("AgeID")]
+        public virtual Ages Ages { set; get; }
         [ForeignKey("CategoryID")]
         public virtual ProductCategory ProductCategory { set; get; }
         [ForeignKey("SupplierID")]

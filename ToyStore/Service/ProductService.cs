@@ -12,6 +12,7 @@ namespace ToyStore.Service
     {
         Product AddProduct(Product product);
         IEnumerable<Product> GetProductList();
+        IEnumerable<Product> GetProductListWithCategory(int ProductCategoryID);
         IEnumerable<Product> GetProductList(string keyWord);
         Product GetByID(int ID);
         IEnumerable<Product> GetProductListName(string keyword);
@@ -81,6 +82,12 @@ namespace ToyStore.Service
                 product.IsActive = false;
                 UpdateProduct(product);
             }
+        }
+
+        public IEnumerable<Product> GetProductListWithCategory(int ProductCategoryID)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.CategoryID == ProductCategoryID);
+            return listProduct;
         }
     }
 }

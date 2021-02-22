@@ -1,0 +1,193 @@
+﻿@model PagedList.IPagedList<ToyStore.Models.Product>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#keyword").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/ProductManagement/ListName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+        $('#btnDeleteMulti').hide();
+        $('#checkAll').click(function () {
+            if ($(this).is(":checked")) {
+                $(".cbProductCategory").prop("checked", true)
+            }
+            else {
+                $(".cbProductCategory").prop("checked", false)
+            }
+            $('#btnDeleteMulti').toggle();
+        });
+    });
+</script>
+@{
+
+    if (TempData["edit"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    title: "Thông báo",
+                    text: "Cập nhật sản phẩm thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            };
+
+        </script>
+    }
+    else if (TempData["create"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    title: "Thông báo",
+                    text: "Thêm mới sản phẩm thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            };
+        </script>
+    }
+    else if (TempData["delete"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    title: "Thông báo",
+                    text: "Xóa sản phẩm thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            };
+        </script>
+    }
+    else if (TempData["deleteMulti"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    title: "Thông báo",
+                    text: "Xóa nhiều sản phẩm thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            };
+        </script>
+    }
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <ul class="bt-list">
+                <li><a href="@Url.Action("Create")" class="hvr-icon-float-away col-24" style="background-color:green">Thêm mới</a></li>
+            </ul>
+            <hr />
+            <div class="w3-search-box">
+                <form action="~/ProductManage/List" method="post">
+                    <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
+                    <input type="submit" value="">
+                </form>
+            </div><!--//end-search-box-->
+            <p>@ViewBag.message</p>
+            <div class="clearfix"> </div>
+            <hr />
+            <h2>Danh sách sản phẩm</h2>
+            @using (Html.BeginForm("DeleteMulti", "ProductManage", FormMethod.Post))
+            {
+                <input type="submit" value="Xóa mục đã chọn" class="btn btn-default" id="btnDeleteMulti" />
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="checkAll" />
+                            </th>
+                            <th>
+                                Tên sản phẩm
+                            </th>
+                            <th>
+                                Hình ảnh
+                            </th>
+                            <th>
+                                Kích hoạt
+                            </th>
+                            <th>
+                                ngày cập nhật cuối
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            @Html.Hidden(item.ID.ToString())
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="cbProductCategory" value="@item.ID" name="IDDelete" />
+                            </td>
+                            <td style="color:brown">
+                                <b>@Html.DisplayFor(modelItem => item.Name)</b>
+                            </td>
+                            <td>
+                                <img src="@Url.Content("~/Content/images/" + item.Image1)" width="100" height="100" />
+                            </td>
+                            <td>
+                                @if (item.IsActive == true)
+                                {
+                                    <input type="checkbox" checked="checked" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.ID }, new { @class = "btn btn-default", id = "btnDelete" })
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            <br />
+            <div id='Paging' style="text-align: center">
+                @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+            </div>
+        </div>
+    </div>
+</div>
+
