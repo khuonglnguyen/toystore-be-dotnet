@@ -14,7 +14,7 @@
         $("#keyword").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "/ProductManagement/ListName",
+                    url: "/ProductManage/ListName",
                     type: "POST",
                     dataType: "json",
                     data: { Prefix: request.term },

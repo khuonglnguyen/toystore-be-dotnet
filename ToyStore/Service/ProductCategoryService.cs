@@ -11,6 +11,7 @@ namespace ToyStore.Service
     {
         ProductCategory AddProductCategory(ProductCategory productCategory);
         IEnumerable<ProductCategory> GetProductCategoryList();
+        ProductCategory GetProductCategoryByName(string Name);
         IEnumerable<ProductCategory> GetProductCategoryList(string keyWord);
         IEnumerable<ProductCategory> GetProductCategoryListName(string keyword);
         ProductCategory GetByID(int ID);
@@ -36,6 +37,15 @@ namespace ToyStore.Service
         public void DeleteProductCategory(ProductCategory productCategory)
         {
             productCategory.IsActive = false;
+            IEnumerable<Product> products = this.context.ProductRepository.GetAllData(x => x.CategoryID == productCategory.ID);
+            foreach (var item in products)
+            {
+                if (item.IsActive != productCategory.IsActive)
+                {
+                    item.IsActive = productCategory.IsActive;
+                }
+                this.context.ProductRepository.Delete(item);
+            }
             this.context.ProductCategoryRepository.Delete(productCategory);
         }
         public void MultiDeleteProductCategory(string[] IDs)
@@ -67,6 +77,15 @@ namespace ToyStore.Service
         public void UpdateProductCategory(ProductCategory productCategory)
         {
             productCategory.LastUpdatedDate = DateTime.Now;
+            IEnumerable<Product> products = this.context.ProductRepository.GetAllData(x => x.CategoryID == productCategory.ID);
+            foreach (var item in products)
+            {
+                if (item.IsActive != productCategory.IsActive)
+                {
+                    item.IsActive = productCategory.IsActive;
+                }
+                this.context.ProductRepository.Update(item);
+            }
             this.context.ProductCategoryRepository.Update(productCategory);
         }
 
@@ -80,6 +99,12 @@ namespace ToyStore.Service
         {
             IEnumerable<ProductCategory> listProductCategoryName = this.context.ProductCategoryRepository.GetAllData(x=>x.Name.Contains(keyword));
             return listProductCategoryName;
+        }
+
+        public ProductCategory GetProductCategoryByName(string Name)
+        {
+            ProductCategory productCategory = this.context.ProductCategoryRepository.GetAllData().SingleOrDefault(x => x.Name == Name);
+            return productCategory;
         }
     }
 }

@@ -12,8 +12,13 @@ namespace ToyStore.Service
     {
         Product AddProduct(Product product);
         IEnumerable<Product> GetProductList();
-        IEnumerable<Product> GetProductListWithCategory(int ProductCategoryID);
+        IEnumerable<Product> GetProductListByCategory(int ProductCategoryID);
+        IEnumerable<Product> GetProductListByAge(int AgeID);
+        IEnumerable<Product> GetProductListByProducer(int ProducerID);
         IEnumerable<Product> GetProductList(string keyWord);
+        IEnumerable<Product> GetProductListForHomePage(int productCategoryID);
+        IEnumerable<Product> GetProductListForDiscount();
+        IEnumerable<Product> GetProductListRandom();
         Product GetByID(int ID);
         IEnumerable<Product> GetProductListName(string keyword);
         void UpdateProduct(Product product);
@@ -48,13 +53,13 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductListName(string keyword)
         {
-            IEnumerable<Product> listProductName = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyword));
+            IEnumerable<Product> listProductName = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyword) && x.IsActive == true);
             return listProductName;
         }
 
         public IEnumerable<Product> GetProductList()
         {
-            return this.context.ProductRepository.GetAllData();
+            return this.context.ProductRepository.GetAllData(x=>x.IsActive == true);
         }
 
         public void Save()
@@ -70,7 +75,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductList(string keyWord)
         {
-            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyWord));
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyWord) && x.IsActive == true);
             return listProduct;
         }
 
@@ -84,9 +89,44 @@ namespace ToyStore.Service
             }
         }
 
-        public IEnumerable<Product> GetProductListWithCategory(int ProductCategoryID)
+        public IEnumerable<Product> GetProductListByCategory(int ProductCategoryID)
         {
-            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.CategoryID == ProductCategoryID);
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.CategoryID == ProductCategoryID && x.IsActive==true);
+            return listProduct;
+        }
+        public IEnumerable<Product> GetProductListForHomePage(int productCategoryID)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData()
+                .Where(x => x.CategoryID == productCategoryID && x.IsActive == true)
+                .OrderByDescending(x => x.LastUpdatedDate)
+                .Take(3);
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListForDiscount()
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData()
+                .Where(x => x.HomeFlag == true)
+                .OrderByDescending(x => x.LastUpdatedDate)
+                .Take(10);
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListRandom()
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData().OrderBy(x=>Guid.NewGuid()).Take(10);
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListByAge(int AgeID)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.AgeID == AgeID && x.IsActive == true);
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListByProducer(int ProducerID)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.ProducerID == ProducerID && x.IsActive == true);
             return listProduct;
         }
     }

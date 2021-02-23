@@ -29,35 +29,23 @@ namespace ToyStore.Controllers
         #endregion
         public ActionResult Index()
         {
-            var ProductCategory1 = _productCategoryService.GetProductCategoryList().SingleOrDefault(x => x.Name == "Đồ chơi lắp ráp");
+            var ProductCategory1 = _productCategoryService.GetProductCategoryByName("Đồ chơi lắp ráp");
             //Get list product 1
-            var listProdudct1 = _productService.GetProductList()
-                .Where(x => x.CategoryID == ProductCategory1.ID)
-                .OrderByDescending(x => x.LastUpdatedDate)
-                .Take(3);
+            var listProdudct1 = _productService.GetProductListForHomePage(ProductCategory1.ID);
             ViewBag.ListProduct1 = listProdudct1;
 
-            var ProductCategory2 = _productCategoryService.GetProductCategoryList().SingleOrDefault(x => x.Name == "Đồ chơi Robot");
+            var ProductCategory2 = _productCategoryService.GetProductCategoryByName("Đồ chơi Robot");
             //Get list product 2
-            var listProdudct2 = _productService.GetProductList()
-                .Where(x => x.CategoryID == ProductCategory2.ID)
-                .OrderByDescending(x => x.LastUpdatedDate)
-                .Take(3);
+            var listProdudct2 = _productService.GetProductListForHomePage(ProductCategory2.ID);
             ViewBag.ListProduct2 = listProdudct2;
 
-            var ProductCategory3 = _productCategoryService.GetProductCategoryList().SingleOrDefault(x => x.Name == "Đồ chơi trí tuệ");
+            var ProductCategory3 = _productCategoryService.GetProductCategoryByName("Đồ chơi trí tuệ");
             //Get list product 3
-            var listProdudct3 = _productService.GetProductList()
-                .Where(x => x.CategoryID == ProductCategory3.ID)
-                .OrderByDescending(x => x.LastUpdatedDate)
-                .Take(3);
+            var listProdudct3 = _productService.GetProductListForHomePage(ProductCategory3.ID);
             ViewBag.ListProduct3 = listProdudct3;
 
             //Get list product 4
-            var listProdudct4 = _productService.GetProductList()
-                .Where(x => x.HomeFlag == true)
-                .OrderByDescending(x => x.LastUpdatedDate)
-                .Take(10);
+            var listProdudct4 = _productService.GetProductListForDiscount();
             ViewBag.ListProduct4 = listProdudct4;
 
             return View();

@@ -33,41 +33,52 @@ namespace ToyStore.Controllers
             var product = _productService.GetByID(ID);
             var producer = _producerService.GetByID(product.ProducerID);
             var supplier = _supplierService.GetByID(product.SupplierID);
-            var listProduct = _productService.GetProductList().OrderByDescending(x=>x.ViewCount).Take(5);
+            var listProduct = _productService.GetProductListRandom();
             ViewBag.ProducerName = producer.Name;
-            ViewBag.SupplierName = supplier.Name; 
+            ViewBag.SupplierName = supplier.Name;
             ViewBag.ListProduct = listProduct;
             return View(product);
         }
-        public ActionResult List(int ProductCategoryID=0, int ageID=0, int page=1)
+        public ActionResult Ages(int ID, int page = 1)
         {
             var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
             ViewBag.ListProduct = listProduct;
 
-            ViewBag.ageID = ageID;
+            ViewBag.ageID = ID;
+            Ages ages = _ageService.GetAgeByID(ID);
+            ViewBag.Name = "Độ tuổi " + ages.Name;
 
             PagedList<Product> listProductPaging;
-            if (ProductCategoryID==0 && ageID != 0)
-            {
-                IEnumerable<Product> products = _productService.GetProductList().Where(x => x.AgeID == ageID);
-                listProductPaging = new PagedList<Product>(products, page, 12);
+            IEnumerable<Product> products = _productService.GetProductListByAge(ID);
+            listProductPaging = new PagedList<Product>(products, page, 12);
+            return View(listProductPaging);
+        }
+        public ActionResult Producer(int ID, int page = 1)
+        {
+            var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
+            ViewBag.ListProduct = listProduct;
 
-                Ages ages = _ageService.GetAgeByID(ageID);
-                ViewBag.ageName = ages.Name;
-            }
-            else if (ProductCategoryID != 0 && ageID == 0 )
-            {
-                IEnumerable<Product> products = _productService.GetProductListWithCategory(ProductCategoryID);
-                listProductPaging = new PagedList<Product>(products, page, 12);
+            ViewBag.producerID = ID;
+            Producer producer = _producerService.GetByID(ID);
+            ViewBag.Name = "Thương hiệu " + producer.Name;
 
-                var productCategoryName = _productCategoryService.GetProductCategoryList().Single(x => x.ID == ProductCategoryID);
-                ViewBag.productCategoryName = productCategoryName.Name;
-            }
-            else
-            {
-                IEnumerable<Product> products = _productService.GetProductListWithCategory(ProductCategoryID).Where(x => x.AgeID == ageID);
-                listProductPaging = new PagedList<Product>(products, page, 12);
-            }
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetProductListByProducer(ID);
+            listProductPaging = new PagedList<Product>(products, page, 12);
+            return View(listProductPaging);
+        }
+        public ActionResult ProductCategory(int ID, int page = 1)
+        {
+            var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
+            ViewBag.ListProduct = listProduct;
+
+            ViewBag.productCategoryID = ID;
+            ProductCategory productCategory = _productCategoryService.GetByID(ID);
+            ViewBag.Name = "Danh mục " + productCategory.Name;
+
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetProductListByCategory(ID);
+            listProductPaging = new PagedList<Product>(products, page, 12);
             return View(listProductPaging);
         }
     }

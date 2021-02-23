@@ -443,8 +443,10 @@
     <Content Include="Views\Home\HeaderTopPartial.cshtml" />
     <Content Include="Views\Home\MenuPartial.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
-    <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Layout\ProductLayout.cshtml" />
+    <Content Include="Views\Product\Ages.cshtml" />
+    <Content Include="Views\Product\Producer.cshtml" />
+    <Content Include="Views\Product\ProductCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

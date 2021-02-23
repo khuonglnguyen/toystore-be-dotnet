@@ -5,7 +5,7 @@
 }
 <script>
     function doIt(item, baseUrl) {
-        window.location.href = baseUrl + '?productCategoryID=' + item.value + '&page=1';
+        window.location.href = baseUrl + '?ID=' + item.value + '&page=1';
     }
 </script>
 <!-- //Modal2 -->
@@ -15,7 +15,7 @@
 <div class="ban-top">
     <div class="container">
         <div class="agileits-navi_search">
-            <select id="agileinfo-nav_search" name="productCategoryName" required="" onchange="doIt(this,'@Url.Action("List", "Product")')">
+            <select id="agileinfo-nav_search" name="productCategoryName" required="" onchange="doIt(this,'@Url.Action("ProductCategory", "Product")')">
                 <option value="">Danh mục</option>
                 @foreach (var item in productCategories)
                 {
@@ -118,7 +118,7 @@
                                     @foreach (var item in ages)
                                     {
                                         <li>
-                                            <a onclick="location.href='@Url.Action("List","Product",new { ageID=item.ID,page=1})'">@item.Name</a>
+                                            <a onclick="location.href='@Url.Action("Ages","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name</a>
                                         </li>
                                     }
                                 </ul>
@@ -132,7 +132,7 @@
                                     @foreach (var item in producers)
                                     {
                                         <li>
-                                            <a href="icons.html">@item.Name</a>
+                                            <a onclick="location.href='@Url.Action("Producer","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name</a>
                                         </li>
                                     }
                                 </ul>

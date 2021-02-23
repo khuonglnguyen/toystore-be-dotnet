@@ -1,18 +1,11 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.Product>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Danh mục";
     Layout = "~/Views/Layout/ProductLayout.cshtml";
 }
 <div class="product-sec1">
-    @if (ViewBag.productCategoryName != null)
-    {
-        <h3 class="heading-tittle">@ViewBag.productCategoryName</h3>
-    }
-    else
-    {
-        <h3 class="heading-tittle">Độ tuổi @ViewBag.ageName</h3>
-    }
+    <h3 class="heading-tittle">@ViewBag.Name</h3>
     @foreach (var item in Model)
     {
         <div class="col-md-3 product-men">
@@ -61,6 +54,6 @@
     <div class="clearfix"></div>
     <br />
     <div id='Paging' style="text-align: right">
-        @Html.PagedListPager(Model, page => Url.Action("List", new { ageID = ViewBag.ageID, page }))
+        @Html.PagedListPager(Model, page => Url.Action("ProductCategory", new { ID = ViewBag.ageID, page }))
     </div>
 </div>
