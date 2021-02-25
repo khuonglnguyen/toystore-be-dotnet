@@ -13,8 +13,11 @@ namespace ToyStore.Service
         Product AddProduct(Product product);
         IEnumerable<Product> GetProductList();
         IEnumerable<Product> GetProductListByCategory(int ProductCategoryID);
+        IEnumerable<Product> GetProductListByCategoryParent(int ProductCategoryParentID);
+        IEnumerable<Product> GetProductListByGender(int GenderID);
         IEnumerable<Product> GetProductListByAge(int AgeID);
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
+        IEnumerable<Product> GetProductListIsNew();
         IEnumerable<Product> GetProductList(string keyWord);
         IEnumerable<Product> GetProductListForHomePage(int productCategoryID);
         IEnumerable<Product> GetProductListForDiscount();
@@ -127,6 +130,31 @@ namespace ToyStore.Service
         public IEnumerable<Product> GetProductListByProducer(int ProducerID)
         {
             IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.ProducerID == ProducerID && x.IsActive == true);
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListByCategoryParent(int ProductCategoryParentID)
+        {
+            ProductCategoryParent productCategoryParent = this.context.ProductCategoryParentRepository.GetDataByID(ProductCategoryParentID);
+            List<Product> listProduct = new List<Product>();
+            IEnumerable<ProductCategory> productCategoryList = this.context.ProductCategoryRepository.GetAllData().Where(x => x.ParentID == productCategoryParent.ID);
+            foreach (var item in productCategoryList)
+            {
+                List<Product> products = (List<Product>)this.context.ProductRepository.GetAllData(x => x.CategoryID == item.ID && x.IsActive == true);
+                listProduct.AddRange(products);
+            }
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListByGender(int GenderID)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.GenderID == GenderID && x.IsActive == true);
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListIsNew()
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.IsNew == true && x.IsActive == true);
             return listProduct;
         }
     }

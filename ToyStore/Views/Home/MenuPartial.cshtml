@@ -2,12 +2,15 @@
     IEnumerable<ToyStore.Models.ProductCategory> productCategories = ViewBag.ListProductCategory;
     IEnumerable<ToyStore.Models.Producer> producers = ViewBag.ListProducer;
     IEnumerable<ToyStore.Models.Ages> ages = ViewBag.ListAge;
+    IEnumerable<ToyStore.Models.ProductCategoryParent> productCategoryParents = ViewBag.ListParent;
+    IEnumerable<ToyStore.Models.Gender> genders = ViewBag.ListGender;
 }
-<script>
+
+@*<script>
     function doIt(item, baseUrl) {
         window.location.href = baseUrl + '?ID=' + item.value + '&page=1';
     }
-</script>
+</script>*@
 <!-- //Modal2 -->
 <!-- //signup Model -->
 <!-- //header-bot -->
@@ -15,13 +18,13 @@
 <div class="ban-top">
     <div class="container">
         <div class="agileits-navi_search">
-            <select id="agileinfo-nav_search" name="productCategoryName" required="" onchange="doIt(this,'@Url.Action("ProductCategory", "Product")')">
+            @*<select id="agileinfo-nav_search" name="productCategoryName" required="" onchange="doIt(this,'@Url.Action("ProductCategory", "Product")')">
                 <option value="">Danh mục</option>
                 @foreach (var item in productCategories)
                 {
-                    <option value="@item.ID" >@item.Name</option>
+                    <option value="@item.ID">@item.Name</option>
                 }
-            </select>
+            </select>*@
         </div>
         <div class="top_nav_left">
             <nav class="navbar navbar-default">
@@ -40,78 +43,58 @@
                     <div class="collapse navbar-collapse menu--shylock" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav menu__list">
                             <li class="active">
-                                <a class="nav-stylehead" href="index.html">
-                                    Trang chủ
+                                <a class="nav-stylehead" href="@Url.Action("index","Home")">
+                                    TRANG CHỦ
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
+                            <li class="">
+                                <a class="nav-stylehead" href="@Url.Action("NewProduct","Product")">HÀNG MỚI</a>
+                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle nav-stylehead" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    Khuyến mãi
+                                    SẢN PHẨM
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu multi-column columns-3">
                                     <div class="agile_inner_drop_nav_info">
-                                        <div class="col-sm-4 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="product.html">Bakery</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Baking Supplies</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Coffee, Tea & Beverages</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Dried Fruits, Nuts</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Sweets, Chocolate</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Spices & Masalas</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Jams, Honey & Spreads</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="product.html">Pickles</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Pasta & Noodles</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Rice, Flour & Pulses</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Sauces & Cooking Pastes</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Snack Foods</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Oils, Vinegars</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Meat, Poultry & Seafood</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4 multi-gd-img">
-                                            <img src="~/Content/home/images/nav.png" alt="">
-                                        </div>
+                                        @foreach (var item1 in productCategoryParents)
+                                        {
+                                            <div class="col-sm-4 multi-gd-img">
+                                                <ul class="multi-column-dropdown">
+                                                    <li style="font-weight:bold">
+                                                        <a onclick="location.href='@Url.Action("ProductCategoryParent","Product",new { ID=item1.ID})'" style="cursor:pointer;text-transform:uppercase;font-size:15px">@item1.Name</a>
+                                                    </li>
+                                                    @foreach (var item2 in productCategories.Where(x => x.ParentID == item1.ID).OrderBy(x => x.Name))
+                                                    {
+                                                        <li>
+                                                            <a onclick="location.href='@Url.Action("ProductCategory","Product",new { ID=item2.ID})'" style="cursor:pointer">@item2.Name</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
                                         <div class="clearfix"></div>
                                     </div>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
-                                    Độ tuổi
+                                    GIỚI TÍNH
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu agile_short_dropdown">
+                                    @foreach (var item in genders)
+                                    {
+                                        <li>
+                                            <a onclick="location.href='@Url.Action("Gender","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
+                                    ĐỘ TUỔI
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu agile_short_dropdown">
@@ -125,7 +108,7 @@
                             </li>
                             <li class="dropdown">
                                 <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
-                                    Thương hiệu
+                                    THƯƠNG HIỆU
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu agile_short_dropdown">
@@ -138,10 +121,10 @@
                                 </ul>
                             </li>
                             <li class="">
-                                <a class="nav-stylehead" href="about.html">Về chúng tôi</a>
+                                <a class="nav-stylehead" href="@Url.Action("About","Home")">KMD</a>
                             </li>
                             <li class="">
-                                <a class="nav-stylehead" href="contact.html">Liên hệ</a>
+                                <a class="nav-stylehead" href="contact.html">LIÊN HỆ</a>
                             </li>
                         </ul>
                     </div>

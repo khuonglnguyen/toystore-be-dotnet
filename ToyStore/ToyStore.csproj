@@ -183,16 +183,40 @@
     <Compile Include="Migrations\202102220254328_AddForeignKeyTableProduct.Designer.cs">
       <DependentUpon>202102220254328_AddForeignKeyTableProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102240158590_AddTableParent.cs" />
+    <Compile Include="Migrations\202102240158590_AddTableParent.Designer.cs">
+      <DependentUpon>202102240158590_AddTableParent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102240216582_AddColTableProductCategory.cs" />
+    <Compile Include="Migrations\202102240216582_AddColTableProductCategory.Designer.cs">
+      <DependentUpon>202102240216582_AddColTableProductCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102240218129_AddForiegnKeyTableProductCategory.cs" />
+    <Compile Include="Migrations\202102240218129_AddForiegnKeyTableProductCategory.Designer.cs">
+      <DependentUpon>202102240218129_AddForiegnKeyTableProductCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102250019089_AddTableGenderAndCol.cs" />
+    <Compile Include="Migrations\202102250019089_AddTableGenderAndCol.Designer.cs">
+      <DependentUpon>202102250019089_AddTableGenderAndCol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.cs" />
+    <Compile Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.Designer.cs">
+      <DependentUpon>202102250024596_AddForiegnKeyFieldGenderTableProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Ages.cs" />
+    <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Producer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
+    <Compile Include="Models\ProductCategoryParent.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
     <Compile Include="Service\AgeService.cs" />
+    <Compile Include="Service\GenderService.cs" />
     <Compile Include="Service\ProducerService.cs" />
+    <Compile Include="Service\ProductCategoryParentService.cs" />
     <Compile Include="Service\ProductCategoryService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\SupplierService.cs" />
@@ -447,6 +471,10 @@
     <Content Include="Views\Product\Ages.cshtml" />
     <Content Include="Views\Product\Producer.cshtml" />
     <Content Include="Views\Product\ProductCategory.cshtml" />
+    <Content Include="Views\Product\ProductCategoryParent.cshtml" />
+    <Content Include="Views\Product\Gender.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Product\NewProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -485,6 +513,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102220254328_AddForeignKeyTableProduct.resx">
       <DependentUpon>202102220254328_AddForeignKeyTableProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102240158590_AddTableParent.resx">
+      <DependentUpon>202102240158590_AddTableParent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102240216582_AddColTableProductCategory.resx">
+      <DependentUpon>202102240216582_AddColTableProductCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102240218129_AddForiegnKeyTableProductCategory.resx">
+      <DependentUpon>202102240218129_AddForiegnKeyTableProductCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102250019089_AddTableGenderAndCol.resx">
+      <DependentUpon>202102250019089_AddTableGenderAndCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.resx">
+      <DependentUpon>202102250024596_AddForiegnKeyFieldGenderTableProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

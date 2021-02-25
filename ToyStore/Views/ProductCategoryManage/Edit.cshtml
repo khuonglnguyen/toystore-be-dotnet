@@ -40,6 +40,13 @@
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
+            @*Để load đúng dữ liệu thì cần truyền đúng name đúng với ViewBag*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.ParentID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.DropDownList("ParentID", null, new { @class = "form-control" })
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-8">

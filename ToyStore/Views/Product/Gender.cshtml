@@ -8,10 +8,10 @@
     <h3 class="heading-tittle">@ViewBag.Name</h3>
     @foreach (var item in Model)
     {
-        <div class="col-md-3 product-men" >
+        <div class="col-md-3 product-men">
             <div class="men-pro-item simpleCart_shelfItem">
-                <div class="men-thumb-item" onclick="location.href='@Url.Action("Details","Product",new { ID=item.ID})'">
-                    <img src="@Url.Content("~/Content/images/"+item.Image1)" alt="" style="width:150px;height:150px" >
+                <div class="men-thumb-item">
+                    <img src="@Url.Content("~/Content/images/"+item.Image1)" alt="" style="width:150px;height:150px">
                     <div class="men-cart-pro">
                         <div class="inner-men-cart-pro">
                             <a href="@Url.Action("Details","Product",new { id=item.ID})" class="link-product-add-cart">Xem chi tiết</a>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="item-info-product ">
                     <h4>
-                        <a href="@Url.Action("Details","Product",new { id=item.ID})" >@item.Name</a>
+                        <a href="single.html">@item.Name</a>
                     </h4>
                     <div class="info-product-price">
                         <span class="item_price">@item.PromotionPrice.ToString() ₫</span>
@@ -54,6 +54,6 @@
     <div class="clearfix"></div>
     <br />
     <div id='Paging' style="text-align: right">
-        @Html.PagedListPager(Model, page => Url.Action("Ages", new { ID= ViewBag.ageID,page }))
+        @Html.PagedListPager(Model, page => Url.Action("Gender", new { ID = ViewBag.GenderID, page }))
     </div>
 </div>

@@ -91,45 +91,57 @@ namespace ToyStore.Controllers
             ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name");
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name");
             ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name");
             //Return view
             return View();
         }
         [HttpPost]
-        public ActionResult Create(Product product, HttpPostedFileBase ImageUpload)
+        public ActionResult Create(Product product, HttpPostedFileBase[] ImageUpload)
         {
             //Declare a errorCount
             int errorCount = 0;
-            //Check content image
-            if (ImageUpload != null && ImageUpload.ContentLength > 0)
+            for (int i = 0; i < ImageUpload.Length; i++)
             {
-                //Check format iamge
-                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
+                //Check content image
+                if (ImageUpload[i] != null && ImageUpload[i].ContentLength > 0)
                 {
-                    //Set viewbag
-                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
-                    //increase by 1 unit errorCount
-                    errorCount++;
-                }
-                else
-                {
-                    //Get file name
-                    var fileName = Path.GetFileName(ImageUpload.FileName);
-                    //Get path
-                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-                    //Check exitst
-                    if (!System.IO.File.Exists(path))
+                    //Check format iamge
+                    if (ImageUpload[i].ContentType != "image/jpeg" && ImageUpload[i].ContentType != "image/png" && ImageUpload[i].ContentType != "image/gif")
                     {
-                        //Add image into folder
-                        ImageUpload.SaveAs(path);
+                        //Set viewbag
+                        ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
+                        //increase by 1 unit errorCount
+                        errorCount++;
+                    }
+                    else
+                    {
+                        //Get file name
+                        var fileName = Path.GetFileName(ImageUpload[i].FileName);
+                        //Get path
+                        var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                        //Check exitst
+                        if (!System.IO.File.Exists(path))
+                        {
+                            //Add image into folder
+                            ImageUpload[i].SaveAs(path);
+                        }
                     }
                 }
-                if (errorCount > 0)
+            }
+            //Set new value image for product
+            for (int i = 0; i < ImageUpload.Length; i++)
+            {
+                if (ImageUpload[i] != null)
                 {
-                    ViewBag.Messag = "Failed";
-                    return View(product);
+                    if (i == 0)
+                        product.Image1 = ImageUpload[0].FileName;
+                    else if (i == 1)
+                        product.Image2 = ImageUpload[1].FileName;
+                    else if (i == 2)
+                        product.Image3 = ImageUpload[2].FileName;
+                    else if (i == 3)
+                        product.Image4 = ImageUpload[3].FileName;
                 }
-                //Set new value image for productCategory
-                product.Image1 = ImageUpload.FileName;
             }
             //Set TempData for checking in view to show swal
             TempData["create"] = "Success";

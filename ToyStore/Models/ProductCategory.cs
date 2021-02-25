@@ -17,6 +17,8 @@ namespace ToyStore.Models
         [Display(Name = "Tên danh mục")]
         [MaxLength(256)]
         public string Name { set; get; }
+        [Display(Name = "Danh mục gốc")]
+        public int ParentID { set; get; }
 
         [Display(Name = "Mô tả")]
         [MaxLength(500)]
@@ -33,6 +35,8 @@ namespace ToyStore.Models
         [Display(Name = "Ngày cập nhật cuối")]
         public DateTime LastUpdatedDate { get; set; }
 
+        [ForeignKey("ParentID")]
+        public virtual ProductCategoryParent ProductCategoryParent { set; get; }
         public virtual IEnumerable<Product> Products { set; get; }
     }
 }

@@ -15,10 +15,12 @@ namespace ToyStore.Controllers
     {
         #region Initialize
         private IProductCategoryService _productCategoryService;
+        private IProductCategoryParentService _productCategoryParentService;
 
-        public ProductCategoryManageController(IProductCategoryService productCategoryService)
+        public ProductCategoryManageController(IProductCategoryService productCategoryService,ProductCategoryParentService productCategoryParentService)
         {
             this._productCategoryService = productCategoryService;
+            this._productCategoryParentService = productCategoryParentService;
         }
         #endregion
 
@@ -79,6 +81,8 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            //Get data for DropdownList
+            ViewBag.ParentID = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name");
             //Return view
             return View();
         }
@@ -131,6 +135,8 @@ namespace ToyStore.Controllers
         {
             //Get product catetgory
             var productCategory = _productCategoryService.GetByID(id);
+            //Get data for DropdownList
+            ViewBag.ParentID = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name", productCategory.ParentID);
             //Check null
             if (productCategory != null)
             {

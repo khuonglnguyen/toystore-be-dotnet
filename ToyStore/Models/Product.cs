@@ -18,9 +18,10 @@ namespace ToyStore.Models
         [Display(Name = "Tên sản phẩm")]
         [MaxLength(256)]
         public string Name { set; get; }
-        [Required]
         [Display(Name = "Độ tuổi")]
         public int AgeID { set; get; }
+        [Display(Name = "Giới tính")]
+        public int GenderID { set; get; }
         [Display(Name = "Danh mục")]
         public int CategoryID { set; get; }
 
@@ -75,6 +76,8 @@ namespace ToyStore.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime LastUpdatedDate { get; set; }
 
+        [ForeignKey("GenderID")]
+        public virtual Gender Gender { set; get; }
         [ForeignKey("AgeID")]
         public virtual Ages Ages { set; get; }
         [ForeignKey("CategoryID")]

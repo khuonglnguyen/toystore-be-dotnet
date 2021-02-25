@@ -33,16 +33,31 @@
                                 <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-responsive" alt="">
                             </div>
                         </li>
-                        <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)">
-                            <div class="thumb-image">
-                                <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-responsive" alt="">
-                            </div>
-                        </li>
-                        <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)">
-                            <div class="thumb-image">
-                                <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-responsive" alt="">
-                            </div>
-                        </li>
+                        @if (Model.Image2 != null)
+                        {
+                            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image2)">
+                                <div class="thumb-image">
+                                    <img src="@Url.Content("~/Content/images/" + Model.Image2)" data-imagezoom="true" class="img-responsive" alt="">
+                                </div>
+                            </li>
+                        }
+                        @if (Model.Image3 != null)
+                        {
+                            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image3)">
+                                <div class="thumb-image">
+                                    <img src="@Url.Content("~/Content/images/" + Model.Image3)" data-imagezoom="true" class="img-responsive" alt="">
+                                </div>
+                            </li>
+                        }
+                        @if (Model.Image4 != null)
+                        {
+
+                            <li data-thumb="@Url.Content("~/Content/images/"+Model.Image4)">
+                                <div class="thumb-image">
+                                    <img src="@Url.Content("~/Content/images/"+Model.Image4)" data-imagezoom="true" class="img-responsive" alt="">
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <div class="clearfix"></div>
                 </div>

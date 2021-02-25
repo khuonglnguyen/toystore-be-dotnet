@@ -18,6 +18,8 @@ namespace ToyStore.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Ages> Ages { get; set; }
+        public DbSet<ProductCategoryParent> ProductCategoryParents { get; set; }
+        public DbSet<Gender> Genders { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

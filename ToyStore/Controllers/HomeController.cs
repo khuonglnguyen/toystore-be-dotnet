@@ -18,13 +18,17 @@ namespace ToyStore.Controllers
         private IProductService _productService;
         private IProducerService _producerService;
         private IAgeService _ageService;
+        private IProductCategoryParentService _productCategoryParentService;
+        private IGenderService _genderService;
 
-        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService,IAgeService ageService)
+        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService,IAgeService ageService,IProductCategoryParentService productCategoryParentService, IGenderService genderService)
         {
             _productCategoryService = productCategoryService;
             _productService = productService;
             _producerService = producerService;
             _ageService = ageService;
+            _productCategoryParentService = productCategoryParentService;
+            _genderService = genderService;
         }
         #endregion
         public ActionResult Index()
@@ -59,7 +63,13 @@ namespace ToyStore.Controllers
             ViewBag.ListProductCategory = _productCategoryService.GetProductCategoryList();
             ViewBag.ListProducer = _producerService.GetProducerList();
             ViewBag.ListAge = _ageService.GetAgeList();
+            ViewBag.ListParent = _productCategoryParentService.GetProductCategoryParentList();
+            ViewBag.ListGender = _genderService.GetGenderList();
             return PartialView();
+        }
+        public ViewResult About()
+        {
+            return View();
         }
     }
 }
