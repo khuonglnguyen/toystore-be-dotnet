@@ -115,7 +115,8 @@
                                     @foreach (var item in producers)
                                     {
                                         <li>
-                                            <a onclick="location.href='@Url.Action("Producer","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name</a>
+                                            <a onclick="location.href='@Url.Action("Producer","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name <img src="@Url.Content("~/Content/image/"+item.Logo)" /></a>
+                                            
                                         </li>
                                     }
                                 </ul>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ToyStore.Models;
@@ -20,7 +21,7 @@ namespace ToyStore.Controllers
         private IProductCategoryParentService _productCategoryParentService;
         private IGenderService _genderService;
 
-        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService,IGenderService genderService)
+        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService)
         {
             this._productService = productService;
             this._producerService = producerService;
@@ -31,6 +32,32 @@ namespace ToyStore.Controllers
             this._genderService = genderService;
         }
         #endregion
+        public ActionResult Search(string keyword, int page = 1)
+        {
+            var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
+            ViewBag.ListProduct = listProduct;
+            if (keyword == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            ViewBag.Keyword = keyword;
+            //Get proudct category list with keyword
+            var products = _productService.GetProductList(keyword);
+            PagedList<Product> listProductSearch = new PagedList<Product>(products, page, 12);
+            //Check null
+            if (listProduct != null)
+            {
+                ViewBag.message = "Hiển thị kết quả tìm kiếm với '" + keyword + "";
+                //Return view
+                return View(listProductSearch);
+            }
+            else
+            {
+                //return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
         // GET: Product
         public ActionResult Details(int ID)
         {
@@ -43,7 +70,8 @@ namespace ToyStore.Controllers
             ViewBag.ListProduct = listProduct;
             return View(product);
         }
-        public ActionResult Ages(int ID, int page = 1)
+        [HttpGet]
+        public ActionResult Ages(int ID, string keyword="", int page = 1)
         {
             var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
             ViewBag.ListProduct = listProduct;
@@ -53,8 +81,16 @@ namespace ToyStore.Controllers
             ViewBag.Name = "Độ tuổi " + ages.Name;
 
             PagedList<Product> listProductPaging;
-            IEnumerable<Product> products = _productService.GetProductListByAge(ID);
-            listProductPaging = new PagedList<Product>(products, page, 12);
+            if (keyword!="")
+            {
+                IEnumerable<Product> products = _productService.GetProductListByAge(ID).Where(x => x.Name.Contains(keyword));
+                listProductPaging = new PagedList<Product>(products, page, 12);
+            }
+            else
+            {
+                IEnumerable<Product> products = _productService.GetProductListByAge(ID);
+                listProductPaging = new PagedList<Product>(products, page, 12);
+            }
             return View(listProductPaging);
         }
         public ActionResult Producer(int ID, int page = 1)
@@ -110,7 +146,7 @@ namespace ToyStore.Controllers
 
             PagedList<Product> listProductPaging;
             IEnumerable<Product> products;
-            if (ID!=3)
+            if (ID != 3)
             {
                 products = _productService.GetProductListByGender(ID);
             }
@@ -130,6 +166,26 @@ namespace ToyStore.Controllers
             IEnumerable<Product> products = _productService.GetProductListIsNew();
             listProductPaging = new PagedList<Product>(products, page, 12);
             return View(listProductPaging);
+        }
+        public ActionResult ProductPartial(Product product)
+        {
+            return PartialView(product);
+        }
+        public PartialViewResult CustomList(string k)
+        {
+            //Get proudct category list with keyword
+            var products = _productService.GetProductList().Where(x=>x.Price<200000);
+            //Check null
+            if (products != null)
+            {
+                //Return view
+                return PartialView("ProductContainerPartial", products);
+            }
+            else
+            {
+                //return 404
+                return null;
+            }
         }
     }
 }

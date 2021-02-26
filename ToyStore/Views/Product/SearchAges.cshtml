@@ -1,0 +1,14 @@
+﻿@model PagedList.IPagedList<ToyStore.Models.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+@Html.Action("ProductLeftSidePartial", "Product", new { type = "Ages" })
+@Html.Action("ProductContainerPartial", "Product", new { products = Model, Name = ViewBag.Name })
+<div class="clearfix"></div>
+<br />
+<div id='Paging' style="text-align: right">
+    @Html.PagedListPager(Model, page => Url.Action("Ages", new { ID = ViewBag.ageID, page }))
+</div>
+</div>

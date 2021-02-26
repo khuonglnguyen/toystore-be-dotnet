@@ -1,12 +1,9 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.Product>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Độ tuổi";
+    ViewBag.Title = "Tìm kiếm";
     Layout = "~/Views/Layout/ProductLayout.cshtml";
 }
-<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
-
 <div class="side-bar col-md-3">
     <div class="search-hotel">
         <div class="left-side">
@@ -176,6 +173,6 @@
     <div class="clearfix"></div>
     <br />
     <div id='Paging' style="text-align: right">
-        @Html.PagedListPager(Model, page => Url.Action("Ages", new { ID = ViewBag.ageID, page }))
+        @Html.PagedListPager(Model, page => Url.Action("Search", new { ID = ViewBag.Keyword, page }))
     </div>
 </div>
