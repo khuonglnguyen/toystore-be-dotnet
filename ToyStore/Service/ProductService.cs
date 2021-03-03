@@ -12,6 +12,7 @@ namespace ToyStore.Service
     {
         Product AddProduct(Product product);
         IEnumerable<Product> GetProductList();
+        IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max);
         IEnumerable<Product> GetProductListByCategory(int ProductCategoryID);
         IEnumerable<Product> GetProductListByCategoryParent(int ProductCategoryParentID);
         IEnumerable<Product> GetProductListByGender(int GenderID);
@@ -155,6 +156,20 @@ namespace ToyStore.Service
         public IEnumerable<Product> GetProductListIsNew()
         {
             IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.IsNew == true && x.IsActive == true);
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max)
+        {
+            IEnumerable<Product> listProduct;
+            if (max != 0)
+            {
+                listProduct = this.context.ProductRepository.GetAllData(x => x.AgeID == ageID && x.PromotionPrice >= min && x.PromotionPrice <= max && x.IsActive == true);
+            }
+            else
+            {
+                listProduct = this.context.ProductRepository.GetAllData(x => x.AgeID == ageID && x.PromotionPrice >= max && x.IsActive == true);
+            }
             return listProduct;
         }
     }

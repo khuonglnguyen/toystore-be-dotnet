@@ -71,7 +71,7 @@ namespace ToyStore.Controllers
             return View(product);
         }
         [HttpGet]
-        public ActionResult Ages(int ID, string keyword="", int page = 1)
+        public ActionResult Ages(int ID, string keyword = "", int page = 1)
         {
             var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
             ViewBag.ListProduct = listProduct;
@@ -81,7 +81,7 @@ namespace ToyStore.Controllers
             ViewBag.Name = "Độ tuổi " + ages.Name;
 
             PagedList<Product> listProductPaging;
-            if (keyword!="")
+            if (keyword != "")
             {
                 IEnumerable<Product> products = _productService.GetProductListByAge(ID).Where(x => x.Name.Contains(keyword));
                 listProductPaging = new PagedList<Product>(products, page, 12);
@@ -171,15 +171,25 @@ namespace ToyStore.Controllers
         {
             return PartialView(product);
         }
-        public PartialViewResult CustomList(string k)
+        public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int page = 1)
         {
-            //Get proudct category list with keyword
-            var products = _productService.GetProductList().Where(x=>x.Price<200000);
+            PagedList<Product> listProductPaging = null;
+            if (type == "Ages")
+            {
+                ViewBag.Name = "Độ tuổi " + _ageService.GetAgeByID(ID).Name;
+                IEnumerable<Product> products = _productService.GetProductFilterByAges(ID, min, max);
+                listProductPaging = new PagedList<Product>(products, page, 2);
+            }
+
+            ViewBag.Min = min;
+            ViewBag.Max = max;
+            ViewBag.Type = type;
+            ViewBag.ID = ID;
             //Check null
-            if (products != null)
+            if (listProductPaging != null)
             {
                 //Return view
-                return PartialView("ProductContainerPartial", products);
+                return PartialView("ProductContainerPartial", listProductPaging);
             }
             else
             {

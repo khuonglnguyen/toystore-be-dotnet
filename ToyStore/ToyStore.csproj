@@ -480,6 +480,7 @@
     <Content Include="Views\Product\ProductPartial.cshtml" />
     <Content Include="Views\Product\SearchAges.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
+    <Content Include="Views\Product\ProductContainerPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
