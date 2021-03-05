@@ -19,18 +19,21 @@ namespace ToyStore.Controllers
         private ISupplierService _supplierService;
         private IProducerService _producerService;
         private IAgeService _ageService;
+        private IGenderService _genderService;
 
         public ProductManageController(IProductService productService, 
             IProductCategoryService productCategoryService, 
             SupplierService supplierService, 
             ProducerService producerService,
-            AgeService ageService)
+            AgeService ageService,
+            GenderService genderService)
         {
             this._productService = productService;
             this._productCategoryService = productCategoryService;
             this._supplierService = supplierService;
             this._producerService = producerService;
             this._ageService = ageService;
+            this._genderService = genderService;
         }
         #endregion
         // GET: Product
@@ -92,6 +95,7 @@ namespace ToyStore.Controllers
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name");
             ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name");
             ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name");
+            ViewBag.GenderID = new SelectList(_genderService.GetGenderList(), "ID", "Name");
             //Return view
             return View();
         }
@@ -161,6 +165,7 @@ namespace ToyStore.Controllers
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
             ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
             ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
+            ViewBag.GenderID = new SelectList(_genderService.GetGenderList(), "ID", "Name");
 
             //Check null
             if (product != null)

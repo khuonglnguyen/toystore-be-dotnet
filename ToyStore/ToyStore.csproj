@@ -203,9 +203,19 @@
     <Compile Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.Designer.cs">
       <DependentUpon>202102250024596_AddForiegnKeyFieldGenderTableProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103031230071_AddColDiscountTableProduct.cs" />
+    <Compile Include="Migrations\202103031230071_AddColDiscountTableProduct.Designer.cs">
+      <DependentUpon>202103031230071_AddColDiscountTableProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.cs" />
+    <Compile Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.Designer.cs">
+      <DependentUpon>202103051016311_AddTableMemberCategoryAndMember.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Ages.cs" />
     <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\MemberCategory.cs" />
     <Compile Include="Models\Producer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
@@ -215,6 +225,8 @@
     <Compile Include="Data\Repository\IGenericRepository.cs" />
     <Compile Include="Service\AgeService.cs" />
     <Compile Include="Service\GenderService.cs" />
+    <Compile Include="Service\MemberCategoryService.cs" />
+    <Compile Include="Service\MemberService.cs" />
     <Compile Include="Service\ProducerService.cs" />
     <Compile Include="Service\ProductCategoryParentService.cs" />
     <Compile Include="Service\ProductCategoryService.cs" />
@@ -481,6 +493,7 @@
     <Content Include="Views\Product\SearchAges.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\Product\ProductContainerPartial.cshtml" />
+    <Content Include="Views\Home\LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -534,6 +547,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.resx">
       <DependentUpon>202102250024596_AddForiegnKeyFieldGenderTableProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103031230071_AddColDiscountTableProduct.resx">
+      <DependentUpon>202103031230071_AddColDiscountTableProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.resx">
+      <DependentUpon>202103051016311_AddTableMemberCategoryAndMember.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

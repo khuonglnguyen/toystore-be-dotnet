@@ -20,8 +20,9 @@ namespace ToyStore.Controllers
         private IAgeService _ageService;
         private IProductCategoryParentService _productCategoryParentService;
         private IGenderService _genderService;
+        private IMemberService _memberService;
 
-        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService,IAgeService ageService,IProductCategoryParentService productCategoryParentService, IGenderService genderService)
+        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService,IAgeService ageService,IProductCategoryParentService productCategoryParentService, GenderService genderService, MemberService memberService)
         {
             _productCategoryService = productCategoryService;
             _productService = productService;
@@ -29,6 +30,7 @@ namespace ToyStore.Controllers
             _ageService = ageService;
             _productCategoryParentService = productCategoryParentService;
             _genderService = genderService;
+            _memberService = memberService;
         }
         #endregion
         public ActionResult Index()
@@ -70,6 +72,20 @@ namespace ToyStore.Controllers
         public ViewResult About()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult SignUp(Member member)
+        {
+            if (member == null)
+            {
+                return null;
+            }
+            else
+            {
+                _memberService.AddMember(member);
+                ViewBag.Email = member.Email;
+            }
+            return RedirectToAction("Index");
         }
     }
 }

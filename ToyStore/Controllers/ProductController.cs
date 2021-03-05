@@ -171,13 +171,13 @@ namespace ToyStore.Controllers
         {
             return PartialView(product);
         }
-        public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int page = 1)
+        public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int discount=0, int page = 1)
         {
             PagedList<Product> listProductPaging = null;
             if (type == "Ages")
             {
                 ViewBag.Name = "Độ tuổi " + _ageService.GetAgeByID(ID).Name;
-                IEnumerable<Product> products = _productService.GetProductFilterByAges(ID, min, max);
+                IEnumerable<Product> products = _productService.GetProductFilterByAges(ID, min, max,discount);
                 listProductPaging = new PagedList<Product>(products, page, 2);
             }
 

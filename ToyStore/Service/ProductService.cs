@@ -12,7 +12,7 @@ namespace ToyStore.Service
     {
         Product AddProduct(Product product);
         IEnumerable<Product> GetProductList();
-        IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max);
+        IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max, int discount);
         IEnumerable<Product> GetProductListByCategory(int ProductCategoryID);
         IEnumerable<Product> GetProductListByCategoryParent(int ProductCategoryParentID);
         IEnumerable<Product> GetProductListByGender(int GenderID);
@@ -40,6 +40,7 @@ namespace ToyStore.Service
         public Product AddProduct(Product product)
         {
             product.LastUpdatedDate = DateTime.Now;
+            product.Discount = (int)(product.Price-(((product.Price/product.Price)*product.PromotionPrice)));
             this.context.ProductRepository.Insert(product);
             return product;
         }
@@ -74,6 +75,8 @@ namespace ToyStore.Service
         public void UpdateProduct(Product product)
         {
             product.LastUpdatedDate = DateTime.Now;
+            decimal tmp = Convert.ToDecimal(product.Discount) / 100;
+            product.PromotionPrice = product.Price - (product.Price * tmp);
             this.context.ProductRepository.Update(product);
         }
 
@@ -159,7 +162,7 @@ namespace ToyStore.Service
             return listProduct;
         }
 
-        public IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max)
+        public IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max, int discount)
         {
             IEnumerable<Product> listProduct;
             if (max != 0)

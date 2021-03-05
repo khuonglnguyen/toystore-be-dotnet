@@ -9,9 +9,9 @@
                     <a href="@Url.Action("Details","Product",new { id=Model.ID})" class="link-product-add-cart">Xem chi tiết</a>
                 </div>
             </div>
-            @if (Model.IsNew)
+            @if (Model.Discount>0)
             {
-                <span class="product-new-top">Mới</span>
+                <span class="product-new-top">-@Model.Discount%</span>
             }
         </div>
         <div class="item-info-product ">

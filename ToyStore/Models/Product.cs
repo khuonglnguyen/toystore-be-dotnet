@@ -47,6 +47,7 @@ namespace ToyStore.Models
         [Required(ErrorMessage = "Vui lòng nhập vào giá khuyến mãi.")]
         [Display(Name = "Giá khuyến mãi")]
         public decimal? PromotionPrice { set; get; }
+        public int Discount { set; get; }
 
         [Required(ErrorMessage = "Vui lòng nhập vào số lượng.")]
         [Display(Name = "Số lượng")]

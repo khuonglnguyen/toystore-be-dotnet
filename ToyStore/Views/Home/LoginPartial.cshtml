@@ -1,0 +1,14 @@
+﻿<li>
+    @if (ViewBag.Email == null)
+    {
+        <a href="#" data-toggle="modal" data-target="#myModal1">
+            <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng nhập
+        </a>
+    }
+    else
+    {
+        <a href="#" data-toggle="modal" data-target="#myModal1">
+            <span class="fa fa-unlock-alt" aria-hidden="true"></span> @ViewBag.Email
+        </a>
+    }
+</li>

@@ -1,5 +1,4 @@
-﻿
-<!-- top-header -->
+﻿<!-- top-header -->
 <div class="header-most-top">
     <p>Ưu đãi hàng đầu</p>
 </div>
@@ -34,11 +33,12 @@
                 <li>
                     <span class="fa fa-phone" aria-hidden="true"></span> 0907892198
                 </li>
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#myModal1">
-                        <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng nhập
-                    </a>
-                </li>
+                @Html.Partial("~/Views/Home/LoginPartial.cshtml")
+                @*<li>
+                        <a href="#" data-toggle="modal" data-target="#myModal1">
+                            <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng nhập
+                        </a>
+                    </li>*@
                 <li>
                     <a href="#" data-toggle="modal" data-target="#myModal2">
                         <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Đăng ký
@@ -48,7 +48,7 @@
             <!-- //header lists -->
             <!-- search -->
             <div class="agileits_search">
-                @using (Html.BeginForm("Search","Product",FormMethod.Get))
+                @using (Html.BeginForm("Search", "Product", FormMethod.Get))
                 {
                     <input name="keyword" type="search" placeholder="Ba mẹ tìm gì cho bé hôm nay?" required="">
                     <button type="submit" class="btn btn-default" aria-label="Left Align">
@@ -474,15 +474,17 @@
                             Đăng ký ngay
                         </a>
                     </p>
-                    <form action="#" method="post">
-                        <div class="styled-input agile-styled-input-top">
-                            <input type="text" placeholder="Tên đăng nhập" name="Name" required="">
+                    @using (Html.BeginForm("Create", "ProductManage"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="styled-input agile-styled-input-top">
+                                <input type="text" placeholder="Tên đăng nhập" name="Username" required="">
+                            </div>
                         </div>
-                        <div class="styled-input">
-                            <input type="password" placeholder="Mật khẩu" name="password" required="">
-                        </div>
-                        <input type="submit" value="Đăng nhập">
-                    </form>
+                    }
                     <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
@@ -507,25 +509,26 @@
                     <span class="fa fa-envelope-o" aria-hidden="true"></span>
                 </div>
                 <div class="modal_body_left modal_body_left1">
-                    <h3 class="agileinfo_sign">Sign Up</h3>
+                    <h3 class="agileinfo_sign">Đăng ký tài khoản</h3>
                     <p>
                         Đến Khuongpro ToyStore! Bắt đầu đăng ký tài khoản!
                     </p>
-                    <form action="#" method="post">
+                    @using (Html.BeginForm("SignUp", "Home"))
+                    {
                         <div class="styled-input agile-styled-input-top">
-                            <input type="text" placeholder="Họ tên" name="Name" required="">
+                            <input type="text" placeholder="Tên đăng nhập" name="Username" required="">
                         </div>
                         <div class="styled-input">
                             <input type="email" placeholder="E-mail" name="Email" required="">
                         </div>
                         <div class="styled-input">
-                            <input type="password" placeholder="Mật khẩu" name="password" id="password1" required="">
+                            <input type="password" placeholder="Mật khẩu" name="Password" id="password1" required="">
                         </div>
                         <div class="styled-input">
                             <input type="password" placeholder="Nhập lại mật khẩu" name="Confirm Password" id="password2" required="">
                         </div>
                         <input type="submit" value="Đăng ký">
-                    </form>
+                    }
                     <p>
                         <a href="#">Đăng ký, Tôi đồng ý với các điều kiện</a>
                     </p>
