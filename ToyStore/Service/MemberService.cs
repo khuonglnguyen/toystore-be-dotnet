@@ -11,6 +11,7 @@ namespace ToyStore.Service
     {
         Member AddMember(Member member);
         IEnumerable<Member> GetMemberList();
+        Member CheckLogin(string username, string password);
         Member GetByID(int ID);
         void UpdateMember(Member member);
         void DeleteMember(Member member);
@@ -27,6 +28,16 @@ namespace ToyStore.Service
         {
             member.MemberCategoryID = 1;
             this.context.MemberRepository.Insert(member);
+            return member;
+        }
+
+        public Member CheckLogin(string username, string password)
+        {
+            Member member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Username == username && x.Password == password);
+            if (member == null)
+            {
+                member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Email == username && x.Password == password);
+            }
             return member;
         }
 

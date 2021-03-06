@@ -1,4 +1,5 @@
-﻿<!-- top-header -->
+﻿@using ToyStore.Models
+<!-- top-header -->
 <div class="header-most-top">
     <p>Ưu đãi hàng đầu</p>
 </div>
@@ -30,20 +31,49 @@
                         <span class="fa fa-truck" aria-hidden="true"></span>Vận chuyển
                     </a>
                 </li>
-                <li>
-                    <span class="fa fa-phone" aria-hidden="true"></span> 0907892198
-                </li>
-                @Html.Partial("~/Views/Home/LoginPartial.cshtml")
-                @*<li>
+                @if (Session["Member"] != null && Session["Member"] != "")
+                {
+                    <li>
+                        @{
+                            Member member = (Member)Session["Member"];
+                            <a href="#" data-toggle="modal" data-target="#myModal1">
+                                <span class="fa fa-user-circle" aria-hidden="true"></span>@member.FullName
+                            </a>
+                        }
+                    </li>
+                }
+                @if (Session["Member"] != null && Session["Member"] != "")
+                {
+                    <li>
+                        @{
+                            Member member = (Member)Session["Member"];
+                            @*<a href="#" data-toggle="modal" data-target="#myModal1">
+                                    <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng xuất
+                                </a>*@
+                            <a href="#" data-toggle="modal" data-target="#myModal1">
+                                <span class="fa fa-user-circle" aria-hidden="true">
+                                    @Html.ActionLink("Đăng xuất", "SignOut", "Home")
+                                </span>
+                            </a>
+                        }
+                    </li>
+                }
+                else
+                {
+                    <li>
                         <a href="#" data-toggle="modal" data-target="#myModal1">
                             <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng nhập
                         </a>
-                    </li>*@
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#myModal2">
-                        <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Đăng ký
-                    </a>
-                </li>
+                    </li>
+                }
+                @if (Session["Member"] == null)
+                {
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#myModal2">
+                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Đăng ký
+                        </a>
+                    </li>
+                }
             </ul>
             <!-- //header lists -->
             <!-- search -->
@@ -467,23 +497,22 @@
                     <span class="fa fa-envelope-o" aria-hidden="true"></span>
                 </div>
                 <div class="modal_body_left modal_body_left1">
-                    <h3 class="agileinfo_sign">Sign In </h3>
+                    <h3 class="agileinfo_sign">Đăng nhập </h3>
                     <p>
                         Đăng ký ngay, Bắt đầu mua sắm. Bạn chưa có tài khoản?
                         <a href="#" data-toggle="modal" data-target="#myModal2">
                             Đăng ký ngay
                         </a>
                     </p>
-                    @using (Html.BeginForm("Create", "ProductManage"))
+                    @using (Html.BeginForm("SignIn", "Home"))
                     {
-                        @Html.AntiForgeryToken()
-                        <div class="form-horizontal">
-                            <hr />
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="styled-input agile-styled-input-top">
-                                <input type="text" placeholder="Tên đăng nhập" name="Username" required="">
-                            </div>
+                        <div class="styled-input agile-styled-input-top">
+                            <input type="text" placeholder="Tên đăng nhập hoặc Email" name="Username" required="">
                         </div>
+                        <div class="styled-input">
+                            <input type="password" placeholder="Mật khẩu" name="Password" id="password1" required="">
+                        </div>
+                        <input type="submit" value="Sign In">
                     }
                     <div class="clearfix"></div>
                 </div>
