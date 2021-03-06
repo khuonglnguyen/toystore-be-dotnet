@@ -213,13 +213,23 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Ages.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Decentralization.cs" />
     <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\ImportCoupon.cs" />
+    <Compile Include="Models\ImportCouponDetail.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\MemberCategory.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Producer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\ProductCategoryParent.cs" />
+    <Compile Include="Models\QA.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
