@@ -26,5 +26,6 @@ namespace ToyStore.Models
         public bool IsActive { get; set; }
         public DateTime LastUpdatedDate { get; set; }
         public virtual IEnumerable<Product> Products { set; get; }
+        public virtual IEnumerable<ImportCoupon> ImportCoupons { set; get; }
     }
 }

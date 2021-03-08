@@ -8,6 +8,7 @@ using ToyStore.Service;
 using ToyStore.Data;
 using ToyStore.Data.Repository;
 using ToyStore.Models;
+using System.Net.Mail;
 
 namespace ToyStore.Controllers
 {
@@ -22,7 +23,7 @@ namespace ToyStore.Controllers
         private IGenderService _genderService;
         private IMemberService _memberService;
 
-        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, GenderService genderService, MemberService memberService)
+        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, IMemberService memberService)
         {
             _productCategoryService = productCategoryService;
             _productService = productService;
@@ -104,7 +105,11 @@ namespace ToyStore.Controllers
                 {
 
                 }
-            }
+                if (memberCheck.EmailConfirmed == false)
+                {
+                    return RedirectToAction("ConfirmEmail", "Member", new { ID = memberCheck.ID });
+                }
+            }  
             return RedirectToAction("Index");
         }
         public ActionResult SignOut()

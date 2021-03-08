@@ -11,6 +11,8 @@ namespace ToyStore.Service
     {
         Member AddMember(Member member);
         IEnumerable<Member> GetMemberList();
+        Member CheckCapcha(int ID, string capcha);
+        void UpdateCapcha(int ID, string capcha);
         Member CheckLogin(string username, string password);
         Member GetByID(int ID);
         void UpdateMember(Member member);
@@ -29,6 +31,18 @@ namespace ToyStore.Service
             member.MemberCategoryID = 1;
             this.context.MemberRepository.Insert(member);
             return member;
+        }
+
+        public Member CheckCapcha(int ID, string capcha)
+        {
+            Member member = GetByID(ID);
+            if(member.Capcha==capcha)
+            {
+                member.EmailConfirmed = true;
+                UpdateMember(member);
+                return member;
+            }    
+            return null;
         }
 
         public Member CheckLogin(string username, string password)
@@ -60,6 +74,13 @@ namespace ToyStore.Service
         public void Save()
         {
             throw new NotImplementedException();
+        }
+
+        public void UpdateCapcha(int ID, string capcha)
+        {
+            Member member = GetByID(ID);
+            member.Capcha = capcha;
+            UpdateMember(member);
         }
 
         public void UpdateMember(Member member)

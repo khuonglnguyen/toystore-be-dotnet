@@ -22,6 +22,16 @@ namespace ToyStore.Data
         public DbSet<Gender> Genders { get; set; }
         public DbSet<MemberCategory> MemberCategories { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<ImportCoupon> ImportCoupons { get; set; }
+        public DbSet<ImportCouponDetail> ImportCouponDetails { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<QA> QAs { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Decentralization> Decentralizations { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

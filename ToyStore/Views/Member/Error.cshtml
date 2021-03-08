@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+
+<h2>Không thể xác minh tài khoản của bạn</h2>
+@Html.ActionLink("Gửi lại mã xác minh", "ConfirmEmail",new { id = ViewBag.ID })

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ToyStore.Models
 {
-    [Table("Detail")]
+    [Table("OrderDetail")]
     public class OrderDetail
     {
         [Key]

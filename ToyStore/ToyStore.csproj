@@ -145,6 +145,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ProductCategoryManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -210,6 +211,22 @@
     <Compile Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.cs" />
     <Compile Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.Designer.cs">
       <DependentUpon>202103051016311_AddTableMemberCategoryAndMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103081151130_AddTable.cs" />
+    <Compile Include="Migrations\202103081151130_AddTable.Designer.cs">
+      <DependentUpon>202103081151130_AddTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103081152494_AddTableInportCoupon.cs" />
+    <Compile Include="Migrations\202103081152494_AddTableInportCoupon.Designer.cs">
+      <DependentUpon>202103081152494_AddTableInportCoupon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103081158549_AddTableImportCouponDetail.cs" />
+    <Compile Include="Migrations\202103081158549_AddTableImportCouponDetail.Designer.cs">
+      <DependentUpon>202103081158549_AddTableImportCouponDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103081242316_AddColCapchaTableMember.cs" />
+    <Compile Include="Migrations\202103081242316_AddColCapchaTableMember.Designer.cs">
+      <DependentUpon>202103081242316_AddColCapchaTableMember.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Ages.cs" />
@@ -504,6 +521,8 @@
     <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\Product\ProductContainerPartial.cshtml" />
     <Content Include="Views\Home\LoginPartial.cshtml" />
+    <Content Include="Views\Member\ConfirmEmail.cshtml" />
+    <Content Include="Views\Member\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -563,6 +582,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.resx">
       <DependentUpon>202103051016311_AddTableMemberCategoryAndMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103081151130_AddTable.resx">
+      <DependentUpon>202103081151130_AddTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103081152494_AddTableInportCoupon.resx">
+      <DependentUpon>202103081152494_AddTableInportCoupon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103081158549_AddTableImportCouponDetail.resx">
+      <DependentUpon>202103081158549_AddTableImportCouponDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103081242316_AddColCapchaTableMember.resx">
+      <DependentUpon>202103081242316_AddColCapchaTableMember.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
