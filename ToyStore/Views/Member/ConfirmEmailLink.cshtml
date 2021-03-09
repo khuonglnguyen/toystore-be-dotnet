@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "ConfirmEmail";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+<div class="page-head_agile_info_w3l">
+
+</div>
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="index.html">Trang chủ</a>
+                    <i>|</i>
+                </li>
+                <li>Sản phẩm</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal-dialog">
+    <!-- Modal content-->
+    @if (ViewBag.Message != "EmailConfirmed")
+    {
+        <div class="modal-body modal-body-sub_agile">
+            <div class="main-mailposi">
+                <span class="fa fa-envelope-o" aria-hidden="true"></span>
+            </div>
+            <div class="modal_body_left modal_body_left1">
+                <h3 class="agileinfo_sign">Xác minh tài khoản</h3>
+                <p>
+                    Hoàn tất quá trình đăng ký tài khoản bằng cách xác minh Email<br />
+                    @ViewBag.Email
+                    <b class="text-danger">@ViewBag.Message</b>
+                </p>
+                @using (Html.BeginForm("ConfirmEmail", "Member", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="styled-input agile-styled-input-top">
+                        <input type="text" placeholder="Nhập vào mã xác minh" name="Capcha" required="">
+                    </div>
+                    <input type="submit" value="Xác minh">
+                }
+                <p>
+                    @Html.ActionLink("Gửi lại mã xác minh", "ConfirmEmail", new { id = ViewBag.ID })
+                </p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="modal-body modal-body-sub_agile">
+            <div class="main-mailposi">
+                <span class="fa fa-envelope-o" aria-hidden="true"></span>
+            </div>
+            <div class="modal_body_left modal_body_left1">
+                <h3 class="agileinfo_sign">Xác minh tài khoản</h3>
+                <p>
+                    Tài khoản của bạn đã được xác minh
+                </p>
+            </div>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "ConfirmEmail";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+<div class="page-head_agile_info_w3l">
+
+</div>
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="index.html">Trang chủ</a>
+                    <i>|</i>
+                </li>
+                <li>Sản phẩm</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-body modal-body-sub_agile">
+        <div class="main-mailposi">
+            <span class="fa fa-envelope-o" aria-hidden="true"></span>
+        </div>
+        <div class="modal_body_left modal_body_left1">
+            <h3 class="agileinfo_sign">Đăng Nhập</h3>
+            @using (Html.BeginForm("SignIn", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="styled-input agile-styled-input-top">
+                    <input type="text" placeholder="Tên đăng nhập hoặc Email" name="Username" required="">
+                </div>
+                <div class="styled-input">
+                    <input type="password" placeholder="Mật khẩu" name="Password" required="">
+                </div>
+                <p>
+                    <b class="text-danger">@ViewBag.Message</b>
+                </p>
+                <p>
+                    @Html.ActionLink("Quên mật khẩu", "ConfirmEmail", new { id = ViewBag.ID })
+                </p>
+                <input type="submit" value="Đăng nhập">
+            }
+        </div>
+    </div>
+</div>

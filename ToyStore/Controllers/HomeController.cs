@@ -74,6 +74,11 @@ namespace ToyStore.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult SignUp()
+        {
+            return View();
+        }
         [HttpPost]
         public ActionResult SignUp(Member member)
         {
@@ -83,9 +88,14 @@ namespace ToyStore.Controllers
             }
             else
             {
-                _memberService.AddMember(member);
+                Member member1 = _memberService.AddMember(member);
+                return RedirectToAction("ConfirmEmail", "Member", new { ID = member1.ID });
             }
-            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult SignIn()
+        {
+            return View();
         }
         [HttpPost]
         public ActionResult SignIn(Member member)
@@ -100,16 +110,17 @@ namespace ToyStore.Controllers
                 if (memberCheck != null)
                 {
                     Session["Member"] = memberCheck;
+                    if (memberCheck.EmailConfirmed == false)
+                    {
+                        return RedirectToAction("ConfirmEmail", "Member", new { ID = memberCheck.ID });
+                    }
                 }
                 else
                 {
-
+                    ViewBag.Message = "Tên đăng nhập/Email hoặc mật khẩu không đúng.";
+                    return View();
                 }
-                if (memberCheck.EmailConfirmed == false)
-                {
-                    return RedirectToAction("ConfirmEmail", "Member", new { ID = memberCheck.ID });
-                }
-            }  
+            }
             return RedirectToAction("Index");
         }
         public ActionResult SignOut()

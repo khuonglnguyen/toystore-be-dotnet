@@ -61,17 +61,15 @@
                 else
                 {
                     <li>
-                        <a href="#" data-toggle="modal" data-target="#myModal1">
-                            <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng nhập
-                        </a>
+                        <span class="fa fa-unlock-alt" aria-hidden="true"></span>
+                        @Html.ActionLink("Đăng nhập", "SignIn", "Home")
                     </li>
                 }
                 @if (Session["Member"] == null)
                 {
                     <li>
-                        <a href="#" data-toggle="modal" data-target="#myModal2">
-                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Đăng ký
-                        </a>
+                        <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                        @Html.ActionLink("Đăng ký", "SignUp", "Home")
                     </li>
                 }
             </ul>

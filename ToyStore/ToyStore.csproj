@@ -522,7 +522,9 @@
     <Content Include="Views\Product\ProductContainerPartial.cshtml" />
     <Content Include="Views\Home\LoginPartial.cshtml" />
     <Content Include="Views\Member\ConfirmEmail.cshtml" />
-    <Content Include="Views\Member\Error.cshtml" />
+    <Content Include="Views\Home\SignUp.cshtml" />
+    <Content Include="Views\Home\SignIn.cshtml" />
+    <Content Include="Views\Member\ConfirmEmailLink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

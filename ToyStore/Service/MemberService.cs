@@ -47,10 +47,10 @@ namespace ToyStore.Service
 
         public Member CheckLogin(string username, string password)
         {
-            Member member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Username == username && x.Password == password);
+            Member member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Username == username && x.Password == password && x.EmailConfirmed==true);
             if (member == null)
             {
-                member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Email == username && x.Password == password);
+                member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Email == username && x.Password == password && x.EmailConfirmed == true);
             }
             return member;
         }

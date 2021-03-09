@@ -20,21 +20,42 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult ConfirmEmail(int ID)
         {
+            if (_memberService.GetByID(ID).EmailConfirmed)
+            {
+                ViewBag.Message = "EmailConfirmed";
+                return View();
+            }
             string strString = "abcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
             int randomCharIndex = 0;
             char randomChar;
             string captcha = "";
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 10; i++)
             {
                 randomCharIndex = random.Next(0, strString.Length);
                 randomChar = strString[randomCharIndex];
                 captcha += Convert.ToString(randomChar);
             }
+            string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
             ViewBag.ID = ID;
+            string email = _memberService.GetByID(ID).Email;
+            ViewBag.Email = "Mã xác minh đã được gửi đến: "+email;
             _memberService.UpdateCapcha(ID, captcha);
-            SentMail("Mã xác minh tài khoản ToyStore", "khuongip564gb@gmail.com", "lapankhuongnguyen@gmail.com", "Garena009", "Mã xác minh của bạn: " + captcha);
+            SentMail("Mã xác minh tài khoản ToyStore", email, "lapankhuongnguyen@gmail.com", "Garena009", "<p>Mã xác minh của bạn: " + captcha+"<br/>Hoặc xác minh nhanh bằng cách click vào link: "+urlBase+ "/Member/ConfirmEmailLink/"+ID+"?Capcha="+captcha+"</p>");
             return View();
+        }
+        [HttpGet]
+        public ActionResult ConfirmEmailLink(int ID, string capcha)
+        {
+            Member member = _memberService.CheckCapcha(ID, capcha);
+            if (member != null)
+            {
+                ViewBag.Message = "EmailConfirmed";
+                return View();
+            }
+            ViewBag.Message = "Mã xác minh tài khoản không đúng";
+            ViewBag.ID = ID;
+            return View(new { ID = ID });
         }
         [HttpPost]
         public ActionResult ConfirmEmail(int ID, string capcha)
@@ -42,9 +63,12 @@ namespace ToyStore.Controllers
             Member member = _memberService.CheckCapcha(ID, capcha);
             if (member != null)
             {
-                return RedirectToAction("Index","Home");
+                ViewBag.Message = "EmailConfirmed";
+                return View();
             }
-            return RedirectToAction("Error", new { CustomerID = ID});
+            ViewBag.Message = "Mã xác minh tài khoản không đúng";
+            ViewBag.ID = ID;
+            return View(new { ID = ID});
         }
         public void SentMail(string Title, string ToEmail, string FromEmail, string Password, string Content)
         {
