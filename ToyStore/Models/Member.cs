@@ -14,6 +14,7 @@ namespace ToyStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public int MemberCategoryID { get; set; }
+        [Required(ErrorMessage = "Tên đăng nhập không được để trống.")]
         public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }

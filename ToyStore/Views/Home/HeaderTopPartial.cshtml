@@ -23,12 +23,12 @@
             <ul>
                 <li>
                     <a class="play-icon popup-with-zoom-anim" href="#small-dialog1">
-                        <span class="fa fa-map-marker" aria-hidden="true"></span> Vị trí
+                        <span class="fa fa-map-marker" aria-hidden="true"></span> Vị Trí
                     </a>
                 </li>
                 <li>
                     <a href="#" data-toggle="modal" data-target="#myModal1">
-                        <span class="fa fa-truck" aria-hidden="true"></span>Vận chuyển
+                        <span class="fa fa-truck" aria-hidden="true"></span>Vận Chuyển
                     </a>
                 </li>
                 @if (Session["Member"] != null && Session["Member"] != "")
@@ -60,16 +60,26 @@
                 }
                 else
                 {
+                    @*<li>
+                            <span class="fa fa-unlock-alt" aria-hidden="true"></span>
+                            @Html.ActionLink("Đăng nhập", "SignIn", "Home")
+                        </li>*@
                     <li>
-                        <span class="fa fa-unlock-alt" aria-hidden="true"></span>
-                        @Html.ActionLink("Đăng nhập", "SignIn", "Home")
+                        <a href="#" data-toggle="modal" data-target="#myModal1">
+                            <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng Nhập
+                        </a>
                     </li>
                 }
                 @if (Session["Member"] == null)
                 {
+                    @*<li>
+                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                            @Html.ActionLink("Đăng ký", "SignUp", "Home")
+                        </li>*@
                     <li>
-                        <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
-                        @Html.ActionLink("Đăng ký", "SignUp", "Home")
+                        <a href="#" data-toggle="modal" data-target="#myModal2">
+                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Đăng Ký
+                        </a>
                     </li>
                 }
             </ul>
@@ -502,15 +512,22 @@
                             Đăng ký ngay
                         </a>
                     </p>
-                    @using (Html.BeginForm("SignIn", "Home"))
+                    @using (Html.BeginForm("SignIn", "Home", FormMethod.Post))
                     {
+                        @Html.AntiForgeryToken()
                         <div class="styled-input agile-styled-input-top">
-                            <input type="text" placeholder="Tên đăng nhập hoặc Email" name="Username" required="">
+                            <input type="text" placeholder="Tên đăng nhập hoặc Email" name="Username" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào tên đăng nhập hoặc Email')">
                         </div>
                         <div class="styled-input">
-                            <input type="password" placeholder="Mật khẩu" name="Password" id="password1" required="">
+                            <input type="password" placeholder="Mật khẩu" name="Password" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào mật khẩu')">
                         </div>
-                        <input type="submit" value="Sign In">
+                        <p>
+                            <b class="text-danger">@ViewBag.Message</b>
+                        </p>
+                        <p>
+                            @Html.ActionLink("Quên mật khẩu", "ConfirmEmail", new { id = ViewBag.ID })
+                        </p>
+                        <input type="submit" value="Đăng nhập">
                     }
                     <div class="clearfix"></div>
                 </div>
@@ -540,19 +557,30 @@
                     <p>
                         Đến Khuongpro ToyStore! Bắt đầu đăng ký tài khoản!
                     </p>
-                    @using (Html.BeginForm("SignUp", "Home"))
+                    @using (Html.BeginForm("SignUp", "Home", FormMethod.Post))
                     {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="styled-input agile-styled-input-top">
-                            <input type="text" placeholder="Tên đăng nhập" name="Username" required="">
+                            <input type="text" placeholder="Họ tên" name="FullName" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào họ tên')">
+                        </div>
+                        <div class="styled-input agile-styled-input-top">
+                            <input type="text" placeholder="Địa chỉ" name="Address" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào địa chỉ')">
+                        </div>
+                        <div class="styled-input agile-styled-input-top">
+                            <input type="text" placeholder="Số điện thoại" name="PhoneNumber" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào số điện thoại')">
+                        </div>
+                        <div class="styled-input agile-styled-input-top">
+                            <input type="text" placeholder="Tên đăng nhập" name="Username" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào tên đăng nhập')">
                         </div>
                         <div class="styled-input">
-                            <input type="email" placeholder="E-mail" name="Email" required="">
+                            <input type="email" placeholder="E-mail" name="Email" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào Email')">
                         </div>
                         <div class="styled-input">
                             <input type="password" placeholder="Mật khẩu" name="Password" id="password1" required="">
                         </div>
                         <div class="styled-input">
-                            <input type="password" placeholder="Nhập lại mật khẩu" name="Confirm Password" id="password2" required="">
+                            <input type="password" placeholder="Nhập lại mật khẩu" name="Confirm Password" id="password2" required="" oninvalid="this.setCustomValidity('Nhập lại mật khẩu không đúng!')">
                         </div>
                         <input type="submit" value="Đăng ký">
                     }

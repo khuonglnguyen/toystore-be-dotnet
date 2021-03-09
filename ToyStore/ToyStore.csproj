@@ -228,6 +228,10 @@
     <Compile Include="Migrations\202103081242316_AddColCapchaTableMember.Designer.cs">
       <DependentUpon>202103081242316_AddColCapchaTableMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103090947114_á.cs" />
+    <Compile Include="Migrations\202103090947114_á.Designer.cs">
+      <DependentUpon>202103090947114_á.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Ages.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -596,6 +600,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103081242316_AddColCapchaTableMember.resx">
       <DependentUpon>202103081242316_AddColCapchaTableMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103090947114_á.resx">
+      <DependentUpon>202103090947114_á.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

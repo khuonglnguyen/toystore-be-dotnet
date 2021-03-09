@@ -2,6 +2,7 @@
     ViewBag.Title = "ConfirmEmail";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
+
 <div class="page-head_agile_info_w3l">
 
 </div>
@@ -30,10 +31,10 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="styled-input agile-styled-input-top">
-                    <input type="text" placeholder="Tên đăng nhập hoặc Email" name="Username" required="">
+                    <input type="text" placeholder="Tên đăng nhập hoặc Email" name="Username" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào tên đăng nhập hoặc Email')">
                 </div>
                 <div class="styled-input">
-                    <input type="password" placeholder="Mật khẩu" name="Password" required="">
+                    <input type="password" placeholder="Mật khẩu" name="Password" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào mật khẩu')">
                 </div>
                 <p>
                     <b class="text-danger">@ViewBag.Message</b>

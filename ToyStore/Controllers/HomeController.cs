@@ -82,15 +82,19 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult SignUp(Member member)
         {
-            if (member == null)
+            if (ModelState.IsValid)
             {
-                return null;
+                if (member == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    Member member1 = _memberService.AddMember(member);
+                    return RedirectToAction("ConfirmEmail", "Member", new { ID = member1.ID });
+                }
             }
-            else
-            {
-                Member member1 = _memberService.AddMember(member);
-                return RedirectToAction("ConfirmEmail", "Member", new { ID = member1.ID });
-            }
+            return null;
         }
         [HttpGet]
         public ActionResult SignIn()
