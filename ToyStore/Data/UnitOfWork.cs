@@ -19,6 +19,11 @@ namespace ToyStore.Data
         private GenericRepository<Gender> genderParentRepository;
         private GenericRepository<MemberCategory> memberCategoryRepository;
         private GenericRepository<Member> memberRepository;
+        private GenericRepository<Customer> customerRepository;
+        private GenericRepository<Order> orderRepository;
+        private GenericRepository<OrderDetail> orderDetailRepository;
+        private GenericRepository<Comment> commentRepository;
+        private GenericRepository<QA> qARepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -116,6 +121,61 @@ namespace ToyStore.Data
                     this.memberRepository = new GenericRepository<Member>(DbContext);
                 }
                 return memberRepository;
+            }
+        }
+        public GenericRepository<Customer> CustomerRepository
+        {
+            get
+            {
+                if (this.customerRepository == null)
+                {
+                    this.customerRepository = new GenericRepository<Customer>(DbContext);
+                }
+                return customerRepository;
+            }
+        }
+        public GenericRepository<Order> OrderRepository
+        {
+            get
+            {
+                if (this.orderRepository == null)
+                {
+                    this.orderRepository = new GenericRepository<Order>(DbContext);
+                }
+                return orderRepository;
+            }
+        }
+        public GenericRepository<OrderDetail> OrderDetailRepository
+        {
+            get
+            {
+                if (this.orderDetailRepository == null)
+                {
+                    this.orderDetailRepository = new GenericRepository<OrderDetail>(DbContext);
+                }
+                return orderDetailRepository;
+            }
+        }
+        public GenericRepository<Comment> CommentRepository
+        {
+            get
+            {
+                if (this.commentRepository == null)
+                {
+                    this.commentRepository = new GenericRepository<Comment>(DbContext);
+                }
+                return commentRepository;
+            }
+        }
+        public GenericRepository<QA> QARepository
+        {
+            get
+            {
+                if (this.qARepository == null)
+                {
+                    this.qARepository = new GenericRepository<QA>(DbContext);
+                }
+                return qARepository;
             }
         }
         public void Save()

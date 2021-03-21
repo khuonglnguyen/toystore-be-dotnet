@@ -3,314 +3,421 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
-@{ 
-    IEnumerable<ToyStore.Models.Product> products1 = ViewBag.ListProduct1;
-    IEnumerable<ToyStore.Models.Product> products2 = ViewBag.ListProduct2;
-    IEnumerable<ToyStore.Models.Product> products3 = ViewBag.ListProduct3;
+@{
+    IEnumerable<ToyStore.Models.Product> productsNew = ViewBag.ListProductNew;
     IEnumerable<ToyStore.Models.Product> products4 = ViewBag.ListProduct4;
 }
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1" class=""></li>
-        <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-        <li data-target="#myCarousel" data-slide-to="3" class=""></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>
-                        Giảm giá
-                        <span>Cực khủng</span>
-                    </h3>
-                    <p>
-                        Lên đến
-                        <span>50%</span> hôm nay
-                    </p>
-                    <a class="button2" href="product.html">Mua ngay </a>
-                </div>
-            </div>
-        </div>
-        <div class="item item2">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>
-                        Tiết kiệm
-                        <span>Tối đa</span>
-                    </h3>
-                    <p>
-                        Get Upto
-                        <span>30%</span> Off
-                    </p>
-                    <a class="button2" href="product.html">Shop Now </a>
-                </div>
-            </div>
-        </div>
-        <div class="item item3">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>
-                        Big
-                        <span>Deal</span>
-                    </h3>
-                    <p>
-                        Get Best Offer Upto
-                        <span>20%</span>
-                    </p>
-                    <a class="button2" href="product.html">Shop Now </a>
-                </div>
-            </div>
-        </div>
-        <div class="item item4">
-            <div class="container">
-                <div class="carousel-caption">
-                    <h3>
-                        Today
-                        <span>Discount</span>
-                    </h3>
-                    <p>
-                        Get Now
-                        <span>40%</span> Discount
-                    </p>
-                    <a class="button2" href="product.html">Shop Now </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-
-<!-- //banner -->
-<!-- top Products -->
-<div class="ads-grid">
+<!--banner-->
+<div class="banner">
     <div class="container">
-        <h3 class="tittle-w3l">
-            Sản phẩm nổi bậc
-            <span class="heading-style">
-                <i></i>
-                <i></i>
-                <i></i>
-            </span>
-        </h3>
-        <div class="agileinfo-ads-display col-md-12">
-            <div class="wrapper">
-                <div class="product-sec1 product-sec2">
-                    <div class="col-xs-7 effect-bg">
-                        <h3 class="">Ưu đãi cực lớn</h3>
-                        <h6>Với nhiều phần quà cực hấp dẫn</h6>
-                    </div>
-                    <h3 class="w3l-nut-middle">ToyStore 2021</h3>
-                    <div class="col-xs-5 bg-right-nut">
-                        <img src="~/Content/home/images/ugsgnnamed.png" alt="" style="width:300px;height:200px">
-                    </div>
-                    <div class="clearfix"></div>
+        <div class="banner-text">
+            <div class="col-sm-5 banner-left wow fadeInLeft animated" data-wow-delay=".5s">
+                <h2>Chương Trình Ưu Đãi Đặc Biệt</h2>
+                <h3>Sắp diễn ra </h3>
+                <h4>Sẽ bắt đầu sau</h4>
+                <div class="count main-row">
+                    <ul id="example">
+                        <li><span class="hours">00</span><p class="hours_text">Hours</p></li>
+                        <li><span class="minutes">00</span><p class="minutes_text">Minutes</p></li>
+                        <li><span class="seconds">00</span><p class="seconds_text">Seconds</p></li>
+                    </ul>
+                    <div class="clearfix"> </div>
+                    <script type="text/javascript" src="~/Content/js/jquery.countdown.min.js"></script>
+                    <script type="text/javascript">
+                            $('#example').countdown({
+                                date: '12/24/2020 15:59:59',
+                                offset: -8,
+                                day: 'Day',
+                                days: 'Days'
+                            }, function () {
+                                //alert('Done!');
+                            });
+                    </script>
                 </div>
-                <div class="product-sec1">
-                    <h3 class="heading-tittle">Đồ chơi lắp ráp</h3>
-                    @foreach (var item in products1)
-                    {
-                        <div class="col-md-4 product-men">
-                            <div class="men-pro-item simpleCart_shelfItem">
-                                <div class="men-thumb-item">
-                                    <img src="@Url.Content("~/Content/images/"+item.Image1)" alt="" style="width:200px;height:200px">
-                                    <div class="men-cart-pro">
-                                        <div class="inner-men-cart-pro">
-                                            <a href="@Url.Action("Details","Product",new { id=item.ID})" class="link-product-add-cart">Xem chi tiết</a>
-                                        </div>
-                                    </div>
-                                    @if (item.IsNew)
-                                    {
-                                        <span class="product-new-top">Mới</span>
-                                    }
-                                </div>
-                                <div class="item-info-product ">
-                                    <h4>
-                                        <a href="single.html">@item.Name</a>
-                                    </h4>
-                                    <div class="info-product-price">
-                                        <span class="item_price">@item.PromotionPrice.ToString() ₫</span>
-                                        <del>@item.Price ₫</del>
-                                    </div>
-                                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <form action="#" method="post">
-                                            <fieldset>
-                                                <input type="hidden" name="cmd" value="_cart" />
-                                                <input type="hidden" name="add" value="1" />
-                                                <input type="hidden" name="business" value=" " />
-                                                <input type="hidden" name="item_name" value="Almonds, 100g" />
-                                                <input type="hidden" name="amount" value="149.00" />
-                                                <input type="hidden" name="discount_amount" value="1.00" />
-                                                <input type="hidden" name="currency_code" value="USD" />
-                                                <input type="hidden" name="return" value=" " />
-                                                <input type="hidden" name="cancel_return" value=" " />
-                                                <input type="submit" name="submit" value="Chọn mua" class="button" />
-                                            </fieldset>
-                                        </form>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <div class="clearfix"></div>
-                </div>
-                <div class="product-sec1">
-                    <h3 class="heading-tittle">Đồ chơi Robot</h3>
-                    @foreach (var item in products2)
-                    {
-                        <div class="col-md-4 product-men">
-                            <div class="men-pro-item simpleCart_shelfItem">
-                                <div class="men-thumb-item">
-                                    <img src="@Url.Content("~/Content/images/"+item.Image1)" alt="" style="width:200px;height:200px">
-                                    <div class="men-cart-pro">
-                                        <div class="inner-men-cart-pro">
-                                            <a href="@Url.Action("Details","Product",new { id=item.ID})" class="link-product-add-cart">Xem chi tiết</a>
-                                        </div>
-                                    </div>
-                                    @if (item.IsNew)
-                                    {
-                                        <span class="product-new-top">Mới</span>
-                                    }
-                                </div>
-                                <div class="item-info-product ">
-                                    <h4>
-                                        <a href="single.html">@item.Name</a>
-                                    </h4>
-                                    <div class="info-product-price">
-                                        <span class="item_price">@item.PromotionPrice.ToString() ₫</span>
-                                        <del>@item.Price ₫</del>
-                                    </div>
-                                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <form action="#" method="post">
-                                            <fieldset>
-                                                <input type="hidden" name="cmd" value="_cart" />
-                                                <input type="hidden" name="add" value="1" />
-                                                <input type="hidden" name="business" value=" " />
-                                                <input type="hidden" name="item_name" value="Almonds, 100g" />
-                                                <input type="hidden" name="amount" value="149.00" />
-                                                <input type="hidden" name="discount_amount" value="1.00" />
-                                                <input type="hidden" name="currency_code" value="USD" />
-                                                <input type="hidden" name="return" value=" " />
-                                                <input type="hidden" name="cancel_return" value=" " />
-                                                <input type="submit" name="submit" value="Chọn mua" class="button" />
-                                            </fieldset>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <div class="clearfix"></div>
-                </div>
-                <div class="product-sec1">
-                    <h3 class="heading-tittle">Đồ chơi trí tuệ</h3>
-                    @foreach (var item in products3)
-                    {
-                        <div class="col-md-4 product-men">
-                            <div class="men-pro-item simpleCart_shelfItem">
-                                <div class="men-thumb-item">
-                                    <img src="@Url.Content("~/Content/images/"+item.Image1)" alt="" style="width:200px;height:200px">
-                                    <div class="men-cart-pro">
-                                        <div class="inner-men-cart-pro">
-                                            <a href="@Url.Action("Details","Product",new { id=item.ID})" class="link-product-add-cart">Xem chi tiết</a>
-                                        </div>
-                                    </div>
-                                    @if (item.IsNew)
-                                    {
-                                        <span class="product-new-top">Mới</span>
-                                    }
-                                </div>
-                                <div class="item-info-product ">
-                                    <h4>
-                                        <a href="single.html">@item.Name</a>
-                                    </h4>
-                                    <div class="info-product-price">
-                                        <span class="item_price">@item.PromotionPrice.ToString() ₫</span>
-                                        <del>@item.Price ₫</del>
-                                    </div>
-                                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <form action="#" method="post">
-                                            <fieldset>
-                                                <input type="hidden" name="cmd" value="_cart" />
-                                                <input type="hidden" name="add" value="1" />
-                                                <input type="hidden" name="business" value=" " />
-                                                <input type="hidden" name="item_name" value="Almonds, 100g" />
-                                                <input type="hidden" name="amount" value="149.00" />
-                                                <input type="hidden" name="discount_amount" value="1.00" />
-                                                <input type="hidden" name="currency_code" value="USD" />
-                                                <input type="hidden" name="return" value=" " />
-                                                <input type="hidden" name="cancel_return" value=" " />
-                                                <input type="submit" name="submit" value="Chọn mua" class="button" />
-                                            </fieldset>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <div class="clearfix"></div>
-                </div>
             </div>
+            <div class="col-sm-7 banner-right wow fadeInRight animated" data-wow-delay=".5s">
+                <section class="slider grid">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <h4>-30%</h4>
+                                <img src="~/Content/images/b1.png" alt="">
+                            </li>
+                            <li>
+                                <h4>-25%</h4>
+                                <img src="~/Content/images/b2.png" alt="">
+                            </li>
+                            <li>
+                                <h4>-32%</h4>
+                                <img src="~/Content/images/b3.png" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!--FlexSlider-->
+                <script defer src="~/Content/js/jquery.flexslider.js"></script>
+                <script type="text/javascript">
+                        $(window).load(function () {
+                            $('.flexslider').flexslider({
+                                animation: "pagination",
+                                start: function (slider) {
+                                    $('body').removeClass('loading');
+                                }
+                            });
+                        });
+                </script>
+                <!--End-slider-script-->
+            </div>
+            <div class="clearfix"> </div>
         </div>
     </div>
 </div>
-<h3 class="tittle-w3l">
-    Ưu đãi đặc biệt
-    <span class="heading-style">
-        <i></i>
-        <i></i>
-        <i></i>
-    </span>
-</h3>
-<div class="content-bottom-in">
-    <ul id="flexiselDemo1">
-        @foreach (var item in products4)
-        {
-            <li>
-                <div class="w3l-specilamk">
-                    <div class="speioffer-agile">
-                        <a href="single.html">
-                            <img src="@Url.Content("~/Content/images/"+item.Image1)" alt="" style="width:100px;height:100px">
-                        </a>
-                    </div>
-                    <div class="product-name-w3l">
-                        <h4>
-                            <a href="single.html">@item.Name</a>
-                        </h4>
-                        <div class="w3l-pricehkj">
-                            <h6>@item.PromotionPrice</h6>
-                            <p>Giá gốc @item.Price</p>
+<!--//banner-->
+<!--new-->
+<div class="new">
+    <div class="container">
+        <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
+            <h3 class="title" style="font-family:'UTM Nyala'">Sản Phẩm <span>Mới</span></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit curabitur </p>
+        </div>
+        <div class="new-info">
+            @{
+                int counter1 = 1;
+                int counter2 = 1;
+            }
+            @foreach (var item in productsNew)
+            {
+                if (counter1 == 1)
+                {
+                    <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay=".5s">
+                        <div class="new-top">
+                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" class="img-responsive" alt="" /></a>
+                            <div class="new-text">
+                                <ul>
+                                    <li><a class="item_add" href=""> Thêm Vào Giỏ</a></li>
+                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                            <form action="#" method="post">
-                                <fieldset>
-                                    <input type="hidden" name="cmd" value="_cart" />
-                                    <input type="hidden" name="add" value="1" />
-                                    <input type="hidden" name="business" value=" " />
-                                    <input type="hidden" name="item_name" value="Aashirvaad, 5g" />
-                                    <input type="hidden" name="amount" value="220.00" />
-                                    <input type="hidden" name="discount_amount" value="1.00" />
-                                    <input type="hidden" name="currency_code" value="USD" />
-                                    <input type="hidden" name="return" value=" " />
-                                    <input type="hidden" name="cancel_return" value=" " />
-                                    <input type="submit" name="submit" value="Chọn mua" class="button" />
-                                </fieldset>
-                            </form>
+                        <div class="new-bottom">
+                            <h5><a class="name" href="single.html">@item.Name </a></h5>
+                            <div class="rating">
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span>☆</span>
+                            </div>
+                            <div class="ofr">
+                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p>
+                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        }
+                    counter1++;
+                }
+                else if (counter1 == 2)
+                {
 
-    </ul>
+                    <div class="col-md-3 new-grid new-mdl simpleCart_shelfItem wow flipInY animated" data-wow-delay=".7s">
+                        <div class="new-top">
+                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" class="img-responsive" alt="" /></a>
+                            <div class="new-text">
+                                <ul>
+                                    <li><a class="item_add" href=""> Thêm Vào Giỏ</a></li>
+                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="new-bottom">
+                            <h5><a class="name" href="single.html">@item.Name </a></h5>
+                            <div class="rating">
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span>☆</span>
+                            </div>
+                            <div class="ofr">
+                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p>
+                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    counter1++;
+                }
+                else if (counter1 == 3)
+                {
+                    <div class="col-md-3 new-grid new-mdl1 simpleCart_shelfItem wow flipInY animated" data-wow-delay=".9s">
+                        <div class="new-top">
+                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" class="img-responsive" alt="" /></a>
+                            <div class="new-text">
+                                <ul>
+                                    <li><a class="item_add" href=""> Thêm Vào Giỏ</a></li>
+                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="new-bottom">
+                            <h5><a class="name" href="single.html">@item.Name </a></h5>
+                            <div class="rating">
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span>☆</span>
+                            </div>
+                            <div class="ofr">
+                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p>
+                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    counter1++;
+                }
+                else if (counter1 == 4)
+                {
+                    <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay="1.1s">
+                        <div class="new-top">
+                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" class="img-responsive" alt="" /></a>
+                            <div class="new-text">
+                                <ul>
+                                    <li><a class="item_add" href=""> Thêm Vào Giỏ</a></li>
+                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="new-bottom">
+                            <h5><a class="name" href="single.html">@item.Name </a></h5>
+                            <div class="rating">
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span class="on">☆</span>
+                                <span>☆</span>
+                            </div>
+                            <div class="ofr">
+                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p>
+                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    counter1++;
+                }
+            }
+            <div class="clearfix"> </div>
+        </div>
+    </div>
 </div>
+<!--//new-->
+<!--gallery-->
+<div class="gallery">
+    <div class="container">
+        <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
+            <h3 class="title">Sản Phẩm<span> Bán Chạy</span></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit curabitur </p>
+        </div>
+        <div class="gallery-info">
+            @foreach (var item in products4)
+            {
+                if (counter2 == 1)
+                {
+                    <div class="col-md-3 gallery-grid wow flipInY animated" data-wow-delay=".5s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    counter2++;
+                }
+                else if (counter2 == 2)
+                {
+                    <div class="col-md-3 gallery-grid gallery-grid1 wow flipInY animated" data-wow-delay=".7s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    counter2++;
+                }
+                else if (counter2 == 3)
+                {
+                    <div class="col-md-3 gallery-grid gallery-grid2 wow flipInY animated" data-wow-delay=".9s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    counter2++;
+                }
+                else if (counter2 == 4)
+                {
+                    <div class="col-md-3 gallery-grid wow flipInY animated" data-wow-delay="1.1s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    counter2++;
+                }
+                else if (counter2 == 5)
+                {
+                    <div class="col-md-3 gallery-grid wow flipInY animated" data-wow-delay=".5s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    counter2++;
+                }
+                else if (counter2 == 6)
+                {
+                    <div class="col-md-3 gallery-grid gallery-grid1 wow flipInY animated" data-wow-delay=".7s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    counter2++;
+                }
+                else if (counter2 == 7)
+                {
+                    <div class="col-md-3 gallery-grid gallery-grid2 wow flipInY animated" data-wow-delay=".9s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    counter2++;
+                }
+                else if (counter2 == 8)
+                {
+                    <div class="col-md-3 gallery-grid wow flipInY animated" data-wow-delay="1.1s">
+                        <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/"+item.Image1)" class="img-responsive" alt="" /></a>
+                        <div class="gallery-text simpleCart_shelfItem">
+                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
+                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <ul>
+                                <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
+                                <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    break;
+                }
+            }
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!--//gallery-->
+<!--trend-->
+<div class="trend wow zoomIn animated" data-wow-delay=".5s">
+    <div class="container">
+        <div class="trend-info">
+            <section class="slider grid">
+                <div class="flexslider trend-slider">
+                    <ul class="slides">
+                        <li>
+                            <div class="col-md-5 trend-left">
+                                <img src="~/Content/images/t1.png" alt="" />
+                            </div>
+                            <div class="col-md-7 trend-right">
+                                <h4>TOP 10 TRENDS <span>FOR YOU</span></h4>
+                                <h5>Flat 20% OFF</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus, justo ac volutpat vestibulum, dolor massa pharetra nunc, nec facilisis lectus nulla a tortor. Duis ultrices nunc a nisi malesuada suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam eu bibendum felis. Sed viverra dapibus tincidunt.</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                        <li>
+                            <div class="col-md-5 trend-left">
+                                <img src="~/Content/images/t2.png" alt="" />
+                            </div>
+                            <div class="col-md-7 trend-right">
+                                <h4>TOP 10 TRENDS <span>FOR YOU</span></h4>
+                                <h5>Flat 20% OFF</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus, justo ac volutpat vestibulum, dolor massa pharetra nunc, nec facilisis lectus nulla a tortor. Duis ultrices nunc a nisi malesuada suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam eu bibendum felis. Sed viverra dapibus tincidunt.</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                        <li>
+                            <div class="col-md-5 trend-left">
+                                <img src="~/Content/images/t3.png" alt="" />
+                            </div>
+                            <div class="col-md-7 trend-right">
+                                <h4>TOP 10 TRENDS <span>FOR YOU</span></h4>
+                                <h5>Flat 20% OFF</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus, justo ac volutpat vestibulum, dolor massa pharetra nunc, nec facilisis lectus nulla a tortor. Duis ultrices nunc a nisi malesuada suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam eu bibendum felis. Sed viverra dapibus tincidunt.</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                        <li>
+                            <div class="col-md-5 trend-left">
+                                <img src="~/Content/images/t4.png" alt="" />
+                            </div>
+                            <div class="col-md-7 trend-right">
+                                <h4>TOP 10 TRENDS <span>FOR YOU</span></h4>
+                                <h5>Flat 20% OFF</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus, justo ac volutpat vestibulum, dolor massa pharetra nunc, nec facilisis lectus nulla a tortor. Duis ultrices nunc a nisi malesuada suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam eu bibendum felis. Sed viverra dapibus tincidunt.</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!--//trend-->

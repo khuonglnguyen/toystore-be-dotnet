@@ -2,48 +2,47 @@
     ViewBag.Title = "ConfirmEmail";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
-
-<div class="page-head_agile_info_w3l">
-
-</div>
-<div class="services-breadcrumb">
-    <div class="agile_inner_breadcrumb">
-        <div class="container">
-            <ul class="w3_short">
-                <li>
-                    <a href="index.html">Trang chủ</a>
-                    <i>|</i>
-                </li>
-                <li>Sản phẩm</li>
-            </ul>
-        </div>
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Đăng Nhập</li>
+        </ol>
     </div>
 </div>
-<div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-body modal-body-sub_agile">
-        <div class="main-mailposi">
-            <span class="fa fa-envelope-o" aria-hidden="true"></span>
+<br />
+<!--//breadcrumbs-->
+<!--login-->
+<div class="login-page">
+    <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
+        <h3 class="title">Đăng Nhập</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit curabitur </p>
+    </div>
+    <div class="widget-shadow">
+        <div class="login-top wow fadeInUp animated" data-wow-delay=".7s">
+            <h4>Chào mừng bạn đến với KMD ToyStore ! <br> Bạn chưa có tài khoản? <a href="register.html">  Đăng Ký Ngay »</a> </h4>
         </div>
-        <div class="modal_body_left modal_body_left1">
-            <h3 class="agileinfo_sign">Đăng Nhập</h3>
+        <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
             @using (Html.BeginForm("SignIn", "Home", FormMethod.Post))
             {
-                @Html.AntiForgeryToken()
-                <div class="styled-input agile-styled-input-top">
-                    <input type="text" placeholder="Tên đăng nhập hoặc Email" name="Username" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào tên đăng nhập hoặc Email')">
+                <input type="text" class="user" name="Email" placeholder="Email của bạn" required="">
+                <input type="password" name="Password" class="lock" placeholder="Mật Khẩu">
+                <input type="submit" name="Sign In" value="Đăng Nhập">
+                <div class="forgot-grid">
+                    <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Lưu mật khẩu</label>
+                    <div class="forgot">
+                        <a href="#">Quên mật khẩu?</a>
+                    </div>
+                    <div class="clearfix"> </div>
                 </div>
-                <div class="styled-input">
-                    <input type="password" placeholder="Mật khẩu" name="Password" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào mật khẩu')">
-                </div>
-                <p>
-                    <b class="text-danger">@ViewBag.Message</b>
-                </p>
-                <p>
-                    @Html.ActionLink("Quên mật khẩu", "ConfirmEmail", new { id = ViewBag.ID })
-                </p>
-                <input type="submit" value="Đăng nhập">
             }
         </div>
     </div>
+    <div class="login-page-bottom">
+        <h5> - Hoặc -</h5>
+        <div class="social-btn"><a href="#"><i>Đăng Nhập Với Facebook</i></a></div>
+        <div class="social-btn sb-two"><a href="#"><i>Đăng Nhập Với Twitter</i></a></div>
+    </div>
 </div>
+<!--//login-->

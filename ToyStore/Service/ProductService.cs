@@ -20,6 +20,8 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
         IEnumerable<Product> GetProductListIsNew();
         IEnumerable<Product> GetProductList(string keyWord);
+        IEnumerable<Product> GetProductListForManage();
+        IEnumerable<Product> GetProductListForManage(string keyWord);
         IEnumerable<Product> GetProductListForHomePage(int productCategoryID);
         IEnumerable<Product> GetProductListForDiscount();
         IEnumerable<Product> GetProductListRandom();
@@ -27,6 +29,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListName(string keyword);
         void UpdateProduct(Product product);
         void DeleteProduct(Product product);
+        void ActiveProduct(Product product);
         void MultiDeleteProduct(string[] IDs);
         void Save();
     }
@@ -174,6 +177,24 @@ namespace ToyStore.Service
                 listProduct = this.context.ProductRepository.GetAllData(x => x.AgeID == ageID && x.PromotionPrice >= max && x.IsActive == true);
             }
             return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListForManage()
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData();
+            return listProduct;
+        }
+
+        public IEnumerable<Product> GetProductListForManage(string keyWord)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyWord));
+            return listProduct;
+        }
+
+        public void ActiveProduct(Product product)
+        {
+            product.IsActive = true;
+            this.context.ProductRepository.Update(product);
         }
     }
 }

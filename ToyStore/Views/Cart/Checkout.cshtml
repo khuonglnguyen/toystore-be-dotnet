@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+@{
+    List<ToyStore.Models.ItemCart> Cart = Session["Cart"] as List<ToyStore.Models.ItemCart>;
+}
+
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Xem Giỏ Hàng</li>
+        </ol>
+    </div>
+</div>
+<!--//breadcrumbs-->
+<!--cart-items-->
+<div class="cart-items">
+    <div class="container">
+        @if (Cart != null)
+        {
+            <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Giỏ Hàng Của Bạn Có: @ViewBag.TotalQuantity Sản Phẩm</h3>
+            foreach (var item in Cart)
+            {
+                <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
+                    <span class="close" onclick="location.href='@Url.Action("RemoveItemCart", "Cart", new { ID = item.ID })'">x</span>
+                    <div class="cart-sec simpleCart_shelfItem">
+                        <div class="cart-item cyc">
+                            <a href="single.html"><img src="@Url.Content("~/Content/images/" + item.Image)" class="img-responsive" alt=""></a>
+                        </div>
+                        <div class="cart-item-info">
+                            <h4><a href="single.html"> @item.Name </a></h4>
+                            <ul class="qty">
+                                <li><p>Số lượng: @item.Quantity</p></li>
+                                <li><p>Đơn giá: @item.Price.ToString("#,##")₫</p></li>
+                                <li><p>Thành tiền: @item.Total.ToString("#,##")₫</p></li>
+                            </ul>
+                        </div>
+                        @Html.ActionLink("Chỉnh sửa", "EditCart", new { @ID = item.ID }, new { @class = "btn btn-primary" })
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            }
+            if (Session["Member"] == null)
+            {
+                <div class="login-page">
+                    <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
+                        <h3 class="title">Thêm Mới Thông Tin Đặt Hàng</h3>
+                    </div>
+                    <div class="widget-shadow">
+                        <div class="login-top wow fadeInUp animated" data-wow-delay=".7s">
+                            <h4>Đăng nhập để mua hàng nhanh chóng <br> Bạn chưa có tài khoản? <a href="register.html">  Đăng Ký Ngay »</a> </h4>
+                        </div>
+                        <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
+                            @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Get))
+                            {
+                                <input type="text" class="user" name="FullName" placeholder="Họ tên" required="">
+                                <input type="text" name="PhoneNumber" class="user" placeholder="Số điện thoại">
+                                <input type="text" name="Email" class="user" placeholder="Email">
+                                <input type="text" name="Address" class="user" placeholder="Địa chỉ nhận hàng">
+                                <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                @Html.ActionLink("Đặt Hàng", "AddOrder", "Cart")
+            }
+        }
+        else
+        {
+            <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Giỏ Hàng Của Bạn Hiện Đang Trống</h3>
+        }
+    </div>
+</div>
+<!--//cart-items-->

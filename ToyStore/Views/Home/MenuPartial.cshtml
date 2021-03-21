@@ -5,132 +5,136 @@
     IEnumerable<ToyStore.Models.ProductCategoryParent> productCategoryParents = ViewBag.ListParent;
     IEnumerable<ToyStore.Models.Gender> genders = ViewBag.ListGender;
 }
-
-@*<script>
-    function doIt(item, baseUrl) {
-        window.location.href = baseUrl + '?ID=' + item.value + '&page=1';
-    }
-</script>*@
-<!-- //Modal2 -->
-<!-- //signup Model -->
-<!-- //header-bot -->
-<!-- navigation -->
-<div class="ban-top">
+<div class="top-nav navbar navbar-default">
+    <!--header-three-->
     <div class="container">
-        <div class="agileits-navi_search">
-            @*<select id="agileinfo-nav_search" name="productCategoryName" required="" onchange="doIt(this,'@Url.Action("ProductCategory", "Product")')">
-                <option value="">Danh mục</option>
-                @foreach (var item in productCategories)
-                {
-                    <option value="@item.ID">@item.Name</option>
-                }
-            </select>*@
-        </div>
-        <div class="top_nav_left">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                                aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse menu--shylock" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav menu__list">
-                            <li class="active">
-                                <a class="nav-stylehead" href="@Url.Action("index","Home")">
-                                    TRANG CHỦ
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a class="nav-stylehead" href="@Url.Action("NewProduct","Product")">HÀNG MỚI</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle nav-stylehead" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    SẢN PHẨM
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu multi-column columns-3">
-                                    <div class="agile_inner_drop_nav_info">
-                                        @foreach (var item1 in productCategoryParents)
-                                        {
-                                            <div class="col-sm-4 multi-gd-img">
-                                                <ul class="multi-column-dropdown">
-                                                    <li style="font-weight:bold">
-                                                        <a onclick="location.href='@Url.Action("ProductCategoryParent","Product",new { ID=item1.ID})'" style="cursor:pointer;text-transform:uppercase;font-size:15px">@item1.Name</a>
-                                                    </li>
-                                                    @foreach (var item2 in productCategories.Where(x => x.ParentID == item1.ID).OrderBy(x => x.Name))
-                                                    {
-                                                        <li>
-                                                            <a onclick="location.href='@Url.Action("ProductCategory","Product",new { ID=item2.ID})'" style="cursor:pointer">@item2.Name</a>
-                                                        </li>
-                                                    }
-                                                </ul>
-                                            </div>
-                                        }
-                                        <div class="clearfix"></div>
+        <nav class="navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!--navbar-header-->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav top-nav-info" style="font-size:15px">
+                    <li><a href="@Url.Action("Index","Home")" class="active">Trang Chủ</a></li>
+                    <li><a href="@Url.Action("NewProduct","Product")">Hàng Mới</a></li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Sản Phẩm<b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column multi-column2">
+                            <div class="row">
+                                @foreach (var item1 in productCategoryParents)
+                                {
+                                    <div class="col-sm-3 menu-grids">
+                                        <a href="@Url.Action("ProductCategoryParent","Product",new { ID=item1.ID})">
+                                            <h4 style="font-size:17px">@item1.Name</h4>
+                                        </a>
+                                        <ul class="multi-column-dropdown">
+                                            @foreach (var item2 in productCategories.Where(x => x.ParentID == item1.ID))
+                                            {
+                                                <li>
+                                                    <a class="list" href="@Url.Action("ProductCategory","Product",new { ID=item2.ID})" style="font-size:17px">@item2.Name</a>
+                                                </li>
+                                            }
+                                        </ul>
                                     </div>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
-                                    GIỚI TÍNH
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu agile_short_dropdown">
-                                    @foreach (var item in genders)
-                                    {
-                                        <li>
-                                            <a onclick="location.href='@Url.Action("Gender","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
-                                    ĐỘ TUỔI
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu agile_short_dropdown">
-                                    @foreach (var item in ages)
-                                    {
-                                        <li>
-                                            <a onclick="location.href='@Url.Action("Ages","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
-                                    THƯƠNG HIỆU
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu agile_short_dropdown">
-                                    @foreach (var item in producers)
-                                    {
-                                        <li>
-                                            <a onclick="location.href='@Url.Action("Producer","Product",new { ID=item.ID})'" style="cursor:pointer">@item.Name <img src="@Url.Content("~/Content/image/"+item.Logo)" /></a>
-                                            
-                                        </li>
-                                    }
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a class="nav-stylehead" href="@Url.Action("About","Home")">KMD</a>
-                            </li>
-                            <li class="">
-                                <a class="nav-stylehead" href="contact.html">LIÊN HỆ</a>
-                            </li>
+                                }
+                                @*<div class="col-sm-3 menu-grids new-add2">
+                                        <a href="products.html">
+                                            <h6>Kids Special</h6>
+                                            <img src="~/Content/images/img1.jpg" alt="">
+                                        </a>
+                                    </div>*@
+                                <div class="clearfix"> </div>
+                            </div>
                         </ul>
-                    </div>
-                </div>
-            </nav>
+                    </li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Giới Tính<b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column multi-column2">
+                            <div class="row">
+                                <div class="col-sm-4 menu-grids">
+                                    <ul class="multi-column-dropdown">
+                                        <li><a class="list" href="@Url.Action("Gender","Product",new { ID=1})" style="font-size:17px">Bé Trai</a></li>
+                                        <li><a class="list" href="@Url.Action("Gender","Product",new { ID=2})" style="font-size:17px">Bé Gái</a></li>
+                                        <li><a class="list" href="@Url.Action("Gender","Product",new { ID=3})" style="font-size:17px">Tất Cả </a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-8 menu-grids">
+                                    <a href="products.html">
+                                        <div class="new-add">
+                                            <h5>30% OFF <br> Today Only</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </ul>
+                    </li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Lứa Tuổi<b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column menu-two multi-column3">
+                            <div class="row">
+                                <div class="col-sm-4 menu-grids">
+                                    <ul class="multi-column-dropdown">
+                                        @foreach (var item in ages)
+                                        {
+                                            <li><a class="list" href="@Url.Action("Ages","Product",new { ID=item.ID})" style="font-size:17px">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="col-sm-8 menu-grids">
+                                    <a href="products.html">
+                                        <div class="new-add">
+                                            <h5>30% OFF <br> Today Only</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </ul>
+                    </li>
+                    <li class="dropdown grid">
+                        <a href="#" class="dropdown-toggle list1" data-toggle="dropdown">Thương Hiệu <b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column multi-column4">
+                            <div class="row">
+                                <div class="col-sm-4 menu-grids">
+                                    <ul class="multi-column-dropdown">
+                                        @foreach (var item in producers)
+                                        {
+                                            <li><a class="list" href="@Url.Action("Producer","Product",new { ID=item.ID})" style="font-size:17px">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="col-sm-8 menu-grids">
+                                    <a href="products.html">
+                                        <div class="new-add">
+                                            <h5>30% OFF <br> Today Only</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="clearfix"> </div>
+                <!--//navbar-collapse-->
+            </div>
+            <header class="cd-main-header">
+                <ul class="cd-header-buttons">
+                    <li><a class="cd-search-trigger" href="#cd-search"> <span></span></a></li>
+                </ul> <!-- cd-header-buttons -->
+            </header>
+            <!--//navbar-header-->
+        </nav>
+        <div id="cd-search" class="cd-search">
+            <form>
+                <input type="search" placeholder="Search...">
+            </form>
         </div>
     </div>
 </div>

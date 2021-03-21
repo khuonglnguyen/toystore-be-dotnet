@@ -20,8 +20,11 @@ namespace ToyStore.Controllers
         private IAgeService _ageService;
         private IProductCategoryParentService _productCategoryParentService;
         private IGenderService _genderService;
+        private ICommentService _commentService;
+        private IMemberService _memberService;
+        private IQAService _qaService;
 
-        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService)
+        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService,IQAService qAService)
         {
             this._productService = productService;
             this._producerService = producerService;
@@ -30,6 +33,9 @@ namespace ToyStore.Controllers
             this._ageService = ageService;
             this._productCategoryParentService = productCategoryParentService;
             this._genderService = genderService;
+            this._commentService = commentService;
+            this._memberService = memberService;
+            this._qaService = qAService;
         }
         #endregion
         public ActionResult Search(string keyword, int page = 1)
@@ -64,10 +70,19 @@ namespace ToyStore.Controllers
             var product = _productService.GetByID(ID);
             var producer = _producerService.GetByID(product.ProducerID);
             var supplier = _supplierService.GetByID(product.SupplierID);
-            var listProduct = _productService.GetProductListRandom();
+            var listProduct = _productService.GetProductListByCategory(product.CategoryID);
+            var listAge = _ageService.GetAgeList();
             ViewBag.ProducerName = producer.Name;
             ViewBag.SupplierName = supplier.Name;
             ViewBag.ListProduct = listProduct;
+            ViewBag.Age = listAge.Single(x => x.ID == product.AgeID).Name;
+
+            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(ID).OrderByDescending(x => x.Date);
+            ViewBag.CommentList = listComment;
+            IEnumerable<QA> listQA = _qaService.GetQAByProductID(ID).OrderByDescending(x => x.DateQuestion);
+            ViewBag.CommentQA = listQA;
+            IEnumerable<Member> listMember = _memberService.GetMemberList();
+            ViewBag.MemberList = listMember;
             return View(product);
         }
         [HttpGet]
@@ -118,7 +133,7 @@ namespace ToyStore.Controllers
 
             PagedList<Product> listProductPaging;
             IEnumerable<Product> products = _productService.GetProductListByCategory(ID);
-            listProductPaging = new PagedList<Product>(products, page, 12);
+            listProductPaging = new PagedList<Product>(products, page, 9);
             return View(listProductPaging);
         }
         public ActionResult ProductCategoryParent(int ID, int page = 1)
@@ -171,13 +186,13 @@ namespace ToyStore.Controllers
         {
             return PartialView(product);
         }
-        public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int discount=0, int page = 1)
+        public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int discount = 0, int page = 1)
         {
             PagedList<Product> listProductPaging = null;
             if (type == "Ages")
             {
                 ViewBag.Name = "Độ tuổi " + _ageService.GetAgeByID(ID).Name;
-                IEnumerable<Product> products = _productService.GetProductFilterByAges(ID, min, max,discount);
+                IEnumerable<Product> products = _productService.GetProductFilterByAges(ID, min, max, discount);
                 listProductPaging = new PagedList<Product>(products, page, 2);
             }
 
@@ -196,6 +211,56 @@ namespace ToyStore.Controllers
                 //return 404
                 return null;
             }
+        }
+
+        [HttpGet]
+        public ActionResult AddComment(int productID, int memberID, string content)
+        {
+            Comment comment = new Comment();
+            comment.MemberID = memberID;
+            comment.Content = content;
+            comment.ProductID = productID;
+            comment.Date = DateTime.Now;
+            _commentService.AddComment(comment);
+
+            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(productID).OrderByDescending(x => x.Date);
+            ViewBag.CommentList = listComment;
+            IEnumerable<Member> listMember = _memberService.GetMemberList();
+            ViewBag.MemberList = listMember;
+            return PartialView("_CommentPartial");
+        }
+        [HttpGet]
+        public ActionResult AddQuestion(int productID, int memberID, string Question)
+        {
+            QA qa = new QA();
+            qa.MemberID = memberID;
+            qa.Question = Question;
+            qa.ProductID = productID;
+            qa.DateQuestion = DateTime.Now;
+            qa.DateAnswer = DateTime.Now;
+            _qaService.AddQA(qa);
+
+            IEnumerable<QA> listQA = _qaService.GetQAByProductID(productID).OrderByDescending(x => x.DateQuestion);
+            ViewBag.QAList = listQA;
+            IEnumerable<Member> listMember = _memberService.GetMemberList();
+            ViewBag.MemberList = listMember;
+            return PartialView("_QAPartial");
+        }
+        public ActionResult CommentPartial(int ID)
+        {
+            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(ID).OrderByDescending(x => x.Date);
+            ViewBag.CommentList = listComment;
+            IEnumerable<Member> listMember = _memberService.GetMemberList();
+            ViewBag.MemberList = listMember;
+            return PartialView("_CommentPartial");
+        }
+        public ActionResult QAPartial(int ID)
+        {
+            IEnumerable<QA> listQA = _qaService.GetQAByProductID(ID).OrderByDescending(x => x.DateQuestion);
+            ViewBag.QAList = listQA;
+            IEnumerable<Member> listMember = _memberService.GetMemberList();
+            ViewBag.MemberList = listMember;
+            return PartialView("_QAPartial");
         }
     }
 }

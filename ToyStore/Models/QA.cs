@@ -15,11 +15,13 @@ namespace ToyStore.Models
         public int ID { set; get; }
         public int ProductID { set; get; }
         public int MemberID { set; get; }
-        [MaxLength(100)]
-        public string Title { set; get; }
         [MaxLength(1000)]
-        public string Content { set; get; }
+        public string Question { set; get; }
+        [MaxLength(1000)]
+        public string Answer { set; get; }
         public bool Status { get; set; }
+        public DateTime DateQuestion { get; set; }
+        public DateTime DateAnswer { get; set; }
         [ForeignKey("ProductID")]
         public virtual Product Product { set; get; }
         [ForeignKey("MemberID")]

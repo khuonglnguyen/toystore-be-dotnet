@@ -17,5 +17,8 @@ namespace ToyStore.Models
         public string Address { set; get; }
         public string PhoneNumber { set; get; }
         public string Email { set; get; }
+        public int MemberCategoryID { get; set; }
+        [ForeignKey("MemberCategoryID")]
+        public virtual MemberCategory MemberCategory { set; get; }
     }
 }

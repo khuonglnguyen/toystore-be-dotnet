@@ -24,6 +24,11 @@ namespace ToyStore
             container.RegisterType<IProductCategoryParentService, ProductCategoryParentService>();
             container.RegisterType<IGenderService, GenderService>();
             container.RegisterType<IMemberService, MemberService>();
+            container.RegisterType<ICustomerService, CustomerService>();
+            container.RegisterType<IOrderService, OrderService>();
+            container.RegisterType<IOrderDetailService, OrderDetailService>();
+            container.RegisterType<ICommentService, CommentService>();
+            container.RegisterType<IQAService, QAService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

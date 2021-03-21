@@ -36,21 +36,9 @@ namespace ToyStore.Controllers
         #endregion
         public ActionResult Index()
         {
-            var ProductCategory1 = _productCategoryService.GetProductCategoryByName("Đồ chơi lắp ráp");
-            //Get list product 1
-            var listProdudct1 = _productService.GetProductListForHomePage(ProductCategory1.ID);
-            ViewBag.ListProduct1 = listProdudct1;
-
-            var ProductCategory2 = _productCategoryService.GetProductCategoryByName("Đồ chơi Robot");
-            //Get list product 2
-            var listProdudct2 = _productService.GetProductListForHomePage(ProductCategory2.ID);
-            ViewBag.ListProduct2 = listProdudct2;
-
-            var ProductCategory3 = _productCategoryService.GetProductCategoryByName("Đồ chơi trí tuệ");
-            //Get list product 3
-            var listProdudct3 = _productService.GetProductListForHomePage(ProductCategory3.ID);
-            ViewBag.ListProduct3 = listProdudct3;
-
+            //Get list product New
+            var listProdudctNew = _productService.GetProductListIsNew();
+            ViewBag.ListProductNew = listProdudctNew;
             //Get list product 4
             var listProdudct4 = _productService.GetProductListForDiscount();
             ViewBag.ListProduct4 = listProdudct4;
@@ -110,7 +98,7 @@ namespace ToyStore.Controllers
             }
             else
             {
-                Member memberCheck = _memberService.CheckLogin(member.Username, member.Password);
+                Member memberCheck = _memberService.CheckLogin(member.Email, member.Password);
                 if (memberCheck != null)
                 {
                     Session["Member"] = memberCheck;

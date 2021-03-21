@@ -1,0 +1,84 @@
+﻿@using ToyStore.Models
+@model ItemCart
+@{
+    ViewBag.Title = "EditCart";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+@{
+    List<ItemCart> listCart = ViewBag.Cart as List<ItemCart>;
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@*Check for the quantity number of changes*@
+<script>
+    $(document).ready(function () {
+        $('#btnUpdate').click(function myfunction() {
+            //Check that quantity is not a number or < 0
+            var quantity = $('.QuantityChange').val();
+            if (isNaN(quantity) || quantity < 0) {
+                $('.Message').text("Số lượng không hợp lệ");
+                return false;
+            }
+        });
+    });
+</script>
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Chỉnh Sửa Giỏ Hàng</li>
+        </ol>
+    </div>
+</div>
+<br />
+<!--//breadcrumbs-->
+<div class="table">
+    <div class="container">
+        @if (listCart != null)
+        {
+            <div class="table-responsive">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Tên</th>
+                            <th>Đơn Điá</th>
+                            <th>Cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in listCart)
+                        {
+                            if (Model.ID == item.ID)
+                            {
+                                using (Html.BeginForm("EditCart", "Cart", FormMethod.Post))
+                                {
+                                    @Html.Hidden("ID", item.ID)
+                                    <tr class="rem1">
+                                        <td class="invert">1</td>
+                                        <td class="invert-image">
+                                            <a href="single2.html">
+                                                <img src="@Url.Content("~/Content/images/"+item.Image)" alt=" " class="img-responsive" style="height:100px;width:100px">
+                                            </a>
+                                        </td>
+                                        <td class="invert">
+                                            <input type="number" name="Quantity" value="@item.Quantity" class="QuantityChange" />
+                                            <p class="Message"></p>
+                                        </td>
+                                        <td class="invert">@item.Name</td>
+                                        <td class="invert">@item.Price.ToString("#,##")₫</td>
+                                        <td>
+                                            <input type="submit" value="Cập nhật" class="btn btn-success" id="btnUpdate" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
