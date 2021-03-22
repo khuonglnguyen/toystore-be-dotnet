@@ -51,6 +51,35 @@
                 }
             });
         });
+        $('.btnAnswer').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/QAManage/Edit',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        var data = response.data;
+                        $('#ID').val(data.ID);
+                        $('#MemberID').val(data.MemberID);
+                        $('#ProductID').val(data.ProductID);
+                        $('#Question').val(data.Question);
+                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(data.DateQuestion)));
+                        $('#DateQuestion').val(newFormattedDate);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
         //$("#keyword").autocomplete({
         //    source: function (request, response) {
         //        $.ajax({
@@ -170,15 +199,12 @@
 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
-    <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Hỏi đáp</a> <i class="fa fa-angle-right"></i></li>
 </ol>
 
 <div class="agile-grids">
     <div class="agile-tables">
         <div class="w3l-table-info">
-            <ul class="bt-list">
-                <li><a href="#" class="hvr-icon-float-away col-24" style="background-color:green" id="btnAddNew">Thêm mới</a></li>
-            </ul>
             <hr />
             <div class="w3-search-box">
                 <form action="~/ProductManage/List" method="post">
@@ -223,7 +249,7 @@
                     }
                     @foreach (var item in Model
                                     .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-                                    .Select(n => new { ID = n.c.ID, FullName = n.m.FullName, Question = n.c.Question, Answer = n.c.Answer, DateQuesion = n.c.DateQuestion, DateAnswer = n.c.DateAnswer, Status = n.c.Status }))
+                                    .Select(n => new { ID = n.c.ID, FullName = n.m.FullName, Question = n.c.Question, Answer = n.c.Answer, DateQuesion = n.c.DateQuestion, DateAnswer = n.c.DateAnswer, Status = n.c.Status, ProductID = n.c.ProductID }))
                     {
                         @Html.Hidden(item.ID.ToString())
                         <tr>
@@ -231,7 +257,7 @@
                                 <b>@Html.DisplayFor(modelItem => item.FullName)</b>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ID)
+                                @Html.DisplayFor(modelItem => item.ProductID)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Question)
@@ -264,7 +290,7 @@
                                 }
                                 else
                                 {
-                                    <button class="btn btn-primary btnAnswer" value="@item.ID">Trả lời</button>
+                                    <button class="btn btn-primary btnAnswer" value="@item.ID">T.lời</button>
                                 }
                             </td>
                         </tr>
@@ -296,7 +322,7 @@
                     <input type="text" name="ID" id="ID" hidden="hidden" />
                     <input type="text" name="MemberID" id="MemberID" hidden="hidden" />
                     <input type="text" name="ProductID" id="ProductID" hidden="hidden" />
-                    <input type="text" name="DateQuestion" id="DateQuestion" hidden="hidden"/>
+                    <input type="text" name="DateQuestion" id="DateQuestion" hidden="hidden" />
                     <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
                     <div class="form-group">
                         <label for="Name">Câu hỏi:</label>
@@ -304,7 +330,42 @@
                     </div>
                     <div class="form-group">
                         <label for="Name">Câu trả lời:</label>
-                        <input type="text" class="form-control" name="Answer" id="Answer">
+                        <textarea class="form-control" name="Answer" id="Answer" style="resize:vertical"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalUpdate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Trả lời</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Answer", "QAManage", FormMethod.Post))
+                {
+                    <input type="text" name="ID" id="ID" hidden="hidden" />
+                    <input type="text" name="MemberID" id="MemberID" hidden="hidden" />
+                    <input type="text" name="ProductID" id="ProductID" hidden="hidden" />
+                    <input type="text" name="DateQuestion" id="DateQuestion" hidden="hidden" />
+                    <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="Name">Câu hỏi:</label>
+                        <input type="text" class="form-control" name="Question" id="Question" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Câu trả lời:</label>
+                        <textarea class="form-control" name="Answer" id="Answer" style="resize:vertical"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>

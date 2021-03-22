@@ -7,12 +7,17 @@
 
 <hr />
 @foreach (var item in qAs
-    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-    .Select(n => new { FullName = n.m.FullName, Question = n.c.Question, Answer = n.c.Answer, DateQuesion = n.c.DateQuestion, DateAnswer = n.c.DateAnswer }))
+                                    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
+                                    .Select(n => new { FullName = n.m.FullName, Question = n.c.Question, Answer = n.c.Answer, DateQuesion = n.c.DateQuestion, DateAnswer = n.c.DateAnswer }))
 {
     <p><label style="color:black">@item.FullName:</label>  @item.DateQuesion</p>
     <p style="color:black">@item.Question</p>
-    <p><label style="color:black">Nguyễn Văn A (Nhân viên tư vấn):</label>  @item.DateAnswer</p>
-    <p style="color:black">@item.Answer</p>
+    if (item.Answer != null)
+    {
+        <div style="background-color:lightgray">
+            <p><label style="color:brown">Nguyễn Văn A  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
+            <p style="color:black">@item.Answer</p>
+        </div>
+    }
+    <hr />
 }
-<hr />

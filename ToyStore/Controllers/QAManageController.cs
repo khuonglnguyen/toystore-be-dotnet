@@ -69,5 +69,12 @@ namespace ToyStore.Controllers
             _qAService.UpdateQA(qA);
             return RedirectToAction("List", new { page = page });
         }
+        [HttpPost]
+        public ActionResult Answer(QA qA, string DateQuestion, int page)
+        {
+            qA.DateQuestion = DateTime.Parse(DateQuestion);
+            _qAService.UpdateQA(qA);
+            return RedirectToAction("List", new { page = page });
+        }
     }
 }
