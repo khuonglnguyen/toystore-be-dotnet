@@ -145,6 +145,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ProductCategoryManageController.cs" />
@@ -262,11 +263,29 @@
     <Compile Include="Migrations\202103210847118_DropColTitleTableQA.Designer.cs">
       <DependentUpon>202103210847118_DropColTitleTableQA.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103230809192_AddTableEmloyee.cs" />
+    <Compile Include="Migrations\202103230809192_AddTableEmloyee.Designer.cs">
+      <DependentUpon>202103230809192_AddTableEmloyee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103230817098_AddTableEmloyeeType.cs" />
+    <Compile Include="Migrations\202103230817098_AddTableEmloyeeType.Designer.cs">
+      <DependentUpon>202103230817098_AddTableEmloyeeType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103230818370_AddForeignKeyTableEmloyee.cs" />
+    <Compile Include="Migrations\202103230818370_AddForeignKeyTableEmloyee.Designer.cs">
+      <DependentUpon>202103230818370_AddForeignKeyTableEmloyee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.cs" />
+    <Compile Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.Designer.cs">
+      <DependentUpon>202103230845115_AddColEmloyeeIDTableQA.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Emloyee.cs" />
     <Compile Include="Models\Ages.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Decentralization.cs" />
+    <Compile Include="Models\EmloyeeType.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\ImportCoupon.cs" />
     <Compile Include="Models\ImportCouponDetail.cs" />
@@ -288,6 +307,8 @@
     <Compile Include="Service\AgeService.cs" />
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
+    <Compile Include="Service\EmloyeeService.cs" />
+    <Compile Include="Service\EmloyeeTypeService.cs" />
     <Compile Include="Service\GenderService.cs" />
     <Compile Include="Service\MemberCategoryService.cs" />
     <Compile Include="Service\MemberService.cs" />
@@ -497,7 +518,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -541,6 +561,8 @@
     <Content Include="Views\Product\_QAPartial.cshtml" />
     <Content Include="Views\ProductManage\ProductActivePartial.cshtml" />
     <Content Include="Views\QAManage\List.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -632,6 +654,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103210847118_DropColTitleTableQA.resx">
       <DependentUpon>202103210847118_DropColTitleTableQA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103230809192_AddTableEmloyee.resx">
+      <DependentUpon>202103230809192_AddTableEmloyee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103230817098_AddTableEmloyeeType.resx">
+      <DependentUpon>202103230817098_AddTableEmloyeeType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103230818370_AddForeignKeyTableEmloyee.resx">
+      <DependentUpon>202103230818370_AddForeignKeyTableEmloyee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.resx">
+      <DependentUpon>202103230845115_AddColEmloyeeIDTableQA.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

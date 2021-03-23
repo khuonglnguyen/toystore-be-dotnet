@@ -15,6 +15,7 @@ namespace ToyStore.Models
         public int ID { set; get; }
         public int ProductID { set; get; }
         public int MemberID { set; get; }
+        public int EmloyeeID { set; get; }
         [MaxLength(1000)]
         public string Question { set; get; }
         [MaxLength(1000)]
@@ -26,5 +27,7 @@ namespace ToyStore.Models
         public virtual Product Product { set; get; }
         [ForeignKey("MemberID")]
         public virtual Member Member { set; get; }
+        [ForeignKey("EmloyeeID")]
+        public virtual Emloyee Emloyee { set; get; }
     }
 }

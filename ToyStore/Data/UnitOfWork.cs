@@ -24,6 +24,8 @@ namespace ToyStore.Data
         private GenericRepository<OrderDetail> orderDetailRepository;
         private GenericRepository<Comment> commentRepository;
         private GenericRepository<QA> qARepository;
+        private GenericRepository<Emloyee> emloyeeRepository;
+        private GenericRepository<EmloyeeType> emloyeeTypeRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -176,6 +178,28 @@ namespace ToyStore.Data
                     this.qARepository = new GenericRepository<QA>(DbContext);
                 }
                 return qARepository;
+            }
+        }
+        public GenericRepository<Emloyee> EmloyeeRepository
+        {
+            get
+            {
+                if (this.emloyeeRepository == null)
+                {
+                    this.emloyeeRepository = new GenericRepository<Emloyee>(DbContext);
+                }
+                return emloyeeRepository;
+            }
+        }
+        public GenericRepository<EmloyeeType> EmloyeeTypeRepository
+        {
+            get
+            {
+                if (this.emloyeeTypeRepository == null)
+                {
+                    this.emloyeeTypeRepository = new GenericRepository<EmloyeeType>(DbContext);
+                }
+                return emloyeeTypeRepository;
             }
         }
         public void Save()

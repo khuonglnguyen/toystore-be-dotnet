@@ -16,15 +16,21 @@ namespace ToyStore.Controllers
         private IQAService _qAService;
         private IProductService _productService;
         private IMemberService _memberService;
-        public QAManageController(IQAService qAService, IProductService productService, IMemberService memberService)
+        private IEmloyeeService _emloyeeService;
+        public QAManageController(IQAService qAService, IProductService productService, IMemberService memberService, IEmloyeeService emloyeeService)
         {
             _qAService = qAService;
             _productService = productService;
             _memberService = memberService;
+            _emloyeeService = emloyeeService;
         }
         // GET: QAManage
         public ActionResult List(int page = 1)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login","Admin");
+            }
             int pageSize = 5;
             //Get qAs list
             var qAs = _qAService.GetQAList().OrderBy(x => x.DateQuestion);
@@ -34,6 +40,8 @@ namespace ToyStore.Controllers
             {
                 ViewBag.Page = page;
                 ViewBag.ListMember = _memberService.GetMemberList();
+                ViewBag.ListProduct = _productService.GetProductList();
+                ViewBag.ListEmloyee = _emloyeeService.GetList();
                 //Return view
                 return View(listqAs);
             }
@@ -66,6 +74,8 @@ namespace ToyStore.Controllers
         public ActionResult Edit(QA qA, string DateQuestion, int page)
         {
             qA.DateQuestion = DateTime.Parse(DateQuestion);
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            qA.EmloyeeID = emloyee.ID;
             _qAService.UpdateQA(qA);
             return RedirectToAction("List", new { page = page });
         }
@@ -73,6 +83,8 @@ namespace ToyStore.Controllers
         public ActionResult Answer(QA qA, string DateQuestion, int page)
         {
             qA.DateQuestion = DateTime.Parse(DateQuestion);
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            qA.EmloyeeID = emloyee.ID;
             _qAService.UpdateQA(qA);
             return RedirectToAction("List", new { page = page });
         }

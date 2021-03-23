@@ -23,8 +23,9 @@ namespace ToyStore.Controllers
         private ICommentService _commentService;
         private IMemberService _memberService;
         private IQAService _qaService;
+        private IEmloyeeService _emloyeeService;
 
-        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService,IQAService qAService)
+        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService,IQAService qAService, IEmloyeeService emloyeeService)
         {
             this._productService = productService;
             this._producerService = producerService;
@@ -36,6 +37,7 @@ namespace ToyStore.Controllers
             this._commentService = commentService;
             this._memberService = memberService;
             this._qaService = qAService;
+            this._emloyeeService = emloyeeService;
         }
         #endregion
         public ActionResult Search(string keyword, int page = 1)
@@ -72,7 +74,9 @@ namespace ToyStore.Controllers
             var supplier = _supplierService.GetByID(product.SupplierID);
             var listProduct = _productService.GetProductListByCategory(product.CategoryID);
             var listAge = _ageService.GetAgeList();
+            var listEmloyee = _emloyeeService.GetList();
             ViewBag.ProducerName = producer.Name;
+            ViewBag.ListEmloyee = listEmloyee;
             ViewBag.SupplierName = supplier.Name;
             ViewBag.ListProduct = listProduct;
             ViewBag.Age = listAge.Single(x => x.ID == product.AgeID).Name;
@@ -238,6 +242,7 @@ namespace ToyStore.Controllers
             qa.ProductID = productID;
             qa.DateQuestion = DateTime.Now;
             qa.DateAnswer = DateTime.Now;
+            qa.EmloyeeID = 1;
             _qaService.AddQA(qa);
 
             IEnumerable<QA> listQA = _qaService.GetQAByProductID(productID).OrderByDescending(x => x.DateQuestion);

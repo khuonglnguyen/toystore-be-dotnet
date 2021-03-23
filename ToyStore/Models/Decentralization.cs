@@ -13,11 +13,11 @@ namespace ToyStore.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { set; get; }
-        public int MemberCategoryID { get; set; }
+        public int EmloyeeID { get; set; }
         public int RoleID { get; set; }
         public string Note { get; set; }
-        [ForeignKey("MemberCategoryID")]
-        public virtual MemberCategory MemberCategory { set; get; }
+        [ForeignKey("EmloyeeID")]
+        public virtual Emloyee Emloyee { set; get; }
         [ForeignKey("RoleID")]
         public virtual Role Role { set; get; }
     }

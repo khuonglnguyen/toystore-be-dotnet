@@ -32,6 +32,8 @@ namespace ToyStore.Data
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Decentralization> Decentralizations { get; set; }
+        public DbSet<Emloyee> Emloyees { get; set; }
+        public DbSet<EmloyeeType> EmloyeeTypes { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
