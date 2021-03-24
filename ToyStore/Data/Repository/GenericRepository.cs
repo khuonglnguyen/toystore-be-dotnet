@@ -7,6 +7,7 @@ using System.Web;
 using System.Xml.Linq;
 using ToyStore.Data;
 using ToyStore.Models;
+using ToyStore.Service;
 
 namespace ToyStore.Data.Repository
 {
@@ -24,6 +25,12 @@ namespace ToyStore.Data.Repository
             dbEntity.Add(Model);
             DbContext.SaveChanges();
         }
+
+        internal void Insert(AccessTimesCountService accessTimesCountService)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<T> GetAllData()
         {
             return (IEnumerable<T>)dbEntity.ToList();

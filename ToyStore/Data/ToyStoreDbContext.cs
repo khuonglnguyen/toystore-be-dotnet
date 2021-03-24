@@ -34,6 +34,7 @@ namespace ToyStore.Data
         public DbSet<Decentralization> Decentralizations { get; set; }
         public DbSet<Emloyee> Emloyees { get; set; }
         public DbSet<EmloyeeType> EmloyeeTypes { get; set; }
+        public DbSet<AccessTimesCount> AccessTimesCounts { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

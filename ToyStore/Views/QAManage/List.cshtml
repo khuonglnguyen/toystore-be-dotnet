@@ -10,6 +10,7 @@
     IEnumerable<Product> products = ViewBag.ListProduct as IEnumerable<Product>;
     IEnumerable<Member> members = ViewBag.ListMember as IEnumerable<Member>;
     IEnumerable<Emloyee> emloyees = ViewBag.ListEmloyee as IEnumerable<Emloyee>;
+    Emloyee emloyee = Session["Emloyee"] as Emloyee;
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -213,7 +214,7 @@
                                     .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
                                      .Join(products, p => p.c.ProductID, n => n.ID, (p, n) => new { p, n })
                                      .Join(emloyees, e => e.p.c.EmloyeeID, v => v.ID, (e, v) => new { e, v })
-                                    .Select(n => new { ID = n.e.p.c.ID, ProductName = n.e.n.Name, FullName = n.e.p.m.FullName, Question = n.e.p.c.Question, Answer = n.e.p.c.Answer, DateQuesion = n.e.p.c.DateQuestion, DateAnswer = n.e.p.c.DateAnswer, Status = n.e.p.c.Status, EmloyeeName = n.v.FullName, Image = n.e.n.Image1 }))
+                                    .Select(n => new { ID = n.e.p.c.ID, ProductName = n.e.n.Name, FullName = n.e.p.m.FullName, Question = n.e.p.c.Question, Answer = n.e.p.c.Answer, DateQuesion = n.e.p.c.DateQuestion, DateAnswer = n.e.p.c.DateAnswer, Status = n.e.p.c.Status, EmloyeeName = n.v.FullName, Image = n.e.n.Image1, EmloyeeID = n.e.p.c.EmloyeeID }))
                     {
                         @Html.Hidden(item.ID.ToString())
                         <tr>
@@ -239,7 +240,7 @@
                                 @Html.DisplayFor(modelItem => item.DateAnswer)
                             </td>
                             <td>
-                                    @Html.DisplayFor(modelItem => item.EmloyeeName)
+                                @Html.DisplayFor(modelItem => item.EmloyeeName)
                             </td>
                             <td>
                                 <div id="DivActive@(counter1)">
@@ -256,11 +257,16 @@
                             <td>
                                 @if (item.Status == true)
                                 {
-                                    <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+
+                                    if (item.EmloyeeID == emloyee.ID)
+                                    {
+                                        <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+                                    }
+                                    <button class="btn btn-primary btnEdit" value="@item.ID" disabled="disabled">Sửa</button>
                                 }
                                 else
                                 {
-                                    <button class="btn btn-primary btnAnswer" value="@item.ID">T.lời</button>
+                                    <button class="btn btn-primary btnAnswer" value="@item.ID" >T.lời</button>
                                 }
                             </td>
                         </tr>

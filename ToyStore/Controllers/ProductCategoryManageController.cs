@@ -26,11 +26,19 @@ namespace ToyStore.Controllers
 
         public ActionResult Index()
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
         [HttpGet]
         public ActionResult List(int page = 1)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             int pageSize = 5;
             //Get proudct category list
             var productCategories = _productCategoryService.GetProductCategoryList();
@@ -56,6 +64,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult List(string keyword)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             int pageSize = 5;
             if (keyword == null)
             {
@@ -81,6 +93,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Get data for DropdownList
             ViewBag.ParentID = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name");
             //Return view
@@ -89,6 +105,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Create(ProductCategory productCategory, HttpPostedFileBase ImageUpload)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Declare a errorCount
             int errorCount = 0;
             //Check content image
@@ -133,6 +153,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Get product catetgory
             var productCategory = _productCategoryService.GetByID(id);
             //Get data for DropdownList
@@ -152,6 +176,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Edit(ProductCategory productCategory, HttpPostedFileBase ImageUpload)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Declare a errorCount
             int errorCount = 0;
             //Check content image
@@ -196,6 +224,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Check id null
             if (id == null)
             {
@@ -220,6 +252,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult DeleteMulti(FormCollection formCollection)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             string[] Ids = formCollection["IDDelete"].Split(new char[] { ',' });
             _productCategoryService.MultiDeleteProductCategory(Ids);
             //Set TempData for checking in view to show swal

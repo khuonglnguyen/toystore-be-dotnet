@@ -264,16 +264,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                         <div class="clearfix"> </div>
                     </div>
+                    @{
+                        ToyStore.Models.Emloyee emloyee = Session["Emloyee"] as ToyStore.Models.Emloyee;
+                    }
                     <div class="profile_details w3l">
                         <ul>
                             <li class="dropdown profile_details_drop">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <div class="profile_img">
-                                        <span class="prfil-img"><img src="~/Content/images/in4.jpg" alt=""> </span>
+                                        <span class="prfil-img"><img src="@Url.Content("~/Content/images/"+emloyee.Image)" alt=""> </span>
                                         <div class="user-name">
-                                            @{ 
-                                                ToyStore.Models.Emloyee emloyee=Session["Emloyee"] as ToyStore.Models.Emloyee;
-                                            }
                                             <p>@emloyee.FullName</p>
                                             <span>Quản trị viên</span>
                                         </div>
@@ -285,7 +285,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <ul class="dropdown-menu drp-mnu">
                                     <li> <a href="#"><i class="fa fa-cog"></i> Thiết lập</a> </li>
                                     <li> <a href="#"><i class="fa fa-user"></i> Thông tin</a> </li>
-                                    <li> <a href="#"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
+                                    <li> <a href="/Admin/Logout"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
                                 </ul>
                             </li>
                         </ul>

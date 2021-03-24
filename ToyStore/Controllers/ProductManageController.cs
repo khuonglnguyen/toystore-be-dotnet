@@ -40,6 +40,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult List(int page = 1)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Get data for DropdownList
             ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name");
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name");
@@ -73,6 +77,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult List(string keyword)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             int pageSize = 5;
             if (keyword == null)
             {
@@ -98,6 +106,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Get data for DropdownList
             ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name");
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name");
@@ -110,6 +122,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Create(Product product, HttpPostedFileBase[] ImageUpload, int page)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Declare a errorCount
             int errorCount = 0;
             for (int i = 0; i < ImageUpload.Length; i++)
@@ -165,6 +181,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Get product catetgory
             var product = _productService.GetByID(id);
 
@@ -194,6 +214,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Get data for DropdownList
             ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
@@ -256,6 +280,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Block(int id, int row)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Check id null
             if (id == null)
             {
@@ -280,6 +308,10 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Active(int id, int row)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             //Check id null
             if (id == null)
             {
@@ -305,6 +337,10 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult DeleteMulti(FormCollection formCollection)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             string[] Ids = formCollection["IDDelete"].Split(new char[] { ',' });
             _productService.MultiDeleteProduct(Ids);
             //Set TempData for checking in view to show swal
@@ -313,6 +349,10 @@ namespace ToyStore.Controllers
         }
         public ActionResult ProductActivePartial(int ID)
         {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             return PartialView("ProductActivePartial", _productService.GetByID(ID));
         }
     }

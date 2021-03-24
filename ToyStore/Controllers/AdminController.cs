@@ -26,12 +26,15 @@ namespace ToyStore.Controllers
             }
             else
             {
+                ViewBag.SumAccessTimes = HttpContext.Application["SumAccessTimes"].ToString();
+                ViewBag.RealAccessTimes = HttpContext.Application["RealAccessTimes"].ToString();
                 Emloyee emloyee = Session["Emloyee"] as Emloyee;
                 ViewBag.EmloyeeTypeName = (_emloyeeTypeService.GetEmloyeeTypeByID(emloyee.EmloyeeTypeID)).Name;
                 return View();
             }
         }
         // GET: Admin
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
@@ -47,6 +50,12 @@ namespace ToyStore.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            Session["Emloyee"] = null;
+            return RedirectToAction("Login");
         }
     }
 }

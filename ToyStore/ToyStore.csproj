@@ -279,7 +279,12 @@
     <Compile Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.Designer.cs">
       <DependentUpon>202103230845115_AddColEmloyeeIDTableQA.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103240727453_AddTableAccessTimesCount.cs" />
+    <Compile Include="Migrations\202103240727453_AddTableAccessTimesCount.Designer.cs">
+      <DependentUpon>202103240727453_AddTableAccessTimesCount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccessTimesCount.cs" />
     <Compile Include="Models\Emloyee.cs" />
     <Compile Include="Models\Ages.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -304,6 +309,7 @@
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
+    <Compile Include="Service\AccessTimesCountService.cs" />
     <Compile Include="Service\AgeService.cs" />
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
@@ -407,6 +413,7 @@
     <Content Include="Content\images\94301151-computer-icon-with-the-cursor-on-the-screen-logo-of-the-laptop-vector-illustration-.jpg" />
     <Content Include="Content\images\94f5264414d2e6c42c752b78eb777d4a_do-choi-dam-hai-tac.jpg" />
     <Content Include="Content\images\active-kids-playing-with-toy-doll-and-car-vector-34040592.jpg" />
+    <Content Include="Content\images\ankhuong.png" />
     <Content Include="Content\images\b1.png" />
     <Content Include="Content\images\b2.png" />
     <Content Include="Content\images\b3.png" />
@@ -666,6 +673,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.resx">
       <DependentUpon>202103230845115_AddColEmloyeeIDTableQA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103240727453_AddTableAccessTimesCount.resx">
+      <DependentUpon>202103240727453_AddTableAccessTimesCount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
