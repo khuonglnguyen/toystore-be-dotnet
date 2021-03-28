@@ -53,6 +53,11 @@ namespace ToyStore.Data.Repository
             DbContext.Entry(Model).State = EntityState.Modified;
             DbContext.SaveChanges();
         }
+        public void Remove(T Model)
+        {
+            dbEntity.Remove(Model);
+            DbContext.SaveChanges();
+        }
         public void Save()
         {
             DbContext.SaveChanges();

@@ -29,24 +29,28 @@ namespace ToyStore.Controllers
         public List<ItemCart> GetCart()
         {
             Member member = Session["Member"] as Member;
-            if (_cartService.CheckCartMember(member.ID))
+            if (member != null)
             {
-                IEnumerable<Cart> listCart = _cartService.GetCart(member.ID);
-                List<ItemCart> itemCarts = new List<ItemCart>();
-                foreach (var item in listCart)
+                if (_cartService.CheckCartMember(member.ID))
                 {
-                    ItemCart itemCart = new ItemCart();
-                    itemCart.ID = item.ProductID;
-                    itemCart.Price = item.Price;
-                    itemCart.Total = item.Total;
-                    itemCart.Image = item.Image;
-                    itemCart.Name = item.Name;
-                    itemCart.Quantity = item.Quantity;
+                    IEnumerable<Cart> listCart = _cartService.GetCart(member.ID);
+                    List<ItemCart> itemCarts = new List<ItemCart>();
+                    foreach (var item in listCart)
+                    {
+                        ItemCart itemCart = new ItemCart();
+                        itemCart.ID = item.ProductID;
+                        itemCart.Price = item.Price;
+                        itemCart.Total = item.Total;
+                        itemCart.Image = item.Image;
+                        itemCart.Name = item.Name;
+                        itemCart.Quantity = item.Quantity;
 
-                    itemCarts.Add(itemCart);
+                        itemCarts.Add(itemCart);
+                    }
+                    Session["Cart"] = itemCarts;
+                    return itemCarts;
                 }
-                Session["Cart"] = itemCarts;
-                return itemCarts;
+
             }
             else
             {
@@ -59,6 +63,7 @@ namespace ToyStore.Controllers
                     Session["Cart"] = listCart;
                     return listCart;
                 }
+                return listCart;
             }
             return null;
         }
@@ -75,23 +80,69 @@ namespace ToyStore.Controllers
             //Get cart
             List<ItemCart> listCart = GetCart();
 
-            //Case 1: If product already exists in session Cart
-            ItemCart itemCart = listCart.SingleOrDefault(n => n.ID == ID);
-            if (itemCart != null)
+            //If member
+            Member member = Session["Member"] as Member;
+            if (member != null)
             {
-                //Check inventory before letting customers make a purchase
-                if (product.Quantity < itemCart.Quantity)
+                //Case 1: If product already exists in Member Cart
+                if (_cartService.CheckProductInCart(ID, member.ID))
                 {
-                    return View("ThongBao");
+                    _cartService.AddQuantityProductCartMember(ID, member.ID);
                 }
-                itemCart.Quantity++;
-                itemCart.Total = itemCart.Quantity * itemCart.Price;
+                else
+                {
+                    //Case 2: If product does not exist in Member Cart
+                    //Get product
+                    Product productAdd = _productService.GetByID(ID);
+                    ItemCart itemCart = new ItemCart();
+                    itemCart.ID = productAdd.ID;
+                    itemCart.Price = (decimal)productAdd.PromotionPrice;
+                    itemCart.Name = productAdd.Name;
+                    itemCart.Quantity = 1;
+                    itemCart.Total = itemCart.Price * itemCart.Quantity;
+                    itemCart.Image = productAdd.Image1;
+                    _cartService.AddCartIntoMember(itemCart, member.ID);
+                }
+                IEnumerable<Cart> carts = _cartService.GetCart(member.ID);
+                List<ItemCart> itemCarts = new List<ItemCart>();
+                foreach (var item in carts)
+                {
+                    ItemCart itemCart = new ItemCart();
+                    itemCart.ID = item.ProductID;
+                    itemCart.Price = item.Price;
+                    itemCart.Total = item.Total;
+                    itemCart.Image = item.Image;
+                    itemCart.Name = item.Name;
+                    itemCart.Quantity = item.Quantity;
+
+                    itemCarts.Add(itemCart);
+                }
+                Session["Cart"] = itemCarts;
                 return Redirect(strURL);
             }
+            else
+            {
+                if (listCart != null)
+                {
+                    //Case 1: If product already exists in session Cart
+                    ItemCart itemCart = listCart.SingleOrDefault(n => n.ID == ID);
+                    if (itemCart != null)
+                    {
+                        //Check inventory before letting customers make a purchase
+                        if (product.Quantity < itemCart.Quantity)
+                        {
+                            return View("ThongBao");
+                        }
+                        itemCart.Quantity++;
+                        itemCart.Total = itemCart.Quantity * itemCart.Price;
+                        return Redirect(strURL);
+                    }
 
-            //Case 2: If product does not exist in the Session Cart
-            ItemCart item = new ItemCart(ID);
-            listCart.Add(item);
+                    //Case 2: If product does not exist in the Session Cart
+                    ItemCart item = new ItemCart(ID);
+                    listCart.Add(item);
+                }
+            }
             return Redirect(strURL);
         }
         public ActionResult CartPartial()
@@ -174,9 +225,14 @@ namespace ToyStore.Controllers
             ItemCart itemUpdate = listCart.Find(n => n.ID == itemCart.ID);
             itemUpdate.Quantity = itemCart.Quantity;
             itemUpdate.Total = itemUpdate.Quantity * itemUpdate.Price;
-            //Update Cart Quantity Member
-            _cartService.UpdateQuantityCartMember(itemCart.Quantity, itemCart.ID);
-            Session["Cart"] = listCart;
+
+            Member member = Session["Member"] as Member;
+            if (member != null)
+            {
+                //Update Cart Quantity Member
+                _cartService.UpdateQuantityCartMember(itemCart.Quantity, itemCart.ID, member.ID);
+                Session["Cart"] = listCart;
+            }
 
             return RedirectToAction("Checkout");
         }
@@ -205,6 +261,23 @@ namespace ToyStore.Controllers
             }
             //Remove item cart
             listCart.Remove(item);
+            Member member = Session["Member"] as Member;
+            _cartService.RemoveCart(ID, member.ID);
+            IEnumerable<Cart> carts = _cartService.GetCart(member.ID);
+            List<ItemCart> itemCarts = new List<ItemCart>();
+            foreach (var itemCart in carts)
+            {
+                ItemCart Carts = new ItemCart();
+                Carts.ID = itemCart.ProductID;
+                Carts.Price = itemCart.Price;
+                Carts.Total = itemCart.Total;
+                Carts.Image = itemCart.Image;
+                Carts.Name = itemCart.Name;
+                Carts.Quantity = itemCart.Quantity;
+
+                itemCarts.Add(Carts);
+            }
+            Session["Cart"] = itemCarts;
             return RedirectToAction("Checkout");
         }
         [HttpGet]
