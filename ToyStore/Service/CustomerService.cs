@@ -10,6 +10,8 @@ namespace ToyStore.Service
     public interface ICustomerService
     {
         Customer AddCustomer(Customer customer);
+        IEnumerable<Customer> GetAll();
+        string GetEmailByID(int ID);
         void Save();
     }
     public class CustomerService : ICustomerService
@@ -23,6 +25,16 @@ namespace ToyStore.Service
         {
             this.context.CustomerRepository.Insert(customer);
             return customer;
+        }
+
+        public IEnumerable<Customer> GetAll()
+        {
+            return context.CustomerRepository.GetAllData();
+        }
+
+        public string GetEmailByID(int ID)
+        {
+            return context.CustomerRepository.GetDataByID(ID).Email;
         }
 
         public void Save()

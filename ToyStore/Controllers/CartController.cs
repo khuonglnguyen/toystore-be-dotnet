@@ -16,25 +16,51 @@ namespace ToyStore.Controllers
         private ICustomerService _customerService;
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
-        public CartController(IProductService productService, ICustomerService customerService, IOrderService orderService, IOrderDetailService orderDetailService)
+        private ICartService _cartService;
+        public CartController(IProductService productService, ICustomerService customerService, IOrderService orderService, IOrderDetailService orderDetailService, ICartService cartService)
         {
             _productService = productService;
             _customerService = customerService;
             _orderService = orderService;
             _orderDetailService = orderDetailService;
+            _cartService = cartService;
         }
         // GET: Cart
         public List<ItemCart> GetCart()
         {
-            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
-            //Check null session Cart
-            if (listCart == null)
+            Member member = Session["Member"] as Member;
+            if (_cartService.CheckCartMember(member.ID))
             {
-                //Initialization listCart
-                listCart = new List<ItemCart>();
-                Session["Cart"] = listCart;
+                IEnumerable<Cart> listCart = _cartService.GetCart(member.ID);
+                List<ItemCart> itemCarts = new List<ItemCart>();
+                foreach (var item in listCart)
+                {
+                    ItemCart itemCart = new ItemCart();
+                    itemCart.ID = item.ProductID;
+                    itemCart.Price = item.Price;
+                    itemCart.Total = item.Total;
+                    itemCart.Image = item.Image;
+                    itemCart.Name = item.Name;
+                    itemCart.Quantity = item.Quantity;
+
+                    itemCarts.Add(itemCart);
+                }
+                Session["Cart"] = itemCarts;
+                return itemCarts;
             }
-            return listCart;
+            else
+            {
+                List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
+                //Check null session Cart
+                if (listCart == null)
+                {
+                    //Initialization listCart
+                    listCart = new List<ItemCart>();
+                    Session["Cart"] = listCart;
+                    return listCart;
+                }
+            }
+            return null;
         }
         public ActionResult AddItemCart(int ID, string strURL)
         {
@@ -127,7 +153,11 @@ namespace ToyStore.Controllers
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.Cart = listCart;
-            return View(item);
+            return Json(new
+            {
+                data = item,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult EditCart(ItemCart itemCart)
@@ -144,6 +174,10 @@ namespace ToyStore.Controllers
             ItemCart itemUpdate = listCart.Find(n => n.ID == itemCart.ID);
             itemUpdate.Quantity = itemCart.Quantity;
             itemUpdate.Total = itemUpdate.Quantity * itemUpdate.Price;
+            //Update Cart Quantity Member
+            _cartService.UpdateQuantityCartMember(itemCart.Quantity, itemCart.ID);
+            Session["Cart"] = listCart;
+
             return RedirectToAction("Checkout");
         }
         [HttpGet]
@@ -181,6 +215,8 @@ namespace ToyStore.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            Customer customercheck = new Customer();
+            bool status = false;
             //Is Customer
             Customer customerNew = new Customer();
             if (Session["Member"] == null)
@@ -194,16 +230,31 @@ namespace ToyStore.Controllers
             {
                 //Is member
                 Member member = Session["Member"] as Member;
-                customerNew.FullName = member.FullName;
-                customerNew.Address = member.Address;
-                customerNew.Email = member.Email;
-                customerNew.PhoneNumber = member.PhoneNumber;
-                customerNew.MemberCategoryID = member.MemberCategoryID;
-                _customerService.AddCustomer(customerNew);
+                customercheck = _customerService.GetAll().FirstOrDefault(x => x.FullName.Contains(member.FullName));
+                if (customercheck != null)
+                {
+                    status = true;
+                }
+                else
+                {
+                    customerNew.FullName = member.FullName;
+                    customerNew.Address = member.Address;
+                    customerNew.Email = member.Email;
+                    customerNew.PhoneNumber = member.PhoneNumber;
+                    customerNew.MemberCategoryID = member.MemberCategoryID;
+                    _customerService.AddCustomer(customerNew);
+                }
             }
             //Add order
             Order order = new Order();
-            order.CustomerID = customerNew.ID;
+            if (status)
+            {
+                order.CustomerID = customercheck.ID;
+            }
+            else
+            {
+                order.CustomerID = customerNew.ID;
+            }
             order.DateOrder = DateTime.Now;
             order.DateShip = DateTime.Now;
             order.IsPaid = false;
@@ -223,7 +274,14 @@ namespace ToyStore.Controllers
                 _orderDetailService.AddOrderDetail(orderDetail);
             }
             Session["Cart"] = null;
-            SentMail("Đặt hàng thành công", customerNew.Email, "lapankhuongnguyen@gmail.com", "Garena009", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "<br/>Nhập mã đơn hàng vào ô tìm kiếm để xem thông tin và theo dõi đơn hàng của bạn</p>");
+            if (status)
+            {
+                SentMail("Đặt hàng thành công", customercheck.Email, "lapankhuongnguyen@gmail.com", "Garena009", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "<br/>Nhập mã đơn hàng vào ô tìm kiếm để xem thông tin và theo dõi đơn hàng của bạn</p>");
+            }
+            else
+            {
+                SentMail("Đặt hàng thành công", customerNew.Email, "lapankhuongnguyen@gmail.com", "Garena009", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "<br/>Nhập mã đơn hàng vào ô tìm kiếm để xem thông tin và theo dõi đơn hàng của bạn</p>");
+            }
             return RedirectToAction("Message");
         }
         [HttpGet]

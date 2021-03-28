@@ -10,6 +10,7 @@ namespace ToyStore.Service
     public interface IOrderDetailService
     {
         OrderDetail AddOrderDetail(OrderDetail order);
+        IEnumerable<OrderDetail> GetByOrderID(int ID);
         void Save();
     }
     public class OrderDetailService : IOrderDetailService
@@ -23,6 +24,11 @@ namespace ToyStore.Service
         {
             this.context.OrderDetailRepository.Insert(orderDetail);
             return orderDetail;
+        }
+
+        public IEnumerable<OrderDetail> GetByOrderID(int ID)
+        {
+            return this.context.OrderDetailRepository.GetAllData().Where(x => x.OrderID == ID);
         }
 
         public void Save()

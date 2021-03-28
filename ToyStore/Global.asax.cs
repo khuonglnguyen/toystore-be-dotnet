@@ -31,9 +31,19 @@ namespace ToyStore
             Application.Lock();
             Application["SumAccessTimes"] = (int)Application["SumAccessTimes"] + 1;
             var accessTimesCount = context.AccessTimesCountRepository.GetAllData().Where(x => x.Date.Date == DateTime.Now.Date);
-            List<AccessTimesCount> list = accessTimesCount.ToList();
-            list[0].AccessTimes += 1;
-            context.AccessTimesCountRepository.Update(list[0]);
+            if (accessTimesCount.Count() != 0)
+            {
+                List<AccessTimesCount> list = accessTimesCount.ToList();
+                list[0].AccessTimes += 1;
+                context.AccessTimesCountRepository.Update(list[0]);
+            }
+            else
+            {
+                AccessTimesCount accessTimesCountNew = new AccessTimesCount();
+                accessTimesCountNew.Date = DateTime.Now;
+                accessTimesCountNew.AccessTimes = 1;
+                context.AccessTimesCountRepository.Insert(accessTimesCountNew);
+            }
             Application["RealAccessTimes"] = (int)Application["RealAccessTimes"] + 1;
             Application.UnLock();
         }

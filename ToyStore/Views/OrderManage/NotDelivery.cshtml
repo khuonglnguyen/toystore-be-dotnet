@@ -1,0 +1,119 @@
+﻿@model PagedList.IPagedList<ToyStore.Models.Order>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Unpaid";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+@{
+    IEnumerable<ToyStore.Models.Customer> customers = ViewBag.CustomerList as IEnumerable<ToyStore.Models.Customer>;
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <hr />
+            <div class="w3-search-box">
+                <form action="~/ProductManage/List" method="post">
+                    <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
+                    <input type="submit" value="">
+                </form>
+            </div><!--//end-search-box-->
+            <p>@ViewBag.message</p>
+            <div class="clearfix"> </div>
+            <hr />
+            <h2>Danh sách đơn đặt hàng chưa giao hàng</h2>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Mã DĐH
+                        </th>
+                        <th>
+                            Tên khách hàng
+                        </th>
+                        <th>
+                            Ngày đặt
+                        </th>
+                        <th>
+                            Ngày giao
+                        </th>
+                        <th>
+                            Ưu đãi
+                        </th>
+                        <th>
+                            Thanh toán
+                        </th>
+                        <th>
+                            Tình trạng giao hàng
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int counter1 = 0;
+                    }
+                    @foreach (var item in Model.Join(customers, c => c.CustomerID, m => m.ID, (c, m) => new { c, m })
+                        .Select(n => new { CustomerName = n.m.FullName, ID = n.c.ID, DateOrder = n.c.DateOrder, DateShip = n.c.DateShip, Offer = n.c.Offer, IsPaid = n.c.IsPaid, IsDelivere = n.c.IsDelivere }))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td style="color:brown">
+                                <b>@Html.DisplayFor(modelItem => item.CustomerName)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateOrder)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateShip)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Offer)
+                            </td>
+                            <td>
+                                <div id="DivActive@(counter1)">
+                                    @if (item.IsPaid == true)
+                                    {
+                                        <span class="label label-success">Đã thanh toán</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-danger">Chưa thanh toán</span>
+                                    }
+                                </div>
+                            </td>
+
+                            <td>
+                                <div id="DivActive@(counter1)">
+                                    @if (item.IsPaid == true)
+                                    {
+                                        <span class="label label-success">Đã giao</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-warning">Chưa giao</span>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                @Html.ActionLink("Giao Hàng", "Delivered", new { ID = item.ID })
+                            </td>
+                        </tr>
+                        @(counter1++)
+                    }
+                    @(counter1 = 0)
+                </tbody>
+            </table>
+            <br />
+            <div id='Paging' style="text-align: center">
+                @Html.PagedListPager(Model, page => Url.Action("NotDelivery", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

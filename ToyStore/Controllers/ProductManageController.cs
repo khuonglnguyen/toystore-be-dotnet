@@ -21,9 +21,9 @@ namespace ToyStore.Controllers
         private IAgeService _ageService;
         private IGenderService _genderService;
 
-        public ProductManageController(IProductService productService, 
-            IProductCategoryService productCategoryService, 
-            SupplierService supplierService, 
+        public ProductManageController(IProductService productService,
+            IProductCategoryService productCategoryService,
+            SupplierService supplierService,
             ProducerService producerService,
             AgeService ageService,
             GenderService genderService)
@@ -53,7 +53,7 @@ namespace ToyStore.Controllers
 
             int pageSize = 5;
             //Get proudct category list
-            var products = _productService.GetProductListForManage().OrderBy(x=>x.Name);
+            var products = _productService.GetProductListForManage().OrderBy(x => x.Name);
             PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
             //Check null
             if (listProduct != null)
@@ -93,7 +93,7 @@ namespace ToyStore.Controllers
             //Check null
             if (listProduct != null)
             {
-                ViewBag.message="Hiển thị kết quả tìm kiếm với '"+keyword+"";
+                ViewBag.message = "Hiển thị kết quả tìm kiếm với '" + keyword + "";
                 //Return view
                 return View(listProduct);
             }
@@ -176,7 +176,7 @@ namespace ToyStore.Controllers
             //Create productCategory
             _productService.AddProduct(product);
             //Return view
-            return RedirectToAction("List");
+            return RedirectToAction("List", new { page = 1 });
         }
         [HttpGet]
         public ActionResult Edit(int id)
@@ -189,7 +189,7 @@ namespace ToyStore.Controllers
             var product = _productService.GetByID(id);
 
             //Get data for DropdownList
-            ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name",product.CategoryID);
+            ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
             ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
             ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
@@ -275,7 +275,7 @@ namespace ToyStore.Controllers
             //Update productCategory
             _productService.UpdateProduct(product);
             string Url = Request.Url.ToString();
-            return RedirectToAction("List",new { page=page});
+            return RedirectToAction("List", new { page = page });
         }
         [HttpGet]
         public ActionResult Block(int id, int row)
@@ -303,7 +303,7 @@ namespace ToyStore.Controllers
             //Set TempData for checking in view to show swal
             TempData["block"] = "Success";
             ViewBag.Row = row;
-            return PartialView("ProductActivePartial",_productService.GetByID(id));
+            return PartialView("ProductActivePartial", _productService.GetByID(id));
         }
         [HttpGet]
         public ActionResult Active(int id, int row)

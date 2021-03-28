@@ -17,9 +17,12 @@ namespace ToyStore.Models
         public DateTime DateOrder { get; set; }
         public DateTime DateShip { get; set; }
         public int Offer { get; set; }
+        public bool IsApproved { get; set; }
         public bool IsPaid { get; set; }
         public bool IsCancel { get; set; }
         public bool IsDelete { get; set; }
+        public bool IsDelivere { get; set; }
+        public bool IsReceived { get; set; }
         [ForeignKey("CustomerID")]
         public virtual Customer Customer { set; get; }
     }

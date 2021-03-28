@@ -27,6 +27,7 @@ namespace ToyStore.Data
         private GenericRepository<Emloyee> emloyeeRepository;
         private GenericRepository<EmloyeeType> emloyeeTypeRepository;
         private GenericRepository<AccessTimesCount> accessTimesCountRepository;
+        private GenericRepository<Cart> cartRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -212,6 +213,17 @@ namespace ToyStore.Data
                     this.accessTimesCountRepository = new GenericRepository<AccessTimesCount>(DbContext);
                 }
                 return accessTimesCountRepository;
+            }
+        }
+        public GenericRepository<Cart> CartRepository
+        {
+            get
+            {
+                if (this.cartRepository == null)
+                {
+                    this.cartRepository = new GenericRepository<Cart>(DbContext);
+                }
+                return cartRepository;
             }
         }
         public void Save()

@@ -26,6 +26,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListForDiscount();
         IEnumerable<Product> GetProductListRandom();
         Product GetByID(int ID);
+        void UpdateQuantity(int ID, int Quantity);
         IEnumerable<Product> GetProductListName(string keyword);
         void UpdateProduct(Product product);
         void DeleteProduct(Product product);
@@ -43,7 +44,7 @@ namespace ToyStore.Service
         public Product AddProduct(Product product)
         {
             product.LastUpdatedDate = DateTime.Now;
-            product.Discount = (int)(product.Price-(((product.Price/product.Price)*product.PromotionPrice)));
+            product.Discount = (int)(product.Price - (((product.Price / product.Price) * product.PromotionPrice)));
             this.context.ProductRepository.Insert(product);
             return product;
         }
@@ -67,7 +68,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductList()
         {
-            return this.context.ProductRepository.GetAllData(x=>x.IsActive == true);
+            return this.context.ProductRepository.GetAllData(x => x.IsActive == true);
         }
 
         public void Save()
@@ -101,7 +102,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductListByCategory(int ProductCategoryID)
         {
-            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.CategoryID == ProductCategoryID && x.IsActive==true);
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.CategoryID == ProductCategoryID && x.IsActive == true);
             return listProduct;
         }
         public IEnumerable<Product> GetProductListForHomePage(int productCategoryID)
@@ -124,7 +125,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductListRandom()
         {
-            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData().OrderBy(x=>Guid.NewGuid()).Take(10);
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData().OrderBy(x => Guid.NewGuid()).Take(10);
             return listProduct;
         }
 
@@ -195,6 +196,13 @@ namespace ToyStore.Service
         {
             product.IsActive = true;
             this.context.ProductRepository.Update(product);
+        }
+
+        public void UpdateQuantity(int ID, int Quantity)
+        {
+            Product product = context.ProductRepository.GetDataByID(ID);
+            product.Quantity -= Quantity;
+            context.ProductRepository.Update(product);
         }
     }
 }

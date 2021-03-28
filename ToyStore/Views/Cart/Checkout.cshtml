@@ -6,7 +6,41 @@
 @{
     List<ToyStore.Models.ItemCart> Cart = Session["Cart"] as List<ToyStore.Models.ItemCart>;
 }
+<script src="~/Scripts/bootbox.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('.btnEdit').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/Cart/EditCart',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        var data = response.data;
+                        $('#ID').val(data.ID);
+                        $('#Price').val(data.Price);
+                        $('#ProductID').val(data.ID);
+                        $('#Quantity').val(data.Quantity);
+                        $('#Image').attr('src', "/Content/images/" + data.Image);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script>
 <!--breadcrumbs-->
 <div class="breadcrumbs">
     <div class="container">
@@ -39,7 +73,7 @@
                                 <li><p>Thành tiền: @item.Total.ToString("#,##")₫</p></li>
                             </ul>
                         </div>
-                        @Html.ActionLink("Chỉnh sửa", "EditCart", new { @ID = item.ID }, new { @class = "btn btn-primary" })
+                        <button class="btn btn-default btnEdit" value="@item.ID">Sửa</button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -80,3 +114,41 @@
     </div>
 </div>
 <!--//cart-items-->
+<div class="modal fade" id="modalUpdate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditCart", "Cart", FormMethod.Post))
+                {
+                    <input type="text" name="ID" id="ID" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="Name">Mã sản phẩm:</label>
+                        <input type="text" class="form-control" name="ProductID" id="ProductID" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label>Hình ảnh:</label>
+                        <img name="Image" id="Image" style="height:200px;width:200px" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Đơn giá:</label>
+                        <input type="text" class="form-control" name="Price" id="Price" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Số lượng:</label>
+                        <input type="number" class="form-control" name="Quantity" id="Quantity">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

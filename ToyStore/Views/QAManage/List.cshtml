@@ -262,11 +262,15 @@
                                     {
                                         <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
                                     }
-                                    <button class="btn btn-primary btnEdit" value="@item.ID" disabled="disabled">Sửa</button>
+                                    else
+                                    {
+
+                                        <button class="btn btn-primary btnEdit" value="@item.ID" disabled="disabled">Sửa</button>
+                                    }
                                 }
                                 else
                                 {
-                                    <button class="btn btn-primary btnAnswer" value="@item.ID" >T.lời</button>
+                                    <button class="btn btn-primary btnAnswer" value="@item.ID">T.lời</button>
                                 }
                             </td>
                         </tr>

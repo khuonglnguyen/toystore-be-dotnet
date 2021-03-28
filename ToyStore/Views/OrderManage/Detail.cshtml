@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ToyStore.Models.OrderDetail>
+@{
+    ViewBag.Title = "Unpaid";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+@{
+    IEnumerable<ToyStore.Models.Customer> customers = ViewBag.CustomerList as IEnumerable<ToyStore.Models.Customer>;
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <hr />
+            <div class="w3-search-box">
+                <form action="~/ProductManage/List" method="post">
+                    <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
+                    <input type="submit" value="">
+                </form>
+            </div><!--//end-search-box-->
+            <p>@ViewBag.message</p>
+            <div class="clearfix"> </div>
+            <hr />
+            <h2>Chi Tiết Đơn Đặt Hàng: @ViewBag.OrderID</h2>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Mã DĐH
+                        </th>
+                        <th>
+                            Mã SP
+                        </th>
+                        <th>
+                            Số Lượng
+                        </th>
+                        <th>
+                            Đơn Giá
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td style="color:brown">
+                                <b>@Html.DisplayFor(modelItem => item.Product.Name)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.ActionLink("Duyệt", "OrderApproval", new { ID = ViewBag.OrderID },new { @class="btn btn-primary"})
+            <br />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ToyStore.Models.OrderDetail>
+@{
+    ViewBag.Title = "CheckoutOrder";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Đơn Đặt Hàng</li>
+        </ol>
+    </div>
+</div>
+<!--//breadcrumbs-->
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Mã DĐH
+                </th>
+                <th>
+                    Tên SP
+                </th>
+                <th>
+                    Đơn Giá
+                </th>
+                <th>
+                    Số Lượng
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>Tổng: @Model.Sum(x => x.Price)</p>
+    if (ViewBag.Status == "Approved" && ViewBag.Received == "")
+    {
+        @Html.ActionLink("Đã nhận được hàng", "Received", new { ID = ViewBag.OrderID })
+    }
+    <br />
+}
+else
+{
+    <p>Bạn chưa có đơn hàng</p>
+}

@@ -38,7 +38,7 @@
                     {
                         Member member = (Member)Session["Member"];
                         <li><i class="glyphicon glyphicon-user" aria-hidden="true"></i>@member.FullName</li>
-                        <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:info@example.com">@member.Email</a></li>
+                        <li><i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i><a href="@Url.Action("CheckoutOrder","Member",new { ID=member.ID})">Đơn Hàng</a></li>
                     }
                 </ul>
             </div>

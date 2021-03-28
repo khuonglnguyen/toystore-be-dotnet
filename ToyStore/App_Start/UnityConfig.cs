@@ -32,6 +32,7 @@ namespace ToyStore
             container.RegisterType<IEmloyeeTypeService, EmloyeeTypeService>();
             container.RegisterType<IEmloyeeService, EmloyeeService>();
             container.RegisterType<IAccessTimesCountService, AccessTimesCountService>();
+            container.RegisterType<ICartService, CartService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

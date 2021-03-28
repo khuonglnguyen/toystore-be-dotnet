@@ -22,8 +22,9 @@ namespace ToyStore.Controllers
         private IProductCategoryParentService _productCategoryParentService;
         private IGenderService _genderService;
         private IMemberService _memberService;
+        private ICartService _cartService;
 
-        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, IMemberService memberService)
+        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, IMemberService memberService, ICartService cartService)
         {
             _productCategoryService = productCategoryService;
             _productService = productService;
@@ -32,6 +33,7 @@ namespace ToyStore.Controllers
             _productCategoryParentService = productCategoryParentService;
             _genderService = genderService;
             _memberService = memberService;
+            _cartService = cartService;
         }
         #endregion
         public ActionResult Index()
@@ -106,6 +108,36 @@ namespace ToyStore.Controllers
                     {
                         return RedirectToAction("ConfirmEmail", "Member", new { ID = memberCheck.ID });
                     }
+                    else
+                    {
+                        if (_cartService.CheckCartMember(memberCheck.ID))
+                        {
+                            IEnumerable<Cart> carts = _cartService.GetCart(memberCheck.ID);
+                            List<ItemCart> itemCarts = new List<ItemCart>();
+                            foreach (var item in carts)
+                            {
+                                ItemCart itemCart = new ItemCart();
+                                itemCart.ID = item.ProductID;
+                                itemCart.Price = item.Price;
+                                itemCart.Total = item.Total;
+                                itemCart.Image = item.Image;
+                                itemCart.Name = item.Name;
+                                itemCart.Quantity = item.Quantity;
+
+                                itemCarts.Add(itemCart);
+                            }
+                            Session["Cart"] = itemCarts;
+                            return RedirectToAction("Index");
+                        }
+                        if (Session["Cart"] != null)
+                        {
+                            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
+                            foreach (var item in listCart)
+                            {
+                                _cartService.AddCartIntoMember(item, memberCheck.ID);
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -118,6 +150,7 @@ namespace ToyStore.Controllers
         public ActionResult SignOut()
         {
             Session["Member"] = null;
+            Session["Cart"] = null;
             return RedirectToAction("Index");
         }
     }

@@ -148,6 +148,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\OrderManageController.cs" />
     <Compile Include="Controllers\ProductCategoryManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -283,8 +284,25 @@
     <Compile Include="Migrations\202103240727453_AddTableAccessTimesCount.Designer.cs">
       <DependentUpon>202103240727453_AddTableAccessTimesCount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103250718598_AddColIsDelivereTableOrder.cs" />
+    <Compile Include="Migrations\202103250718598_AddColIsDelivereTableOrder.Designer.cs">
+      <DependentUpon>202103250718598_AddColIsDelivereTableOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103261009559_AddColIsApprovedTableOrder.cs" />
+    <Compile Include="Migrations\202103261009559_AddColIsApprovedTableOrder.Designer.cs">
+      <DependentUpon>202103261009559_AddColIsApprovedTableOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103270106204_AddColIsReceivedTableOrder.cs" />
+    <Compile Include="Migrations\202103270106204_AddColIsReceivedTableOrder.Designer.cs">
+      <DependentUpon>202103270106204_AddColIsReceivedTableOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103280445138_AddTableCart.cs" />
+    <Compile Include="Migrations\202103280445138_AddTableCart.Designer.cs">
+      <DependentUpon>202103280445138_AddTableCart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessTimesCount.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Emloyee.cs" />
     <Compile Include="Models\Ages.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -311,6 +329,7 @@
     <Compile Include="Data\Repository\IGenericRepository.cs" />
     <Compile Include="Service\AccessTimesCountService.cs" />
     <Compile Include="Service\AgeService.cs" />
+    <Compile Include="Service\CartService.cs" />
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\EmloyeeService.cs" />
@@ -570,6 +589,15 @@
     <Content Include="Views\QAManage\List.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\OrderManage\NotApproval.cshtml" />
+    <Content Include="Views\OrderManage\NotDelivery.cshtml" />
+    <Content Include="Views\OrderManage\DeliveredAndPaid.cshtml" />
+    <Content Include="Views\OrderManage\OrderApproval.cshtml" />
+    <Content Include="Views\OrderManage\Detail.cshtml" />
+    <Content Include="Views\OrderManage\ApprovedAndNotDelivery.cshtml" />
+    <Content Include="Views\OrderManage\DeliveredList.cshtml" />
+    <Content Include="Views\Member\CheckoutOrder.cshtml" />
+    <Content Include="Views\Member\OrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -676,6 +704,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103240727453_AddTableAccessTimesCount.resx">
       <DependentUpon>202103240727453_AddTableAccessTimesCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103250718598_AddColIsDelivereTableOrder.resx">
+      <DependentUpon>202103250718598_AddColIsDelivereTableOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103261009559_AddColIsApprovedTableOrder.resx">
+      <DependentUpon>202103261009559_AddColIsApprovedTableOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103270106204_AddColIsReceivedTableOrder.resx">
+      <DependentUpon>202103270106204_AddColIsReceivedTableOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103280445138_AddTableCart.resx">
+      <DependentUpon>202103280445138_AddTableCart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
