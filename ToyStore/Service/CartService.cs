@@ -9,13 +9,13 @@ namespace ToyStore.Service
 {
     public interface ICartService
     {
-        void AddCartIntoMember(ItemCart itemCart, int MemberID);
+        void AddCartIntoMember(Cart cart, int MemberID);
         bool CheckCartMember(int MemberID);
         void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID);
         void AddQuantityProductCartMember(int ProductID, int MemberID);
         void RemoveCart(int ProductID, int MemberID);
         void AddCart(Cart cart);
-        IEnumerable<Cart> GetCart(int MemberID);
+        List<Cart> GetCart(int MemberID);
         bool CheckProductInCart(int ProductID, int MemberID);
     }
     public class CartService : ICartService
@@ -31,17 +31,17 @@ namespace ToyStore.Service
             context.CartRepository.Insert(cart);
         }
 
-        public void AddCartIntoMember(ItemCart itemCart, int MemberID)
+        public void AddCartIntoMember(Cart cart, int MemberID)
         {
-            Cart cart = new Cart();
-            cart.ProductID = itemCart.ID;
-            cart.MemberID = MemberID;
-            cart.Price = itemCart.Price;
-            cart.Total = itemCart.Total;
-            cart.Image = itemCart.Image;
-            cart.Name = itemCart.Name;
-            cart.Quantity = itemCart.Quantity;
-            context.CartRepository.Insert(cart);
+            Cart itemcart = new Cart();
+            itemcart.ProductID = cart.ID;
+            itemcart.MemberID = MemberID;
+            itemcart.Price = cart.Price;
+            itemcart.Total = cart.Total;
+            itemcart.Image = cart.Image;
+            itemcart.Name = cart.Name;
+            itemcart.Quantity = cart.Quantity;
+            context.CartRepository.Insert(itemcart);
         }
 
         public void AddQuantityProductCartMember(int ProductID, int MemberID)
@@ -65,9 +65,9 @@ namespace ToyStore.Service
             return false;
         }
 
-        public IEnumerable<Cart> GetCart(int MemberID)
+        public List<Cart> GetCart(int MemberID)
         {
-            return context.CartRepository.GetAllData().Where(x => x.MemberID == MemberID);
+            return context.CartRepository.GetAllData().Where(x => x.MemberID == MemberID).ToList();
         }
 
         public void RemoveCart(int ProductID, int MemberID)

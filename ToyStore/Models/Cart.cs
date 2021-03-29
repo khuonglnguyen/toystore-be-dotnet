@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using ToyStore.Data;
 
 namespace ToyStore.Models
 {
@@ -24,5 +25,20 @@ namespace ToyStore.Models
         public virtual Member Member { set; get; }
         [ForeignKey("ProductID")]
         public virtual Product Product { set; get; }
+        public Cart(int iID)
+        {
+            ToyStoreDbContext db = new ToyStoreDbContext();
+            this.ProductID = iID;
+            Product product = db.Products.Single(n => n.ID == iID);
+            this.Name = product.Name;
+            this.Image = product.Image1;
+            this.Price = (decimal)product.PromotionPrice;
+            this.Quantity = 1;
+            this.Total = Price * Quantity;
+        }
+        public Cart()
+        {
+
+        }
     }
 }

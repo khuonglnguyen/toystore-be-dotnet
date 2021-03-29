@@ -112,26 +112,13 @@ namespace ToyStore.Controllers
                     {
                         if (_cartService.CheckCartMember(memberCheck.ID))
                         {
-                            IEnumerable<Cart> carts = _cartService.GetCart(memberCheck.ID);
-                            List<ItemCart> itemCarts = new List<ItemCart>();
-                            foreach (var item in carts)
-                            {
-                                ItemCart itemCart = new ItemCart();
-                                itemCart.ID = item.ProductID;
-                                itemCart.Price = item.Price;
-                                itemCart.Total = item.Total;
-                                itemCart.Image = item.Image;
-                                itemCart.Name = item.Name;
-                                itemCart.Quantity = item.Quantity;
-
-                                itemCarts.Add(itemCart);
-                            }
-                            Session["Cart"] = itemCarts;
+                            List<Cart> carts = _cartService.GetCart(memberCheck.ID);
+                            Session["Cart"] = carts;
                             return RedirectToAction("Index");
                         }
                         if (Session["Cart"] != null)
                         {
-                            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
+                            List<Cart> listCart = Session["Cart"] as List<Cart>;
                             foreach (var item in listCart)
                             {
                                 _cartService.AddCartIntoMember(item, memberCheck.ID);

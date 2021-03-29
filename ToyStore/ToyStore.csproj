@@ -312,7 +312,6 @@
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\ImportCoupon.cs" />
     <Compile Include="Models\ImportCouponDetail.cs" />
-    <Compile Include="Models\ItemCart.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\MemberCategory.cs" />
     <Compile Include="Models\Order.cs" />

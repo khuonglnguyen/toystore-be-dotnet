@@ -4,7 +4,7 @@
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 @{
-    List<ToyStore.Models.ItemCart> Cart = Session["Cart"] as List<ToyStore.Models.ItemCart>;
+    List<ToyStore.Models.Cart> Cart = Session["Cart"] as List<ToyStore.Models.Cart>;
 }
 <script src="~/Scripts/bootbox.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -26,7 +26,7 @@
                         var data = response.data;
                         $('#ID').val(data.ID);
                         $('#Price').val(data.Price);
-                        $('#ProductID').val(data.ID);
+                        $('#ProductID').val(data.ProductID);
                         $('#Quantity').val(data.Quantity);
                         $('#Image').attr('src', "/Content/images/" + data.Image);
                     }
@@ -60,7 +60,7 @@
             foreach (var item in Cart)
             {
                 <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
-                    <span class="close" onclick="location.href='@Url.Action("RemoveItemCart", "Cart", new { ID = item.ID })'">x</span>
+                    <span class="close" onclick="location.href='@Url.Action("RemoveItemCart", "Cart", new { ID = item.ProductID })'">x</span>
                     <div class="cart-sec simpleCart_shelfItem">
                         <div class="cart-item cyc">
                             <a href="single.html"><img src="@Url.Content("~/Content/images/" + item.Image)" class="img-responsive" alt=""></a>
@@ -73,7 +73,7 @@
                                 <li><p>Thành tiền: @item.Total.ToString("#,##")₫</p></li>
                             </ul>
                         </div>
-                        <button class="btn btn-default btnEdit" value="@item.ID">Sửa</button>
+                        <button class="btn btn-default btnEdit" value="@item.ProductID">Sửa</button>
                         <div class="clearfix"></div>
                     </div>
                 </div>
