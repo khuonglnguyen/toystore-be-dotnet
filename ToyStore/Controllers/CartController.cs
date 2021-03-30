@@ -53,7 +53,7 @@ namespace ToyStore.Controllers
             }
             return null;
         }
-        public ActionResult AddItemCart(int ID, string strURL)
+        public ActionResult AddItemCart(int ID)
         {
             //Check product already exists in DB
             Product product = _productService.GetByID(ID);
@@ -91,14 +91,16 @@ namespace ToyStore.Controllers
                 }
                 List<Cart> carts = _cartService.GetCart(member.ID);
                 Session["Cart"] = carts;
-                return Redirect(strURL);
+                ViewBag.TotalQuanity = GetTotalQuanity();
+                ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
+                return PartialView("CartPartial");
             }
             else
             {
                 if (listCart != null)
                 {
                     //Case 1: If product already exists in session Cart
-                    Cart itemCart = listCart.SingleOrDefault(n => n.ID == ID);
+                    Cart itemCart = listCart.SingleOrDefault(n => n.ProductID == ID);
                     if (itemCart != null)
                     {
                         //Check inventory before letting customers make a purchase
@@ -108,7 +110,9 @@ namespace ToyStore.Controllers
                         }
                         itemCart.Quantity++;
                         itemCart.Total = itemCart.Quantity * itemCart.Price;
-                        return Redirect(strURL);
+                        ViewBag.TotalQuanity = GetTotalQuanity();
+                        ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
+                        return PartialView("CartPartial");
                     }
 
                     //Case 2: If product does not exist in the Session Cart
@@ -116,7 +120,9 @@ namespace ToyStore.Controllers
                     listCart.Add(item);
                 }
             }
-            return Redirect(strURL);
+            ViewBag.TotalQuanity = GetTotalQuanity();
+            ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
+            return PartialView("CartPartial");
         }
         public ActionResult CartPartial()
         {
@@ -235,10 +241,14 @@ namespace ToyStore.Controllers
             //Remove item cart
             listCart.Remove(item);
             Member member = Session["Member"] as Member;
-            _cartService.RemoveCart(ID, member.ID);
-            List<Cart> carts = _cartService.GetCart(member.ID);
-            Session["Cart"] = carts;
-            return RedirectToAction("Checkout");
+            if (member != null)
+            {
+                _cartService.RemoveCart(ID, member.ID);
+                List<Cart> carts = _cartService.GetCart(member.ID);
+                Session["Cart"] = carts;
+            }
+            ViewBag.TotalQuantity = GetTotalQuanity();
+            return PartialView("CheckoutPartial");
         }
         [HttpGet]
         public ActionResult AddOrder(Customer customer)

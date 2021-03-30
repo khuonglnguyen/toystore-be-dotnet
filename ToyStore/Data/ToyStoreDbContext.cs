@@ -36,6 +36,7 @@ namespace ToyStore.Data
         public DbSet<EmloyeeType> EmloyeeTypes { get; set; }
         public DbSet<AccessTimesCount> AccessTimesCounts { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<ProductViewed> ProductVieweds { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

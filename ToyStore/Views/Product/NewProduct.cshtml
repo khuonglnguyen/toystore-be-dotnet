@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.Product>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Hàng mới";
+    ViewBag.Title = "Hàng Mới";
     Layout = "~/Views/Layout/ProductLayout.cshtml";
 }
 
@@ -10,6 +10,19 @@
 }
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.Add').on('click', function () {
+            swal({
+                title: "Thông báo",
+                text: "Thêm vào giỏ hàng thành công!",
+                icon: "success",
+                timer: 1500
+            });
+        });
+    });
+</script>
 <!--breadcrumbs-->
 <div class="breadcrumbs">
     <div class="container">
@@ -212,7 +225,7 @@
         <div class="product-sec1" id="ProductContainer">
             <br />
             <div id='Paging' style="text-align: right">
-                @Html.PagedListPager(Model, page => Url.Action("NewProduct" ,new {  page }))
+                @Html.PagedListPager(Model, page => Url.Action("NewProduct", new { page }))
             </div>
         </div>
     </div>

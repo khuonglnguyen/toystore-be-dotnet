@@ -1,16 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "Checkout";
+    ViewBag.Title = "Giỏ Hàng";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 @{
     List<ToyStore.Models.Cart> Cart = Session["Cart"] as List<ToyStore.Models.Cart>;
 }
 <script src="~/Scripts/bootbox.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-
 <script>
-    $(document).ready(function () {
+    $(document).ready(function (c) {
         $('.btnEdit').off('click').on('click', function () {
             var id = $(this).val();
             $('#modalUpdate').modal('show');
@@ -53,14 +51,14 @@
 <!--//breadcrumbs-->
 <!--cart-items-->
 <div class="cart-items">
-    <div class="container">
+    <div class="container" id="DivCheckout">
         @if (Cart != null)
         {
             <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Giỏ Hàng Của Bạn Có: @ViewBag.TotalQuantity Sản Phẩm</h3>
             foreach (var item in Cart)
             {
                 <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
-                    <span class="close" onclick="location.href='@Url.Action("RemoveItemCart", "Cart", new { ID = item.ProductID })'">x</span>
+                    @Ajax.ActionLink("Xóa", "RemoveItemCart", "Cart", new { ID = item.ProductID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCheckout", InsertionMode = InsertionMode.Replace }, null)
                     <div class="cart-sec simpleCart_shelfItem">
                         <div class="cart-item cyc">
                             <a href="single.html"><img src="@Url.Content("~/Content/images/" + item.Image)" class="img-responsive" alt=""></a>
@@ -86,7 +84,7 @@
                     </div>
                     <div class="widget-shadow">
                         <div class="login-top wow fadeInUp animated" data-wow-delay=".7s">
-                            <h4>Đăng nhập để mua hàng nhanh chóng <br> Bạn chưa có tài khoản? <a href="register.html">  Đăng Ký Ngay »</a> </h4>
+                            <h4>Đăng nhập để mua hàng nhanh chóng <br> Bạn chưa có tài khoản? <a href="@Url.Action("SignUp","Home")">  Đăng Ký Ngay »</a> </h4>
                         </div>
                         <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
                             @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Get))

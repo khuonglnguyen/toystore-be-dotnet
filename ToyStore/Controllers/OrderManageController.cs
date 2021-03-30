@@ -153,6 +153,7 @@ namespace ToyStore.Controllers
             foreach (var item in orderDetail)
             {
                 _productService.UpdateQuantity(item.ProductID, item.Quantity);
+                _productService.UpdatePurchasedCount(item.ProductID, item.Quantity);
             }
             return RedirectToAction("Index", "Home");
         }

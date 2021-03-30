@@ -1,23 +1,16 @@
 ﻿@model ToyStore.Models.Product
-<script>
-    $(document).ready(function () {
-        $('.item_add').on('click', function () {
-            alert(sd);
-        });
-    });
-</script>
+
 <div class="new-top">
-    <a href="@Url.Action("Details","Product",new { ID=Model.ID})"><img src="@Url.Content("~/Content/images/"+Model.Image1)" class="img-responsive" alt="item" /></a>
+    <a href="@Url.Action("Details","Product",new { ID=Model.ID})"><img src="@Url.Content("~/Content/images/"+Model.Image1)" style="height:250px;width:300px" class="img-responsive" alt="item" /></a>
     <div class="new-text">
         <ul>
-            <li><a href="@Url.Action("Details","Product",new { ID=Model.ID})" >Xem Chi Tiết </a></li>
-            <li><input type="number" class="item_quantity" min="1" value="1"></li>
-            <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=Model.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
+            <li><a href="@Url.Action("Details","Product",new { ID=Model.ID})">Xem Chi Tiết </a></li>
+            <li class="Add">@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = Model.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
         </ul>
     </div>
 </div>
 <div class="new-bottom">
-    <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@Model.Name </a></h5>
+    <h5><a class="name" href="@Url.Action("Details","Product",new { ID=Model.ID})" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@Model.Name </a></h5>
     <div class="rating">
         <span class="on">☆</span>
         <span class="on">☆</span>
@@ -26,7 +19,7 @@
         <span>☆</span>
     </div>
     <div class="ofr">
-        <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p>
+        <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p><br />
         <p><span class="item_price">@Model.PromotionPrice.Value.ToString("#,##")₫</span></p>
     </div>
 </div>

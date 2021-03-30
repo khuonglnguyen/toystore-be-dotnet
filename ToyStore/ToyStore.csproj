@@ -157,6 +157,7 @@
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\ToyStoreDbContext.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
+    <Compile Include="Extensions\HelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -300,6 +301,10 @@
     <Compile Include="Migrations\202103280445138_AddTableCart.Designer.cs">
       <DependentUpon>202103280445138_AddTableCart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103301235024_AddTableProductViewed.cs" />
+    <Compile Include="Migrations\202103301235024_AddTableProductViewed.Designer.cs">
+      <DependentUpon>202103301235024_AddTableProductViewed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessTimesCount.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -320,6 +325,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\ProductCategoryParent.cs" />
+    <Compile Include="Models\ProductViewed.cs" />
     <Compile Include="Models\QA.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Role.cs" />
@@ -577,7 +583,6 @@
     <Content Include="Views\Member\ConfirmEmailLink.cshtml" />
     <Content Include="Views\Cart\CartPartial.cshtml" />
     <Content Include="Views\Cart\Checkout.cshtml" />
-    <Content Include="Views\Cart\EditCart.cshtml" />
     <Content Include="Views\Cart\Message.cshtml" />
     <Content Include="Views\Layout\ProductLayout.cshtml" />
     <Content Include="Views\Layout\CheckoutLayout.cshtml" />
@@ -597,6 +602,7 @@
     <Content Include="Views\OrderManage\DeliveredList.cshtml" />
     <Content Include="Views\Member\CheckoutOrder.cshtml" />
     <Content Include="Views\Member\OrderDetail.cshtml" />
+    <Content Include="Views\Cart\CheckoutPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -715,6 +721,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103280445138_AddTableCart.resx">
       <DependentUpon>202103280445138_AddTableCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103301235024_AddTableProductViewed.resx">
+      <DependentUpon>202103301235024_AddTableProductViewed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

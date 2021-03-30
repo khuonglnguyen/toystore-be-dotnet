@@ -27,6 +27,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListRandom();
         Product GetByID(int ID);
         void UpdateQuantity(int ID, int Quantity);
+        void UpdatePurchasedCount(int ID, int PurchasedCount);
         IEnumerable<Product> GetProductListName(string keyword);
         void UpdateProduct(Product product);
         void DeleteProduct(Product product);
@@ -202,6 +203,13 @@ namespace ToyStore.Service
         {
             Product product = context.ProductRepository.GetDataByID(ID);
             product.Quantity -= Quantity;
+            context.ProductRepository.Update(product);
+        }
+
+        public void UpdatePurchasedCount(int ID, int PurchasedCount)
+        {
+            Product product = context.ProductRepository.GetDataByID(ID);
+            product.PurchasedCount += PurchasedCount;
             context.ProductRepository.Update(product);
         }
     }
