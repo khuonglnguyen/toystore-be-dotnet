@@ -18,6 +18,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListByGender(int GenderID);
         IEnumerable<Product> GetProductListByAge(int AgeID);
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
+        IEnumerable<Product> GetProductListBySupplier(int SupplierID);
         IEnumerable<Product> GetProductListIsNew();
         IEnumerable<Product> GetProductList(string keyWord);
         IEnumerable<Product> GetProductListForManage();
@@ -25,6 +26,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListForHomePage(int productCategoryID);
         IEnumerable<Product> GetProductListForDiscount();
         IEnumerable<Product> GetProductListRandom();
+        IEnumerable<Product> GetProductListAlmostOver();
         Product GetByID(int ID);
         void UpdateQuantity(int ID, int Quantity);
         void UpdatePurchasedCount(int ID, int PurchasedCount);
@@ -211,6 +213,17 @@ namespace ToyStore.Service
             Product product = context.ProductRepository.GetDataByID(ID);
             product.PurchasedCount += PurchasedCount;
             context.ProductRepository.Update(product);
+        }
+
+        public IEnumerable<Product> GetProductListAlmostOver()
+        {
+            return context.ProductRepository.GetAllData().OrderBy(x=>x.Quantity);
+        }
+
+        public IEnumerable<Product> GetProductListBySupplier(int SupplierID)
+        {
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.SupplierID == SupplierID && x.IsActive == true);
+            return listProduct;
         }
     }
 }

@@ -2,6 +2,19 @@
     ViewBag.Title = "Đăng Ký";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
+<script>
+    $(document).ready(function () {
+        $('#Password, #confirm_password').on('keyup', function () {
+            if ($('#Password').val() == $('#confirm_password').val()) {
+                $('#message').html('Đúng').css('color', 'green');
+            } else
+                $('#message').html('Không đúng').css('color', 'red');
+        });
+        $('#btnSignIn').off('click').on('click', function () {
+            var check = $('#message').html();
+        });
+    });
+</script>
 <!--breadcrumbs-->
 <div class="breadcrumbs">
     <div class="container">
@@ -26,13 +39,15 @@
         <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
             @using (Html.BeginForm("SignUp", "Home", FormMethod.Post))
             {
-                <input type="text" class="user" name="Username" placeholder="Tên đăng nhập" required="">
-                <input type="password" name="Password" class="lock" placeholder="Mật Khẩu">
-                <input type="text" class="user" name="FullName" placeholder="Họ tên" required="">
-                <input type="text" class="user" name="Email" placeholder="Email của bạn" required="">
-                <input type="text" class="user" name="PhoneNumber" placeholder="Số điện thoại" required="">
-                <input type="text" class="user" name="Address" placeholder="Địa chỉ" required="">
-                <input type="submit" name="Sign In" value="Đăng Ký">
+                <input type="text" class="user" name="Username" placeholder="Tên đăng nhập" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào tên đăng nhập')" oninput="setCustomValidity('')">
+                <input type="password" id="Password" name="Password" class="lock" placeholder="Mật Khẩu" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào mật khẩu')" oninput="setCustomValidity('')">
+                <input type="password" id="confirm_password" name="confirm_password" class="lock" placeholder="Nhập lại mật Khẩu" required="" oninvalid="this.setCustomValidity('Vui lòng nhập lại mật khẩu')" oninput="setCustomValidity('')">
+                <span id='message'></span>
+                <input type="text" class="user" name="FullName" placeholder="Họ tên" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào họ tên')" oninput="setCustomValidity('')">
+                <input type="text" class="user" name="Email" placeholder="Email của bạn" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào Email')" oninput="setCustomValidity('')">
+                <input type="text" class="user" name="PhoneNumber" placeholder="Số điện thoại" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào số điện thoại')" oninput="setCustomValidity('')">
+                <input type="text" class="user" name="Address" placeholder="Địa chỉ" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào địa chỉ')" oninput="setCustomValidity('')">
+                <input type="submit" id="btnSignIn" name="Sign In" value="Đăng Ký">
             }
         </div>
     </div>

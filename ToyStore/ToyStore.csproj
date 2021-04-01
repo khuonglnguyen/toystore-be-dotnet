@@ -147,6 +147,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ImportProductManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OrderManageController.cs" />
     <Compile Include="Controllers\ProductCategoryManageController.cs" />
@@ -305,6 +306,14 @@
     <Compile Include="Migrations\202103301235024_AddTableProductViewed.Designer.cs">
       <DependentUpon>202103301235024_AddTableProductViewed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103310717108_AddColEmloyeeIDTableImportCoupon.cs" />
+    <Compile Include="Migrations\202103310717108_AddColEmloyeeIDTableImportCoupon.Designer.cs">
+      <DependentUpon>202103310717108_AddColEmloyeeIDTableImportCoupon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103310812289_ChangeColTableImportCoupon.cs" />
+    <Compile Include="Migrations\202103310812289_ChangeColTableImportCoupon.Designer.cs">
+      <DependentUpon>202103310812289_ChangeColTableImportCoupon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessTimesCount.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -340,6 +349,8 @@
     <Compile Include="Service\EmloyeeService.cs" />
     <Compile Include="Service\EmloyeeTypeService.cs" />
     <Compile Include="Service\GenderService.cs" />
+    <Compile Include="Service\ImportCouponDetailService.cs" />
+    <Compile Include="Service\ImportCouponService.cs" />
     <Compile Include="Service\MemberCategoryService.cs" />
     <Compile Include="Service\MemberService.cs" />
     <Compile Include="Service\OrderDetailService.cs" />
@@ -603,6 +614,10 @@
     <Content Include="Views\Member\CheckoutOrder.cshtml" />
     <Content Include="Views\Member\OrderDetail.cshtml" />
     <Content Include="Views\Cart\CheckoutPartial.cshtml" />
+    <Content Include="Views\ImportProductManage\ImportProduct.cshtml" />
+    <Content Include="Views\ImportProductManage\ProductListIsAlmostOver.cshtml" />
+    <Content Include="Views\ImportProductManage\ImportProductBySupplierID.cshtml" />
+    <Content Include="Views\ImportProductManage\ImportCoupon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -724,6 +739,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103301235024_AddTableProductViewed.resx">
       <DependentUpon>202103301235024_AddTableProductViewed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103310717108_AddColEmloyeeIDTableImportCoupon.resx">
+      <DependentUpon>202103310717108_AddColEmloyeeIDTableImportCoupon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103310812289_ChangeColTableImportCoupon.resx">
+      <DependentUpon>202103310812289_ChangeColTableImportCoupon.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

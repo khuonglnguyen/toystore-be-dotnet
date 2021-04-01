@@ -28,6 +28,8 @@ namespace ToyStore.Data
         private GenericRepository<EmloyeeType> emloyeeTypeRepository;
         private GenericRepository<AccessTimesCount> accessTimesCountRepository;
         private GenericRepository<Cart> cartRepository;
+        private GenericRepository<ImportCoupon> importCouponRepository;
+        private GenericRepository<ImportCouponDetail> importCouponDetailRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -224,6 +226,28 @@ namespace ToyStore.Data
                     this.cartRepository = new GenericRepository<Cart>(DbContext);
                 }
                 return cartRepository;
+            }
+        }
+        public GenericRepository<ImportCoupon> ImportCouponRepository
+        {
+            get
+            {
+                if (this.importCouponRepository == null)
+                {
+                    this.importCouponRepository = new GenericRepository<ImportCoupon>(DbContext);
+                }
+                return importCouponRepository;
+            }
+        }
+        public GenericRepository<ImportCouponDetail> ImportCouponDetailRepository
+        {
+            get
+            {
+                if (this.importCouponDetailRepository == null)
+                {
+                    this.importCouponDetailRepository = new GenericRepository<ImportCouponDetail>(DbContext);
+                }
+                return importCouponDetailRepository;
             }
         }
         public void Save()

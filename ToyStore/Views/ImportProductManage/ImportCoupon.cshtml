@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<ToyStore.Models.ImportCoupon>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ProductListIsAlmostOver";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <h2>Danh sách phiếu nhập</h2>
+            <input type="submit" value="Xóa mục đã chọn" class="btn btn-default" id="btnDeleteMulti" />
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Mã Phiếu Nhập
+                        </th>
+                        <th>
+                            Mã NCC
+                        </th>
+                        <th>
+                            Nhân Viên
+                        </th>
+                        <th>
+                            Ngày Nhập
+                        </th>
+                        <th>
+                            Trạng Thái
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @Html.Hidden(item.ID.ToString())
+                        <tr>
+                            <td style="color:brown">
+                                <b>@Html.DisplayFor(modelItem => item.ID)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SupplierID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmloyeeID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @if (item.IsDelete == true)
+                                {
+                                    <span class="label label-danger">Đã xóa</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-success">Lưu trữ</span>
+                                }
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btnImport" value="@item.ID">Chi Tiết</button>
+                                @if (item.IsDelete == true)
+                                {
+                                    @Html.ActionLink("P.Hồi", "Rehibilitate", "ImportProductManage", new { ID = item.ID, page = @ViewBag.Page }, new { @class = "btn btn-danger" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Xóa", "Delete", "ImportProductManage", new { ID = item.ID, page = @ViewBag.Page }, new { @class = "btn btn-danger" })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <div id='Paging' style="text-align: center">
+                @Html.PagedListPager(Model, page => Url.Action("ImportCoupon", new { page }))
+            </div>
+        </div>
+    </div>
+</div>

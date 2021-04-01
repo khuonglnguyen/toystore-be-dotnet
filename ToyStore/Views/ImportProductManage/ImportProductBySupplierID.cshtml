@@ -1,0 +1,148 @@
+﻿@using ToyStore.Models
+@model ImportCoupon
+@{
+    ViewBag.Title = "Nhập Hàng";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<script src="~/Scripts/bootbox.js"></script>
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <h2>Nhà Cung Cấp: @ViewBag.SupplierName</h2>
+            @using (Html.BeginForm("ImportProduct", "ImportProductManage", FormMethod.Post))
+            {
+                <input type="text" name="SupplierID" value="@ViewBag.SupplierID" hidden="hidden" />
+                <table class="tblImportCouponDetail" id="table">
+                    @{ IEnumerable<Product> lstProduct = ViewBag.ListProduct as IEnumerable<Product>;}
+                    <tr class="trAppend" style="display:none;">
+                        <td>
+                            <select class="ddlProduct" id="ProductID" name="ProductID">
+                                @foreach (var item in lstProduct)
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input name="" class="Price" value="0" />
+                        </td>
+                        <td>
+                            <input name="" class="Quantity" value="0" />
+                        </td>
+                        <td>
+                            <input class="btnDelete btn btn-danger" style="width:30px;height:30px" value="-" />
+                        </td>
+                    </tr>
+                    <tr class="trFirstChild" data-id="-1">
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá nhập</th>
+                        <th>Số lượng nhập</th>
+                        <th></th>
+                    </tr>
+                </table>
+                @*Nút button thêm*@
+                <input type="button" class="btn btn-success" value="+" id="btnAdd" />
+                <input type="submit" class="btn btn-primary" value="Nhập hàng" id="btnImportProduct" />
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnAdd").click(function () {
+        //Lấy id của thẻ tr cuối cùng thuộc table có class = tblChiTietPhieuNhap
+        //Phương thức find là tìm đến thẻ nào đó: ở đây là thẻ tr (:last-child) là thẻ tr cuối cùng trong table tblChiTietPhieuNhap
+        var id_cuoi = $(".tblImportCouponDetail").find("tr:last-child").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        //Bước 1:
+        //lấy nội dung phía trong thẻ trAppend
+        var tdnoidung = $(".trAppend").html();
+        //Bước 2:
+        //Tạo 1 thẻ tr bao ngoài nội dung
+        var trnoidung = "<tr class=\"trAppended\" data-id=\"" + i + "\">" + tdnoidung + "</tr>";
+        //Bước 3:
+        //append trnoidung vào thẻ table Append
+        $(".tblImportCouponDetail").append(trnoidung);
+        LoadIDLenThe();
+    });
+
+    //Phương thức xử lý gán name cho td
+    function LoadIDLenThe() {
+        $(".trAppended").each(function () {
+            //Lấy data-id của tr
+            var id = $(this).attr("data-id");
+            var nameProductID = "[" + id + "].ProductID";
+            var nameQuantity = "[" + id + "].Quantity";
+            var namePrice = "[" + id + "].Price";
+
+            $(this).find(".ddlProduct").attr("name", nameProductID); //Gán name cho ddlSanPham
+            $(this).find(".Price").attr("name", namePrice); //Gán name cho txtDonGia
+            $(this).find(".Quantity").attr("name", nameQuantity); //Gán name cho txtSoLuong
+        })
+    };
+
+    //Cập nhật id
+    function CapNhatID() {
+        //Lấy lại tr 1
+        var id_cuoi = $(".tblImportCouponDetail").find(".trFirstChild").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        $(".trAppended").each(function () {
+            var id = i;
+            //Cập nhật lại name khi xóa
+            var nameProductID = "[" + id + "].ProductID";
+            var nameQuantity = "[" + id + "].Quantity";
+            var namePrice = "[" + id + "].Price";
+
+            $(this).find(".ddlProduct").attr("name", nameProductID); //Gán name cho ddlSanPham
+            $(this).find(".Price").attr("name", namePrice); //Gán name cho txtDonGia
+            $(this).find(".Quantity").attr("name", nameQuantity); //Gán name cho txtSoLuong
+
+            //Cập nhật lại data-id khi xóa
+            $(this).attr("data-id", i);
+            i++;
+        })
+    };
+
+    //Sự kiện xóa
+    $("body").on("click", ".btnDelete", function () {
+        $(this).closest("tr").remove();
+        CapNhatID();
+    });
+
+    //Kiểm tra dữ liệu đầu vào
+    $("#btnImportProduct").click(function () {
+        if (KiemTraDonGia() == false) {
+            return false;
+        }
+        if (KiemTraSoLuong() == false) {
+            return false;
+        }
+    });
+
+    //Kiểm tra đơn giá
+    function KiemTraDonGia() {
+        var bl = true;
+        $(".Price").each(function () {
+            var giatri = $(this).val();
+            if (isNaN(giatri) == true) {
+                alert("Đơn giá không hợp lệ");
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+
+    //Kiểm tra số lượng
+    function KiemTraDonGia() {
+        var bl = true;
+        $(".Quantity").each(function () {
+            var giatri = $(this).val();
+            if (isNaN(giatri) == true) {
+                alert("Số lượng không hợp lệ");
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+</script>
