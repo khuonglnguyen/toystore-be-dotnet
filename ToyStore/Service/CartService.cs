@@ -33,15 +33,8 @@ namespace ToyStore.Service
 
         public void AddCartIntoMember(Cart cart, int MemberID)
         {
-            Cart itemcart = new Cart();
-            itemcart.ProductID = cart.ID;
-            itemcart.MemberID = MemberID;
-            itemcart.Price = cart.Price;
-            itemcart.Total = cart.Total;
-            itemcart.Image = cart.Image;
-            itemcart.Name = cart.Name;
-            itemcart.Quantity = cart.Quantity;
-            context.CartRepository.Insert(itemcart);
+            cart.MemberID = MemberID;
+            context.CartRepository.Insert(cart);
         }
 
         public void AddQuantityProductCartMember(int ProductID, int MemberID)

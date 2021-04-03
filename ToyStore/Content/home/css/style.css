@@ -335,8 +335,8 @@ ul.multi-column-dropdown:nth-child(3) {
 .cd-header-buttons {
     position: absolute;
     display: inline-block;
-    top: -47px;
-    right: 15%;
+    top: -50px;
+    right: 6%;
 }
 .cd-header-buttons li {
 	display: inline-block;

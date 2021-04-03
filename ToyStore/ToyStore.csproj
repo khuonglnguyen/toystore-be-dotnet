@@ -386,6 +386,7 @@
     <Content Include="Content\home\css\jquery-ui.css" />
     <Content Include="Content\home\css\style.css" />
     <Content Include="Content\home\images\1.jpg" />
+    <Content Include="Content\home\images\ankhuong.png" />
     <Content Include="Content\home\images\b1.png" />
     <Content Include="Content\home\images\b2.png" />
     <Content Include="Content\home\images\b3.png" />
@@ -520,7 +521,10 @@
     <Content Include="Content\sweetalert\docs.css" />
     <Content Include="Content\sweetalert\sweet-alert.css" />
     <Content Include="Content\sweetalert\thumbs-up.jpg" />
+    <Content Include="css\font-awesome.css" />
+    <Content Include="css\font-awesome.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootbox.js" />
@@ -539,6 +543,11 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\home\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\home\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

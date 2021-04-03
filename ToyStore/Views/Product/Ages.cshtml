@@ -6,6 +6,7 @@
 }
 
 @{
+    IEnumerable<ToyStore.Models.Product> products = ViewBag.ListProduct as IEnumerable<ToyStore.Models.Product>;
     int couter = 1;
 }
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -194,8 +195,8 @@
                 </div>
             </div>
             <div class="gallery-grid ">
-                <h6>YOU MAY ALSO LIKE</h6>
-                <a href="single.html"><img src="images/b1.png" class="img-responsive" alt="" /></a>
+                <h6>Sản Phẩm Đã Xem</h6>
+                <a href="single.html"><img src="~/Content/images/g4.jpg" class="img-responsive" alt="" /></a>
                 <div class="gallery-text simpleCart_shelfItem">
                     <h5><a class="name" href="single.html">Full Sleeves Romper</a></h5>
                     <p><span class="item_price">60$</span></p>

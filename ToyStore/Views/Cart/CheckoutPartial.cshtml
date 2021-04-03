@@ -7,7 +7,10 @@
     foreach (var item in Cart)
     {
         <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
-            @Ajax.ActionLink("Xóa", "RemoveItemCart", "Cart", new { ID = item.ProductID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCheckout", InsertionMode = InsertionMode.Replace }, null)
+            <div style="text-align:right">
+                <button class="btn btn-group btnEdit" value="@item.ProductID">Sửa</button>
+                @Ajax.ActionLink("X", "RemoveItemCart", "Cart", new { ID = item.ProductID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCheckout", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-danger btnRemove" })
+            </div>
             <div class="cart-sec simpleCart_shelfItem">
                 <div class="cart-item cyc">
                     <a href="single.html"><img src="@Url.Content("~/Content/images/" + item.Image)" class="img-responsive" alt=""></a>
@@ -20,7 +23,6 @@
                         <li><p>Thành tiền: @item.Total.ToString("#,##")₫</p></li>
                     </ul>
                 </div>
-                <button class="btn btn-default btnEdit" value="@item.ProductID">Sửa</button>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -50,8 +52,9 @@
     }
     else
     {
-
-        @Html.ActionLink("Đặt Hàng", "AddOrder", "Cart")
+        <div style="text-align:right">
+            @Html.ActionLink("Đặt Hàng", "AddOrder", "Cart", null, new { @class = "btn btn-success" })
+        </div>
     }
 }
 else

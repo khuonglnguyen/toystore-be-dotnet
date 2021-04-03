@@ -3,9 +3,17 @@
     ViewBag.Title = "Giới Thiệu";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
-<div class="page-head_agile_info_w3l">
-
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Giới Thiệu</li>
+        </ol>
+    </div>
 </div>
+<br />
+<!--//breadcrumbs-->
 <div class="welcome">
     <div class="container">
         <!-- tittle heading -->

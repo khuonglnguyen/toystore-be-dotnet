@@ -81,7 +81,7 @@ namespace ToyStore.Controllers
                     //Get product
                     Product productAdd = _productService.GetByID(ID);
                     Cart itemCart = new Cart();
-                    itemCart.ID = productAdd.ID;
+                    itemCart.ProductID = productAdd.ID;
                     itemCart.Price = (decimal)productAdd.PromotionPrice;
                     itemCart.Name = productAdd.Name;
                     itemCart.Quantity = 1;

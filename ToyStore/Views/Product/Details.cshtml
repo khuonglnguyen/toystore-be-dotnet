@@ -13,7 +13,6 @@
     Member member = Session["Member"] as Member;
     int counter = 1;
 }
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -239,7 +238,7 @@
                                         <input value="@Model.ID" hidden="hidden" name="productID" />
                                         <div class="form-group mx-sm-3 mb-2">
                                             <label for="inputPassword2" class="sr-only">Nội dung câu hỏi</label>
-                                            <textarea class="form-control" id="Textarea2" style="resize:none" rows="3"></textarea>
+                                            <textarea class="form-control" id="Textarea2" style="resize:none" rows="3" placeholder="Viết câu hỏi tại đây..."></textarea>
                                         </div>
                                         <input type="text" name="Question" id="content2" hidden="hidden" />
                                         <button type="submit" class="btn btn-warning btnPost">Đăng Câu Hỏi</button>
@@ -310,7 +309,7 @@
                                         <input value="@Model.ID" hidden="hidden" name="productID" />
                                         <div class="form-group mx-sm-3 mb-2">
                                             <label for="inputPassword2" class="sr-only">Nội dung</label>
-                                            <textarea class="form-control" id="Textarea1" style="resize:none" rows="3"></textarea>
+                                            <textarea class="form-control" id="Textarea1" style="resize:none" rows="3" placeholder="Viết bình luận tại đây..."></textarea>
                                         </div>
                                         <input type="text" name="content" id="content" hidden="hidden" />
                                         <button type="submit" class="btn btn-warning btnPost">Đăng Bình Luận</button>
