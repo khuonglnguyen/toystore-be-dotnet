@@ -10,7 +10,7 @@
 <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
 <script>
     $(document).ready(function (c) {
-        $('.btnEdit').off('click').on('click', function () {
+        $(document).on('click', '.btnEdit', function () {
             var id = $(this).val();
             $('#modalUpdate').modal('show');
             $.ajax({
@@ -34,14 +34,37 @@
                     }
                 },
                 error: function (err) {
-                    console.log(err);
+                    bootbox.alert("ds");
                 }
             });
         });
-        $(".btnRemove").on("click", function (e) {
-            setTimeout(function () {
-                location.reload();
-            }, 3000)
+        $(document).on('click', '.btnDelete', function () {
+            var id = $(this).val();
+            $.ajax({
+                url: '/Cart/RemoveItemCart',
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                dataType: 'html',
+                success: function (result) {
+                    $('#DivCheckout').html(result);
+                    $.ajax({
+                        url: '/Cart/CartPartial',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function (result) {
+                            $('#DivCart').html(result);
+                        },
+                        error: function (err) {
+                            bootbox.alert("ds");
+                        }
+                    });
+                },
+                error: function (err) {
+                    bootbox.alert("ds");
+                }
+            });
         });
     });
 </script>
@@ -68,7 +91,9 @@
                         <button class="btn btn-group btnEdit" value="@item.ProductID">
                             <i class="fa fa-pencil"></i>
                         </button>
-                        @Ajax.ActionLink("X", "RemoveItemCart", "Cart", new { ID = item.ProductID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCheckout", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-danger btnRemove" })
+                        <button class="btn btn-danger btnDelete" value="@item.ProductID">
+                            <i class="fa fa-close"></i>
+                        </button>
                     </div>
                     <div class="cart-sec simpleCart_shelfItem">
                         <div class="cart-item cyc">

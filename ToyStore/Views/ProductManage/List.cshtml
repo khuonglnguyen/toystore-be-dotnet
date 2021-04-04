@@ -161,44 +161,44 @@
                     @foreach (var item in Model)
                     {
                         @Html.Hidden(item.ID.ToString())
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="cbProductCategory" value="@item.ID" name="IDDelete" />
-                            </td>
-                            <td style="color:brown">
-                                <b>@Html.DisplayFor(modelItem => item.Name)</b>
-                            </td>
-                            <td>
-                                <img src="@Url.Content("~/Content/images/" + item.Image1)" width="100" height="100" />
-                            </td>
-                            <td>
-                                <div id="DivActive@(counter1)">
-                                    @if (item.IsActive == true)
-                                    {
-                                        <span class="label label-success">Kích hoạt</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger">Khóa</span>
-                                    }
-                                </div>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastUpdatedDate)
-                            </td>
-                            <td>
-                                @*@Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })*@
-                                <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="cbProductCategory" value="@item.ID" name="IDDelete" />
+                        </td>
+                        <td style="color:brown">
+                            <b>@Html.DisplayFor(modelItem => item.Name)</b>
+                        </td>
+                        <td>
+                            <img src="@Url.Content("~/Content/images/" + item.Image1)" width="100" height="100" />
+                        </td>
+                        <td>
+                            <div id="DivActive@(counter1)">
                                 @if (item.IsActive == true)
                                 {
-                                    @Ajax.ActionLink("Khóa", "Block", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
+                                    <span class="label label-success">Kích hoạt</span>
                                 }
                                 else
                                 {
-                                    @Ajax.ActionLink("Mở", "Active", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnOpen", data = counter1, id = item.ID, value = counter1 })
+                                    <span class="label label-danger">Khóa</span>
                                 }
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+                        </td>
+                        <td>
+                            @*@Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })*@
+                            <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+                            @if (item.IsActive == true)
+                            {
+                                @Ajax.ActionLink("Khóa", "Block", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
+                            }
+                            else
+                            {
+                                @Ajax.ActionLink("Mở", "Active", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnOpen", data = counter1, id = item.ID, value = counter1 })
+                            }
+                        </td>
+                    </tr>
                         @(counter1++)
                     }
                     @(counter1 = 0)

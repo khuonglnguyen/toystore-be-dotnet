@@ -87,5 +87,6 @@ namespace ToyStore.Models
         public virtual Supplier Supplier { set; get; }
         [ForeignKey("ProducerID")]
         public virtual Producer Producer { set; get; }
+
     }
 }
