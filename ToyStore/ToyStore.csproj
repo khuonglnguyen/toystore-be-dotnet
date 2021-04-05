@@ -314,6 +314,10 @@
     <Compile Include="Migrations\202103310812289_ChangeColTableImportCoupon.Designer.cs">
       <DependentUpon>202103310812289_ChangeColTableImportCoupon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104050736284_AddColDateTableProductViewed.cs" />
+    <Compile Include="Migrations\202104050736284_AddColDateTableProductViewed.Designer.cs">
+      <DependentUpon>202104050736284_AddColDateTableProductViewed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessTimesCount.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -359,6 +363,7 @@
     <Compile Include="Service\ProductCategoryParentService.cs" />
     <Compile Include="Service\ProductCategoryService.cs" />
     <Compile Include="Service\ProductService.cs" />
+    <Compile Include="Service\ProductViewedService.cs" />
     <Compile Include="Service\QAService.cs" />
     <Compile Include="Service\SupplierService.cs" />
   </ItemGroup>
@@ -625,6 +630,7 @@
     <Content Include="Views\ImportProductManage\ProductListIsAlmostOver.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProductBySupplierID.cshtml" />
     <Content Include="Views\ImportProductManage\ImportCoupon.cshtml" />
+    <Content Include="Views\Product\ProductViewed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -752,6 +758,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103310812289_ChangeColTableImportCoupon.resx">
       <DependentUpon>202103310812289_ChangeColTableImportCoupon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104050736284_AddColDateTableProductViewed.resx">
+      <DependentUpon>202104050736284_AddColDateTableProductViewed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

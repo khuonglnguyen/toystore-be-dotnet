@@ -3,7 +3,7 @@
 }
 @if (Cart != null)
 {
-    <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Giỏ Hàng Của Bạn Có: @ViewBag.TotalQuantity Sản Phẩm</h3>
+    <h3 class="wow fadeInUp">Giỏ Hàng Của Bạn Có: @ViewBag.TotalQuantity Sản Phẩm</h3>
     foreach (var item in Cart)
     {
         <div class="cart-header">
@@ -56,9 +56,12 @@
     }
     else
     {
-        <div style="text-align:right">
-            @Html.ActionLink("Đặt Hàng", "AddOrder", "Cart", null, new { @class = "btn btn-success" })
-        </div>
+        if (Cart.Count > 0)
+        {
+            <div style="text-align:right">
+                @Html.ActionLink("Đặt Hàng", "AddOrder", "Cart", null, new { @class = "btn btn-success" })
+            </div>
+        }
     }
 }
 else

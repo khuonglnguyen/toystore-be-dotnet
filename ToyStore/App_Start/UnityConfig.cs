@@ -35,6 +35,7 @@ namespace ToyStore
             container.RegisterType<ICartService, CartService>();
             container.RegisterType<IImportCouponService, ImportCouponService>();
             container.RegisterType<IImportCouponDetailService, ImportCouponDetailService>();
+            container.RegisterType<IProductViewedService, ProductViewedService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

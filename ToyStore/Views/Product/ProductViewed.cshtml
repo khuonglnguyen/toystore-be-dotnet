@@ -1,0 +1,56 @@
+﻿@model PagedList.IPagedList<ToyStore.Models.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Sản Phẩm Đã Xem";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Lịch Sử</li>
+        </ol>
+    </div>
+</div>
+<!--//breadcrumbs-->
+<!--cart-items-->
+<div class="cart-items">
+    <div class="container">
+        @if (Model.Count() > 0)
+        {
+            <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Lịch Sử Xem Sản Phẩm</h3>
+            <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
+                @Html.ActionLink("Xóa Lịch Sử", "DeleteHistoryView","Product")
+            </div>
+            foreach (var item in Model)
+            {
+                <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
+                    <div class="cart-sec simpleCart_shelfItem">
+                        <div class="cart-item cyc">
+                            <a href="single.html"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt=""></a>
+                        </div>
+                        <div class="cart-item-info">
+                            <h4><a href="@Url.Action("Details","Product",new { ID=item.ID})"> @item.Name </a></h4>
+                            <ul class="qty">
+                                <li><p>Kho: @item.Quantity</p></li>
+                                <li><p>Đơn giá: @item.Price.ToString("#,##")₫</p></li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Chưa Có Lịch Sử Xem Sản Phẩm</h3>
+        }
+        <div id='Paging' style="text-align: center">
+            @Html.PagedListPager(Model, page => Url.Action("ProductViewed", new { ID = ViewBag.GenderID, page }))
+        </div>
+    </div>
+
+</div>
+<!--//cart-items-->

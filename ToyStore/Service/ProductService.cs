@@ -11,6 +11,7 @@ namespace ToyStore.Service
     public interface IProductService
     {
         Product AddProduct(Product product);
+        void AddViewCount(int ID);
         IEnumerable<Product> GetProductList();
         IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max, int discount);
         IEnumerable<Product> GetProductListByCategory(int ProductCategoryID);
@@ -20,6 +21,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
         IEnumerable<Product> GetProductListBySupplier(int SupplierID);
         IEnumerable<Product> GetProductListIsNew();
+        IEnumerable<Product> GetProductListViewedByMemberID(int MemberID);
         IEnumerable<Product> GetProductList(string keyWord);
         IEnumerable<Product> GetProductListForManage();
         IEnumerable<Product> GetProductListForManage(string keyWord);
@@ -224,6 +226,24 @@ namespace ToyStore.Service
         {
             IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.SupplierID == SupplierID && x.IsActive == true);
             return listProduct;
+        }
+
+        public void AddViewCount(int ID)
+        {
+            Product product = context.ProductRepository.GetDataByID(ID);
+            product.ViewCount += 1;
+            context.ProductRepository.Update(product);
+        }
+
+        public IEnumerable<Product> GetProductListViewedByMemberID(int MemberID)
+        {
+            var productIDList = context.ProductViewedRepository.GetAllData(x => x.MemberID == MemberID).OrderByDescending(x=>x.Date).Select(x=>x.ProductID);
+            List<Product> productsList = new List<Product>();
+            foreach (var item in productIDList)
+            {
+                productsList.Add(context.ProductRepository.GetDataByID(item));
+            }
+            return productsList;
         }
     }
 }

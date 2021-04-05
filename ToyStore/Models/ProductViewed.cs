@@ -15,6 +15,7 @@ namespace ToyStore.Models
         public int ID { get; set; }
         public int MemberID { get; set; }
         public int ProductID { get; set; }
+        public DateTime Date { get; set; }
         [ForeignKey("MemberID")]
         public virtual Member Member { set; get; }
         [ForeignKey("ProductID")]

@@ -30,6 +30,7 @@ namespace ToyStore.Data
         private GenericRepository<Cart> cartRepository;
         private GenericRepository<ImportCoupon> importCouponRepository;
         private GenericRepository<ImportCouponDetail> importCouponDetailRepository;
+        private GenericRepository<ProductViewed> productViewedRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -248,6 +249,17 @@ namespace ToyStore.Data
                     this.importCouponDetailRepository = new GenericRepository<ImportCouponDetail>(DbContext);
                 }
                 return importCouponDetailRepository;
+            }
+        }
+        public GenericRepository<ProductViewed> ProductViewedRepository
+        {
+            get
+            {
+                if (this.productViewedRepository == null)
+                {
+                    this.productViewedRepository = new GenericRepository<ProductViewed>(DbContext);
+                }
+                return productViewedRepository;
             }
         }
         public void Save()

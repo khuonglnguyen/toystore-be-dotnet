@@ -24,20 +24,22 @@ namespace ToyStore.Controllers
         private IMemberService _memberService;
         private IQAService _qaService;
         private IEmloyeeService _emloyeeService;
+        private IProductViewedService _productViewedService;
 
-        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService,IQAService qAService, IEmloyeeService emloyeeService)
+        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService, IQAService qAService, IEmloyeeService emloyeeService, IProductViewedService productViewedService)
         {
-            this._productService = productService;
-            this._producerService = producerService;
-            this._supplierService = supplierService;
-            this._productCategoryService = productCategoryService;
-            this._ageService = ageService;
-            this._productCategoryParentService = productCategoryParentService;
-            this._genderService = genderService;
-            this._commentService = commentService;
-            this._memberService = memberService;
-            this._qaService = qAService;
-            this._emloyeeService = emloyeeService;
+            _productService = productService;
+            _producerService = producerService;
+            _supplierService = supplierService;
+            _productCategoryService = productCategoryService;
+            _ageService = ageService;
+            _productCategoryParentService = productCategoryParentService;
+            _genderService = genderService;
+            _commentService = commentService;
+            _memberService = memberService;
+            _qaService = qAService;
+            _emloyeeService = emloyeeService;
+            _productViewedService = productViewedService;
         }
         #endregion
         public ActionResult Search(string keyword, int page = 1)
@@ -87,6 +89,34 @@ namespace ToyStore.Controllers
             ViewBag.CommentQA = listQA;
             IEnumerable<Member> listMember = _memberService.GetMemberList();
             ViewBag.MemberList = listMember;
+
+            if (Session["Member"] != null)
+            {
+                Member member = Session["Member"] as Member;
+                _productViewedService.AddProductViewByMember(ID, member.ID);
+            }
+            //Add view count
+            if (Request.Cookies["ViewedPage"] != null)
+            {
+                if (Request.Cookies["ViewedPage"][string.Format("ID_{0}", ID)] == null)
+                {
+                    HttpCookie cookie = (HttpCookie)Request.Cookies["ViewedPage"];
+                    cookie[string.Format("ID_{0}", ID)] = "1";
+                    cookie.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Add(cookie);
+
+                    _productService.AddViewCount(ID);
+                }
+            }
+            else
+            {
+                HttpCookie cookie = new HttpCookie("ViewedPage");
+                cookie[string.Format("ID_{0}", ID)] = "1";
+                cookie.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Add(cookie);
+
+                _productService.AddViewCount(ID);
+            }
             return View(product);
         }
         [HttpGet]
@@ -185,6 +215,23 @@ namespace ToyStore.Controllers
             IEnumerable<Product> products = _productService.GetProductListIsNew();
             listProductPaging = new PagedList<Product>(products, page, 12);
             return View(listProductPaging);
+        }
+        public ActionResult ProductViewed(int page = 1)
+        {
+            var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
+            ViewBag.ListProduct = listProduct;
+
+            Member member = Session["Member"] as Member;
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetProductListViewedByMemberID(member.ID);
+            listProductPaging = new PagedList<Product>(products, page, 10);
+            return View(listProductPaging);
+        }
+        public ActionResult DeleteHistoryView()
+        {
+            Member member = Session["Member"] as Member;
+            _productViewedService.Delete(member.ID);
+            return RedirectToAction("ProductViewed");
         }
         public ActionResult ProductPartial(Product product)
         {
