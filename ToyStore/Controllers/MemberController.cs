@@ -139,5 +139,14 @@ namespace ToyStore.Controllers
             }
             return View(orderDetails);
         }
+        public ActionResult GetDataProduct(int ID)
+        {
+            Product product = _productService.GetByID(ID);
+            return Json(new
+            {
+                data = product,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

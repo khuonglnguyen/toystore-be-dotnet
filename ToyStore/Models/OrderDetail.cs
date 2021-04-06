@@ -16,6 +16,7 @@ namespace ToyStore.Models
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
+        public bool IsRating { get; set; }
         public decimal Price { get; set; }
         [ForeignKey("OrderID")]
         public virtual Order Order { set; get; }

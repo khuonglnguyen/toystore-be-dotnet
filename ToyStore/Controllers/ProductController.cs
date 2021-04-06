@@ -25,8 +25,10 @@ namespace ToyStore.Controllers
         private IQAService _qaService;
         private IEmloyeeService _emloyeeService;
         private IProductViewedService _productViewedService;
+        private IRatingService _ratingService;
+        private IOrderDetailService _orderDetailService;
 
-        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService, IQAService qAService, IEmloyeeService emloyeeService, IProductViewedService productViewedService)
+        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService, IQAService qAService, IEmloyeeService emloyeeService, IProductViewedService productViewedService, IRatingService ratingService, IOrderDetailService orderDetailService)
         {
             _productService = productService;
             _producerService = producerService;
@@ -40,6 +42,8 @@ namespace ToyStore.Controllers
             _qaService = qAService;
             _emloyeeService = emloyeeService;
             _productViewedService = productViewedService;
+            _ratingService = ratingService;
+            _orderDetailService = orderDetailService;
         }
         #endregion
         public ActionResult Search(string keyword, int page = 1)
@@ -117,6 +121,8 @@ namespace ToyStore.Controllers
 
                 _productService.AddViewCount(ID);
             }
+            //Get rating
+            ViewBag.Rating = _ratingService.GetRating(ID);
             return View(product);
         }
         [HttpGet]
@@ -313,6 +319,16 @@ namespace ToyStore.Controllers
             IEnumerable<Member> listMember = _memberService.GetMemberList();
             ViewBag.MemberList = listMember;
             return PartialView("_QAPartial");
+        }
+        [HttpPost]
+        public ActionResult Rating(Rating rating, int OrderDetailID)
+        {
+            Member member = Session["Member"] as Member;
+            rating.MemberID = member.ID;
+            _ratingService.AddRating(rating);
+            _orderDetailService.SetIsRating(OrderDetailID);
+            string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
+            return Redirect(urlBase);
         }
     }
 }

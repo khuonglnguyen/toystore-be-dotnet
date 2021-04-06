@@ -112,19 +112,19 @@
             <div class="col-md-6 single-top wow fadeInLeft animated" data-wow-delay=".5s">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li data-thumb="@Url.Content("~/Content/images/"+Model.Image1)">
-                            <div class="thumb-image"> <img src="@Url.Content("~/Content/images/"+Model.Image1)" data-imagezoom="true" class="img-responsive" alt=""> </div>
+                        <li data-thumb="@Url.Content("~/Content/images/" + Model.Image1)">
+                            <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image1)" data-imagezoom="true" class="img-responsive" alt=""> </div>
                         </li>
                         @if (Model.Image2 != null)
                         {
-                            <li data-thumb="@Url.Content("~/Content/images/"+Model.Image2)">
-                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/"+Model.Image2)" data-imagezoom="true" class="img-responsive" alt=""> </div>
+                            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image2)">
+                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image2)" data-imagezoom="true" class="img-responsive" alt=""> </div>
                             </li>
                         }
                         @if (Model.Image3 != null)
                         {
-                            <li data-thumb="@Url.Content("~/Content/images/"+Model.Image3)">
-                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/"+Model.Image3)" data-imagezoom="true" class="img-responsive" alt=""> </div>
+                            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image3)">
+                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image3)" data-imagezoom="true" class="img-responsive" alt=""> </div>
                             </li>
                         }
                     </ul>
@@ -134,18 +134,75 @@
                 <h3>@Model.Name</h3>
                 <div class="single-rating">
                     <span class="starRating">
-                        <input id="rating5" type="radio" name="rating" value="5" checked>
-                        <label for="rating5">5</label>
-                        <input id="rating4" type="radio" name="rating" value="4">
-                        <label for="rating4">4</label>
-                        <input id="rating3" type="radio" name="rating" value="3">
-                        <label for="rating3">3</label>
-                        <input id="rating2" type="radio" name="rating" value="2">
-                        <label for="rating2">2</label>
-                        <input id="rating1" type="radio" name="rating" value="1">
-                        <label for="rating1">1</label>
+                        @{
+                            if (ViewBag.Rating == 5)
+                            {
+                                <input id="rating5" type="radio" name="rating" value="5" checked>
+                                <label for="rating5">5</label>
+                                <input id="rating4" type="radio" name="rating" value="4">
+                                <label for="rating4">4</label>
+                                <input id="rating3" type="radio" name="rating" value="3">
+                                <label for="rating3">3</label>
+                                <input id="rating2" type="radio" name="rating" value="2">
+                                <label for="rating2">2</label>
+                                <input id="rating1" type="radio" name="rating" value="1">
+                                <label for="rating1">1</label>
+                            }
+                            else if (ViewBag.Rating == 4)
+                            {
+                                <input id="rating5" type="radio" name="rating" value="5">
+                                <label for="rating5">5</label>
+                                <input id="rating4" type="radio" name="rating" value="4" checked>
+                                <label for="rating4">4</label>
+                                <input id="rating3" type="radio" name="rating" value="3">
+                                <label for="rating3">3</label>
+                                <input id="rating2" type="radio" name="rating" value="2">
+                                <label for="rating2">2</label>
+                                <input id="rating1" type="radio" name="rating" value="1">
+                                <label for="rating1">1</label>
+                            }
+                            else if (ViewBag.Rating == 3)
+                            {
+                                <input id="rating5" type="radio" name="rating" value="5">
+                                <label for="rating5">5</label>
+                                <input id="rating4" type="radio" name="rating" value="4">
+                                <label for="rating4">4</label>
+                                <input id="rating3" type="radio" name="rating" value="3" checked>
+                                <label for="rating3">3</label>
+                                <input id="rating2" type="radio" name="rating" value="2">
+                                <label for="rating2">2</label>
+                                <input id="rating1" type="radio" name="rating" value="1">
+                                <label for="rating1">1</label>
+                            }
+                            else if (ViewBag.Rating == 2)
+                            {
+                                <input id="rating5" type="radio" name="rating" value="5">
+                                <label for="rating5">5</label>
+                                <input id="rating4" type="radio" name="rating" value="4">
+                                <label for="rating4">4</label>
+                                <input id="rating3" type="radio" name="rating" value="3">
+                                <label for="rating3">3</label>
+                                <input id="rating2" type="radio" name="rating" value="2" checked>
+                                <label for="rating2">2</label>
+                                <input id="rating1" type="radio" name="rating" value="1">
+                                <label for="rating1">1</label>
+                            }
+                            else
+                            {
+                                <input id="rating5" type="radio" name="rating" value="5">
+                                <label for="rating5">5</label>
+                                <input id="rating4" type="radio" name="rating" value="4" >
+                                <label for="rating4">4</label>
+                                <input id="rating3" type="radio" name="rating" value="3">
+                                <label for="rating3">3</label>
+                                <input id="rating2" type="radio" name="rating" value="2">
+                                <label for="rating2">2</label>
+                                <input id="rating1" type="radio" name="rating" value="1" checked>
+                                <label for="rating1">1</label>
+                            }
+                        }
                     </span>
-                    <p>5.00 / 5</p>
+                    <p>@ViewBag.Rating / 5</p>
                     <a href="#">Đánh giá sau khi mua hàng</a>
                 </div>
                 <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p>
@@ -207,138 +264,138 @@
                         </div>
                     </div>
                 </div>
-                    <div class="panel panel-default wow fadeInUp animated" data-wow-delay=".7s">
-                        <div class="panel-heading" role="tab" id="headingThree">
-                            <h4 class="panel-title">
-                                @if (qAs.Count() > 0)
+                <div class="panel panel-default wow fadeInUp animated" data-wow-delay=".7s">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            @if (qAs.Count() > 0)
+                            {
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Hỏi Đáp (@qAs.Count())
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Hỏi Đáp
+                                </a>
+                            }
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body">
+                            @if (Session["Member"] != null)
+                            {
+                                using (Ajax.BeginForm("AddQuestion", "Product", new AjaxOptions
                                 {
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Hỏi Đáp (@qAs.Count())
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Hỏi Đáp
-                                    </a>
-                                }
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                @if (Session["Member"] != null)
-                                {
-                                    using (Ajax.BeginForm("AddQuestion", "Product", new AjaxOptions
-                                    {
-                                        InsertionMode = InsertionMode.Replace,
-                                        HttpMethod = "GET",
-                                        LoadingElementId = "ajax-loader",
-                                        UpdateTargetId = "qaContainer",
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "GET",
+                                    LoadingElementId = "ajax-loader",
+                                    UpdateTargetId = "qaContainer",
 
-                                    }))
+                                }))
+                                {
+                                    <input value="@member.ID" hidden="hidden" name="memberID" />
+                                    <input value="@Model.ID" hidden="hidden" name="productID" />
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <label for="inputPassword2" class="sr-only">Nội dung câu hỏi</label>
+                                        <textarea class="form-control" id="Textarea2" style="resize:none" rows="3" placeholder="Viết câu hỏi tại đây..."></textarea>
+                                    </div>
+                                    <input type="text" name="Question" id="content2" hidden="hidden" />
+                                    <button type="submit" class="btn btn-warning btnPost">Đăng Câu Hỏi</button>
+                                    <img id="ajax-loader"
+                                         src="@Url.Content("~/Content/images/loading.gif")"
+                                         style="display:none" />
+
+                                }
+                                <div class="ajax-loader"></div>
+                            }
+                            else
+                            {
+                                <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng câu hỏi</a>
+                            }
+                            <div id="qaContainer">
+                                <hr />
+                                @foreach (var item in qAs
+                                    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
+                                    .Join(emloyees, e => e.c.EmloyeeID, n => n.ID, (e, n) => new { e, n })
+                                    .Select(n => new { EmloyeeName = n.n.FullName, FullName = n.e.m.FullName, Question = n.e.c.Question, Answer = n.e.c.Answer, DateQuesion = n.e.c.DateQuestion, DateAnswer = n.e.c.DateAnswer }))
+                                {
+                                    <p><label style="color:black">@item.FullName:</label>  @item.DateQuesion</p>
+                                    <p style="color:black">@item.Question</p>
+                                    if (item.Answer != null)
                                     {
-                                        <input value="@member.ID" hidden="hidden" name="memberID" />
-                                        <input value="@Model.ID" hidden="hidden" name="productID" />
-                                        <div class="form-group mx-sm-3 mb-2">
-                                            <label for="inputPassword2" class="sr-only">Nội dung câu hỏi</label>
-                                            <textarea class="form-control" id="Textarea2" style="resize:none" rows="3" placeholder="Viết câu hỏi tại đây..."></textarea>
+                                        <div style="background-color:lightgray">
+                                            <p><label style="color:brown">@item.EmloyeeName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
+                                            <p style="color:black">@item.Answer</p>
                                         </div>
-                                        <input type="text" name="Question" id="content2" hidden="hidden" />
-                                        <button type="submit" class="btn btn-warning btnPost">Đăng Câu Hỏi</button>
-                                        <img id="ajax-loader"
-                                             src="@Url.Content("~/Content/images/loading.gif")"
-                                             style="display:none" />
-
                                     }
-                                    <div class="ajax-loader"></div>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng câu hỏi</a>
-                                }
-                                <div id="qaContainer">
                                     <hr />
-                                    @foreach (var item in qAs
-                                        .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-                                        .Join(emloyees, e => e.c.EmloyeeID, n => n.ID, (e, n) => new { e, n })
-                                        .Select(n => new { EmloyeeName = n.n.FullName, FullName = n.e.m.FullName, Question = n.e.c.Question, Answer = n.e.c.Answer, DateQuesion = n.e.c.DateQuestion, DateAnswer = n.e.c.DateAnswer }))
-                                    {
-                                        <p><label style="color:black">@item.FullName:</label>  @item.DateQuesion</p>
-                                        <p style="color:black">@item.Question</p>
-                                        if (item.Answer != null)
-                                        {
-                                            <div style="background-color:lightgray">
-                                                <p><label style="color:brown">@item.EmloyeeName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
-                                                <p style="color:black">@item.Answer</p>
-                                            </div>
-                                        }
-                                        <hr />
-                                    }
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default wow fadeInUp animated" data-wow-delay=".8s">
-                        <div class="panel-heading" role="tab" id="headingFour">
-                            <h4 class="panel-title">
-                                @if (comments.Count() > 0)
+                </div>
+                <div class="panel panel-default wow fadeInUp animated" data-wow-delay=".8s">
+                    <div class="panel-heading" role="tab" id="headingFour">
+                        <h4 class="panel-title">
+                            @if (comments.Count() > 0)
+                            {
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Bình Luận (@comments.Count())
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Bình Luận
+                                </a>
+                            }
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                        <div class="panel-body">
+                            @if (Session["Member"] != null)
+                            {
+                                using (Ajax.BeginForm("AddComment", "Product", new AjaxOptions
                                 {
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                        Bình Luận (@comments.Count())
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                        Bình Luận
-                                    </a>
-                                }
-                            </h4>
-                        </div>
-                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                            <div class="panel-body">
-                                @if (Session["Member"] != null)
-                                {
-                                    using (Ajax.BeginForm("AddComment", "Product", new AjaxOptions
-                                    {
-                                        InsertionMode = InsertionMode.Replace,
-                                        HttpMethod = "GET",
-                                        LoadingElementId = "ajax-loader",
-                                        UpdateTargetId = "commentContainer",
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "GET",
+                                    LoadingElementId = "ajax-loader",
+                                    UpdateTargetId = "commentContainer",
 
-                                    }))
-                                    {
-                                        <input value="@member.ID" hidden="hidden" name="memberID" />
-                                        <input value="@Model.ID" hidden="hidden" name="productID" />
-                                        <div class="form-group mx-sm-3 mb-2">
-                                            <label for="inputPassword2" class="sr-only">Nội dung</label>
-                                            <textarea class="form-control" id="Textarea1" style="resize:none" rows="3" placeholder="Viết bình luận tại đây..."></textarea>
-                                        </div>
-                                        <input type="text" name="content" id="content" hidden="hidden" />
-                                        <button type="submit" class="btn btn-warning btnPost">Đăng Bình Luận</button>
-                                        <img id="ajax-loader"
-                                             src="@Url.Content("~/Content/images/loading.gif")"
-                                             style="display:none" />
-                                    }
-                                    <div class="ajax-loader"></div>
-                                }
-                                else
+                                }))
                                 {
-                                    <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng bình luận</a>
+                                    <input value="@member.ID" hidden="hidden" name="memberID" />
+                                    <input value="@Model.ID" hidden="hidden" name="productID" />
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <label for="inputPassword2" class="sr-only">Nội dung</label>
+                                        <textarea class="form-control" id="Textarea1" style="resize:none" rows="3" placeholder="Viết bình luận tại đây..."></textarea>
+                                    </div>
+                                    <input type="text" name="content" id="content" hidden="hidden" />
+                                    <button type="submit" class="btn btn-warning btnPost">Đăng Bình Luận</button>
+                                    <img id="ajax-loader"
+                                         src="@Url.Content("~/Content/images/loading.gif")"
+                                         style="display:none" />
                                 }
-                                <div id="commentContainer">
-                                    <hr />
-                                    @foreach (var item in comments
-                                        .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-                                        .Select(n => new { FullName = n.m.FullName, Content = n.c.Content, Date = n.c.Date }))
-                                    {
-                                        <label style="color:black">@item.FullName</label> @item.Date
-                                        <p style="color:black">@item.Content</p>
-                                    }
-                                </div>
+                                <div class="ajax-loader"></div>
+                            }
+                            else
+                            {
+                                <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng bình luận</a>
+                            }
+                            <div id="commentContainer">
+                                <hr />
+                                @foreach (var item in comments
+                                    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
+                                    .Select(n => new { FullName = n.m.FullName, Content = n.c.Content, Date = n.c.Date }))
+                                {
+                                    <label style="color:black">@item.FullName</label> @item.Date
+                                    <p style="color:black">@item.Content</p>
+                                }
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
         <!--//collapse -->

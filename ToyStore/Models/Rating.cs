@@ -16,6 +16,7 @@ namespace ToyStore.Models
         public int ProductID { set; get; }
         public int MemberID { set; get; }
         public int Star { set; get; }
+        public string Content { set; get; }
         [ForeignKey("ProductID")]
         public virtual Product Product { set; get; }
         [ForeignKey("MemberID")]

@@ -318,6 +318,14 @@
     <Compile Include="Migrations\202104050736284_AddColDateTableProductViewed.Designer.cs">
       <DependentUpon>202104050736284_AddColDateTableProductViewed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104060930124_AddColContentTableRating.cs" />
+    <Compile Include="Migrations\202104060930124_AddColContentTableRating.Designer.cs">
+      <DependentUpon>202104060930124_AddColContentTableRating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104060945289_AddColIsRatingTableOrderDetail.cs" />
+    <Compile Include="Migrations\202104060945289_AddColIsRatingTableOrderDetail.Designer.cs">
+      <DependentUpon>202104060945289_AddColIsRatingTableOrderDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessTimesCount.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -365,6 +373,7 @@
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\ProductViewedService.cs" />
     <Compile Include="Service\QAService.cs" />
+    <Compile Include="Service\RatingService.cs" />
     <Compile Include="Service\SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -761,6 +770,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104050736284_AddColDateTableProductViewed.resx">
       <DependentUpon>202104050736284_AddColDateTableProductViewed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104060930124_AddColContentTableRating.resx">
+      <DependentUpon>202104060930124_AddColContentTableRating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104060945289_AddColIsRatingTableOrderDetail.resx">
+      <DependentUpon>202104060945289_AddColIsRatingTableOrderDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

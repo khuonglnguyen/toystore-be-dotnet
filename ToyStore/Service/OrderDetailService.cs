@@ -11,6 +11,7 @@ namespace ToyStore.Service
     {
         OrderDetail AddOrderDetail(OrderDetail order);
         IEnumerable<OrderDetail> GetByOrderID(int ID);
+        void SetIsRating(int ID);
         void Save();
     }
     public class OrderDetailService : IOrderDetailService
@@ -34,6 +35,13 @@ namespace ToyStore.Service
         public void Save()
         {
             throw new NotImplementedException();
+        }
+
+        public void SetIsRating(int ID)
+        {
+            OrderDetail orderDetail = context.OrderDetailRepository.GetDataByID(ID);
+            orderDetail.IsRating = true;
+            context.OrderDetailRepository.Update(orderDetail);
         }
     }
 }
