@@ -1,21 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-
 namespace ToyStore.Models
 {
-    [Table("ProductCategoryParent")]
-    public class ProductCategoryParent
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-        [MaxLength(256)]
-        public string Name { set; get; }
-        public virtual IEnumerable<ProductCategory> ProductCategories { set; get; }
+    [Table("ProductCategoryParent")]
+    public partial class ProductCategoryParent
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ProductCategoryParent()
+        {
+            ProductCategories = new HashSet<ProductCategory>();
+        }
+
+        public int ID { get; set; }
+
+        [StringLength(256)]
+        public string Name { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }

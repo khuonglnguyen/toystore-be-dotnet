@@ -19,18 +19,17 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == true) {
-                        var data = response.data;
-                        $('#ID').val(data.ID);
+                        $('#ID').val(response.ID);
                         $('#OrderDetailID').val(orderDetailID);
-                        $('#Name').val(data.Name);
-                        $('#Image').attr('src', "/Content/images/" + data.Image1);
+                        $('#Name').val(response.Name);
+                        $('#Image').attr('src', "/Content/images/" + response.Image);
                     }
                     else {
                         bootbox.alert(response.message);
                     }
                 },
                 error: function (err) {
-                    bootbox.alert("ds");
+                    bootbox.alert(err.fail);
                 }
             });
         });

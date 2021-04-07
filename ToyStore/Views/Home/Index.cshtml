@@ -111,7 +111,7 @@
                             </div>
                             <div class="ofr">
                                 <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                             </div>
                             <div class="ofr">
                                 <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                             </div>
                             <div class="ofr">
                                 <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             </div>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
                             </div>
                             <div class="ofr">
                                 <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             </div>
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
@@ -244,7 +244,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
@@ -261,7 +261,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
@@ -278,7 +278,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
@@ -295,7 +295,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
@@ -312,7 +312,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
@@ -329,7 +329,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/" + item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
@@ -346,7 +346,7 @@
                         <a href="@Url.Action("Details","Product",new { ID=item.ID})"><img src="@Url.Content("~/Content/images/"+item.Image1)" class="img-responsive" alt="" /></a>
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
-                            <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                             <h4 class="sizes">Còn lại: @item.Quantity</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>

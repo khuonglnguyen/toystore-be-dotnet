@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-
 namespace ToyStore.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("Decentralization")]
-    public class Decentralization
+    public partial class Decentralization
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
-        public int EmloyeeID { get; set; }
+        public int ID { get; set; }
+
         public int RoleID { get; set; }
+
         public string Note { get; set; }
-        [ForeignKey("EmloyeeID")]
-        public virtual Emloyee Emloyee { set; get; }
-        [ForeignKey("RoleID")]
-        public virtual Role Role { set; get; }
+
+        public int EmloyeeID { get; set; }
+
+        public virtual Emloyee Emloyee { get; set; }
+
+        public virtual Role Role { get; set; }
     }
 }

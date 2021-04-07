@@ -64,6 +64,8 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -156,184 +158,18 @@
     <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Controllers\QAManageController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
-    <Compile Include="Data\ToyStoreDbContext.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102091005414_addcol.cs" />
-    <Compile Include="Migrations\202102091005414_addcol.Designer.cs">
-      <DependentUpon>202102091005414_addcol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102091029226_addcoll.cs" />
-    <Compile Include="Migrations\202102091029226_addcoll.Designer.cs">
-      <DependentUpon>202102091029226_addcoll.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102092222359_change-10-2.cs" />
-    <Compile Include="Migrations\202102092222359_change-10-2.Designer.cs">
-      <DependentUpon>202102092222359_change-10-2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102211114033_changeTableProduct.cs" />
-    <Compile Include="Migrations\202102211114033_changeTableProduct.Designer.cs">
-      <DependentUpon>202102211114033_changeTableProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102220249062_AddTableAges.cs" />
-    <Compile Include="Migrations\202102220249062_AddTableAges.Designer.cs">
-      <DependentUpon>202102220249062_AddTableAges.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102220253332_AddColTableProduct.cs" />
-    <Compile Include="Migrations\202102220253332_AddColTableProduct.Designer.cs">
-      <DependentUpon>202102220253332_AddColTableProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102220254328_AddForeignKeyTableProduct.cs" />
-    <Compile Include="Migrations\202102220254328_AddForeignKeyTableProduct.Designer.cs">
-      <DependentUpon>202102220254328_AddForeignKeyTableProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102240158590_AddTableParent.cs" />
-    <Compile Include="Migrations\202102240158590_AddTableParent.Designer.cs">
-      <DependentUpon>202102240158590_AddTableParent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102240216582_AddColTableProductCategory.cs" />
-    <Compile Include="Migrations\202102240216582_AddColTableProductCategory.Designer.cs">
-      <DependentUpon>202102240216582_AddColTableProductCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102240218129_AddForiegnKeyTableProductCategory.cs" />
-    <Compile Include="Migrations\202102240218129_AddForiegnKeyTableProductCategory.Designer.cs">
-      <DependentUpon>202102240218129_AddForiegnKeyTableProductCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102250019089_AddTableGenderAndCol.cs" />
-    <Compile Include="Migrations\202102250019089_AddTableGenderAndCol.Designer.cs">
-      <DependentUpon>202102250019089_AddTableGenderAndCol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.cs" />
-    <Compile Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.Designer.cs">
-      <DependentUpon>202102250024596_AddForiegnKeyFieldGenderTableProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103031230071_AddColDiscountTableProduct.cs" />
-    <Compile Include="Migrations\202103031230071_AddColDiscountTableProduct.Designer.cs">
-      <DependentUpon>202103031230071_AddColDiscountTableProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.cs" />
-    <Compile Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.Designer.cs">
-      <DependentUpon>202103051016311_AddTableMemberCategoryAndMember.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103081151130_AddTable.cs" />
-    <Compile Include="Migrations\202103081151130_AddTable.Designer.cs">
-      <DependentUpon>202103081151130_AddTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103081152494_AddTableInportCoupon.cs" />
-    <Compile Include="Migrations\202103081152494_AddTableInportCoupon.Designer.cs">
-      <DependentUpon>202103081152494_AddTableInportCoupon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103081158549_AddTableImportCouponDetail.cs" />
-    <Compile Include="Migrations\202103081158549_AddTableImportCouponDetail.Designer.cs">
-      <DependentUpon>202103081158549_AddTableImportCouponDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103081242316_AddColCapchaTableMember.cs" />
-    <Compile Include="Migrations\202103081242316_AddColCapchaTableMember.Designer.cs">
-      <DependentUpon>202103081242316_AddColCapchaTableMember.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103090947114_á.cs" />
-    <Compile Include="Migrations\202103090947114_á.Designer.cs">
-      <DependentUpon>202103090947114_á.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103130028353_AddColTableCustomer.cs" />
-    <Compile Include="Migrations\202103130028353_AddColTableCustomer.Designer.cs">
-      <DependentUpon>202103130028353_AddColTableCustomer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103130042218_UpdateColTableOrderDetail.cs" />
-    <Compile Include="Migrations\202103130042218_UpdateColTableOrderDetail.Designer.cs">
-      <DependentUpon>202103130042218_UpdateColTableOrderDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103170825554_AddColDateTableComment.cs" />
-    <Compile Include="Migrations\202103170825554_AddColDateTableComment.Designer.cs">
-      <DependentUpon>202103170825554_AddColDateTableComment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103190537248_AddColDateTableQA.cs" />
-    <Compile Include="Migrations\202103190537248_AddColDateTableQA.Designer.cs">
-      <DependentUpon>202103190537248_AddColDateTableQA.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103190631591_AddColQA.cs" />
-    <Compile Include="Migrations\202103190631591_AddColQA.Designer.cs">
-      <DependentUpon>202103190631591_AddColQA.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103190639188_AddColQAd.cs" />
-    <Compile Include="Migrations\202103190639188_AddColQAd.Designer.cs">
-      <DependentUpon>202103190639188_AddColQAd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103210847118_DropColTitleTableQA.cs" />
-    <Compile Include="Migrations\202103210847118_DropColTitleTableQA.Designer.cs">
-      <DependentUpon>202103210847118_DropColTitleTableQA.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103230809192_AddTableEmloyee.cs" />
-    <Compile Include="Migrations\202103230809192_AddTableEmloyee.Designer.cs">
-      <DependentUpon>202103230809192_AddTableEmloyee.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103230817098_AddTableEmloyeeType.cs" />
-    <Compile Include="Migrations\202103230817098_AddTableEmloyeeType.Designer.cs">
-      <DependentUpon>202103230817098_AddTableEmloyeeType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103230818370_AddForeignKeyTableEmloyee.cs" />
-    <Compile Include="Migrations\202103230818370_AddForeignKeyTableEmloyee.Designer.cs">
-      <DependentUpon>202103230818370_AddForeignKeyTableEmloyee.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.cs" />
-    <Compile Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.Designer.cs">
-      <DependentUpon>202103230845115_AddColEmloyeeIDTableQA.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103240727453_AddTableAccessTimesCount.cs" />
-    <Compile Include="Migrations\202103240727453_AddTableAccessTimesCount.Designer.cs">
-      <DependentUpon>202103240727453_AddTableAccessTimesCount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103250718598_AddColIsDelivereTableOrder.cs" />
-    <Compile Include="Migrations\202103250718598_AddColIsDelivereTableOrder.Designer.cs">
-      <DependentUpon>202103250718598_AddColIsDelivereTableOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103261009559_AddColIsApprovedTableOrder.cs" />
-    <Compile Include="Migrations\202103261009559_AddColIsApprovedTableOrder.Designer.cs">
-      <DependentUpon>202103261009559_AddColIsApprovedTableOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103270106204_AddColIsReceivedTableOrder.cs" />
-    <Compile Include="Migrations\202103270106204_AddColIsReceivedTableOrder.Designer.cs">
-      <DependentUpon>202103270106204_AddColIsReceivedTableOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103280445138_AddTableCart.cs" />
-    <Compile Include="Migrations\202103280445138_AddTableCart.Designer.cs">
-      <DependentUpon>202103280445138_AddTableCart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103301235024_AddTableProductViewed.cs" />
-    <Compile Include="Migrations\202103301235024_AddTableProductViewed.Designer.cs">
-      <DependentUpon>202103301235024_AddTableProductViewed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103310717108_AddColEmloyeeIDTableImportCoupon.cs" />
-    <Compile Include="Migrations\202103310717108_AddColEmloyeeIDTableImportCoupon.Designer.cs">
-      <DependentUpon>202103310717108_AddColEmloyeeIDTableImportCoupon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103310812289_ChangeColTableImportCoupon.cs" />
-    <Compile Include="Migrations\202103310812289_ChangeColTableImportCoupon.Designer.cs">
-      <DependentUpon>202103310812289_ChangeColTableImportCoupon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104050736284_AddColDateTableProductViewed.cs" />
-    <Compile Include="Migrations\202104050736284_AddColDateTableProductViewed.Designer.cs">
-      <DependentUpon>202104050736284_AddColDateTableProductViewed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104060930124_AddColContentTableRating.cs" />
-    <Compile Include="Migrations\202104060930124_AddColContentTableRating.Designer.cs">
-      <DependentUpon>202104060930124_AddColContentTableRating.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104060945289_AddColIsRatingTableOrderDetail.cs" />
-    <Compile Include="Migrations\202104060945289_AddColIsRatingTableOrderDetail.Designer.cs">
-      <DependentUpon>202104060945289_AddColIsRatingTableOrderDetail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessTimesCount.cs" />
+    <Compile Include="Models\Age.cs" />
     <Compile Include="Models\Cart.cs" />
-    <Compile Include="Models\Emloyee.cs" />
-    <Compile Include="Models\Ages.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Decentralization.cs" />
+    <Compile Include="Models\Emloyee.cs" />
     <Compile Include="Models\EmloyeeType.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\ImportCoupon.cs" />
@@ -351,6 +187,7 @@
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Data\ToyStoreModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
     <Compile Include="Service\AccessTimesCountService.cs" />
@@ -591,8 +428,6 @@
     <Content Include="Views\ProductCategoryManage\Create.cshtml" />
     <Content Include="Views\Layout\HomeLayout.cshtml" />
     <Content Include="Views\ProductManage\List.cshtml" />
-    <Content Include="Views\ProductManage\Edit.cshtml" />
-    <Content Include="Views\ProductManage\Create.cshtml" />
     <Content Include="Views\Home\HeaderTopPartial.cshtml" />
     <Content Include="Views\Home\MenuPartial.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
@@ -652,131 +487,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102091005414_addcol.resx">
-      <DependentUpon>202102091005414_addcol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102091029226_addcoll.resx">
-      <DependentUpon>202102091029226_addcoll.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102092222359_change-10-2.resx">
-      <DependentUpon>202102092222359_change-10-2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102211114033_changeTableProduct.resx">
-      <DependentUpon>202102211114033_changeTableProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102220249062_AddTableAges.resx">
-      <DependentUpon>202102220249062_AddTableAges.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102220253332_AddColTableProduct.resx">
-      <DependentUpon>202102220253332_AddColTableProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102220254328_AddForeignKeyTableProduct.resx">
-      <DependentUpon>202102220254328_AddForeignKeyTableProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102240158590_AddTableParent.resx">
-      <DependentUpon>202102240158590_AddTableParent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102240216582_AddColTableProductCategory.resx">
-      <DependentUpon>202102240216582_AddColTableProductCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102240218129_AddForiegnKeyTableProductCategory.resx">
-      <DependentUpon>202102240218129_AddForiegnKeyTableProductCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102250019089_AddTableGenderAndCol.resx">
-      <DependentUpon>202102250019089_AddTableGenderAndCol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102250024596_AddForiegnKeyFieldGenderTableProduct.resx">
-      <DependentUpon>202102250024596_AddForiegnKeyFieldGenderTableProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103031230071_AddColDiscountTableProduct.resx">
-      <DependentUpon>202103031230071_AddColDiscountTableProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103051016311_AddTableMemberCategoryAndMember.resx">
-      <DependentUpon>202103051016311_AddTableMemberCategoryAndMember.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103081151130_AddTable.resx">
-      <DependentUpon>202103081151130_AddTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103081152494_AddTableInportCoupon.resx">
-      <DependentUpon>202103081152494_AddTableInportCoupon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103081158549_AddTableImportCouponDetail.resx">
-      <DependentUpon>202103081158549_AddTableImportCouponDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103081242316_AddColCapchaTableMember.resx">
-      <DependentUpon>202103081242316_AddColCapchaTableMember.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103090947114_á.resx">
-      <DependentUpon>202103090947114_á.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103130028353_AddColTableCustomer.resx">
-      <DependentUpon>202103130028353_AddColTableCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103130042218_UpdateColTableOrderDetail.resx">
-      <DependentUpon>202103130042218_UpdateColTableOrderDetail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103170825554_AddColDateTableComment.resx">
-      <DependentUpon>202103170825554_AddColDateTableComment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103190537248_AddColDateTableQA.resx">
-      <DependentUpon>202103190537248_AddColDateTableQA.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103190631591_AddColQA.resx">
-      <DependentUpon>202103190631591_AddColQA.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103190639188_AddColQAd.resx">
-      <DependentUpon>202103190639188_AddColQAd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103210847118_DropColTitleTableQA.resx">
-      <DependentUpon>202103210847118_DropColTitleTableQA.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103230809192_AddTableEmloyee.resx">
-      <DependentUpon>202103230809192_AddTableEmloyee.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103230817098_AddTableEmloyeeType.resx">
-      <DependentUpon>202103230817098_AddTableEmloyeeType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103230818370_AddForeignKeyTableEmloyee.resx">
-      <DependentUpon>202103230818370_AddForeignKeyTableEmloyee.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103230845115_AddColEmloyeeIDTableQA.resx">
-      <DependentUpon>202103230845115_AddColEmloyeeIDTableQA.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103240727453_AddTableAccessTimesCount.resx">
-      <DependentUpon>202103240727453_AddTableAccessTimesCount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103250718598_AddColIsDelivereTableOrder.resx">
-      <DependentUpon>202103250718598_AddColIsDelivereTableOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103261009559_AddColIsApprovedTableOrder.resx">
-      <DependentUpon>202103261009559_AddColIsApprovedTableOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103270106204_AddColIsReceivedTableOrder.resx">
-      <DependentUpon>202103270106204_AddColIsReceivedTableOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103280445138_AddTableCart.resx">
-      <DependentUpon>202103280445138_AddTableCart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103301235024_AddTableProductViewed.resx">
-      <DependentUpon>202103301235024_AddTableProductViewed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103310717108_AddColEmloyeeIDTableImportCoupon.resx">
-      <DependentUpon>202103310717108_AddColEmloyeeIDTableImportCoupon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103310812289_ChangeColTableImportCoupon.resx">
-      <DependentUpon>202103310812289_ChangeColTableImportCoupon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104050736284_AddColDateTableProductViewed.resx">
-      <DependentUpon>202104050736284_AddColDateTableProductViewed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104060930124_AddColContentTableRating.resx">
-      <DependentUpon>202104060930124_AddColContentTableRating.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104060945289_AddColIsRatingTableOrderDetail.resx">
-      <DependentUpon>202104060945289_AddColIsRatingTableOrderDetail.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

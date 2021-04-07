@@ -1,24 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-
 namespace ToyStore.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("Customer")]
-    public class Customer
+    public partial class Customer
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
-        public string FullName { set; get; }
-        public string Address { set; get; }
-        public string PhoneNumber { set; get; }
-        public string Email { set; get; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Customer()
+        {
+            Orders = new HashSet<Order>();
+        }
+
+        public int ID { get; set; }
+
+        public string FullName { get; set; }
+
+        public string Address { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Email { get; set; }
+
         public int MemberCategoryID { get; set; }
-        [ForeignKey("MemberCategoryID")]
-        public virtual MemberCategory MemberCategory { set; get; }
+
+        public virtual MemberCategory MemberCategory { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -144,7 +144,9 @@ namespace ToyStore.Controllers
             Product product = _productService.GetByID(ID);
             return Json(new
             {
-                data = product,
+                ID = product.ID,
+                Name = product.Name,
+                Image = product.Image1,
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }

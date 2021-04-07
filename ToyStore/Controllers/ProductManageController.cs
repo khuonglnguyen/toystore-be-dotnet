@@ -201,7 +201,24 @@ namespace ToyStore.Controllers
                 //Return view
                 return Json(new
                 {
-                    data = product,
+                    ID = product.ID,
+                    Name = product.Name,
+                    CategoryID = product.CategoryID,
+                    SupplierID = product.SupplierID,
+                    ProducerID = product.ProducerID,
+                    AgeID = product.AgeID,
+                    GenderID = product.GenderID,
+                    Image1 = product.Image1,
+                    Image2 = product.Image2,
+                    Image3 = product.Image3,
+                    Price = product.Price,
+                    PromotionPrice = product.PromotionPrice,
+                    Description = product.Description,
+                    Quantity = product.Quantity,
+                    HomeFlag = product.HomeFlag,
+                    HotFlag = product.HotFlag,
+                    IsNew = product.IsNew,
+                    IsActive = product.IsActive,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
             }

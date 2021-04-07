@@ -7,9 +7,6 @@
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 @{
-    IEnumerable<Product> products = ViewBag.ListProduct as IEnumerable<Product>;
-    IEnumerable<Member> members = ViewBag.ListMember as IEnumerable<Member>;
-    IEnumerable<Emloyee> emloyees = ViewBag.ListEmloyee as IEnumerable<Emloyee>;
     Emloyee emloyee = Session["Emloyee"] as Emloyee;
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -35,13 +32,12 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == true) {
-                        var data = response.data;
-                        $('#ID').val(data.ID);
-                        $('#MemberID').val(data.MemberID);
-                        $('#ProductID').val(data.ProductID);
-                        $('#Question').val(data.Question);
-                        $('#Answer').val(data.Answer);
-                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(data.DateQuestion)));
+                        $('#ID').val(response.ID);
+                        $('#MemberID').val(response.MemberID);
+                        $('#ProductID').val(response.ProductID);
+                        $('#Question').val(response.Question);
+                        $('#Answer').val(response.Answer);
+                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(response.DateQuestion)));
                         $('#DateQuestion').val(newFormattedDate);
                     }
                     else {
@@ -140,22 +136,18 @@
                     @{
                         int counter1 = 0;
                     }
-                    @foreach (var item in Model
-                                    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-                                     .Join(products, p => p.c.ProductID, n => n.ID, (p, n) => new { p, n })
-                                     .Join(emloyees, e => e.p.c.EmloyeeID, v => v.ID, (e, v) => new { e, v })
-                                    .Select(n => new { ID = n.e.p.c.ID, ProductName = n.e.n.Name, FullName = n.e.p.m.FullName, Question = n.e.p.c.Question, Answer = n.e.p.c.Answer, DateQuesion = n.e.p.c.DateQuestion, DateAnswer = n.e.p.c.DateAnswer, Status = n.e.p.c.Status, EmloyeeName = n.v.FullName, Image = n.e.n.Image1, EmloyeeID = n.e.p.c.EmloyeeID }))
+                    @foreach (var item in Model)
                     {
                         @Html.Hidden(item.ID.ToString())
                         <tr>
                             <td style="color:brown">
-                                <b>@Html.DisplayFor(modelItem => item.FullName)</b>
+                                <b>@Html.DisplayFor(modelItem => item.Member.FullName)</b>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ProductName)
+                                @Html.DisplayFor(modelItem => item.Product.Name)
                             </td>
                             <td>
-                                <img src="@Url.Content("~/Content/images/" + item.Image)" width="50" height="50" />
+                                <img src="@Url.Content("~/Content/images/" + item.Product.Image1)" width="50" height="50" />
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Question)
@@ -164,13 +156,13 @@
                                 @Html.DisplayFor(modelItem => item.Answer)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DateQuesion)
+                                @Html.DisplayFor(modelItem => item.DateQuestion)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DateAnswer)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.EmloyeeName)
+                                @Html.DisplayFor(modelItem => item.Emloyee.FullName)
                             </td>
                             <td>
                                 <div id="DivActive@(counter1)">

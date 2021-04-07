@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-
 namespace ToyStore.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("Comment")]
-    public class Comment
+    public partial class Comment
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
-        public int ProductID { set; get; }
-        public int MemberID { set; get; }
-        [MaxLength(1000)]
-        public string Content { set; get; }
+        public int ID { get; set; }
+
+        public int ProductID { get; set; }
+
+        public int MemberID { get; set; }
+
+        [StringLength(1000)]
+        public string Content { get; set; }
+
         public DateTime Date { get; set; }
-        [ForeignKey("ProductID")]
-        public virtual Product Product { set; get; }
-        [ForeignKey("MemberID")]
-        public virtual Member Member { set; get; }
+
+        public virtual Member Member { get; set; }
+
+        public virtual Product Product { get; set; }
     }
 }

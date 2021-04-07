@@ -28,28 +28,27 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == true) {
-                        var data = response.data;
-                        $('#ID').val(data.ID);
-                        $('#Name').val(data.Name);
-                        $('#CategoryID').val(data.CategoryID);
-                        $('#SupplierID').val(data.SupplierID);
-                        $('#ProducerID').val(data.ProducerID);
-                        $('#AgeID').val(data.AgeID);
-                        $('#GenderID').val(data.GenderID);
-                        $('#TextImage1').val(data.Image1);
-                        $('#TextImage2').val(data.Image2);
-                        $('#TextImage3').val(data.Image3);
-                        $('#img1').attr('src', "/Content/images/" + data.Image1);
-                        $('#img2').attr('src', "/Content/images/" + data.Image2);
-                        $('#img3').attr('src', "/Content/images/" + data.Image3);
-                        $('#Price').val(data.Price);
-                        $('#PromotionPrice').val(data.PromotionPrice);
-                        $('#Description').val(data.Description);
-                        $('#Quantity').val(data.Quantity);
-                        $('#HomeFlag').prop("checked", data.HomeFlag);
-                        $('#HotFlag').prop("checked", data.HotFlag);
-                        $('#IsNew').prop("checked", data.IsNew);
-                        $('#IsActive').prop("checked", data.IsActive);
+                        $('#ID').val(response.ID);
+                        $('#Name').val(response.Name);
+                        $('#CategoryID').val(response.CategoryID);
+                        $('#SupplierID').val(response.SupplierID);
+                        $('#ProducerID').val(response.ProducerID);
+                        $('#AgeID').val(response.AgeID);
+                        $('#GenderID').val(response.GenderID);
+                        $('#TextImage1').val(response.Image1);
+                        $('#TextImage2').val(response.Image2);
+                        $('#TextImage3').val(response.Image3);
+                        $('#img1').attr('src', "/Content/images/" + response.Image1);
+                        $('#img2').attr('src', "/Content/images/" + response.Image2);
+                        $('#img3').attr('src', "/Content/images/" + response.Image3);
+                        $('#Price').val(response.Price);
+                        $('#PromotionPrice').val(response.PromotionPrice);
+                        $('#Description').val(response.Description);
+                        $('#Quantity').val(response.Quantity);
+                        $('#HomeFlag').prop("checked", response.HomeFlag);
+                        $('#HotFlag').prop("checked", response.HotFlag);
+                        $('#IsNew').prop("checked", response.IsNew);
+                        $('#IsActive').prop("checked", response.IsActive);
                     }
                     else {
                         bootbox.alert(response.message);

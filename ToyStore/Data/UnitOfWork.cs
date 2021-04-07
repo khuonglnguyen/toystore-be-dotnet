@@ -9,12 +9,12 @@ namespace ToyStore.Data
 {
     public class UnitOfWork : IDisposable
     {
-        private ToyStoreDbContext DbContext = new ToyStoreDbContext();
+        private ToyStoreModel DbContext = new ToyStoreModel();
         private GenericRepository<Product> productRepository;
         private GenericRepository<ProductCategory> productCategoryRepository;
         private GenericRepository<Supplier> supplierRepository;
         private GenericRepository<Producer> producerRepository;
-        private GenericRepository<Ages> ageRepository;
+        private GenericRepository<Age> ageRepository;
         private GenericRepository<ProductCategoryParent> productCategoryParentRepository;
         private GenericRepository<Gender> genderParentRepository;
         private GenericRepository<MemberCategory> memberCategoryRepository;
@@ -76,13 +76,13 @@ namespace ToyStore.Data
                 return producerRepository;
             }
         }
-        public GenericRepository<Ages> AgeRepository
+        public GenericRepository<Age> AgeRepository
         {
             get
             {
                 if (this.ageRepository == null)
                 {
-                    this.ageRepository = new GenericRepository<Ages>(DbContext);
+                    this.ageRepository = new GenericRepository<Age>(DbContext);
                 }
                 return ageRepository;
             }

@@ -21,7 +21,7 @@
                             Mã Phiếu Nhập
                         </th>
                         <th>
-                            Mã NCC
+                            NCC
                         </th>
                         <th>
                             Nhân Viên
@@ -44,10 +44,10 @@
                                 <b>@Html.DisplayFor(modelItem => item.ID)</b>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.SupplierID)
+                                @Html.DisplayFor(modelItem => item.Supplier.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.EmloyeeID)
+                                @Html.DisplayFor(modelItem => item.Emloyee.FullName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Date)

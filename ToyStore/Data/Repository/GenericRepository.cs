@@ -13,9 +13,9 @@ namespace ToyStore.Data.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private ToyStoreDbContext DbContext;
+        private ToyStoreModel DbContext;
         private IDbSet<T> dbEntity;
-        public GenericRepository(ToyStoreDbContext DbContext)
+        public GenericRepository(ToyStoreModel DbContext)
         {
             this.DbContext = DbContext;
             dbEntity = DbContext.Set<T>();

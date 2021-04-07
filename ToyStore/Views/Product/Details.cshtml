@@ -191,7 +191,7 @@
                             {
                                 <input id="rating5" type="radio" name="rating" value="5">
                                 <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4" >
+                                <input id="rating4" type="radio" name="rating" value="4">
                                 <label for="rating4">4</label>
                                 <input id="rating3" type="radio" name="rating" value="3">
                                 <label for="rating3">3</label>
@@ -206,19 +206,19 @@
                     <a href="#">Đánh giá sau khi mua hàng</a>
                 </div>
                 <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p>
-                <h6 class="item_price">@Model.PromotionPrice.Value.ToString("#,##")₫</h6>
+                <h6 class="item_price">@Model.PromotionPrice.ToString("#,##")₫</h6>
                 <div class="clearfix"> </div>
                 <div class="quantity">
                     <p class="qty"> Lượt xem :</p> @Model.ViewCount
                 </div>
                 <div class="quantity">
-                    <p class="qty"> Thương Hiệu :</p> @ViewBag.ProducerName
+                    <p class="qty"> Thương Hiệu :</p> @Model.Producer.Name
                 </div>
                 <div class="quantity">
-                    <p class="qty"> Nhà Cung Cấp :</p> @ViewBag.SupplierName
+                    <p class="qty"> Nhà Cung Cấp :</p> @Model.Supplier.Name
                 </div>
                 <div class="quantity">
-                    <p class="qty"> Lứa Tuổi :</p> @ViewBag.Age
+                    <p class="qty"> Lứa Tuổi :</p> @Model.Age.Name
                 </div>
                 <div class="quantity">
                     <p class="qty"> Kho :</p> @Model.Quantity
@@ -313,12 +313,14 @@
                             {
                                 <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng câu hỏi</a>
                             }
-                            <div id="qaContainer">
-                                <hr />
-                                @foreach (var item in qAs
-                                    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-                                    .Join(emloyees, e => e.c.EmloyeeID, n => n.ID, (e, n) => new { e, n })
-                                    .Select(n => new { EmloyeeName = n.n.FullName, FullName = n.e.m.FullName, Question = n.e.c.Question, Answer = n.e.c.Answer, DateQuesion = n.e.c.DateQuestion, DateAnswer = n.e.c.DateAnswer }))
+                        <div id="qaContainer">
+                            <hr />
+                            @if (qAs.Count() > 0)
+                            {
+                                foreach (var item in qAs
+                                                                   .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
+                                                                   .Join(emloyees, e => e.c.EmloyeeID, n => n.ID, (e, n) => new { e, n })
+                                                                   .Select(n => new { EmloyeeName = n.n.FullName, FullName = n.e.m.FullName, Question = n.e.c.Question, Answer = n.e.c.Answer, DateQuesion = n.e.c.DateQuestion, DateAnswer = n.e.c.DateAnswer }))
                                 {
                                     <p><label style="color:black">@item.FullName:</label>  @item.DateQuesion</p>
                                     <p style="color:black">@item.Question</p>
@@ -331,7 +333,9 @@
                                     }
                                     <hr />
                                 }
-                            </div>
+                            }
+
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -385,13 +389,17 @@
                             }
                             <div id="commentContainer">
                                 <hr />
-                                @foreach (var item in comments
-                                    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-                                    .Select(n => new { FullName = n.m.FullName, Content = n.c.Content, Date = n.c.Date }))
+                                @if (comments.Count() > 0)
                                 {
-                                    <label style="color:black">@item.FullName</label> @item.Date
-                                    <p style="color:black">@item.Content</p>
+                                    foreach (var item in comments
+                                                                        .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
+                                                                        .Select(n => new { FullName = n.m.FullName, Content = n.c.Content, Date = n.c.Date }))
+                                    {
+                                        <label style="color:black">@item.FullName</label> @item.Date
+                                        <p style="color:black">@item.Content</p>
+                                    }
                                 }
+
                             </div>
                         </div>
                     </div>
@@ -431,7 +439,7 @@
                                 </div>
                                 <div class="ofr">
                                     <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
                         </div>
@@ -460,7 +468,7 @@
                                 </div>
                                 <div class="ofr">
                                     <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
                         </div>
@@ -488,7 +496,7 @@
                                 </div>
                                 <div class="ofr">
                                     <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
                         </div>
@@ -517,7 +525,7 @@
                                 </div>
                                 <div class="ofr">
                                     <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.Value.ToString("#,##")₫</span></p>
+                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
                         </div>

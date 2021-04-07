@@ -76,16 +76,8 @@ namespace ToyStore.Controllers
         public ActionResult Details(int ID)
         {
             var product = _productService.GetByID(ID);
-            var producer = _producerService.GetByID(product.ProducerID);
-            var supplier = _supplierService.GetByID(product.SupplierID);
             var listProduct = _productService.GetProductListByCategory(product.CategoryID);
-            var listAge = _ageService.GetAgeList();
-            var listEmloyee = _emloyeeService.GetList();
-            ViewBag.ProducerName = producer.Name;
-            ViewBag.ListEmloyee = listEmloyee;
-            ViewBag.SupplierName = supplier.Name;
             ViewBag.ListProduct = listProduct;
-            ViewBag.Age = listAge.Single(x => x.ID == product.AgeID).Name;
 
             IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(ID).OrderByDescending(x => x.Date);
             ViewBag.CommentList = listComment;
@@ -132,7 +124,7 @@ namespace ToyStore.Controllers
             ViewBag.ListProduct = listProduct;
 
             ViewBag.ageID = ID;
-            Ages ages = _ageService.GetAgeByID(ID);
+            Age ages = _ageService.GetAgeByID(ID);
             ViewBag.Name = "Độ tuổi " + ages.Name;
 
             PagedList<Product> listProductPaging;

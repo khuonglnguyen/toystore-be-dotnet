@@ -1,42 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-
 namespace ToyStore.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("ProductCategory")]
-    public class ProductCategory
+    public partial class ProductCategory
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ProductCategory()
+        {
+            Products = new HashSet<Product>();
+        }
 
-        [Display(Name = "Tên danh mục")]
-        [MaxLength(256)]
-        public string Name { set; get; }
-        [Display(Name = "Danh mục gốc")]
-        public int ParentID { set; get; }
+        public int ID { get; set; }
 
-        [Display(Name = "Mô tả")]
-        [MaxLength(500)]
-        public string Description { set; get; }
+        [StringLength(256)]
+        public string Name { get; set; }
 
-        [Display(Name = "Hình ảnh")]
-        [MaxLength(256)]
-        public string Image { set; get; }
+        [StringLength(500)]
+        public string Description { get; set; }
 
-        [Display(Name = "Kích hoạt")]
+        [StringLength(256)]
+        public string Image { get; set; }
+
         public bool IsActive { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày cập nhật cuối")]
         public DateTime LastUpdatedDate { get; set; }
 
-        [ForeignKey("ParentID")]
-        public virtual ProductCategoryParent ProductCategoryParent { set; get; }
-        public virtual IEnumerable<Product> Products { set; get; }
+        public int ParentID { get; set; }
+
+        public virtual ProductCategoryParent ProductCategoryParent { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

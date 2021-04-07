@@ -1,92 +1,110 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-
 namespace ToyStore.Models
 {
-    [Table("Products")]
-    public class Product
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Product
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            Carts = new HashSet<Cart>();
+            Comments = new HashSet<Comment>();
+            ImportCouponDetails = new HashSet<ImportCouponDetail>();
+            OrderDetails = new HashSet<OrderDetail>();
+            ProductVieweds = new HashSet<ProductViewed>();
+            QAs = new HashSet<QA>();
+            Ratings = new HashSet<Rating>();
+        }
 
-        [Required(ErrorMessage = "Vui lòng nhập vào tên sản phẩm.")]
-        [Display(Name = "Tên sản phẩm")]
-        [MaxLength(256)]
-        public string Name { set; get; }
-        [Display(Name = "Độ tuổi")]
-        public int AgeID { set; get; }
-        [Display(Name = "Giới tính")]
-        public int GenderID { set; get; }
-        [Display(Name = "Danh mục")]
-        public int CategoryID { set; get; }
+        public int ID { get; set; }
 
-        [Display(Name = "Hình ảnh 1")]
-        [MaxLength(256)]
-        public string Image1 { set; get; }
-        [Display(Name = "Hình ảnh 2")]
-        [MaxLength(256)]
-        public string Image2 { set; get; }
-        [Display(Name = "Hình ảnh 3")]
-        [MaxLength(256)]
-        public string Image3 { set; get; }
-        [Display(Name = "Hình ảnh 4")]
-        [MaxLength(256)]
-        public string Image4 { set; get; }
+        [Required]
+        [StringLength(256)]
+        public string Name { get; set; }
 
-        public string ClipReview { set; get; }
+        public int CategoryID { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập vào giá bán.")]
-        [Display(Name = "Giá bán")]
-        public decimal Price { set; get; }
+        [StringLength(256)]
+        public string Image1 { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập vào giá khuyến mãi.")]
-        [Display(Name = "Giá khuyến mãi")]
-        public decimal? PromotionPrice { set; get; }
-        public int Discount { set; get; }
+        [StringLength(256)]
+        public string Image2 { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập vào số lượng.")]
-        [Display(Name = "Số lượng")]
-        public int Quantity { set; get; }
+        [StringLength(256)]
+        public string Image3 { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập vào mô tả sản phẩm.")]
-        [Display(Name = "Mô tả sản phẩm")]
-        public string Description { set; get; }
+        [StringLength(256)]
+        public string Image4 { get; set; }
 
-        [Display(Name = "Hiển thị trang chủ")]
-        public bool HomeFlag { set; get; }
-        [Display(Name = "Sản phẩm bán chạy")]
-        public bool HotFlag { set; get; }
-        public int? ViewCount { set; get; }
+        public string ClipReview { get; set; }
+
+        public decimal Price { get; set; }
+
+        public decimal PromotionPrice { get; set; }
+
+        public int Quantity { get; set; }
+
+        public string Description { get; set; }
+
+        public bool HomeFlag { get; set; }
+
+        public bool HotFlag { get; set; }
+
+        public int? ViewCount { get; set; }
+
         public int? CommentCount { get; set; }
+
         public int? PurchasedCount { get; set; }
-        [Required]
-        [Display(Name = "Nhà cung cấp")]
+
         public int SupplierID { get; set; }
-        [Required]
-        [Display(Name = "Hãng sản xuất")]
+
         public int ProducerID { get; set; }
-        [Display(Name = "Sản phẩm mới")]
+
         public bool IsNew { get; set; }
-        [Display(Name = "Kích hoạt")]
+
         public bool IsActive { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
         public DateTime LastUpdatedDate { get; set; }
 
-        [ForeignKey("GenderID")]
-        public virtual Gender Gender { set; get; }
-        [ForeignKey("AgeID")]
-        public virtual Ages Ages { set; get; }
-        [ForeignKey("CategoryID")]
-        public virtual ProductCategory ProductCategory { set; get; }
-        [ForeignKey("SupplierID")]
-        public virtual Supplier Supplier { set; get; }
-        [ForeignKey("ProducerID")]
-        public virtual Producer Producer { set; get; }
+        public int AgeID { get; set; }
 
+        public int GenderID { get; set; }
+
+        public int Discount { get; set; }
+
+        public virtual Age Age { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Carts { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual Gender Gender { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ImportCouponDetail> ImportCouponDetails { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public virtual Producer Producer { get; set; }
+
+        public virtual ProductCategory ProductCategory { get; set; }
+
+        public virtual Supplier Supplier { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductViewed> ProductVieweds { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QA> QAs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

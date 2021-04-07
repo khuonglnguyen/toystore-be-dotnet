@@ -9,8 +9,8 @@ namespace ToyStore.Service
 {
     public interface IAgeService
     {
-        IEnumerable<Ages> GetAgeList();
-        Ages GetAgeByID(int ID);
+        IEnumerable<Age> GetAgeList();
+        Age GetAgeByID(int ID);
     }
     public class AgeService : IAgeService
     {
@@ -19,13 +19,13 @@ namespace ToyStore.Service
         {
             this.context = repositoryContext;
         }
-        public IEnumerable<Ages> GetAgeList()
+        public IEnumerable<Age> GetAgeList()
         {
-            IEnumerable<Ages> listAge = this.context.AgeRepository.GetAllData();
+            IEnumerable<Age> listAge = this.context.AgeRepository.GetAllData();
             return listAge;
         }
 
-        public Ages GetAgeByID(int ID)
+        public Age GetAgeByID(int ID)
         {
             return this.context.AgeRepository.GetDataByID(ID);
         }

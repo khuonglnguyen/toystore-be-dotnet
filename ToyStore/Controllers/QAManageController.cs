@@ -29,19 +29,16 @@ namespace ToyStore.Controllers
         {
             if (Session["Emloyee"] == null)
             {
-                return RedirectToAction("Login","Admin");
+                return RedirectToAction("Login", "Admin");
             }
             int pageSize = 5;
             //Get qAs list
-            var qAs = _qAService.GetQAList().OrderBy(x => x.DateQuestion);
+            IEnumerable<QA> qAs = _qAService.GetQAList().OrderBy(x => x.DateQuestion);
             PagedList<QA> listqAs = new PagedList<QA>(qAs, page, pageSize);
             //Check null
             if (listqAs != null)
             {
                 ViewBag.Page = page;
-                ViewBag.ListMember = _memberService.GetMemberList();
-                ViewBag.ListProduct = _productService.GetProductList();
-                ViewBag.ListEmloyee = _emloyeeService.GetList();
                 //Return view
                 return View(listqAs);
             }
@@ -66,7 +63,11 @@ namespace ToyStore.Controllers
             }
             return Json(new
             {
-                data = qAs,
+                ID = qAs.ID,
+                MemberID = qAs.MemberID,
+                ProductID = qAs.ProductID,
+                Question = qAs.Question,
+                Answer = qAs.Answer,
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
