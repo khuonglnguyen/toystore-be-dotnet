@@ -61,12 +61,11 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == true) {
-                        var data = response.data;
-                        $('#ID').val(data.ID);
-                        $('#MemberID').val(data.MemberID);
-                        $('#ProductID').val(data.ProductID);
-                        $('#Question').val(data.Question);
-                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(data.DateQuestion)));
+                        $('#ID').val(response.ID);
+                        $('#MemberID').val(response.MemberID);
+                        $('#ProductID').val(response.ProductID);
+                        $('#Question').val(response.Question);
+                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(response.DateQuestion)));
                         $('#DateQuestion').val(newFormattedDate);
                     }
                     else {

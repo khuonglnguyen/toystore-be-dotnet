@@ -22,12 +22,11 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == true) {
-                        var data = response.data;
-                        $('#ID').val(data.ID);
-                        $('#Price').val(data.Price);
-                        $('#ProductID').val(data.ProductID);
-                        $('#Quantity').val(data.Quantity);
-                        $('#Image').attr('src', "/Content/images/" + data.Image);
+                        $('#ID').val(response.ID);
+                        $('#Price').val(response.Price);
+                        $('#ProductID').val(response.ProductID);
+                        $('#Quantity').val(response.Quantity);
+                        $('#Image').attr('src', "/Content/images/" + response.Image);
                     }
                     else {
                         bootbox.alert(response.message);
@@ -136,9 +135,12 @@
             }
             else
             {
-                <div style="text-align:right">
-                    @Html.ActionLink("Đặt Hàng", "AddOrder", "Cart", null, new { @class = "btn btn-success" })
-                </div>
+                if (Cart.Count() > 0)
+                {
+                    <div style="text-align:right">
+                        @Html.ActionLink("Đặt Hàng", "AddOrder", "Cart", null, new { @class = "btn btn-success" })
+                    </div>
+                }
             }
         }
         else

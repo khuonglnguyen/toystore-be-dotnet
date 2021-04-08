@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -100,14 +101,16 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult CheckoutOrder(int ID)
+        public ActionResult CheckoutOrder(int ID, int page=1)
         {
             string Name = _memberService.GetByID(ID).FullName;
             Customer customer = _customerService.GetAll().FirstOrDefault(x => x.FullName.Contains(Name));
             if (customer != null)
             {
-                IEnumerable<Order> orders = _orderService.GetByCustomerID(customer.ID);
-                return View(orders);
+                var orders = _orderService.GetByCustomerID(customer.ID);
+                int pageSize = 10;
+                PagedList<Order> listOrderPaging = new PagedList<Order>(orders, page, pageSize);
+                return View(listOrderPaging);
             }
             return View();
         }

@@ -11,6 +11,7 @@ namespace ToyStore.Service
     {
         void AddRating(Rating rating);
         int GetRating(int ProductID);
+        IEnumerable<Rating> GetListRating(int ProductID);
     }
     public class RatingService : IRatingService
     {
@@ -24,16 +25,24 @@ namespace ToyStore.Service
             context.RatingRepository.Insert(rating);
         }
 
+        public IEnumerable<Rating> GetListRating(int ProductID)
+        {
+            return context.RatingRepository.GetAllData(x => x.ProductID == ProductID);
+        }
+
         public int GetRating(int ProductID)
         {
             IEnumerable<Rating> ratings = context.RatingRepository.GetAllData(x => x.ProductID == ProductID);
-            List<int> list = ratings.Select(x=>x.Star).ToList();
+            List<int> list = ratings.Select(x => x.Star).ToList();
             int sum = 0;
             foreach (int item in list)
             {
                 sum += item;
             }
-            return sum/list.Count;
+            if (sum > 0)
+                return sum / list.Count;
+            else
+                return 0;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace ToyStore.Service
         void RemoveCart(int ProductID, int MemberID);
         void AddCart(Cart cart);
         List<Cart> GetCart(int MemberID);
+        Cart GetCartByID(int ID);
         bool CheckProductInCart(int ProductID, int MemberID);
     }
     public class CartService : ICartService
@@ -61,6 +62,11 @@ namespace ToyStore.Service
         public List<Cart> GetCart(int MemberID)
         {
             return context.CartRepository.GetAllData().Where(x => x.MemberID == MemberID).ToList();
+        }
+
+        public Cart GetCartByID(int ID)
+        {
+            return context.CartRepository.GetDataByID(ID);
         }
 
         public void RemoveCart(int ProductID, int MemberID)

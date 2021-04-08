@@ -185,7 +185,11 @@ namespace ToyStore.Controllers
             ViewBag.Cart = listCart;
             return Json(new
             {
-                data = item,
+                ID = item.ID,
+                Price = item.Price,
+                ProductID = item.ProductID,
+                Quantity = item.Quantity,
+                Image = item.Image,
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }

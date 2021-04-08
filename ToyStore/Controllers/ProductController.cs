@@ -115,6 +115,8 @@ namespace ToyStore.Controllers
             }
             //Get rating
             ViewBag.Rating = _ratingService.GetRating(ID);
+            //Get list rating
+            ViewBag.ListRating = _ratingService.GetListRating(ID);
             return View(product);
         }
         [HttpGet]
