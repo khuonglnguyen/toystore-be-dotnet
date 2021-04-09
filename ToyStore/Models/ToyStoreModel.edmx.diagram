@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ee0e3b09b00f4949ae6f52917d08eef6" Name="Diagram1" ZoomLevel="44">
+        <EntityTypeShape EntityType="ToyStore2021Model.AccessTimesCount" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Age" Width="1.5" PointX="3.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Cart" Width="1.5" PointX="11.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Comment" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Customer" Width="1.5" PointX="3.75" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Decentralization" Width="1.5" PointX="6" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Emloyee" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.EmloyeeType" Width="1.5" PointX="1.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Gender" Width="1.5" PointX="3.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ImportCoupon" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ImportCouponDetail" Width="1.5" PointX="8.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Member" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.MemberCategory" Width="1.5" PointX="3.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Order" Width="1.5" PointX="6" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.OrderDetail" Width="1.5" PointX="8.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Producer" Width="1.5" PointX="3.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ProductCategory" Width="1.5" PointX="3.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ProductCategoryParent" Width="1.5" PointX="1.5" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Product" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ProductViewed" Width="1.5" PointX="11.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.QA" Width="1.5" PointX="11.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Rating" Width="1.5" PointX="14.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Role" Width="1.5" PointX="3.75" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Supplier" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Cart_dbo_Member_MemberID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Cart_dbo_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Comment_dbo_Member_MemberID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Comment_dbo_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Order_dbo_Customer_CustomerID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_QA_dbo_Emloyee_EmloyeeID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Products_dbo_Gender_GenderID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_ImportCouponDetail_dbo_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Member_MemberID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_QA_dbo_Member_MemberID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Rating_dbo_Member_MemberID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Order_OrderID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Products_dbo_Producer_ProducerID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Products_dbo_ProductCategory_CategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Products_dbo_Supplier_SupplierID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_QA_dbo_Products_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="ToyStore2021Model.FK_dbo_Rating_dbo_Products_ProductID" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

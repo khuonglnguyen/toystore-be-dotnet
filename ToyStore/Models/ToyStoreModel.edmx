@@ -1,0 +1,2016 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ToyStore2021Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccessTimesCount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="AccessTimes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Age">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="MemberCategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="EmloyeeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Emloyee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="EmloyeeTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmloyeeType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="ImportCoupon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="EmloyeeID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ImportCouponDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImportCouponID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberCategoryID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="Capcha" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="DateOrder" Type="datetime" Nullable="false" />
+          <Property Name="DateShip" Type="datetime" Nullable="false" />
+          <Property Name="Offer" Type="int" Nullable="false" />
+          <Property Name="IsPaid" Type="bit" Nullable="false" />
+          <Property Name="IsCancel" Type="bit" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="IsDelivere" Type="bit" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="IsReceived" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsRating" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="Imfomation" Type="nvarchar" MaxLength="256" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Image" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCategoryParent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="Image1" Type="nvarchar" MaxLength="256" />
+          <Property Name="Image2" Type="nvarchar" MaxLength="256" />
+          <Property Name="Image3" Type="nvarchar" MaxLength="256" />
+          <Property Name="Image4" Type="nvarchar" MaxLength="256" />
+          <Property Name="ClipReview" Type="nvarchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PromotionPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="HomeFlag" Type="bit" Nullable="false" />
+          <Property Name="HotFlag" Type="bit" Nullable="false" />
+          <Property Name="ViewCount" Type="int" />
+          <Property Name="CommentCount" Type="int" />
+          <Property Name="PurchasedCount" Type="int" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="ProducerID" Type="int" Nullable="false" />
+          <Property Name="IsNew" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="AgeID" Type="int" Nullable="false" />
+          <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="Discount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductViewed">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Question" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Answer" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DateQuestion" Type="datetime" />
+          <Property Name="DateAnswer" Type="datetime" />
+          <Property Name="EmloyeeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="Star" Type="int" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Cart_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cart_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comment_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comment_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Decentralization_dbo_Role_RoleID">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
+          <End Role="EmloyeeType" Type="Self.EmloyeeType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmloyeeType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Emloyee">
+              <PropertyRef Name="EmloyeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCoupon_dbo_Supplier_SupplierID">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID">
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="1" />
+          <End Role="ImportCouponDetail" Type="Self.ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportCoupon">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="ImportCouponID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCouponDetail_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ImportCouponDetail" Type="Self.ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_dbo_Customer_CustomerID">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderDetail_dbo_Order_OrderID">
+          <End Role="Order" Type="Self.Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderDetail_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID">
+          <End Role="ProductCategoryParent" Type="Self.ProductCategoryParent" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategoryParent">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Ages_AgeID">
+          <End Role="Age" Type="Self.Age" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Age">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="AgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Gender_GenderID">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Producer_ProducerID">
+          <End Role="Producer" Type="Self.Producer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProducerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_ProductCategory_CategoryID">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Supplier_SupplierID">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductViewed_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductViewed_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID">
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_QA_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_QA_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Rating_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Rating_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToyStore2021ModelStoreContainer">
+          <EntitySet Name="AccessTimesCount" EntityType="Self.AccessTimesCount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Age" EntityType="Self.Age" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Decentralization" EntityType="Self.Decentralization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emloyee" EntityType="Self.Emloyee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmloyeeType" EntityType="Self.EmloyeeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportCoupon" EntityType="Self.ImportCoupon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportCouponDetail" EntityType="Self.ImportCouponDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberCategory" EntityType="Self.MemberCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producer" EntityType="Self.Producer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategoryParent" EntityType="Self.ProductCategoryParent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductViewed" EntityType="Self.ProductViewed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QA" EntityType="Self.QA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Cart_dbo_Member_MemberID" Association="Self.FK_dbo_Cart_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cart_dbo_Products_ProductID" Association="Self.FK_dbo_Cart_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comment_dbo_Member_MemberID" Association="Self.FK_dbo_Comment_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comment_dbo_Products_ProductID" Association="Self.FK_dbo_Comment_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" Association="Self.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
+            <End Role="Emloyee" EntitySet="Emloyee" />
+            <End Role="Decentralization" EntitySet="Decentralization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Decentralization_dbo_Role_RoleID" Association="Self.FK_dbo_Decentralization_dbo_Role_RoleID">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Decentralization" EntitySet="Decentralization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" Association="Self.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
+            <End Role="EmloyeeType" EntitySet="EmloyeeType" />
+            <End Role="Emloyee" EntitySet="Emloyee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
+            <End Role="Emloyee" EntitySet="Emloyee" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" Association="Self.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" Association="Self.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID">
+            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_Products_ProductID" Association="Self.FK_dbo_ImportCouponDetail_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" Association="Self.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_dbo_Customer_CustomerID" Association="Self.FK_dbo_Order_dbo_Customer_CustomerID">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetail_dbo_Order_OrderID" Association="Self.FK_dbo_OrderDetail_dbo_Order_OrderID">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetail_dbo_Products_ProductID" Association="Self.FK_dbo_OrderDetail_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID" Association="Self.FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID">
+            <End Role="ProductCategoryParent" EntitySet="ProductCategoryParent" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Ages_AgeID" Association="Self.FK_dbo_Products_dbo_Ages_AgeID">
+            <End Role="Age" EntitySet="Age" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Gender_GenderID" Association="Self.FK_dbo_Products_dbo_Gender_GenderID">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Producer_ProducerID" Association="Self.FK_dbo_Products_dbo_Producer_ProducerID">
+            <End Role="Producer" EntitySet="Producer" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_ProductCategory_CategoryID" Association="Self.FK_dbo_Products_dbo_ProductCategory_CategoryID">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Supplier_SupplierID" Association="Self.FK_dbo_Products_dbo_Supplier_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductViewed_dbo_Member_MemberID" Association="Self.FK_dbo_ProductViewed_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="ProductViewed" EntitySet="ProductViewed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductViewed_dbo_Products_ProductID" Association="Self.FK_dbo_ProductViewed_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductViewed" EntitySet="ProductViewed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_QA_dbo_Emloyee_EmloyeeID">
+            <End Role="Emloyee" EntitySet="Emloyee" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QA_dbo_Member_MemberID" Association="Self.FK_dbo_QA_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QA_dbo_Products_ProductID" Association="Self.FK_dbo_QA_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Rating_dbo_Member_MemberID" Association="Self.FK_dbo_Rating_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Rating_dbo_Products_ProductID" Association="Self.FK_dbo_Rating_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ToyStore2021Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccessTimesCount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AccessTimes" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Age">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Ages_AgeID" FromRole="Age" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_dbo_Cart_dbo_Member_MemberID" FromRole="Cart" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_Cart_dbo_Products_ProductID" FromRole="Cart" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_dbo_Comment_dbo_Member_MemberID" FromRole="Comment" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_Comment_dbo_Products_ProductID" FromRole="Comment" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MemberCategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MemberCategory" Relationship="Self.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" FromRole="Customer" ToRole="MemberCategory" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_dbo_Order_dbo_Customer_CustomerID" FromRole="Customer" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmloyeeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Emloyee" Relationship="Self.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" FromRole="Decentralization" ToRole="Emloyee" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_dbo_Decentralization_dbo_Role_RoleID" FromRole="Decentralization" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Emloyee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmloyeeTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Decentralizations" Relationship="Self.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="Decentralization" />
+          <NavigationProperty Name="EmloyeeType" Relationship="Self.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="Emloyee" ToRole="EmloyeeType" />
+          <NavigationProperty Name="ImportCoupons" Relationship="Self.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="ImportCoupon" />
+          <NavigationProperty Name="QAs" Relationship="Self.FK_dbo_QA_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="QA" />
+        </EntityType>
+        <EntityType Name="EmloyeeType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Emloyees" Relationship="Self.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="EmloyeeType" ToRole="Emloyee" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Gender_GenderID" FromRole="Gender" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="ImportCoupon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="EmloyeeID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Emloyee" Relationship="Self.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" FromRole="ImportCoupon" ToRole="Emloyee" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" FromRole="ImportCoupon" ToRole="Supplier" />
+          <NavigationProperty Name="ImportCouponDetails" Relationship="Self.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" FromRole="ImportCoupon" ToRole="ImportCouponDetail" />
+        </EntityType>
+        <EntityType Name="ImportCouponDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImportCouponID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ImportCoupon" Relationship="Self.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" FromRole="ImportCouponDetail" ToRole="ImportCoupon" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_ImportCouponDetail_dbo_Products_ProductID" FromRole="ImportCouponDetail" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="Capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK_dbo_Cart_dbo_Member_MemberID" FromRole="Member" ToRole="Cart" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_dbo_Comment_dbo_Member_MemberID" FromRole="Member" ToRole="Comment" />
+          <NavigationProperty Name="MemberCategory" Relationship="Self.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="Member" ToRole="MemberCategory" />
+          <NavigationProperty Name="ProductVieweds" Relationship="Self.FK_dbo_ProductViewed_dbo_Member_MemberID" FromRole="Member" ToRole="ProductViewed" />
+          <NavigationProperty Name="QAs" Relationship="Self.FK_dbo_QA_dbo_Member_MemberID" FromRole="Member" ToRole="QA" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK_dbo_Rating_dbo_Member_MemberID" FromRole="Member" ToRole="Rating" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" FromRole="MemberCategory" ToRole="Customer" />
+          <NavigationProperty Name="Members" Relationship="Self.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="MemberCategory" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateShip" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Offer" Type="Int32" Nullable="false" />
+          <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+          <Property Name="IsCancel" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="IsDelivere" Type="Boolean" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="IsReceived" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_dbo_Order_dbo_Customer_CustomerID" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_dbo_OrderDetail_dbo_Order_OrderID" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsRating" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_dbo_OrderDetail_dbo_Order_OrderID" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_OrderDetail_dbo_Products_ProductID" FromRole="OrderDetail" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Producer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Imfomation" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Producer_ProducerID" FromRole="Producer" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductCategoryParent" Relationship="Self.FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID" FromRole="ProductCategory" ToRole="ProductCategoryParent" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_ProductCategory_CategoryID" FromRole="ProductCategory" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="ProductCategoryParent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductCategories" Relationship="Self.FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID" FromRole="ProductCategoryParent" ToRole="ProductCategory" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Image1" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Image2" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Image3" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Image4" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ClipReview" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PromotionPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HomeFlag" Type="Boolean" Nullable="false" />
+          <Property Name="HotFlag" Type="Boolean" Nullable="false" />
+          <Property Name="ViewCount" Type="Int32" />
+          <Property Name="CommentCount" Type="Int32" />
+          <Property Name="PurchasedCount" Type="Int32" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="ProducerID" Type="Int32" Nullable="false" />
+          <Property Name="IsNew" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AgeID" Type="Int32" Nullable="false" />
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="Discount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Age" Relationship="Self.FK_dbo_Products_dbo_Ages_AgeID" FromRole="Products" ToRole="Age" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK_dbo_Cart_dbo_Products_ProductID" FromRole="Products" ToRole="Cart" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_dbo_Comment_dbo_Products_ProductID" FromRole="Products" ToRole="Comment" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_dbo_Products_dbo_Gender_GenderID" FromRole="Products" ToRole="Gender" />
+          <NavigationProperty Name="ImportCouponDetails" Relationship="Self.FK_dbo_ImportCouponDetail_dbo_Products_ProductID" FromRole="Products" ToRole="ImportCouponDetail" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_dbo_OrderDetail_dbo_Products_ProductID" FromRole="Products" ToRole="OrderDetail" />
+          <NavigationProperty Name="Producer" Relationship="Self.FK_dbo_Products_dbo_Producer_ProducerID" FromRole="Products" ToRole="Producer" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_dbo_Products_dbo_ProductCategory_CategoryID" FromRole="Products" ToRole="ProductCategory" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_dbo_Products_dbo_Supplier_SupplierID" FromRole="Products" ToRole="Supplier" />
+          <NavigationProperty Name="ProductVieweds" Relationship="Self.FK_dbo_ProductViewed_dbo_Products_ProductID" FromRole="Products" ToRole="ProductViewed" />
+          <NavigationProperty Name="QAs" Relationship="Self.FK_dbo_QA_dbo_Products_ProductID" FromRole="Products" ToRole="QA" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK_dbo_Rating_dbo_Products_ProductID" FromRole="Products" ToRole="Rating" />
+        </EntityType>
+        <EntityType Name="ProductViewed">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_dbo_ProductViewed_dbo_Member_MemberID" FromRole="ProductViewed" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_ProductViewed_dbo_Products_ProductID" FromRole="ProductViewed" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="QA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Question" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DateQuestion" Type="DateTime" Precision="3" />
+          <Property Name="DateAnswer" Type="DateTime" Precision="3" />
+          <Property Name="EmloyeeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Emloyee" Relationship="Self.FK_dbo_QA_dbo_Emloyee_EmloyeeID" FromRole="QA" ToRole="Emloyee" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_dbo_QA_dbo_Member_MemberID" FromRole="QA" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_QA_dbo_Products_ProductID" FromRole="QA" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="Star" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_dbo_Rating_dbo_Member_MemberID" FromRole="Rating" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_Rating_dbo_Products_ProductID" FromRole="Rating" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Decentralizations" Relationship="Self.FK_dbo_Decentralization_dbo_Role_RoleID" FromRole="Role" ToRole="Decentralization" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ImportCoupons" Relationship="Self.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" FromRole="Supplier" ToRole="ImportCoupon" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Supplier_SupplierID" FromRole="Supplier" ToRole="Products" />
+        </EntityType>
+        <Association Name="FK_dbo_Products_dbo_Ages_AgeID">
+          <End Role="Age" Type="Self.Age" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Age">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="AgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cart_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cart_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comment_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comment_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_dbo_Customer_CustomerID">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Decentralization_dbo_Role_RoleID">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
+          <End Role="EmloyeeType" Type="Self.EmloyeeType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmloyeeType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Emloyee">
+              <PropertyRef Name="EmloyeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID">
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Gender_GenderID">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCoupon_dbo_Supplier_SupplierID">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID">
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="1" />
+          <End Role="ImportCouponDetail" Type="Self.ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportCoupon">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="ImportCouponID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCouponDetail_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="ImportCouponDetail" Type="Self.ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="MemberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductViewed_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_QA_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Rating_dbo_Member_MemberID">
+          <End Role="Member" Type="Self.Member" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderDetail_dbo_Order_OrderID">
+          <End Role="Order" Type="Self.Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderDetail_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Producer_ProducerID">
+          <End Role="Producer" Type="Self.Producer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProducerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID">
+          <End Role="ProductCategoryParent" Type="Self.ProductCategoryParent" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategoryParent">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_ProductCategory_CategoryID">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Products_dbo_Supplier_SupplierID">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductViewed_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_QA_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Rating_dbo_Products_ProductID">
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToyStore2021Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccessTimesCounts" EntityType="Self.AccessTimesCount" />
+          <EntitySet Name="Ages" EntityType="Self.Age" />
+          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Decentralizations" EntityType="Self.Decentralization" />
+          <EntitySet Name="Emloyees" EntityType="Self.Emloyee" />
+          <EntitySet Name="EmloyeeTypes" EntityType="Self.EmloyeeType" />
+          <EntitySet Name="Genders" EntityType="Self.Gender" />
+          <EntitySet Name="ImportCoupons" EntityType="Self.ImportCoupon" />
+          <EntitySet Name="ImportCouponDetails" EntityType="Self.ImportCouponDetail" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="MemberCategories" EntityType="Self.MemberCategory" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Producers" EntityType="Self.Producer" />
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
+          <EntitySet Name="ProductCategoryParents" EntityType="Self.ProductCategoryParent" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductVieweds" EntityType="Self.ProductViewed" />
+          <EntitySet Name="QAs" EntityType="Self.QA" />
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <AssociationSet Name="FK_dbo_Products_dbo_Ages_AgeID" Association="Self.FK_dbo_Products_dbo_Ages_AgeID">
+            <End Role="Age" EntitySet="Ages" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cart_dbo_Member_MemberID" Association="Self.FK_dbo_Cart_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cart_dbo_Products_ProductID" Association="Self.FK_dbo_Cart_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comment_dbo_Member_MemberID" Association="Self.FK_dbo_Comment_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comment_dbo_Products_ProductID" Association="Self.FK_dbo_Comment_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" Association="Self.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
+            <End Role="MemberCategory" EntitySet="MemberCategories" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_dbo_Customer_CustomerID" Association="Self.FK_dbo_Order_dbo_Customer_CustomerID">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
+            <End Role="Emloyee" EntitySet="Emloyees" />
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Decentralization_dbo_Role_RoleID" Association="Self.FK_dbo_Decentralization_dbo_Role_RoleID">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" Association="Self.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
+            <End Role="EmloyeeType" EntitySet="EmloyeeTypes" />
+            <End Role="Emloyee" EntitySet="Emloyees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
+            <End Role="Emloyee" EntitySet="Emloyees" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_QA_dbo_Emloyee_EmloyeeID">
+            <End Role="Emloyee" EntitySet="Emloyees" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Gender_GenderID" Association="Self.FK_dbo_Products_dbo_Gender_GenderID">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" Association="Self.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" Association="Self.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID">
+            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_Products_ProductID" Association="Self.FK_dbo_ImportCouponDetail_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" Association="Self.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
+            <End Role="MemberCategory" EntitySet="MemberCategories" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductViewed_dbo_Member_MemberID" Association="Self.FK_dbo_ProductViewed_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="ProductViewed" EntitySet="ProductVieweds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QA_dbo_Member_MemberID" Association="Self.FK_dbo_QA_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Rating_dbo_Member_MemberID" Association="Self.FK_dbo_Rating_dbo_Member_MemberID">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetail_dbo_Order_OrderID" Association="Self.FK_dbo_OrderDetail_dbo_Order_OrderID">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetail_dbo_Products_ProductID" Association="Self.FK_dbo_OrderDetail_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Producer_ProducerID" Association="Self.FK_dbo_Products_dbo_Producer_ProducerID">
+            <End Role="Producer" EntitySet="Producers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID" Association="Self.FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID">
+            <End Role="ProductCategoryParent" EntitySet="ProductCategoryParents" />
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_ProductCategory_CategoryID" Association="Self.FK_dbo_Products_dbo_ProductCategory_CategoryID">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_Supplier_SupplierID" Association="Self.FK_dbo_Products_dbo_Supplier_SupplierID">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductViewed_dbo_Products_ProductID" Association="Self.FK_dbo_ProductViewed_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductViewed" EntitySet="ProductVieweds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QA_dbo_Products_ProductID" Association="Self.FK_dbo_QA_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Rating_dbo_Products_ProductID" Association="Self.FK_dbo_Rating_dbo_Products_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ToyStore2021ModelStoreContainer" CdmEntityContainer="ToyStore2021Entities">
+          <EntitySetMapping Name="AccessTimesCounts">
+            <EntityTypeMapping TypeName="ToyStore2021Model.AccessTimesCount">
+              <MappingFragment StoreEntitySet="AccessTimesCount">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="AccessTimes" ColumnName="AccessTimes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ages">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Age">
+              <MappingFragment StoreEntitySet="Age">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MemberCategoryID" ColumnName="MemberCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Decentralizations">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Decentralization">
+              <MappingFragment StoreEntitySet="Decentralization">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emloyees">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Emloyee">
+              <MappingFragment StoreEntitySet="Emloyee">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="EmloyeeTypeID" ColumnName="EmloyeeTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmloyeeTypes">
+            <EntityTypeMapping TypeName="ToyStore2021Model.EmloyeeType">
+              <MappingFragment StoreEntitySet="EmloyeeType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportCoupons">
+            <EntityTypeMapping TypeName="ToyStore2021Model.ImportCoupon">
+              <MappingFragment StoreEntitySet="ImportCoupon">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportCouponDetails">
+            <EntityTypeMapping TypeName="ToyStore2021Model.ImportCouponDetail">
+              <MappingFragment StoreEntitySet="ImportCouponDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ImportCouponID" ColumnName="ImportCouponID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MemberCategoryID" ColumnName="MemberCategoryID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Capcha" ColumnName="Capcha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberCategories">
+            <EntityTypeMapping TypeName="ToyStore2021Model.MemberCategory">
+              <MappingFragment StoreEntitySet="MemberCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
+                <ScalarProperty Name="DateShip" ColumnName="DateShip" />
+                <ScalarProperty Name="Offer" ColumnName="Offer" />
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="IsCancel" ColumnName="IsCancel" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsDelivere" ColumnName="IsDelivere" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsReceived" ColumnName="IsReceived" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="ToyStore2021Model.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IsRating" ColumnName="IsRating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producers">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Producer">
+              <MappingFragment StoreEntitySet="Producer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Imfomation" ColumnName="Imfomation" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="ToyStore2021Model.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategoryParents">
+            <EntityTypeMapping TypeName="ToyStore2021Model.ProductCategoryParent">
+              <MappingFragment StoreEntitySet="ProductCategoryParent">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Image1" ColumnName="Image1" />
+                <ScalarProperty Name="Image2" ColumnName="Image2" />
+                <ScalarProperty Name="Image3" ColumnName="Image3" />
+                <ScalarProperty Name="Image4" ColumnName="Image4" />
+                <ScalarProperty Name="ClipReview" ColumnName="ClipReview" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PromotionPrice" ColumnName="PromotionPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="HomeFlag" ColumnName="HomeFlag" />
+                <ScalarProperty Name="HotFlag" ColumnName="HotFlag" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="CommentCount" ColumnName="CommentCount" />
+                <ScalarProperty Name="PurchasedCount" ColumnName="PurchasedCount" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ProducerID" ColumnName="ProducerID" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="AgeID" ColumnName="AgeID" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductVieweds">
+            <EntityTypeMapping TypeName="ToyStore2021Model.ProductViewed">
+              <MappingFragment StoreEntitySet="ProductViewed">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QAs">
+            <EntityTypeMapping TypeName="ToyStore2021Model.QA">
+              <MappingFragment StoreEntitySet="QA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="DateQuestion" ColumnName="DateQuestion" />
+                <ScalarProperty Name="DateAnswer" ColumnName="DateAnswer" />
+                <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Star" ColumnName="Star" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

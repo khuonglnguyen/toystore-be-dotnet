@@ -9,7 +9,7 @@ namespace ToyStore.Data
 {
     public class UnitOfWork : IDisposable
     {
-        private ToyStoreModel DbContext = new ToyStoreModel();
+        private ToyStore2021Entities DbContext = new ToyStore2021Entities();
         private GenericRepository<Product> productRepository;
         private GenericRepository<ProductCategory> productCategoryRepository;
         private GenericRepository<Supplier> supplierRepository;

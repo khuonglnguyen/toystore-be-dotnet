@@ -164,33 +164,88 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccessTimesCount.cs" />
-    <Compile Include="Models\Age.cs" />
-    <Compile Include="Models\Cart.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Decentralization.cs" />
-    <Compile Include="Models\Emloyee.cs" />
-    <Compile Include="Models\EmloyeeType.cs" />
-    <Compile Include="Models\Gender.cs" />
-    <Compile Include="Models\ImportCoupon.cs" />
-    <Compile Include="Models\ImportCouponDetail.cs" />
-    <Compile Include="Models\Member.cs" />
-    <Compile Include="Models\MemberCategory.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDetail.cs" />
-    <Compile Include="Models\Producer.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductCategory.cs" />
-    <Compile Include="Models\ProductCategoryParent.cs" />
-    <Compile Include="Models\ProductViewed.cs" />
-    <Compile Include="Models\QA.cs" />
-    <Compile Include="Models\Rating.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\Supplier.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
-    <Compile Include="Models\ToyStoreModel.cs" />
+    <Compile Include="Models\AccessTimesCount.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Age.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cart.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Decentralization.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Emloyee.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmloyeeType.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Gender.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImportCoupon.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImportCouponDetail.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Member.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MemberCategory.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderDetail.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Producer.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductCategory.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductCategoryParent.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductViewed.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QA.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rating.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Supplier.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ToyStoreModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ToyStoreModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ToyStoreModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ToyStoreModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
     <Compile Include="Service\AccessTimesCountService.cs" />
@@ -379,6 +434,16 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\ToyStoreModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ToyStoreModel.edmx</DependentUpon>
+      <LastGenOutput>ToyStoreModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ToyStoreModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ToyStoreModel.edmx</DependentUpon>
+      <LastGenOutput>ToyStoreModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -400,6 +465,13 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <EntityDeploy Include="Models\ToyStoreModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ToyStoreModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ToyStoreModel.edmx.diagram">
+      <DependentUpon>ToyStoreModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -491,6 +563,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
