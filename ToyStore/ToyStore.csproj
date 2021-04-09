@@ -157,12 +157,14 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Controllers\QAManageController.cs" />
+    <Compile Include="Controllers\RoleManageController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessTimesCount.cs" />
     <Compile Include="Models\Age.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -187,7 +189,8 @@
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Supplier.cs" />
-    <Compile Include="Data\ToyStoreModel.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\ToyStoreModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
     <Compile Include="Service\AccessTimesCountService.cs" />
@@ -475,6 +478,7 @@
     <Content Include="Views\ImportProductManage\ImportProductBySupplierID.cshtml" />
     <Content Include="Views\ImportProductManage\ImportCoupon.cshtml" />
     <Content Include="Views\Product\ProductViewed.cshtml" />
+    <Content Include="Views\RoleManage\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
