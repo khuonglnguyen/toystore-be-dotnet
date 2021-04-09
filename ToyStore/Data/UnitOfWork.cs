@@ -32,6 +32,7 @@ namespace ToyStore.Data
         private GenericRepository<ImportCouponDetail> importCouponDetailRepository;
         private GenericRepository<ProductViewed> productViewedRepository;
         private GenericRepository<Rating> ratingRepository;
+        private GenericRepository<Role> roleRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -272,6 +273,17 @@ namespace ToyStore.Data
                     this.ratingRepository = new GenericRepository<Rating>(DbContext);
                 }
                 return ratingRepository;
+            }
+        }
+        public GenericRepository<Role> RoleRepository
+        {
+            get
+            {
+                if (this.roleRepository == null)
+                {
+                    this.roleRepository = new GenericRepository<Role>(DbContext);
+                }
+                return roleRepository;
             }
         }
         public void Save()

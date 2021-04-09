@@ -269,6 +269,7 @@
     <Compile Include="Service\ProductViewedService.cs" />
     <Compile Include="Service\QAService.cs" />
     <Compile Include="Service\RatingService.cs" />
+    <Compile Include="Service\RoleService.cs" />
     <Compile Include="Service\SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -551,6 +552,7 @@
     <Content Include="Views\ImportProductManage\ImportCoupon.cshtml" />
     <Content Include="Views\Product\ProductViewed.cshtml" />
     <Content Include="Views\RoleManage\List.cshtml" />
+    <Content Include="Views\RoleManage\RoleActivePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

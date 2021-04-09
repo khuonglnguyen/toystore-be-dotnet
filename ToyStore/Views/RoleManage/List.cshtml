@@ -13,18 +13,17 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="~/Scripts/bootbox.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <script>
     $(document).ready(function () {
-        //$('#btnAddNew').off('click').on('click', function () {
-        //    $('#modalAdd').modal('show');
-        //});
+        $('#btnAddNew').off('click').on('click', function () {
+            $('#modalAdd').modal('show');
+        });
         $('.btnEdit').off('click').on('click', function () {
             var id = $(this).val();
             $('#modalUpdate').modal('show');
             $.ajax({
-                url: '/QAManage/Edit',
+                url: '/RoleManage/Edit',
                 data: {
                     id: id
                 },
@@ -32,13 +31,8 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == true) {
-                        $('#ID').val(response.ID);
-                        $('#MemberID').val(response.MemberID);
-                        $('#ProductID').val(response.ProductID);
-                        $('#Question').val(response.Question);
-                        $('#Answer').val(response.Answer);
-                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(response.DateQuestion)));
-                        $('#DateQuestion').val(newFormattedDate);
+                        $('#IDUpdate').val(response.ID);
+                        $('#NameUpdate').val(response.Name);
                     }
                     else {
                         bootbox.alert(response.message);
@@ -49,33 +43,21 @@
                 }
             });
         });
-        $('.btnAnswer').off('click').on('click', function () {
-            var id = $(this).val();
-            $('#modalUpdate').modal('show');
-            $.ajax({
-                url: '/QAManage/Edit',
-                data: {
-                    id: id
-                },
-                type: 'GET',
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status == true) {
-                        $('#ID').val(response.ID);
-                        $('#MemberID').val(response.MemberID);
-                        $('#ProductID').val(response.ProductID);
-                        $('#Question').val(response.Question);
-                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(response.DateQuestion)));
-                        $('#DateQuestion').val(newFormattedDate);
-                    }
-                    else {
-                        bootbox.alert(response.message);
-                    }
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
+        $(document).on('click', '.btnActive', function () {
+            var id = $(this).attr('id');
+            var row = $(this).attr('value');
+            $(this).attr("class", "btn btn-link btnBlock");
+            $(this).attr("data-ajax-update", "#DivActive" + row);
+            $(this).attr("href", "/RoleManage/Block/" + id + "?row=" + row + "&amp;value=" + id + "\"");
+            $(this).html("Khóa");
+        });
+        $(document).on('click', '.btnBlock', function () {
+            var id = $(this).attr('id');
+            var row = $(this).attr('value');
+            $(this).attr("class", "btn btn-link btnActive");
+            $(this).attr("data-ajax-update", "#DivActive" + row);
+            $(this).attr("href", "/RoleManage/Active/" + id + "?row=" + row + "&amp;value=" + id + "\"");
+            $(this).html("Mở");
         });
     });
 </script>
@@ -87,6 +69,9 @@
 <div class="agile-grids">
     <div class="agile-tables">
         <div class="w3l-table-info">
+            <ul class="bt-list">
+                <li><a href="#" class="hvr-icon-float-away col-24" style="background-color:green" id="btnAddNew">Thêm mới</a></li>
+            </ul>
             <hr />
             <div class="w3-search-box">
                 <form action="~/ProductManage/List" method="post">
@@ -122,55 +107,26 @@
                                 <b>@Html.DisplayFor(modelItem => item.Name)</b>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Product.Name)
-                            </td>
-                            <td>
-                                <img src="@Url.Content("~/Content/images/" + item.Product.Image1)" width="50" height="50" />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Question)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Answer)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DateQuestion)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DateAnswer)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Emloyee.FullName)
-                            </td>
-                            <td>
                                 <div id="DivActive@(counter1)">
-                                    @if (item.Status == true)
+                                    @if (item.IsActive == true)
                                     {
-                                        <span class="label label-success">Đã trả lời</span>
+                                        <span class="label label-success">Kích hoạt</span>
                                     }
                                     else
                                     {
-                                        <span class="label label-danger">Chưa trả lời</span>
+                                        <span class="label label-danger">Khóa</span>
                                     }
                                 </div>
                             </td>
                             <td>
-                                @if (item.Status == true)
+                                <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+                                @if (item.IsActive == true)
                                 {
-
-                                    if (item.EmloyeeID == emloyee.ID)
-                                    {
-                                        <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
-                                    }
-                                    else
-                                    {
-
-                                        <button class="btn btn-primary btnEdit" value="@item.ID" disabled="disabled">Sửa</button>
-                                    }
+                                    @Ajax.ActionLink("Khóa", "Block", "RoleManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
                                 }
                                 else
                                 {
-                                    <button class="btn btn-primary btnAnswer" value="@item.ID">T.lời</button>
+                                    @Ajax.ActionLink("Mở", "Active", "RoleManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnActive", data = counter1, id = item.ID, value = counter1 })
                                 }
                             </td>
                         </tr>
@@ -187,30 +143,20 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalUpdate" role="dialog">
+<div class="modal fade" id="modalAdd" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Chỉnh sửa</h4>
+                <h4 class="modal-title">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Edit", "QAManage", FormMethod.Post))
+                @using (Html.BeginForm("AddRole", "RoleManage", FormMethod.Post))
                 {
-                    <input type="text" name="ID" id="ID" hidden="hidden" />
-                    <input type="text" name="MemberID" id="MemberID" hidden="hidden" />
-                    <input type="text" name="ProductID" id="ProductID" hidden="hidden" />
-                    <input type="text" name="DateQuestion" id="DateQuestion" hidden="hidden" />
-                    <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
                     <div class="form-group">
-                        <label for="Name">Câu hỏi:</label>
-                        <input type="text" class="form-control" name="Question" id="Question" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label for="Name">Câu trả lời:</label>
-                        <textarea class="form-control" name="Answer" id="Answer" style="resize:vertical"></textarea>
+                        <label for="Name">Tên quyền:</label>
+                        <input type="text" class="form-control" name="Name" id="Name">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
@@ -229,23 +175,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Trả lời</h4>
+                <h4 class="modal-title">Chỉnh sửa</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Answer", "QAManage", FormMethod.Post))
+                @using (Html.BeginForm("Edit", "RoleManage", FormMethod.Post))
                 {
-                    <input type="text" name="ID" id="ID" hidden="hidden" />
-                    <input type="text" name="MemberID" id="MemberID" hidden="hidden" />
-                    <input type="text" name="ProductID" id="ProductID" hidden="hidden" />
-                    <input type="text" name="DateQuestion" id="DateQuestion" hidden="hidden" />
-                    <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
+                    <input type="text" name="ID" id="IDUpdate" hidden="hidden" />
                     <div class="form-group">
-                        <label for="Name">Câu hỏi:</label>
-                        <input type="text" class="form-control" name="Question" id="Question" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label for="Name">Câu trả lời:</label>
-                        <textarea class="form-control" name="Answer" id="Answer" style="resize:vertical"></textarea>
+                        <label for="Name">Tên quyền:</label>
+                        <input type="text" class="form-control" name="Name" id="NameUpdate">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
