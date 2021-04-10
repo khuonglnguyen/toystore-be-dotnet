@@ -149,6 +149,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\DecentralizationManageController.cs" />
     <Compile Include="Controllers\ImportProductManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OrderManageController.cs" />
@@ -241,6 +242,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ToyStoreModel.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ToyStoreModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ToyStoreModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -253,6 +259,7 @@
     <Compile Include="Service\CartService.cs" />
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
+    <Compile Include="Service\DecentralizationService.cs" />
     <Compile Include="Service\EmloyeeService.cs" />
     <Compile Include="Service\EmloyeeTypeService.cs" />
     <Compile Include="Service\GenderService.cs" />
@@ -553,6 +560,8 @@
     <Content Include="Views\Product\ProductViewed.cshtml" />
     <Content Include="Views\RoleManage\List.cshtml" />
     <Content Include="Views\RoleManage\RoleActivePartial.cshtml" />
+    <Content Include="Views\DecentralizationManage\Index.cshtml" />
+    <Content Include="Views\DecentralizationManage\Decentralization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

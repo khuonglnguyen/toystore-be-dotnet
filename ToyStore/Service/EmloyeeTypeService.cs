@@ -10,6 +10,7 @@ namespace ToyStore.Service
     public interface IEmloyeeTypeService
     {
         EmloyeeType GetEmloyeeTypeByID(int ID);
+        IEnumerable<EmloyeeType> GetListEmloyeeType();
     }
     public class EmloyeeTypeService : IEmloyeeTypeService
     {
@@ -21,6 +22,11 @@ namespace ToyStore.Service
         public EmloyeeType GetEmloyeeTypeByID(int ID)
         {
             return context.EmloyeeTypeRepository.GetDataByID(ID);
+        }
+
+        public IEnumerable<EmloyeeType> GetListEmloyeeType()
+        {
+            return context.EmloyeeTypeRepository.GetAllData();
         }
     }
 }

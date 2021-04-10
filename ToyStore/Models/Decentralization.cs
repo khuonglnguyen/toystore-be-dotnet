@@ -17,7 +17,7 @@ namespace ToyStore.Models
         public int ID { get; set; }
         public int RoleID { get; set; }
         public string Note { get; set; }
-        public int EmloyeeID { get; set; }
+        public int EmloyeeTypeID { get; set; }
     
         public virtual Emloyee Emloyee { get; set; }
         public virtual Role Role { get; set; }
