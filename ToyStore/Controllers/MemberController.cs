@@ -50,7 +50,7 @@ namespace ToyStore.Controllers
             string email = _memberService.GetByID(ID).Email;
             ViewBag.Email = "Mã xác minh đã được gửi đến: " + email;
             _memberService.UpdateCapcha(ID, captcha);
-            SentMail("Mã xác minh tài khoản ToyStore", email, "lapankhuongnguyen@gmail.com", "Garena009", "<p>Mã xác minh của bạn: " + captcha + "<br/>Hoặc xác minh nhanh bằng cách click vào link: " + urlBase + "/Member/ConfirmEmailLink/" + ID + "?Capcha=" + captcha + "</p>");
+            SentMail("Mã xác minh tài khoản ToyStore", email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?", "<p>Mã xác minh của bạn: " + captcha + "<br/>Hoặc xác minh nhanh bằng cách click vào link: " + urlBase + "/Member/ConfirmEmailLink/" + ID + "?Capcha=" + captcha + "</p>");
             return View();
         }
         [HttpGet]
@@ -136,6 +136,10 @@ namespace ToyStore.Controllers
             {
                 ViewBag.Approved = "Approved";
             }
+            if (order.IsDelivere)
+            {
+                ViewBag.Delivere = "Delivere";
+            }
             if (order.IsReceived)
             {
                 ViewBag.Received = "Received";
@@ -152,6 +156,11 @@ namespace ToyStore.Controllers
                 Image = product.Image1,
                 status = true
             }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Received(int OrderID)
+        {
+            _orderService.Received(OrderID);
+            return RedirectToAction("OrderDetail",new { ID =OrderID});
         }
     }
 }

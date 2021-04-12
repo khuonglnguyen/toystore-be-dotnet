@@ -19,6 +19,7 @@ namespace ToyStore.Service
         IEnumerable<Order> GetByCustomerID(int ID);
         Order Approved(int ID);
         Order Delivered(int ID);
+        Order Received(int ID);
         void Update(Order order);
     }
     public class OrderService : IOrderService 
@@ -88,6 +89,23 @@ namespace ToyStore.Service
         public IEnumerable<Order> GetByCustomerID(int ID)
         {
             return context.OrderRepository.GetAllData(x => x.CustomerID == ID);
+        }
+
+        public Order Received(int ID)
+        {
+            Order order = context.OrderRepository.GetDataByID(ID);
+            order.IsReceived = true;
+            order.IsPaid = true;
+            context.OrderRepository.Update(order);
+            //Update PurchasedCount
+            IEnumerable<OrderDetail> orderDetails = context.OrderDetailRepository.GetAllData(x => x.OrderID == ID);
+            foreach (var item in orderDetails)
+            {
+                Product product = context.ProductRepository.GetDataByID(item.ProductID);
+                product.PurchasedCount += item.Quantity;
+                context.ProductRepository.Update(product);
+            }
+            return order;
         }
     }
 }

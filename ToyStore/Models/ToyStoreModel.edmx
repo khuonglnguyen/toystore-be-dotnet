@@ -262,6 +262,22 @@
           <Property Name="IsActive" Type="bit" />
           <Property Name="NameDisplay" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Statistic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="StatisticTypeID" Type="int" Nullable="false" />
+          <Property Name="EmloyeeID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StatisticType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Supplier">
           <Key>
             <PropertyRef Name="ID" />
@@ -676,6 +692,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Statistic_Emloyee">
+          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1" />
+          <End Role="Statistic" Type="Self.Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Statistic_StatisticType">
+          <End Role="StatisticType" Type="Self.StatisticType" Multiplicity="1" />
+          <End Role="Statistic" Type="Self.Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatisticType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="StatisticTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ToyStore2021ModelStoreContainer">
           <EntitySet Name="AccessTimesCount" EntityType="Self.AccessTimesCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Age" EntityType="Self.Age" Schema="dbo" store:Type="Tables" />
@@ -700,6 +740,8 @@
           <EntitySet Name="QA" EntityType="Self.QA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statistic" EntityType="Self.Statistic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatisticType" EntityType="Self.StatisticType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_Cart_dbo_Member_MemberID" Association="Self.FK_dbo_Cart_dbo_Member_MemberID">
             <End Role="Member" EntitySet="Member" />
@@ -817,6 +859,14 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
+          <AssociationSet Name="FK_Statistic_Emloyee" Association="Self.FK_Statistic_Emloyee">
+            <End Role="Emloyee" EntitySet="Emloyee" />
+            <End Role="Statistic" EntitySet="Statistic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statistic_StatisticType" Association="Self.FK_Statistic_StatisticType">
+            <End Role="StatisticType" EntitySet="StatisticType" />
+            <End Role="Statistic" EntitySet="Statistic" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -846,6 +896,8 @@
           <EntitySet Name="QAs" EntityType="ToyStore2021Model.QA" />
           <EntitySet Name="Ratings" EntityType="ToyStore2021Model.Rating" />
           <EntitySet Name="Roles" EntityType="ToyStore2021Model.Role" />
+          <EntitySet Name="Statistics" EntityType="ToyStore2021Model.Statistic" />
+          <EntitySet Name="StatisticTypes" EntityType="ToyStore2021Model.StatisticType" />
           <EntitySet Name="Suppliers" EntityType="ToyStore2021Model.Supplier" />
           <AssociationSet Name="FK_dbo_Products_dbo_Ages_AgeID" Association="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID">
             <End Role="Age" EntitySet="Ages" />
@@ -894,6 +946,10 @@
           <AssociationSet Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID" Association="ToyStore2021Model.FK_dbo_QA_dbo_Emloyee_EmloyeeID">
             <End Role="Emloyee" EntitySet="Emloyees" />
             <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statistic_Emloyee" Association="ToyStore2021Model.FK_Statistic_Emloyee">
+            <End Role="Emloyee" EntitySet="Emloyees" />
+            <End Role="Statistic" EntitySet="Statistics" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Products_dbo_Gender_GenderID" Association="ToyStore2021Model.FK_dbo_Products_dbo_Gender_GenderID">
             <End Role="Gender" EntitySet="Genders" />
@@ -962,6 +1018,10 @@
           <AssociationSet Name="FK_dbo_Rating_dbo_Products_ProductID" Association="ToyStore2021Model.FK_dbo_Rating_dbo_Products_ProductID">
             <End Role="Product" EntitySet="Products" />
             <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statistic_StatisticType" Association="ToyStore2021Model.FK_Statistic_StatisticType">
+            <End Role="StatisticType" EntitySet="StatisticTypes" />
+            <End Role="Statistic" EntitySet="Statistics" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccessTimesCount">
@@ -1048,6 +1108,7 @@
           <NavigationProperty Name="EmloyeeType" Relationship="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="Emloyee" ToRole="EmloyeeType" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="ImportCoupon" />
           <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="QA" />
+          <NavigationProperty Name="Statistics" Relationship="ToyStore2021Model.FK_Statistic_Emloyee" FromRole="Emloyee" ToRole="Statistic" />
         </EntityType>
         <EntityType Name="EmloyeeType">
           <Key>
@@ -1277,6 +1338,25 @@
           <Property Name="NameDisplay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Decentralizations" Relationship="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID" FromRole="Role" ToRole="Decentralization" />
         </EntityType>
+        <EntityType Name="Statistic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="StatisticTypeID" Type="Int32" Nullable="false" />
+          <Property Name="EmloyeeID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Emloyee" Relationship="ToyStore2021Model.FK_Statistic_Emloyee" FromRole="Statistic" ToRole="Emloyee" />
+          <NavigationProperty Name="StatisticType" Relationship="ToyStore2021Model.FK_Statistic_StatisticType" FromRole="Statistic" ToRole="StatisticType" />
+        </EntityType>
+        <EntityType Name="StatisticType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Statistics" Relationship="ToyStore2021Model.FK_Statistic_StatisticType" FromRole="StatisticType" ToRole="Statistic" />
+        </EntityType>
         <EntityType Name="Supplier">
           <Key>
             <PropertyRef Name="ID" />
@@ -1455,6 +1535,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="QA">
+              <PropertyRef Name="EmloyeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Statistic_Emloyee">
+          <End Type="ToyStore2021Model.Emloyee" Role="Emloyee" Multiplicity="1" />
+          <End Type="ToyStore2021Model.Statistic" Role="Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emloyee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Statistic">
               <PropertyRef Name="EmloyeeID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1690,6 +1782,18 @@
             </Principal>
             <Dependent Role="Rating">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Statistic_StatisticType">
+          <End Type="ToyStore2021Model.StatisticType" Role="StatisticType" Multiplicity="1" />
+          <End Type="ToyStore2021Model.Statistic" Role="Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatisticType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="StatisticTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1974,6 +2078,24 @@
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="NameDisplay" ColumnName="NameDisplay" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statistics">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Statistic">
+              <MappingFragment StoreEntitySet="Statistic">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
+                <ScalarProperty Name="StatisticTypeID" ColumnName="StatisticTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatisticTypes">
+            <EntityTypeMapping TypeName="ToyStore2021Model.StatisticType">
+              <MappingFragment StoreEntitySet="StatisticType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

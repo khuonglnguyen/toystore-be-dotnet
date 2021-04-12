@@ -80,20 +80,23 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Quantity)
                     </td>
-                    @if (item.IsRating != true)
+                    @if (ViewBag.Received == "Received")
                     {
-                        <td>
-                            <input type="button" class="btnRating" value="Đánh Giá" id="@item.ID" title="@item.ProductID">
-                        </td>
+                        if (item.IsRating != true)
+                        {
+                            <td>
+                                <input type="button" class="btnRating" value="Đánh Giá" id="@item.ID" title="@item.ProductID">
+                            </td>
+                        }
                     }
                 </tr>
             }
         </tbody>
     </table>
     <p>Tổng: @Model.Sum(x => x.Price)</p>
-    if (ViewBag.Status == "Approved" && ViewBag.Received == "")
+    if (ViewBag.Received != "Received" && ViewBag.Delivere == "Delivere")
     {
-        @Html.ActionLink("Đã nhận được hàng", "Received", new { ID = ViewBag.OrderID })
+        @Html.ActionLink("Đã nhận được hàng", "Received", new { OrderID = ViewBag.OrderID })
     }
     <br />
 }

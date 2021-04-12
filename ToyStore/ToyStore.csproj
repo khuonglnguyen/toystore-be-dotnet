@@ -158,7 +158,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Controllers\QAManageController.cs" />
-    <Compile Include="Controllers\RoleManageController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
@@ -234,6 +234,12 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Statistic.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StatisticType.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
@@ -277,6 +283,7 @@
     <Compile Include="Service\QAService.cs" />
     <Compile Include="Service\RatingService.cs" />
     <Compile Include="Service\RoleService.cs" />
+    <Compile Include="Service\StatisticTypeService.cs" />
     <Compile Include="Service\SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -562,6 +569,7 @@
     <Content Include="Views\RoleManage\RoleActivePartial.cshtml" />
     <Content Include="Views\DecentralizationManage\Index.cshtml" />
     <Content Include="Views\DecentralizationManage\Decentralization.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
