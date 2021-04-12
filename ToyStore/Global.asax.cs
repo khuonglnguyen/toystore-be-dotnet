@@ -53,16 +53,16 @@ namespace ToyStore
             Application["RealAccessTimes"] = (int)Application["RealAccessTimes"] - 1;
             Application.UnLock();
         }
-        //protected void Application_AuthenticateRequest(Object sender, EventArgs e)
-        //{
-        //    var AccountCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
-        //    if (AccountCookie != null)
-        //    {
-        //        var authTicket = FormsAuthentication.Decrypt(AccountCookie.Value);
-        //        var quyen = authTicket.UserData.Split(new Char[] { ',' });
-        //        var userPrincial = new GenericPrincipal(new GenericIdentity(authTicket.Name), quyen);
-        //        Context.User = userPrincial;
-        //    }
-        //}
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+        {
+            var AccountCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (AccountCookie != null)
+            {
+                var authTicket = FormsAuthentication.Decrypt(AccountCookie.Value);
+                var role = authTicket.UserData.Split(new Char[] { ',' });
+                var userPrincial = new GenericPrincipal(new GenericIdentity(authTicket.Name), role);
+                Context.User = userPrincial;
+            }
+        }
     }
 }

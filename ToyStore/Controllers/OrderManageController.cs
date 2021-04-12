@@ -11,6 +11,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "OrderManage")]
     public class OrderManageController : Controller
     {
         private IOrderService _orderService;

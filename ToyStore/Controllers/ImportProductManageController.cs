@@ -9,6 +9,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "ImportProductManage")]
     public class ImportProductManageController : Controller
     {
         private IImportCouponService _importCouponService;

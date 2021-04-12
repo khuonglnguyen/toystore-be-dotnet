@@ -9,6 +9,7 @@ using ToyStore.Data;
 using ToyStore.Data.Repository;
 using ToyStore.Models;
 using System.Net.Mail;
+using System.Web.Security;
 
 namespace ToyStore.Controllers
 {
@@ -140,5 +141,6 @@ namespace ToyStore.Controllers
             Session["Cart"] = null;
             return RedirectToAction("Index");
         }
+        
     }
 }

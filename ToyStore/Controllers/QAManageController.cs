@@ -11,6 +11,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "QAManage")]
     public class QAManageController : Controller
     {
         private IQAService _qAService;

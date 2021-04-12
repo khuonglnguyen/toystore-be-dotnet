@@ -9,6 +9,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "DecentralizationManage")]
     public class DecentralizationManageController : Controller
     {
         private IEmloyeeTypeService _emloyeeTypeService;

@@ -36,14 +36,14 @@
                         {
                             <div class="col-md-4" style="font-size:15pt;">
                                 <input class="ckb_click" checked="checked" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).ID" />
-                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).Name</label><br>
+                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
                             </div>
                         }
                         else
                         {
                             <div class="col-md-4" style="font-size:15pt;">
                                 <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].MaQuyen")" value="@roles.ElementAt(i).ID" />
-                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).Name</label><br>
+                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
                             </div>
                         }
                         k = 0;
@@ -57,7 +57,7 @@
                         //Lấy danh danh sách quyền
                         <div class="col-md-4" style="font-size:15pt;">
                             <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).ID" />
-                            <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).Name</label><br>
+                            <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
                         </div>
                     }
                 }
