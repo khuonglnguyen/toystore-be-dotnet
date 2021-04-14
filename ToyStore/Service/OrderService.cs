@@ -20,6 +20,8 @@ namespace ToyStore.Service
         Order Approved(int ID);
         Order Delivered(int ID);
         Order Received(int ID);
+        decimal GetTotalRevenue();
+        int GetTotalOrder();
         void Update(Order order);
     }
     public class OrderService : IOrderService 
@@ -106,6 +108,15 @@ namespace ToyStore.Service
                 context.ProductRepository.Update(product);
             }
             return order;
+        }
+        public decimal GetTotalRevenue()
+        {
+            return context.OrderDetailRepository.GetAllData(x => x.Order.IsPaid == true).Sum(x => x.Price);
+        }
+
+        public int GetTotalOrder()
+        {
+            return context.OrderRepository.GetAllData().Count();
         }
     }
 }

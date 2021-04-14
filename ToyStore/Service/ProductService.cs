@@ -12,6 +12,8 @@ namespace ToyStore.Service
     {
         Product AddProduct(Product product);
         void AddViewCount(int ID);
+        int GetTotalProduct();
+        int GetTotalProductPurchased();
         IEnumerable<Product> GetProductList();
         IEnumerable<Product> GetProductFilterByAges(int ageID, int min, int max, int discount);
         IEnumerable<Product> GetProductListByCategory(int ProductCategoryID);
@@ -244,6 +246,16 @@ namespace ToyStore.Service
                 productsList.Add(context.ProductRepository.GetDataByID(item));
             }
             return productsList;
+        }
+
+        public int GetTotalProduct()
+        {
+            return context.ProductRepository.GetAllData().Count();
+        }
+
+        public int GetTotalProductPurchased()
+        {
+            return (int)context.ProductRepository.GetAllData().Sum(x => x.PurchasedCount);
         }
     }
 }

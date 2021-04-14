@@ -14,11 +14,17 @@ namespace ToyStore.Controllers
         private IEmloyeeService _emloyeeService;
         private IEmloyeeTypeService _emloyeeTypeService;
         private IDecentralizationService _decentralizationService;
-        public AdminController(IEmloyeeService emloyeeService, IEmloyeeTypeService emloyeeTypeService, IDecentralizationService decentralizationService)
+        private IMemberService _memberService;
+        private IProductService _productService;
+        private IOrderService _orderService;
+        public AdminController(IEmloyeeService emloyeeService, IEmloyeeTypeService emloyeeTypeService, IDecentralizationService decentralizationService, IMemberService memberService, IProductService productService, IOrderService orderService)
         {
             _emloyeeService = emloyeeService;
             _emloyeeTypeService = emloyeeTypeService;
             _decentralizationService = decentralizationService;
+            _memberService = memberService;
+            _productService = productService;
+            _orderService = orderService;
         }
         [HttpGet]
         public ActionResult Index()
@@ -33,6 +39,22 @@ namespace ToyStore.Controllers
                 ViewBag.RealAccessTimes = HttpContext.Application["RealAccessTimes"].ToString();
                 Emloyee emloyee = Session["Emloyee"] as Emloyee;
                 ViewBag.EmloyeeTypeName = (_emloyeeTypeService.GetEmloyeeTypeByID(emloyee.EmloyeeTypeID)).Name;
+                ViewBag.TotalMember = _memberService.GetTotalMember();
+                ViewBag.TotalEmloyee = _emloyeeService.GetTotalEmloyee();
+                ViewBag.TotalProduct = _productService.GetTotalProduct();
+                ViewBag.TotalProductPurchased = _productService.GetTotalProductPurchased();
+                decimal TotalRevenue = _orderService.GetTotalRevenue();
+                if (TotalRevenue < 1000000)
+                {
+                    TotalRevenue = TotalRevenue / 1000;
+                    ViewBag.TotalRevenue = (int)TotalRevenue+"K";
+                }
+                else
+                {
+                    TotalRevenue = TotalRevenue / 1000000;
+                    ViewBag.TotalRevenue = (int)TotalRevenue + "M";
+                }
+                ViewBag.TotalOrder = _orderService.GetTotalOrder();
                 return View();
             }
         }

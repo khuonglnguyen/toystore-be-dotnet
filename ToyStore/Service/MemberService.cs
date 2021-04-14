@@ -15,6 +15,7 @@ namespace ToyStore.Service
         void UpdateCapcha(int ID, string capcha);
         Member CheckLogin(string username, string password);
         Member GetByID(int ID);
+        int GetTotalMember();
         void UpdateMember(Member member);
         void DeleteMember(Member member);
         void Save();
@@ -69,6 +70,11 @@ namespace ToyStore.Service
         {
             IEnumerable<Member> listMember = this.context.MemberRepository.GetAllData();
             return listMember;
+        }
+
+        public int GetTotalMember()
+        {
+            return context.MemberRepository.GetAllData().Count();
         }
 
         public void Save()

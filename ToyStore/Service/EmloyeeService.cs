@@ -11,6 +11,7 @@ namespace ToyStore.Service
     {
         Emloyee CheckLogin(string username, string password);
         IEnumerable<Emloyee> GetList();
+        int GetTotalEmloyee();
     }
     public class EmloyeeService : IEmloyeeService
     {
@@ -32,6 +33,11 @@ namespace ToyStore.Service
         public IEnumerable<Emloyee> GetList()
         {
             return context.EmloyeeRepository.GetAllData();
+        }
+
+        public int GetTotalEmloyee()
+        {
+            return context.EmloyeeRepository.GetAllData().Count();
         }
     }
 }
