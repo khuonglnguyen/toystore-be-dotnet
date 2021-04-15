@@ -150,6 +150,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\DecentralizationManageController.cs" />
+    <Compile Include="Controllers\DiscountCodeManageController.cs" />
     <Compile Include="Controllers\ImportProductManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OrderManageController.cs" />
@@ -158,7 +159,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Controllers\QAManageController.cs" />
-    <Compile Include="Controllers\StatisticController.cs" />
+    <Compile Include="Controllers\StatisticManageController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
@@ -181,6 +182,12 @@
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Decentralization.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DiscountCode.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DiscountCodeDetail.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Emloyee.cs">
@@ -266,6 +273,7 @@
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\DecentralizationService.cs" />
+    <Compile Include="Service\DiscountCodeService.cs" />
     <Compile Include="Service\EmloyeeService.cs" />
     <Compile Include="Service\EmloyeeTypeService.cs" />
     <Compile Include="Service\GenderService.cs" />
@@ -569,7 +577,8 @@
     <Content Include="Views\RoleManage\RoleActivePartial.cshtml" />
     <Content Include="Views\DecentralizationManage\Index.cshtml" />
     <Content Include="Views\DecentralizationManage\Decentralization.cshtml" />
-    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\StatisticManage\Index.cshtml" />
+    <Content Include="Views\DiscountCodeManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

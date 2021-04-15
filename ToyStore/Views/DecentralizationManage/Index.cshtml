@@ -69,18 +69,6 @@
 <div class="agile-grids">
     <div class="agile-tables">
         <div class="w3l-table-info">
-            <ul class="bt-list">
-                <li><a href="#" class="hvr-icon-float-away col-24" style="background-color:green" id="btnAddNew">Thêm mới</a></li>
-            </ul>
-            <hr />
-            <div class="w3-search-box">
-                <form action="~/ProductManage/List" method="post">
-                    <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
-                    <input type="submit" value="">
-                </form>
-            </div><!--//end-search-box-->
-            <div class="clearfix"> </div>
-            <hr />
             <h2>Danh sách loại nhân viên</h2>
             <table id="table">
                 <thead>
@@ -110,58 +98,6 @@
             <br />
             <div id='Paging' style="text-align: center">
                 @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalAdd" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Thêm mới</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("AddRole", "RoleManage", FormMethod.Post))
-                {
-                    <div class="form-group">
-                        <label for="Name">Tên quyền:</label>
-                        <input type="text" class="form-control" name="Name" id="Name">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalUpdate" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Chỉnh sửa</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Edit", "RoleManage", FormMethod.Post))
-                {
-                    <input type="text" name="ID" id="IDUpdate" hidden="hidden" />
-                    <div class="form-group">
-                        <label for="Name">Tên quyền:</label>
-                        <input type="text" class="form-control" name="Name" id="NameUpdate">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
             </div>
         </div>
     </div>

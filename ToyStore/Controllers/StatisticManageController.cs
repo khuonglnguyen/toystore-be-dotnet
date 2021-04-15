@@ -8,12 +8,14 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
-    public class StatisticController : Controller
+    public class StatisticManageController : Controller
     {
         private IStatisticTypeService _statisticTypeService;
-        public StatisticController(IStatisticTypeService statisticTypeService)
+        private IOrderService _orderService;
+        public StatisticManageController(IStatisticTypeService statisticTypeService, IOrderService orderService)
         {
             _statisticTypeService = statisticTypeService;
+            _orderService = orderService;
         }
         // GET: Statistic
         public ActionResult Index()

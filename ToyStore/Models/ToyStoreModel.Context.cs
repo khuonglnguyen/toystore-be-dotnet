@@ -31,6 +31,8 @@ namespace ToyStore.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Decentralization> Decentralizations { get; set; }
+        public virtual DbSet<DiscountCode> DiscountCodes { get; set; }
+        public virtual DbSet<DiscountCodeDetail> DiscountCodeDetails { get; set; }
         public virtual DbSet<Emloyee> Emloyees { get; set; }
         public virtual DbSet<EmloyeeType> EmloyeeTypes { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }

@@ -18,6 +18,7 @@ namespace ToyStore.Models
         public Emloyee()
         {
             this.Decentralizations = new HashSet<Decentralization>();
+            this.DiscountCodes = new HashSet<DiscountCode>();
             this.ImportCoupons = new HashSet<ImportCoupon>();
             this.QAs = new HashSet<QA>();
             this.Statistics = new HashSet<Statistic>();
@@ -35,6 +36,8 @@ namespace ToyStore.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Decentralization> Decentralizations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DiscountCode> DiscountCodes { get; set; }
         public virtual EmloyeeType EmloyeeType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImportCoupon> ImportCoupons { get; set; }

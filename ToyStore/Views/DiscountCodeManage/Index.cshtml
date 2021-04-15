@@ -1,0 +1,202 @@
+﻿@model PagedList.IPagedList<ToyStore.Models.DiscountCode>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Mã Giảm Giá";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#btnAddNew').off('click').on('click', function () {
+            $('#modalAdd').modal('show');
+        });
+        $('.btnEdit').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/ProductManage/Edit',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#ID').val(response.ID);
+                        $('#Name').val(response.Name);
+                        $('#CategoryID').val(response.CategoryID);
+                        $('#SupplierID').val(response.SupplierID);
+                        $('#ProducerID').val(response.ProducerID);
+                        $('#AgeID').val(response.AgeID);
+                        $('#GenderID').val(response.GenderID);
+                        $('#TextImage1').val(response.Image1);
+                        $('#TextImage2').val(response.Image2);
+                        $('#TextImage3').val(response.Image3);
+                        $('#img1').attr('src', "/Content/images/" + response.Image1);
+                        $('#img2').attr('src', "/Content/images/" + response.Image2);
+                        $('#img3').attr('src', "/Content/images/" + response.Image3);
+                        $('#Price').val(response.Price);
+                        $('#PromotionPrice').val(response.PromotionPrice);
+                        $('#Description').val(response.Description);
+                        $('#Quantity').val(response.Quantity);
+                        $('#HomeFlag').prop("checked", response.HomeFlag);
+                        $('#HotFlag').prop("checked", response.HotFlag);
+                        $('#IsNew').prop("checked", response.IsNew);
+                        $('#IsActive').prop("checked", response.IsActive);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $("#keyword").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/ProductManage/ListName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+        $(document).on('click', '.btnOpen', function () {
+            var id = $(this).attr('id');
+            var row = $(this).attr('value');
+            $(this).attr("class", "btn btn-link btnBlock");
+            $(this).attr("data-ajax-update", "#DivActive" + row);
+            $(this).attr("href", "/ProductManage/Block/" + id + "?row=" + row + "&amp;value=" + id + "\"");
+            $(this).html("Khóa");
+        });
+        $(document).on('click', '.btnBlock', function () {
+            var id = $(this).attr('id');
+            var row = $(this).attr('value');
+            $(this).attr("class", "btn btn-link btnOpen");
+            $(this).attr("data-ajax-update", "#DivActive" + row);
+            $(this).attr("href", "/ProductManage/Active/" + id + "?row=" + row + "&amp;value=" + id + "\"");
+            $(this).html("Mở");
+        });
+        $('#btnDeleteMulti').hide();
+        $('#checkAll').click(function () {
+            if ($(this).is(":checked")) {
+                $(".cbProductCategory").prop("checked", true)
+            }
+            else {
+                $(".cbProductCategory").prop("checked", false)
+            }
+            $('#btnDeleteMulti').toggle();
+        });
+    });
+</script>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Mã Giảm Giá</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <ul class="bt-list">
+                <li><a href="#" class="hvr-icon-float-away col-24" style="background-color:green" id="btnAddNew">Thêm mới</a></li>
+            </ul>
+            <p>@ViewBag.message</p>
+            <div class="clearfix"> </div>
+            <hr />
+            <h2>Danh sách mã giảm giá</h2>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Giảm Giá
+                        </th>
+                        <th>
+                            Ngày Hết Hạn
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th>
+                            Tạo Bởi
+                        </th>
+                        <th>Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int counter1 = 0;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        @Html.Hidden(item.ID.ToString())
+                    <tr>
+                        <td style="color:brown">
+                            <b>@Html.DisplayFor(modelItem => item.ID)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberDiscount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpirationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Emloyee.FullName)
+                        </td>
+                        <td>
+                            <div id="DivActive@(counter1)">
+                                @if (item.IsActive == true)
+                                {
+                                    <span class="label label-success">Kích hoạt</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-danger">Khóa</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            @*@Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })*@
+                            <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+                            @if (item.IsActive == true)
+                            {
+                                @Ajax.ActionLink("Khóa", "Block", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
+                            }
+                            else
+                            {
+                                @Ajax.ActionLink("Mở", "Active", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnOpen", data = counter1, id = item.ID, value = counter1 })
+                            }
+                        </td>
+                    </tr>
+                        @(counter1++)
+                    }
+                    @(counter1 = 0)
+                </tbody>
+            </table>
+            <br />
+            <div id='Paging' style="text-align: center">
+                @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+            </div>
+        </div>
+    </div>
+</div>
+
