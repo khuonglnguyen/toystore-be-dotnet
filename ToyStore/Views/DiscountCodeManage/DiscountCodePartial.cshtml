@@ -1,0 +1,11 @@
+﻿@model ToyStore.Models.DiscountCode
+<div id="DivActive@(ViewBag.Row)">
+    @if (Model.IsActive == true)
+    {
+        <span class="label label-success">Kích hoạt</span>
+    }
+    else
+    {
+        <span class="label label-danger">Khóa</span>
+    }
+</div>

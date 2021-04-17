@@ -19,7 +19,6 @@ namespace ToyStore.Models
         {
             this.Carts = new HashSet<Cart>();
             this.Comments = new HashSet<Comment>();
-            this.DiscountCodes = new HashSet<DiscountCode>();
             this.ImportCouponDetails = new HashSet<ImportCouponDetail>();
             this.OrderDetails = new HashSet<OrderDetail>();
             this.ProductVieweds = new HashSet<ProductViewed>();
@@ -58,8 +57,6 @@ namespace ToyStore.Models
         public virtual ICollection<Cart> Carts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DiscountCode> DiscountCodes { get; set; }
         public virtual Gender Gender { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImportCouponDetail> ImportCouponDetails { get; set; }

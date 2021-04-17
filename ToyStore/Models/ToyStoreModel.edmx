@@ -71,7 +71,6 @@
           <Property Name="ExpirationDate" Type="datetime" />
           <Property Name="NumberDiscount" Type="int" />
           <Property Name="EmloyeeID" Type="int" />
-          <Property Name="ProductID" Type="int" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="DiscountCodeDetail">
@@ -724,18 +723,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DiscountCode_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
-          <End Role="DiscountCode" Type="Self.DiscountCode" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DiscountCode">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DiscountCodeDetail_DiscountCode">
           <End Role="DiscountCode" Type="Self.DiscountCode" Multiplicity="0..1" />
           <End Role="DiscountCodeDetail" Type="Self.DiscountCodeDetail" Multiplicity="*" />
@@ -921,10 +908,6 @@
             <End Role="Emloyee" EntitySet="Emloyee" />
             <End Role="DiscountCode" EntitySet="DiscountCode" />
           </AssociationSet>
-          <AssociationSet Name="FK_DiscountCode_Products" Association="Self.FK_DiscountCode_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="DiscountCode" EntitySet="DiscountCode" />
-          </AssociationSet>
           <AssociationSet Name="FK_DiscountCodeDetail_DiscountCode" Association="Self.FK_DiscountCodeDetail_DiscountCode">
             <End Role="DiscountCode" EntitySet="DiscountCode" />
             <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetail" />
@@ -1009,10 +992,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_DiscountCode_Emloyee" Association="ToyStore2021Model.FK_DiscountCode_Emloyee">
             <End Role="Emloyee" EntitySet="Emloyees" />
-            <End Role="DiscountCode" EntitySet="DiscountCodes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DiscountCode_Products" Association="ToyStore2021Model.FK_DiscountCode_Products">
-            <End Role="Product" EntitySet="Products" />
             <End Role="DiscountCode" EntitySet="DiscountCodes" />
           </AssociationSet>
           <AssociationSet Name="FK_DiscountCodeDetail_DiscountCode" Association="ToyStore2021Model.FK_DiscountCodeDetail_DiscountCode">
@@ -1183,10 +1162,8 @@
           <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
           <Property Name="NumberDiscount" Type="Int32" />
           <Property Name="EmloyeeID" Type="Int32" />
-          <Property Name="ProductID" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Emloyee" Relationship="ToyStore2021Model.FK_DiscountCode_Emloyee" FromRole="DiscountCode" ToRole="Emloyee" />
-          <NavigationProperty Name="Product" Relationship="ToyStore2021Model.FK_DiscountCode_Products" FromRole="DiscountCode" ToRole="Product" />
           <NavigationProperty Name="DiscountCodeDetails" Relationship="ToyStore2021Model.FK_DiscountCodeDetail_DiscountCode" FromRole="DiscountCode" ToRole="DiscountCodeDetail" />
         </EntityType>
         <EntityType Name="DiscountCodeDetail">
@@ -1387,7 +1364,6 @@
           <NavigationProperty Name="Age" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID" FromRole="Product" ToRole="Age" />
           <NavigationProperty Name="Carts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_Products_ProductID" FromRole="Product" ToRole="Cart" />
           <NavigationProperty Name="Comments" Relationship="ToyStore2021Model.FK_dbo_Comment_dbo_Products_ProductID" FromRole="Product" ToRole="Comment" />
-          <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_Products" FromRole="Product" ToRole="DiscountCode" />
           <NavigationProperty Name="Gender" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Gender_GenderID" FromRole="Product" ToRole="Gender" />
           <NavigationProperty Name="ImportCouponDetails" Relationship="ToyStore2021Model.FK_dbo_ImportCouponDetail_dbo_Products_ProductID" FromRole="Product" ToRole="ImportCouponDetail" />
           <NavigationProperty Name="OrderDetails" Relationship="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Products_ProductID" FromRole="Product" ToRole="OrderDetail" />
@@ -1616,18 +1592,6 @@
             </Principal>
             <Dependent Role="DiscountCode">
               <PropertyRef Name="EmloyeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DiscountCode_Products">
-          <End Type="ToyStore2021Model.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="ToyStore2021Model.DiscountCode" Role="DiscountCode" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DiscountCode">
-              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2017,7 +1981,6 @@
             <EntityTypeMapping TypeName="ToyStore2021Model.DiscountCode">
               <MappingFragment StoreEntitySet="DiscountCode">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
                 <ScalarProperty Name="NumberDiscount" ColumnName="NumberDiscount" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />

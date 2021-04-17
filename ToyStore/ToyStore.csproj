@@ -273,6 +273,7 @@
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\DecentralizationService.cs" />
+    <Compile Include="Service\DiscountCodeDetailService.cs" />
     <Compile Include="Service\DiscountCodeService.cs" />
     <Compile Include="Service\EmloyeeService.cs" />
     <Compile Include="Service\EmloyeeTypeService.cs" />
@@ -579,6 +580,7 @@
     <Content Include="Views\DecentralizationManage\Decentralization.cshtml" />
     <Content Include="Views\StatisticManage\Index.cshtml" />
     <Content Include="Views\DiscountCodeManage\Index.cshtml" />
+    <Content Include="Views\DiscountCodeManage\DiscountCodePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

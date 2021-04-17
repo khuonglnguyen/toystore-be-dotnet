@@ -10,13 +10,66 @@ namespace ToyStore.Service
     public interface IDiscountCodeService
     {
         IEnumerable<DiscountCode> GetDiscountCodeList();
+        DiscountCode GetByID(int ID);
+        void Block(int ID);
+        void Active(int ID);
+        void AddDiscountCode(DiscountCode discountCode, int quantity);
+        bool CheckCode(string Code);
     }
-    public class DiscountCodeService: IDiscountCodeService
+    public class DiscountCodeService : IDiscountCodeService
     {
         private readonly UnitOfWork context;
         public DiscountCodeService(UnitOfWork repositoryContext)
         {
             this.context = repositoryContext;
+        }
+
+        public void Active(int ID)
+        {
+            DiscountCode discount = context.DiscountCodeRepository.GetDataByID(ID);
+            discount.IsActive = true;
+            context.DiscountCodeRepository.Update(discount);
+        }
+
+        public void AddDiscountCode(DiscountCode discountCode, int quantity)
+        {
+            discountCode.IsActive = true;
+            context.DiscountCodeRepository.Insert(discountCode);
+            DiscountCodeDetail discountCodeDetail = new DiscountCodeDetail();
+            discountCodeDetail.DiscountCodeID = discountCode.ID;
+            discountCodeDetail.IsUsed = false;
+            Random random = new Random(); 
+            for (int i = 0; i < quantity; i++)
+            {
+                lock (discountCodeDetail)
+                { // synchronize
+
+                    int code = random.Next(100000, 999999);
+                    discountCodeDetail.Code = code.ToString();
+                    context.DiscountCodeDetailRepository.Insert(discountCodeDetail);
+                }
+            }
+        }
+        public void Block(int ID)
+        {
+            DiscountCode discount = context.DiscountCodeRepository.GetDataByID(ID);
+            discount.IsActive = false;
+            context.DiscountCodeRepository.Update(discount);
+        }
+
+        public bool CheckCode(string Code)
+        {
+            DiscountCodeDetail discountCodeDetail = context.DiscountCodeDetailRepository.GetAllData().FirstOrDefault(x => x.Code == Code);
+            if (discountCodeDetail != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public DiscountCode GetByID(int ID)
+        {
+            return context.DiscountCodeRepository.GetDataByID(ID);
         }
 
         public IEnumerable<DiscountCode> GetDiscountCodeList()

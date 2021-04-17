@@ -17,13 +17,17 @@ namespace ToyStore.Controllers
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
         private ICartService _cartService;
-        public CartController(IProductService productService, ICustomerService customerService, IOrderService orderService, IOrderDetailService orderDetailService, ICartService cartService)
+        private IDiscountCodeService _discountCodeService;
+        private IDiscountCodeDetailService _discountCodeDetailService;
+        public CartController(IProductService productService, ICustomerService customerService, IOrderService orderService, IOrderDetailService orderDetailService, ICartService cartService, IDiscountCodeService discountCodeService, IDiscountCodeDetailService discountCodeDetailService)
         {
             _productService = productService;
             _customerService = customerService;
             _orderService = orderService;
             _orderDetailService = orderDetailService;
             _cartService = cartService;
+            _discountCodeService = discountCodeService;
+            _discountCodeDetailService = discountCodeDetailService;
         }
         // GET: Cart
         public List<Cart> GetCart()
@@ -157,6 +161,7 @@ namespace ToyStore.Controllers
         public ActionResult Checkout()
         {
             ViewBag.TotalQuantity = GetTotalQuanity();
+            ViewBag.Code = new SelectList(_discountCodeDetailService.GetDiscountCodeDetailList(), "Code", "Code");
             return View();
         }
         [HttpGet]
@@ -255,7 +260,7 @@ namespace ToyStore.Controllers
             return PartialView("CheckoutPartial");
         }
         [HttpGet]
-        public ActionResult AddOrder(Customer customer)
+        public ActionResult AddOrder(Customer customer, int NumberDiscountPass=0, string CodePass="")
         {
             //Check null session cart
             if (Session["Cart"] == null)
@@ -310,7 +315,7 @@ namespace ToyStore.Controllers
             order.IsApproved = false;
             order.IsReceived = false;
             order.IsCancel = false;
-            order.Offer = 0;
+            order.Offer = NumberDiscountPass;
             _orderService.AddOrder(order);
             //Add order detail
             List<Cart> listCart = GetCart();
@@ -326,6 +331,10 @@ namespace ToyStore.Controllers
                 //Remove Cart
                 _cartService.RemoveCart(item.ProductID, item.MemberID);
             }
+            //Set discountcode used
+            _discountCodeDetailService.Used(CodePass);
+            Session["Code"] = null;
+            Session["num"] = null;
             Session["Cart"] = null;
             if (status)
             {
@@ -357,6 +366,23 @@ namespace ToyStore.Controllers
             smtp.Credentials = new NetworkCredential(FromEmail, Password);
             smtp.EnableSsl = true;
             smtp.Send(mail);
+        }
+        [HttpPost]
+        public ActionResult CheckCode(string Code)
+        {
+            if (_discountCodeService.CheckCode(Code))
+            {
+                ViewBag.CheckCode = _discountCodeDetailService.GetDiscountByCode(Code);
+            }
+            return RedirectToAction("Checkout");
+        }
+        [HttpPost]
+        public ActionResult Choose(string Code)
+        {
+            int num = _discountCodeDetailService.GetDiscountByCode(Code);
+            Session["Code"] = Code;
+            Session["num"] = num;
+            return RedirectToAction("Checkout");
         }
     }
 }
