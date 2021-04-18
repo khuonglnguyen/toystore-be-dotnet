@@ -161,7 +161,7 @@ namespace ToyStore.Controllers
         public ActionResult Checkout()
         {
             ViewBag.TotalQuantity = GetTotalQuanity();
-            ViewBag.Code = new SelectList(_discountCodeDetailService.GetDiscountCodeDetailList(), "Code", "Code");
+            ViewBag.DiscountCodeDetailList = _discountCodeDetailService.GetDiscountCodeDetailList();
             return View();
         }
         [HttpGet]
@@ -366,15 +366,6 @@ namespace ToyStore.Controllers
             smtp.Credentials = new NetworkCredential(FromEmail, Password);
             smtp.EnableSsl = true;
             smtp.Send(mail);
-        }
-        [HttpPost]
-        public ActionResult CheckCode(string Code)
-        {
-            if (_discountCodeService.CheckCode(Code))
-            {
-                ViewBag.CheckCode = _discountCodeDetailService.GetDiscountByCode(Code);
-            }
-            return RedirectToAction("Checkout");
         }
         [HttpPost]
         public ActionResult Choose(string Code)

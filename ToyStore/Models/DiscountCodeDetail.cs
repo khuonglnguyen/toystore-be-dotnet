@@ -14,11 +14,19 @@ namespace ToyStore.Models
     
     public partial class DiscountCodeDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DiscountCodeDetail()
+        {
+            this.MemberDiscountCodes = new HashSet<MemberDiscountCode>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> DiscountCodeID { get; set; }
         public string Code { get; set; }
         public Nullable<bool> IsUsed { get; set; }
     
         public virtual DiscountCode DiscountCode { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberDiscountCode> MemberDiscountCodes { get; set; }
     }
 }

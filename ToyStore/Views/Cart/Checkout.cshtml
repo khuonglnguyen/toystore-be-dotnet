@@ -6,6 +6,7 @@
 @{
     List<ToyStore.Models.Cart> Cart = Session["Cart"] as List<ToyStore.Models.Cart>;
     ToyStore.Models.Member Member = Session["Member"] as ToyStore.Models.Member;
+    List<ToyStore.Models.DiscountCodeDetail> discountCodeDetails = ViewBag.DiscountCodeDetailList as List<ToyStore.Models.DiscountCodeDetail>;
 }
 <script src="~/Scripts/bootbox.js"></script>
 <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
@@ -162,11 +163,10 @@
                                     <input type="text" name="NumberDiscountPass" hidden="hidden" value="@Session["num"]">
                                     <input type="text" name="CodePass" hidden="hidden" value="@Session["Code"]">
                                     <input type="button" value="Chọn mã Code khác" id="btnChoose" /><br />
-                                    <label>Thành tiền</label>
-                                    <input type="text" name="Address" class="user" value="@Cart.Sum(x=>x.Total).ToString("#,##")₫" readonly>
-                                    <label>Thành tiền sau khi giảm giá</label>
                                     decimal total = @Cart.Sum(x => x.Total) - (@Cart.Sum(x => x.Total) / 100 * (int)@Session["num"]);
-                                    <input type="text" name="Address" class="user" value="@total.ToString("#,##")₫" readonly>
+                                    <label>Thành tiền</label><br />
+                                    <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
+                                    <h4 style="color:brown">@total.ToString("#,##")₫</h4>
                                 }
                                 else
                                 {
@@ -241,7 +241,13 @@
                 {
                     <div class="form-group">
                         <label>Mã giảm giá của bạn:</label>
-                        @Html.DropDownList("Code", null, new { @class = "form-control" })
+                        @*@Html.DropDownList("Code", null, new { @class = "form-control" })*@
+                        <select class="form-control" name="Code">
+                            @foreach (var item in discountCodeDetails)
+                            {
+                                <option value="@item.Code">Mã: @item.Code (Giảm @item.DiscountCode.NumberDiscount% - Ngày hết hạn: @item.DiscountCode.ExpirationDate.Value.ToShortDateString())</option>
+                            }
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="Name">Hoặc nhập mã tại đây:</label>

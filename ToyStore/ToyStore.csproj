@@ -211,6 +211,9 @@
     <Compile Include="Models\MemberCategory.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MemberDiscountCode.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Order.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>

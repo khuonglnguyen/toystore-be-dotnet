@@ -22,6 +22,7 @@ namespace ToyStore.Models
             this.ProductVieweds = new HashSet<ProductViewed>();
             this.QAs = new HashSet<QA>();
             this.Ratings = new HashSet<Rating>();
+            this.MemberDiscountCodes = new HashSet<MemberDiscountCode>();
         }
     
         public int ID { get; set; }
@@ -46,5 +47,7 @@ namespace ToyStore.Models
         public virtual ICollection<QA> QAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Ratings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberDiscountCode> MemberDiscountCodes { get; set; }
     }
 }
