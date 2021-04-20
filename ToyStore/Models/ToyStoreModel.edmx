@@ -175,6 +175,7 @@
           <Property Name="IsDelivere" Type="bit" Nullable="false" />
           <Property Name="IsApproved" Type="bit" Nullable="false" />
           <Property Name="IsReceived" Type="bit" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -1344,6 +1345,7 @@
           <Property Name="IsDelivere" Type="Boolean" Nullable="false" />
           <Property Name="IsApproved" Type="Boolean" Nullable="false" />
           <Property Name="IsReceived" Type="Boolean" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Customer" Relationship="ToyStore2021Model.FK_dbo_Order_dbo_Customer_CustomerID" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="OrderDetails" Relationship="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Order_OrderID" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
@@ -2173,6 +2175,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ToyStore2021Model.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="IsReceived" ColumnName="IsReceived" />
                 <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
                 <ScalarProperty Name="IsDelivere" ColumnName="IsDelivere" />

@@ -72,7 +72,7 @@
                         @Html.DisplayFor(modelItem => item.ID)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ProductID)
+                        @Html.DisplayFor(modelItem => item.Product.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
@@ -93,7 +93,7 @@
             }
         </tbody>
     </table>
-    <p>Tổng: @Model.Sum(x => x.Price)</p>
+    <p>Tổng: @ViewBag.Total.ToString("#,##")₫ (<del>@Model.Sum(x => x.Price * x.Quantity).ToString("#,##")₫</del>)</p>
     if (ViewBag.Received != "Received" && ViewBag.Delivere == "Delivere")
     {
         @Html.ActionLink("Đã nhận được hàng", "Received", new { OrderID = ViewBag.OrderID })

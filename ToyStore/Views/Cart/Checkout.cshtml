@@ -6,7 +6,7 @@
 @{
     List<ToyStore.Models.Cart> Cart = Session["Cart"] as List<ToyStore.Models.Cart>;
     ToyStore.Models.Member Member = Session["Member"] as ToyStore.Models.Member;
-    List<ToyStore.Models.DiscountCodeDetail> discountCodeDetails = ViewBag.DiscountCodeDetailList as List<ToyStore.Models.DiscountCodeDetail>;
+    List<ToyStore.Models.MemberDiscountCode> memberDiscountCodes = ViewBag.DiscountCodeDetailListByMemer as List<ToyStore.Models.MemberDiscountCode>;
 }
 <script src="~/Scripts/bootbox.js"></script>
 <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
@@ -243,15 +243,16 @@
                         <label>Mã giảm giá của bạn:</label>
                         @*@Html.DropDownList("Code", null, new { @class = "form-control" })*@
                         <select class="form-control" name="Code">
-                            @foreach (var item in discountCodeDetails)
+                            <option value="0">Chọn mã giảm giá</option>
+                            @foreach (var item in memberDiscountCodes)
                             {
-                                <option value="@item.Code">Mã: @item.Code (Giảm @item.DiscountCode.NumberDiscount% - Ngày hết hạn: @item.DiscountCode.ExpirationDate.Value.ToShortDateString())</option>
+                                <option value="@item.DiscountCodeDetail.Code">Mã: @item.DiscountCodeDetail.Code (Giảm @item.DiscountCodeDetail.DiscountCode.NumberDiscount% - Ngày hết hạn: @item.DiscountCodeDetail.DiscountCode.ExpirationDate.Value.ToShortDateString())</option>
                             }
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="Name">Hoặc nhập mã tại đây:</label>
-                        <input type="number" class="form-control" name="Code" id="Code">
+                        <input type="number" class="form-control" name="CodeInput" id="Code">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Chọn</button>

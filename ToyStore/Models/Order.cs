@@ -31,6 +31,7 @@ namespace ToyStore.Models
         public bool IsDelivere { get; set; }
         public bool IsApproved { get; set; }
         public bool IsReceived { get; set; }
+        public Nullable<decimal> Total { get; set; }
     
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -23,6 +23,7 @@ namespace ToyStore.Service
         decimal GetTotalRevenue();
         int GetTotalOrder();
         void Update(Order order);
+        void UpdateTotal(int OrderID, decimal Total);
     }
     public class OrderService : IOrderService 
     {
@@ -117,6 +118,13 @@ namespace ToyStore.Service
         public int GetTotalOrder()
         {
             return context.OrderRepository.GetAllData().Count();
+        }
+
+        public void UpdateTotal(int OrderID, decimal Total)
+        {
+            Order order = context.OrderRepository.GetDataByID(OrderID);
+            order.Total = Total;
+            context.OrderRepository.Update(order);
         }
     }
 }

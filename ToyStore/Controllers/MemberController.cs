@@ -144,6 +144,7 @@ namespace ToyStore.Controllers
             {
                 ViewBag.Received = "Received";
             }
+            ViewBag.Total = order.Total;
             return View(orderDetails);
         }
         public ActionResult GetDataProduct(int ID)

@@ -37,6 +37,7 @@ namespace ToyStore.Data
         private GenericRepository<StatisticType> statisticTypeRepository;
         private GenericRepository<DiscountCode> discountCodeRepository;
         private GenericRepository<DiscountCodeDetail> discountCodeDetailRepository;
+        private GenericRepository<MemberDiscountCode> memberDiscountCodeRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -332,6 +333,17 @@ namespace ToyStore.Data
                     this.discountCodeDetailRepository = new GenericRepository<DiscountCodeDetail>(DbContext);
                 }
                 return discountCodeDetailRepository;
+            }
+        }
+        public GenericRepository<MemberDiscountCode> MemberDiscountCodeRepository
+        {
+            get
+            {
+                if (this.memberDiscountCodeRepository == null)
+                {
+                    this.memberDiscountCodeRepository = new GenericRepository<MemberDiscountCode>(DbContext);
+                }
+                return memberDiscountCodeRepository;
             }
         }
         public void Save()

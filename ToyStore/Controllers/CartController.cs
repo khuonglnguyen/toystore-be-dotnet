@@ -161,7 +161,8 @@ namespace ToyStore.Controllers
         public ActionResult Checkout()
         {
             ViewBag.TotalQuantity = GetTotalQuanity();
-            ViewBag.DiscountCodeDetailList = _discountCodeDetailService.GetDiscountCodeDetailList();
+            Member member = Session["Member"] as Member;
+            ViewBag.DiscountCodeDetailListByMemer = _discountCodeDetailService.GetDiscountCodeDetailListByMember(member.ID);
             return View();
         }
         [HttpGet]
@@ -315,10 +316,11 @@ namespace ToyStore.Controllers
             order.IsApproved = false;
             order.IsReceived = false;
             order.IsCancel = false;
-            order.Offer = NumberDiscountPass;
+            order.Offer = NumberDiscountPass; 
             _orderService.AddOrder(order);
             //Add order detail
             List<Cart> listCart = GetCart();
+            decimal sumtotal = 0;
             foreach (Cart item in listCart)
             {
                 OrderDetail orderDetail = new OrderDetail();
@@ -327,9 +329,17 @@ namespace ToyStore.Controllers
                 orderDetail.Quantity = item.Quantity;
                 orderDetail.Price = item.Price;
                 _orderDetailService.AddOrderDetail(orderDetail);
-
+                sumtotal += orderDetail.Quantity * orderDetail.Price;
                 //Remove Cart
                 _cartService.RemoveCart(item.ProductID, item.MemberID);
+            }
+            if (NumberDiscountPass != 0)
+            {
+                _orderService.UpdateTotal(order.ID, sumtotal - (sumtotal / 100 * NumberDiscountPass));
+            }
+            else
+            {
+                _orderService.UpdateTotal(order.ID, sumtotal);
             }
             //Set discountcode used
             _discountCodeDetailService.Used(CodePass);
@@ -368,11 +378,29 @@ namespace ToyStore.Controllers
             smtp.Send(mail);
         }
         [HttpPost]
-        public ActionResult Choose(string Code)
+        public ActionResult Choose(string Code, string CodeInput)
         {
-            int num = _discountCodeDetailService.GetDiscountByCode(Code);
-            Session["Code"] = Code;
-            Session["num"] = num;
+            if (CodeInput != "")
+            {
+                int numcheck = _discountCodeDetailService.GetDiscountByCode(CodeInput);
+                if (numcheck != null)
+                {
+                    Session["Code"] = CodeInput;
+                    Session["num"] = numcheck;
+                }
+                else
+                {
+                    int num = _discountCodeDetailService.GetDiscountByCode(Code);
+                    Session["Code"] = Code;
+                    Session["num"] = num;
+                }
+            }
+            else
+            {
+                int num = _discountCodeDetailService.GetDiscountByCode(Code);
+                Session["Code"] = Code;
+                Session["num"] = num;
+            }
             return RedirectToAction("Checkout");
         }
     }
