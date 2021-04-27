@@ -15,11 +15,9 @@ namespace ToyStore.Models
     public partial class Statistic
     {
         public int ID { get; set; }
-        public int StatisticTypeID { get; set; }
         public int EmloyeeID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
     
         public virtual Emloyee Emloyee { get; set; }
-        public virtual StatisticType StatisticType { get; set; }
     }
 }

@@ -1,13 +1,8 @@
-﻿@using ToyStore.Models
-@model StatisticType
-@{
+﻿@{
     ViewBag.Title = "Nhập Hàng";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 <script src="~/Scripts/bootbox.js"></script>
-@{
-    IEnumerable<StatisticType> lstStatisticType = ViewBag.StatisticType as IEnumerable<StatisticType>;
-}
 <script>
     $(document).ready(function () {
         $('#btnSupplier').off('click').on('click', function () {
@@ -54,18 +49,17 @@
             <div class="modal-body">
                 @using (Html.BeginForm("ImportProductBySupplierID", "ImportProductManage", FormMethod.Get))
                 {
-                    <div class="form-group">
-                        <label>Hình Thức Thống Kê:</label>
-                        <select name="ID">
-                            @foreach (var item in lstStatisticType)
-                            {
-                                <option value="@item.ID">@item.Name</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Chọn</button>
-                    </div>
+                <div class="form-group">
+                    <label>Hình Thức Thống Kê:</label>
+                        <br />
+                        <a href="@Url.Action("StatisticStocking","StatisticManage")" class="btn btn-default">Tồn kho</a><br />
+                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Khách hàng tiềm năng</a><br />
+                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Nhà cung cấp tốt nhất</a><br />
+                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Sản phẩm bán chạy</a><br />
+                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Đơn đặt hàng</a><br />
+                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Từ khóa tìm kiếm hàng đầu</a><br />
+                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Lượt truy cập</a>
+                </div>
                 }
             </div>
         </div>

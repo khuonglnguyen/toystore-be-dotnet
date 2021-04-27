@@ -31,6 +31,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListForDiscount();
         IEnumerable<Product> GetProductListRandom();
         IEnumerable<Product> GetProductListAlmostOver();
+        IEnumerable<Product> GetProductListStocking();
         Product GetByID(int ID);
         void UpdateQuantity(int ID, int Quantity);
         void UpdatePurchasedCount(int ID, int PurchasedCount);
@@ -221,7 +222,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductListAlmostOver()
         {
-            return context.ProductRepository.GetAllData().OrderBy(x=>x.Quantity);
+            return context.ProductRepository.GetAllData().OrderBy(x => x.Quantity);
         }
 
         public IEnumerable<Product> GetProductListBySupplier(int SupplierID)
@@ -239,7 +240,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductListViewedByMemberID(int MemberID)
         {
-            var productIDList = context.ProductViewedRepository.GetAllData(x => x.MemberID == MemberID).OrderByDescending(x=>x.Date).Select(x=>x.ProductID);
+            var productIDList = context.ProductViewedRepository.GetAllData(x => x.MemberID == MemberID).OrderByDescending(x => x.Date).Select(x => x.ProductID);
             List<Product> productsList = new List<Product>();
             foreach (var item in productIDList)
             {
@@ -256,6 +257,11 @@ namespace ToyStore.Service
         public int GetTotalProductPurchased()
         {
             return (int)context.ProductRepository.GetAllData().Sum(x => x.PurchasedCount);
+        }
+
+        public IEnumerable<Product> GetProductListStocking()
+        {
+            return context.ProductRepository.GetAllData(x => x.Quantity > 0 && x.IsActive==true);
         }
     }
 }

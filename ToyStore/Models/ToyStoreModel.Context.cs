@@ -52,7 +52,6 @@ namespace ToyStore.Models
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Statistic> Statistics { get; set; }
-        public virtual DbSet<StatisticType> StatisticTypes { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
     }
 }

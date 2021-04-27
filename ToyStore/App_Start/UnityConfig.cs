@@ -39,7 +39,6 @@ namespace ToyStore
             container.RegisterType<IRatingService, RatingService>();
             container.RegisterType<IRoleService, RoleService>();
             container.RegisterType<IDecentralizationService, DecentralizationService>();
-            container.RegisterType<IStatisticTypeService, StatisticTypeService>();
             container.RegisterType<IDiscountCodeService, DiscountCodeService>();
             container.RegisterType<IDiscountCodeDetailService, DiscountCodeDetailService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
