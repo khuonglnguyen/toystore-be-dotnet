@@ -52,6 +52,12 @@ namespace ToyStore.Controllers
             ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name");
             ViewBag.GenderID = new SelectList(_genderService.GetGenderList(), "ID", "Name");
 
+            ViewBag.CategoryIDEdit = ViewBag.CategoryID;
+            ViewBag.SupplierIDEdit = ViewBag.SupplierID;
+            ViewBag.ProducerIDEdit = ViewBag.ProducerID;
+            ViewBag.AgeIDEdit = ViewBag.AgeID;
+            ViewBag.GenderIDEdit = ViewBag.GenderID;
+
             int pageSize = 5;
             //Get proudct category list
             var products = _productService.GetProductListForManage().OrderBy(x => x.Name);
@@ -190,11 +196,11 @@ namespace ToyStore.Controllers
             var product = _productService.GetByID(id);
 
             //Get data for DropdownList
-            ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
-            ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
-            ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
-            ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
-            ViewBag.GenderID = new SelectList(_genderService.GetGenderList(), "ID", "Name");
+            ViewBag.CategoryIDEdit = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
+            ViewBag.SupplierIDEdit = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
+            ViewBag.ProducerIDEdit = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
+            ViewBag.AgeIDEdit = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
+            ViewBag.GenderIDEdit = new SelectList(_genderService.GetGenderList(), "ID", "Name", product.GenderID);
 
             //Check null
             if (product != null)
@@ -213,13 +219,15 @@ namespace ToyStore.Controllers
                     Image2 = product.Image2,
                     Image3 = product.Image3,
                     Price = product.Price,
-                    PromotionPrice = product.PromotionPrice,
+                    Discount = product.Discount,
                     Description = product.Description,
-                    Quantity = product.Quantity,
                     HomeFlag = product.HomeFlag,
                     HotFlag = product.HotFlag,
                     IsNew = product.IsNew,
                     IsActive = product.IsActive,
+                    ViewCount = product.ViewCount,
+                    PurchasedCount = product.PurchasedCount,
+                    CommentCount = product.CommentCount,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -230,7 +238,7 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page)
+        public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page, int CategoryIDEdit, int SupplierIDEdit, int ProducerIDEdit, int AgeIDEdit, int GenderIDEdit)
         {
             if (Session["Emloyee"] == null)
             {
@@ -241,6 +249,7 @@ namespace ToyStore.Controllers
             ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
             ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
             ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
+            ViewBag.GenderID = new SelectList(_genderService.GetGenderList(), "ID", "Name", product.GenderID);
 
             //Declare a errorCount
             int errorCount = 0;
@@ -291,6 +300,11 @@ namespace ToyStore.Controllers
             //Set TempData for checking in view to show swal
             TempData["edit"] = "Success";
             //Update productCategory
+            product.CategoryID = CategoryIDEdit;
+            product.SupplierID = SupplierIDEdit;
+            product.ProducerID = ProducerIDEdit;
+            product.AgeID = AgeIDEdit;
+            product.GenderID = GenderIDEdit;
             _productService.UpdateProduct(product);
             string Url = Request.Url.ToString();
             return RedirectToAction("List", new { page = page });

@@ -10,10 +10,6 @@ namespace ToyStore.Service
     public interface IRoleService
     {
         IEnumerable<Role> GetRoleList();
-        void AddRole(Role role);
-        void UpdateRole(Role role);
-        void BlockRole(Role role);
-        void ActiveRole(Role role);
         Role GetRoleByID(int ID);
     }
     public class RoleService : IRoleService
@@ -24,24 +20,6 @@ namespace ToyStore.Service
             this.context = repositoryContext;
         }
 
-        public void ActiveRole(Role role)
-        {
-            role.IsActive = true;
-            context.RoleRepository.Update(role);
-        }
-
-        public void AddRole(Role role)
-        {
-            role.IsActive = true;
-            context.RoleRepository.Insert(role);
-        }
-
-        public void BlockRole(Role role)
-        {
-            role.IsActive = false;
-            context.RoleRepository.Update(role);
-        }
-
         public Role GetRoleByID(int ID)
         {
             return context.RoleRepository.GetDataByID(ID);
@@ -50,12 +28,6 @@ namespace ToyStore.Service
         public IEnumerable<Role> GetRoleList()
         {
             return context.RoleRepository.GetAllData();
-        }
-
-        public void UpdateRole(Role role)
-        {
-            role.IsActive = true;
-            context.RoleRepository.Update(role);
         }
     }
 }

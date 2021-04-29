@@ -25,9 +25,8 @@ namespace ToyStore.Models
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public int MemberCategoryID { get; set; }
+        public Nullable<bool> IsMember { get; set; }
     
-        public virtual MemberCategory MemberCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
     }

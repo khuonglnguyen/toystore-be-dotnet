@@ -39,8 +39,8 @@ namespace ToyStore.Models
         public virtual DbSet<ImportCoupon> ImportCoupons { get; set; }
         public virtual DbSet<ImportCouponDetail> ImportCouponDetails { get; set; }
         public virtual DbSet<Member> Members { get; set; }
-        public virtual DbSet<MemberCategory> MemberCategories { get; set; }
         public virtual DbSet<MemberDiscountCode> MemberDiscountCodes { get; set; }
+        public virtual DbSet<MemberType> MemberTypes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Producer> Producers { get; set; }
@@ -53,5 +53,6 @@ namespace ToyStore.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Statistic> Statistics { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace ToyStore.Service
         }
         public Member AddMember(Member member)
         {
-            member.MemberCategoryID = 1;
+            member.MemberTypeID = 1;
             this.context.MemberRepository.Insert(member);
             return member;
         }

@@ -226,10 +226,10 @@
     <Compile Include="Models\Member.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MemberCategory.cs">
+    <Compile Include="Models\MemberDiscountCode.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MemberDiscountCode.cs">
+    <Compile Include="Models\MemberType.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order.cs">
@@ -268,6 +268,9 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ToyStoreModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -298,7 +301,7 @@
     <Compile Include="Service\GenderService.cs" />
     <Compile Include="Service\ImportCouponDetailService.cs" />
     <Compile Include="Service\ImportCouponService.cs" />
-    <Compile Include="Service\MemberCategoryService.cs" />
+    <Compile Include="Service\MemberTypeService.cs" />
     <Compile Include="Service\MemberService.cs" />
     <Compile Include="Service\OrderDetailService.cs" />
     <Compile Include="Service\OrderService.cs" />

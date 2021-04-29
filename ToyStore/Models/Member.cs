@@ -26,7 +26,7 @@ namespace ToyStore.Models
         }
     
         public int ID { get; set; }
-        public int MemberCategoryID { get; set; }
+        public int MemberTypeID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
@@ -40,7 +40,7 @@ namespace ToyStore.Models
         public virtual ICollection<Cart> Carts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual MemberCategory MemberCategory { get; set; }
+        public virtual MemberType MemberType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductViewed> ProductVieweds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

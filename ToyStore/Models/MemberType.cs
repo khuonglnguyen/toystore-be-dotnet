@@ -12,20 +12,17 @@ namespace ToyStore.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberCategory
+    public partial class MemberType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MemberCategory()
+        public MemberType()
         {
-            this.Customers = new HashSet<Customer>();
             this.Members = new HashSet<Member>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customer> Customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Member> Members { get; set; }
     }

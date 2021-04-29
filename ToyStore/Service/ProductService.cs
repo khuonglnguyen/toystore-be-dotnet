@@ -52,7 +52,11 @@ namespace ToyStore.Service
         public Product AddProduct(Product product)
         {
             product.LastUpdatedDate = DateTime.Now;
-            product.Discount = (int)(product.Price - (((product.Price / product.Price) * product.PromotionPrice)));
+            product.PromotionPrice = product.Price - (product.Price / 100 * product.Discount);
+            product.Quantity = 0;
+            product.ViewCount = 0;
+            product.PurchasedCount = 0;
+            product.CommentCount = 0;
             this.context.ProductRepository.Insert(product);
             return product;
         }
@@ -87,8 +91,7 @@ namespace ToyStore.Service
         public void UpdateProduct(Product product)
         {
             product.LastUpdatedDate = DateTime.Now;
-            decimal tmp = Convert.ToDecimal(product.Discount) / 100;
-            product.PromotionPrice = product.Price - (product.Price * tmp);
+            product.PromotionPrice = product.Price - (product.Price / 100 * product.Discount);
             this.context.ProductRepository.Update(product);
         }
 

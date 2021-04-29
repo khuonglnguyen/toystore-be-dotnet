@@ -29,11 +29,11 @@
                     if (response.status == true) {
                         $('#ID').val(response.ID);
                         $('#Name').val(response.Name);
-                        $('#CategoryID').val(response.CategoryID);
-                        $('#SupplierID').val(response.SupplierID);
-                        $('#ProducerID').val(response.ProducerID);
-                        $('#AgeID').val(response.AgeID);
-                        $('#GenderID').val(response.GenderID);
+                        $('#CategoryIDEdit').val(response.CategoryID);
+                        $('#SupplierIDEdit').val(response.SupplierID);
+                        $('#ProducerIDEdit').val(response.ProducerID);
+                        $('#AgeIDEdit').val(response.AgeID);
+                        $('#GenderIDEdit').val(response.GenderID);
                         $('#TextImage1').val(response.Image1);
                         $('#TextImage2').val(response.Image2);
                         $('#TextImage3').val(response.Image3);
@@ -41,13 +41,15 @@
                         $('#img2').attr('src', "/Content/images/" + response.Image2);
                         $('#img3').attr('src', "/Content/images/" + response.Image3);
                         $('#Price').val(response.Price);
-                        $('#PromotionPrice').val(response.PromotionPrice);
+                        $('#Discount').val(response.Discount);
                         $('#Description').val(response.Description);
-                        $('#Quantity').val(response.Quantity);
                         $('#HomeFlag').prop("checked", response.HomeFlag);
                         $('#HotFlag').prop("checked", response.HotFlag);
                         $('#IsNew').prop("checked", response.IsNew);
                         $('#IsActive').prop("checked", response.IsActive);
+                        $('#ViewCount').val(response.ViewCount);
+                        $('#PurchasedCount').val(response.PurchasedCount);
+                        $('#CommentCount').val(response.CommentCount);
                     }
                     else {
                         bootbox.alert(response.message);
@@ -159,44 +161,44 @@
                     @foreach (var item in Model)
                     {
                         @Html.Hidden(item.ID.ToString())
-                    <tr>
-                        <td>
-                            <input type="checkbox" class="cbProductCategory" value="@item.ID" name="IDDelete" />
-                        </td>
-                        <td style="color:brown">
-                            <b>@Html.DisplayFor(modelItem => item.Name)</b>
-                        </td>
-                        <td>
-                            <img src="@Url.Content("~/Content/images/" + item.Image1)" width="100" height="100" />
-                        </td>
-                        <td>
-                            <div id="DivActive@(counter1)">
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="cbProductCategory" value="@item.ID" name="IDDelete" />
+                            </td>
+                            <td style="color:brown">
+                                <b>@Html.DisplayFor(modelItem => item.Name)</b>
+                            </td>
+                            <td>
+                                <img src="@Url.Content("~/Content/images/" + item.Image1)" width="100" height="100" />
+                            </td>
+                            <td>
+                                <div id="DivActive@(counter1)">
+                                    @if (item.IsActive == true)
+                                    {
+                                        <span class="label label-success">Kích hoạt</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-danger">Khóa</span>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+                            </td>
+                            <td>
+                                @*@Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })*@
+                                <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
                                 @if (item.IsActive == true)
                                 {
-                                    <span class="label label-success">Kích hoạt</span>
+                                    @Ajax.ActionLink("Khóa", "Block", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
                                 }
                                 else
                                 {
-                                    <span class="label label-danger">Khóa</span>
+                                    @Ajax.ActionLink("Mở", "Active", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnOpen", data = counter1, id = item.ID, value = counter1 })
                                 }
-                            </div>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastUpdatedDate)
-                        </td>
-                        <td>
-                            @*@Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })*@
-                            <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
-                            @if (item.IsActive == true)
-                            {
-                                @Ajax.ActionLink("Khóa", "Block", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
-                            }
-                            else
-                            {
-                                @Ajax.ActionLink("Mở", "Active", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnOpen", data = counter1, id = item.ID, value = counter1 })
-                            }
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                         @(counter1++)
                     }
                     @(counter1 = 0)
@@ -266,16 +268,12 @@
                         <input type="number" class="form-control" name="Price" id="PriceAdd">
                     </div>
                     <div class="form-group">
-                        <label>Giá khuyến mãi:</label>
-                        <input type="number" class="form-control" name="PromotionPrice" id="PromotionPriceAdd">
+                        <label>Khuyến mãi:</label>
+                        <input type="number" class="form-control" name="Discount" id="DiscountAdd">
                     </div>
                     <div class="form-group">
                         <label>Mô tả:</label>
                         <input type="text" class="form-control" name="Description" id="DescriptionAdd">
-                    </div>
-                    <div class="form-group">
-                        <label>Số lượng tồn:</label>
-                        <input type="number" class="form-control" name="Quantity" id="QuantityAdd">
                     </div>
                     <div class="form-group">
                         <label>Hiển thị trang chủ:</label>
@@ -315,7 +313,10 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Edit", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
-                    <input type="text" name="ID" id="ID" hidden="hidden" />
+                    <input type="text" name="ID" id="ID" hidden/>
+                    <input type="text" name="ViewCount" id="ViewCount" hidden/>
+                    <input type="text" name="PurchasedCount" id="PurchasedCount" hidden/>
+                    <input type="text" name="CommentCount" id="CommentCount" hidden/>
                     <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
                     <div class="form-group">
                         <label for="Name">Tên sản phẩm:</label>
@@ -324,23 +325,23 @@
                     </div>
                     <div class="form-group">
                         <label>Danh mục:</label>
-                        @Html.DropDownList("CategoryID", null, new { @class = "form-control" })
+                        @Html.DropDownList("CategoryIDEdit", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label>Nhà cung cấp:</label>
-                        @Html.DropDownList("SupplierID", null, new { @class = "form-control" })
+                        @Html.DropDownList("SupplierIDEdit", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label>Nhà sản xuất:</label>
-                        @Html.DropDownList("ProducerID", null, new { @class = "form-control" })
+                        @Html.DropDownList("ProducerIDEdit", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label>Độ tuổi:</label>
-                        @Html.DropDownList("AgeID", null, new { @class = "form-control" })
+                        @Html.DropDownList("AgeIDEdit", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label>Giới tính:</label>
-                        @Html.DropDownList("GenderID", null, new { @class = "form-control" })
+                        @Html.DropDownList("GenderIDEdit", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 1:</label>
@@ -362,16 +363,12 @@
                         <input type="number" class="form-control" name="Price" id="Price">
                     </div>
                     <div class="form-group">
-                        <label>Giá khuyến mãi:</label>
-                        <input type="number" class="form-control" name="PromotionPrice" id="PromotionPrice">
+                        <label>Khuyến mãi:</label>
+                        <input type="number" class="form-control" name="Discount" id="Discount">
                     </div>
                     <div class="form-group">
                         <label>Mô tả:</label>
                         <input type="text" class="form-control" name="Description" id="Description">
-                    </div>
-                    <div class="form-group">
-                        <label>Số lượng tồn:</label>
-                        <input type="number" class="form-control" name="Quantity" id="Quantity">
                     </div>
                     <div class="form-group">
                         <label>Hiển thị trang chủ:</label>

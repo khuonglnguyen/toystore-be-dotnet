@@ -52,7 +52,7 @@
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="MemberCategoryID" Type="int" Nullable="false" />
+          <Property Name="IsMember" Type="bit" />
         </EntityType>
         <EntityType Name="Decentralization">
           <Key>
@@ -135,7 +135,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberCategoryID" Type="int" Nullable="false" />
+          <Property Name="MemberTypeID" Type="int" Nullable="false" />
           <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Password" Type="nvarchar(max)" />
           <Property Name="FullName" Type="nvarchar(max)" />
@@ -145,13 +145,6 @@
           <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
           <Property Name="Capcha" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="MemberCategory">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" />
-        </EntityType>
         <EntityType Name="MemberDiscountCode">
           <Key>
             <PropertyRef Name="ID" />
@@ -159,6 +152,13 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MemberID" Type="int" />
           <Property Name="DiscountCodeDetailID" Type="int" />
+        </EntityType>
+        <EntityType Name="MemberType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -287,7 +287,6 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="IsActive" Type="bit" />
           <Property Name="NameDisplay" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Statistic">
@@ -309,6 +308,16 @@
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_dbo_Cart_dbo_Member_MemberID">
           <End Role="Member" Type="Self.Member" Multiplicity="1">
@@ -363,20 +372,6 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
-          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MemberCategory">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="MemberCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -475,16 +470,16 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="1">
+          <End Role="MemberType" Type="Self.MemberType" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Member" Type="Self.Member" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MemberCategory">
+            <Principal Role="MemberType">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Member">
-              <PropertyRef Name="MemberCategoryID" />
+              <PropertyRef Name="MemberTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -787,8 +782,8 @@
           <EntitySet Name="ImportCoupon" EntityType="Self.ImportCoupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImportCouponDetail" EntityType="Self.ImportCouponDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MemberCategory" EntityType="Self.MemberCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberDiscountCode" EntityType="Self.MemberDiscountCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberType" EntityType="Self.MemberType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producer" EntityType="Self.Producer" Schema="dbo" store:Type="Tables" />
@@ -801,6 +796,7 @@
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statistic" EntityType="Self.Statistic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_Cart_dbo_Member_MemberID" Association="Self.FK_dbo_Cart_dbo_Member_MemberID">
             <End Role="Member" EntitySet="Member" />
             <End Role="Cart" EntitySet="Cart" />
@@ -816,10 +812,6 @@
           <AssociationSet Name="FK_dbo_Comment_dbo_Products_ProductID" Association="Self.FK_dbo_Comment_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="Comment" EntitySet="Comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" Association="Self.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
-            <End Role="MemberCategory" EntitySet="MemberCategory" />
-            <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
             <End Role="Emloyee" EntitySet="Emloyee" />
@@ -850,7 +842,7 @@
             <End Role="ImportCouponDetail" EntitySet="ImportCouponDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" Association="Self.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="MemberType" EntitySet="MemberType" />
             <End Role="Member" EntitySet="Member" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Order_dbo_Customer_CustomerID" Association="Self.FK_dbo_Order_dbo_Customer_CustomerID">
@@ -957,8 +949,8 @@
           <EntitySet Name="ImportCoupons" EntityType="ToyStore2021Model.ImportCoupon" />
           <EntitySet Name="ImportCouponDetails" EntityType="ToyStore2021Model.ImportCouponDetail" />
           <EntitySet Name="Members" EntityType="ToyStore2021Model.Member" />
-          <EntitySet Name="MemberCategories" EntityType="ToyStore2021Model.MemberCategory" />
           <EntitySet Name="MemberDiscountCodes" EntityType="ToyStore2021Model.MemberDiscountCode" />
+          <EntitySet Name="MemberTypes" EntityType="ToyStore2021Model.MemberType" />
           <EntitySet Name="Orders" EntityType="ToyStore2021Model.Order" />
           <EntitySet Name="OrderDetails" EntityType="ToyStore2021Model.OrderDetail" />
           <EntitySet Name="Producers" EntityType="ToyStore2021Model.Producer" />
@@ -971,6 +963,7 @@
           <EntitySet Name="Roles" EntityType="ToyStore2021Model.Role" />
           <EntitySet Name="Statistics" EntityType="ToyStore2021Model.Statistic" />
           <EntitySet Name="Suppliers" EntityType="ToyStore2021Model.Supplier" />
+          <EntitySet Name="sysdiagrams" EntityType="ToyStore2021Model.sysdiagram" />
           <AssociationSet Name="FK_dbo_Products_dbo_Ages_AgeID" Association="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID">
             <End Role="Age" EntitySet="Ages" />
             <End Role="Product" EntitySet="Products" />
@@ -990,10 +983,6 @@
           <AssociationSet Name="FK_dbo_Comment_dbo_Products_ProductID" Association="ToyStore2021Model.FK_dbo_Comment_dbo_Products_ProductID">
             <End Role="Product" EntitySet="Products" />
             <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" Association="ToyStore2021Model.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
-            <End Role="MemberCategory" EntitySet="MemberCategories" />
-            <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Order_dbo_Customer_CustomerID" Association="ToyStore2021Model.FK_dbo_Order_dbo_Customer_CustomerID">
             <End Role="Customer" EntitySet="Customers" />
@@ -1052,7 +1041,7 @@
             <End Role="ImportCouponDetail" EntitySet="ImportCouponDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" Association="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-            <End Role="MemberCategory" EntitySet="MemberCategories" />
+            <End Role="MemberType" EntitySet="MemberTypes" />
             <End Role="Member" EntitySet="Members" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_ProductViewed_dbo_Member_MemberID" Association="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Member_MemberID">
@@ -1160,8 +1149,7 @@
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MemberCategoryID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="MemberCategory" Relationship="ToyStore2021Model.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" FromRole="Customer" ToRole="MemberCategory" />
+          <Property Name="IsMember" Type="Boolean" />
           <NavigationProperty Name="Orders" Relationship="ToyStore2021Model.FK_dbo_Order_dbo_Customer_CustomerID" FromRole="Customer" ToRole="Order" />
         </EntityType>
         <EntityType Name="Decentralization">
@@ -1264,7 +1252,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="MemberTypeID" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1275,20 +1263,11 @@
           <Property Name="Capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Carts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_Member_MemberID" FromRole="Member" ToRole="Cart" />
           <NavigationProperty Name="Comments" Relationship="ToyStore2021Model.FK_dbo_Comment_dbo_Member_MemberID" FromRole="Member" ToRole="Comment" />
-          <NavigationProperty Name="MemberCategory" Relationship="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="Member" ToRole="MemberCategory" />
+          <NavigationProperty Name="MemberType" Relationship="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="Member" ToRole="MemberType" />
           <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Member_MemberID" FromRole="Member" ToRole="ProductViewed" />
           <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Member_MemberID" FromRole="Member" ToRole="QA" />
           <NavigationProperty Name="Ratings" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_Member_MemberID" FromRole="Member" ToRole="Rating" />
           <NavigationProperty Name="MemberDiscountCodes" Relationship="ToyStore2021Model.FK_MemberDiscountCode_Member" FromRole="Member" ToRole="MemberDiscountCode" />
-        </EntityType>
-        <EntityType Name="MemberCategory">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customers" Relationship="ToyStore2021Model.FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID" FromRole="MemberCategory" ToRole="Customer" />
-          <NavigationProperty Name="Members" Relationship="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="MemberCategory" ToRole="Member" />
         </EntityType>
         <EntityType Name="MemberDiscountCode">
           <Key>
@@ -1299,6 +1278,14 @@
           <Property Name="DiscountCodeDetailID" Type="Int32" />
           <NavigationProperty Name="DiscountCodeDetail" Relationship="ToyStore2021Model.FK_MemberDiscountCode_DiscountCodeDetail" FromRole="MemberDiscountCode" ToRole="DiscountCodeDetail" />
           <NavigationProperty Name="Member" Relationship="ToyStore2021Model.FK_MemberDiscountCode_Member" FromRole="MemberDiscountCode" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="MemberType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Members" Relationship="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="MemberType" ToRole="Member" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1454,7 +1441,6 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
           <Property Name="NameDisplay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Decentralizations" Relationship="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID" FromRole="Role" ToRole="Decentralization" />
         </EntityType>
@@ -1480,6 +1466,16 @@
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" FromRole="Supplier" ToRole="ImportCoupon" />
           <NavigationProperty Name="Products" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Supplier_SupplierID" FromRole="Supplier" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_dbo_Products_dbo_Ages_AgeID">
           <End Type="ToyStore2021Model.Age" Role="Age" Multiplicity="1">
@@ -1548,20 +1544,6 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Customer_dbo_MemberCategory_MemberCategoryID">
-          <End Type="ToyStore2021Model.MemberCategory" Role="MemberCategory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.Customer" Role="Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MemberCategory">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="MemberCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1750,16 +1732,16 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-          <End Type="ToyStore2021Model.MemberCategory" Role="MemberCategory" Multiplicity="1">
+          <End Type="ToyStore2021Model.MemberType" Role="MemberType" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Type="ToyStore2021Model.Member" Role="Member" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MemberCategory">
+            <Principal Role="MemberType">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Member">
-              <PropertyRef Name="MemberCategoryID" />
+              <PropertyRef Name="MemberTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1994,7 +1976,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="ToyStore2021Model.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="MemberCategoryID" ColumnName="MemberCategoryID" />
+                <ScalarProperty Name="IsMember" ColumnName="IsMember" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -2098,15 +2080,7 @@
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="MemberCategoryID" ColumnName="MemberCategoryID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MemberCategories">
-            <EntityTypeMapping TypeName="ToyStore2021Model.MemberCategory">
-              <MappingFragment StoreEntitySet="MemberCategory">
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MemberTypeID" ColumnName="MemberTypeID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2116,6 +2090,14 @@
               <MappingFragment StoreEntitySet="MemberDiscountCode">
                 <ScalarProperty Name="DiscountCodeDetailID" ColumnName="DiscountCodeDetailID" />
                 <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberTypes">
+            <EntityTypeMapping TypeName="ToyStore2021Model.MemberType">
+              <MappingFragment StoreEntitySet="MemberType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2254,7 +2236,6 @@
             <EntityTypeMapping TypeName="ToyStore2021Model.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="NameDisplay" ColumnName="NameDisplay" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -2279,6 +2260,17 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ToyStore2021Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

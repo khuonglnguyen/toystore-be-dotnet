@@ -276,7 +276,7 @@ namespace ToyStore.Controllers
             {
                 //Insert customer into DB
                 customerNew = customer;
-                customerNew.MemberCategoryID = 1;
+                customerNew.IsMember = false;
                 _customerService.AddCustomer(customerNew);
             }
             else
@@ -294,7 +294,7 @@ namespace ToyStore.Controllers
                     customerNew.Address = member.Address;
                     customerNew.Email = member.Email;
                     customerNew.PhoneNumber = member.PhoneNumber;
-                    customerNew.MemberCategoryID = member.MemberCategoryID;
+                    customerNew.IsMember = true;
                     _customerService.AddCustomer(customerNew);
                 }
             }
