@@ -20,6 +20,13 @@
     </div>
     <div class="ofr">
         <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p><br />
-        <p><span class="item_price">@Model.PromotionPrice.ToString("#,##")₫</span></p>
+        @if (Model.Discount > 0)
+        {
+            <p><span class="item_price">@Model.PromotionPrice.ToString("#,##")₫</span></p>
+        }
+        else
+        {
+            <p class="pric1"><del>0</del></p><br />
+        }
     </div>
 </div>
