@@ -260,7 +260,7 @@ namespace ToyStore.Controllers
             ViewBag.TotalQuantity = GetTotalQuanity();
             return PartialView("CheckoutPartial");
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult AddOrder(Customer customer, int NumberDiscountPass=0, string CodePass="")
         {
             //Check null session cart
@@ -341,8 +341,11 @@ namespace ToyStore.Controllers
             {
                 _orderService.UpdateTotal(order.ID, sumtotal);
             }
-            //Set discountcode used
-            _discountCodeDetailService.Used(CodePass);
+            if (CodePass != "")
+            {
+                //Set discountcode used
+                _discountCodeDetailService.Used(CodePass);
+            }
             Session["Code"] = null;
             Session["num"] = null;
             Session["Cart"] = null;

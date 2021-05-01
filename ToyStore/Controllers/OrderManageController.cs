@@ -143,20 +143,20 @@ namespace ToyStore.Controllers
             smtp.EnableSsl = true;
             smtp.Send(mail);
         }
-        [HttpGet]
-        public ActionResult Received(int ID)
-        {
-            Order order = _orderService.GetByID(ID);
-            order.IsReceived = true;
-            order.IsPaid = true;
-            _orderService.Update(order);
-            IEnumerable<OrderDetail> orderDetail = _orderDetailService.GetByOrderID(order.ID);
-            foreach (var item in orderDetail)
-            {
-                _productService.UpdateQuantity(item.ProductID, item.Quantity);
-                _productService.UpdatePurchasedCount(item.ProductID, item.Quantity);
-            }
-            return RedirectToAction("Index", "Home");
-        }
+        //[HttpGet]
+        //public ActionResult Received(int ID)
+        //{
+        //    Order order = _orderService.GetByID(ID);
+        //    order.IsReceived = true;
+        //    order.IsPaid = true;
+        //    _orderService.Update(order);
+        //    IEnumerable<OrderDetail> orderDetail = _orderDetailService.GetByOrderID(order.ID);
+        //    foreach (var item in orderDetail)
+        //    {
+        //        _productService.UpdateQuantity(item.ProductID, item.Quantity);
+        //        _productService.UpdatePurchasedCount(item.ProductID, item.Quantity);
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
     }
 }

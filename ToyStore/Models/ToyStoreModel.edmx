@@ -144,6 +144,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
           <Property Name="Capcha" Type="nvarchar(max)" />
+          <Property Name="AmountPurchased" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="MemberDiscountCode">
           <Key>
@@ -1261,6 +1262,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="Capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AmountPurchased" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Carts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_Member_MemberID" FromRole="Member" ToRole="Cart" />
           <NavigationProperty Name="Comments" Relationship="ToyStore2021Model.FK_dbo_Comment_dbo_Member_MemberID" FromRole="Member" ToRole="Comment" />
           <NavigationProperty Name="MemberType" Relationship="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="Member" ToRole="MemberType" />
@@ -2072,6 +2074,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="ToyStore2021Model.Member">
               <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="AmountPurchased" ColumnName="AmountPurchased" />
                 <ScalarProperty Name="Capcha" ColumnName="Capcha" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />

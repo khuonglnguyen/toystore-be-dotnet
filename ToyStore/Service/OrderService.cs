@@ -106,6 +106,7 @@ namespace ToyStore.Service
             {
                 Product product = context.ProductRepository.GetDataByID(item.ProductID);
                 product.PurchasedCount += item.Quantity;
+                product.Quantity -= item.Quantity;
                 context.ProductRepository.Update(product);
             }
             return order;

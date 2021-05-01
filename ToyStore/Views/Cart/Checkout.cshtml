@@ -146,7 +146,7 @@
                     </div>
                     <div class="widget-shadow">
                         <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
-                            @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Get))
+                            @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Post))
                             {
                                 <label>Họ tên</label>
                                 <input type="text" class="user" name="FullName" value="@Member.FullName" readonly>

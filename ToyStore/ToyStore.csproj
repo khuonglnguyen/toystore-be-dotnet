@@ -603,6 +603,7 @@
     <Content Include="Views\DiscountCodeManage\DiscountCodePartial.cshtml" />
     <Content Include="Views\StatisticManage\Statistic.cshtml" />
     <Content Include="Views\StatisticManage\StatisticStocking.cshtml" />
+    <Content Include="Views\StatisticManage\StatisticMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

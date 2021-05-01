@@ -161,6 +161,13 @@ namespace ToyStore.Controllers
         public ActionResult Received(int OrderID)
         {
             _orderService.Received(OrderID);
+
+            Member member = Session["Member"] as Member;
+            //Update AmountPurchased for member
+            if (member!=null)
+            {
+                _memberService.UpdateAmountPurchased(member.ID, _orderService.GetByID(OrderID).Total.Value);
+            }    
             return RedirectToAction("OrderDetail",new { ID =OrderID});
         }
     }
