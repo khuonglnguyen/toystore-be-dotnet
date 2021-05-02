@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using ToyStore.Data;
@@ -24,6 +25,7 @@ namespace ToyStore.Service
         int GetTotalOrder();
         void Update(Order order);
         void UpdateTotal(int OrderID, decimal Total);
+        IEnumerable<Order> GetListOrderStatistic(DateTime from, DateTime to);
     }
     public class OrderService : IOrderService 
     {
@@ -126,6 +128,22 @@ namespace ToyStore.Service
             Order order = context.OrderRepository.GetDataByID(OrderID);
             order.Total = Total;
             context.OrderRepository.Update(order);
+        }
+
+        public IEnumerable<Order> GetListOrderStatistic(DateTime from, DateTime to)
+        {
+            IEnumerable<OrderDetail> orderDetails = context.OrderDetailRepository.GetAllData(x => DbFunctions.TruncateTime(x.Order.DateOrder) >= from.Date && DbFunctions.TruncateTime(x.Order.DateOrder) <= to.Date);
+
+            List<int> OrderIDs = new List<int>();
+            foreach (var item in orderDetails)
+            {
+                OrderIDs.Add(item.OrderID);
+            }
+            if (OrderIDs.Count() > 0)
+            {
+                return context.OrderRepository.GetAllData(x => x.IsReceived == true && OrderIDs.Contains(x.ID)).OrderByDescending(x => x.Total);
+            }
+            return null;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using ToyStore.Data;
@@ -11,6 +12,7 @@ namespace ToyStore.Service
     {
         int GetSum();
         void AddCount(DateTime Date);
+        IEnumerable<AccessTimesCount> GetListAccessTimeCountStatistic(DateTime from, DateTime to);
     }
     public class AccessTimesCountService : IAccessTimesCountService
     {
@@ -27,6 +29,11 @@ namespace ToyStore.Service
             context.AccessTimesCountRepository.Update(accessTimesCount);
         }
 
+        public IEnumerable<AccessTimesCount> GetListAccessTimeCountStatistic(DateTime from, DateTime to)
+        {
+            IEnumerable<AccessTimesCount> accessTimesCounts = context.AccessTimesCountRepository.GetAllData(x => DbFunctions.TruncateTime(x.Date) >= from.Date && DbFunctions.TruncateTime(x.Date) <= to.Date);
+            return accessTimesCounts;
+        }
         public int GetSum()
         {
             return context.AccessTimesCountRepository.GetAllData().Sum(x => x.AccessTimes);

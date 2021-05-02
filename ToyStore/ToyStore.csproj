@@ -604,6 +604,10 @@
     <Content Include="Views\StatisticManage\Statistic.cshtml" />
     <Content Include="Views\StatisticManage\StatisticStocking.cshtml" />
     <Content Include="Views\StatisticManage\StatisticMember.cshtml" />
+    <Content Include="Views\StatisticManage\StatisticSupplier.cshtml" />
+    <Content Include="Views\StatisticManage\StatisticProductSold.cshtml" />
+    <Content Include="Views\StatisticManage\StatisticOrder.cshtml" />
+    <Content Include="Views\StatisticManage\StatisticAccessTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

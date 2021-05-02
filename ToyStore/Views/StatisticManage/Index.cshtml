@@ -49,17 +49,16 @@
             <div class="modal-body">
                 @using (Html.BeginForm("ImportProductBySupplierID", "ImportProductManage", FormMethod.Get))
                 {
-                <div class="form-group">
-                    <label>Hình Thức Thống Kê:</label>
+                    <div class="form-group">
+                        <label>Hình Thức Thống Kê:</label>
                         <br />
                         <a href="@Url.Action("StatisticStocking","StatisticManage")" class="btn btn-default">Tồn kho</a><br />
                         <a href="@Url.Action("StatisticMember","StatisticManage")" class="btn btn-default">Khách hàng tiềm năng</a><br />
-                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Nhà cung cấp tốt nhất</a><br />
-                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Sản phẩm bán chạy</a><br />
-                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Đơn đặt hàng</a><br />
-                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Từ khóa tìm kiếm hàng đầu</a><br />
-                        <a href="@Url.Action("Statistic","StatisticManage")" class="btn btn-default">Lượt truy cập</a>
-                </div>
+                        <a href="@Url.Action("StatisticSupplier","StatisticManage")" class="btn btn-default">Nhà cung cấp tốt nhất</a><br />
+                        <a href="@Url.Action("StatisticProductSold","StatisticManage",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-default">Sản phẩm bán chạy</a><br />
+                        <a href="@Url.Action("StatisticOrder","StatisticManage",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-default">Đơn đặt hàng hoàn thành</a><br />
+                        <a href="@Url.Action("StatisticAccessTime","StatisticManage",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-default">Lượt truy cập</a>
+                    </div>
                 }
             </div>
         </div>

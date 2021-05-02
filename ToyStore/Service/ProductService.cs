@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -32,6 +33,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListRandom();
         IEnumerable<Product> GetProductListAlmostOver();
         IEnumerable<Product> GetProductListStocking();
+        IEnumerable<Product> GetProductListSold(DateTime from, DateTime to);
         Product GetByID(int ID);
         void UpdateQuantity(int ID, int Quantity);
         void UpdatePurchasedCount(int ID, int PurchasedCount);
@@ -264,7 +266,23 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductListStocking()
         {
-            return context.ProductRepository.GetAllData(x => x.Quantity > 0 && x.IsActive==true);
+            return context.ProductRepository.GetAllData(x => x.Quantity > 0 && x.IsActive == true);
+        }
+
+        public IEnumerable<Product> GetProductListSold(DateTime from, DateTime to)
+        {
+            IEnumerable<OrderDetail> orderDetails = context.OrderDetailRepository.GetAllData(x => DbFunctions.TruncateTime(x.Order.DateOrder) >= from.Date && DbFunctions.TruncateTime(x.Order.DateOrder) <= to.Date);
+
+            List<int> ProductIDs = new List<int>();
+            foreach (var item in orderDetails)
+            {
+                ProductIDs.Add(item.ProductID);
+            }
+            if (ProductIDs.Count() > 0)
+            {
+                return context.ProductRepository.GetAllData(x => x.PurchasedCount > 0 && ProductIDs.Contains(x.ID)).OrderByDescending(x=>x.PurchasedCount);
+            }
+            return null;
         }
     }
 }

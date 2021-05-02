@@ -20,10 +20,15 @@ namespace ToyStore.Service
             this.context = repositoryContext;
         }
 
-        public ImportCouponDetail AddImportCouponDetail(ImportCouponDetail import)
+        public ImportCouponDetail AddImportCouponDetail(ImportCouponDetail importCouponDetail)
         {
-            context.ImportCouponDetailRepository.Insert(import);
-            return import;
+            context.ImportCouponDetailRepository.Insert(importCouponDetail);
+            //Update total amount
+            ImportCoupon importCoupon = context.ImportCouponRepository.GetDataByID(importCouponDetail.ImportCouponID);
+            Supplier supplier = context.SupplierRepository.GetDataByID(importCoupon.SupplierID);
+            supplier.TotalAmount += importCouponDetail.Price * importCouponDetail.Quantity;
+            context.SupplierRepository.Update(supplier);
+            return importCouponDetail;
         }
 
         public IEnumerable<ImportCouponDetail> GetByImportCouponID(int ID)

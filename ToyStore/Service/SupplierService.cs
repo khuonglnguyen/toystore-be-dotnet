@@ -55,7 +55,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Supplier> GetSupplierList()
         {
-            IEnumerable<Supplier> listSupplier = this.context.SupplierRepository.GetAllData();
+            IEnumerable<Supplier> listSupplier = this.context.SupplierRepository.GetAllData().OrderByDescending(x=>x.TotalAmount);
             return listSupplier;
         }
 
