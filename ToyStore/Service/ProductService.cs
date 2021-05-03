@@ -37,7 +37,7 @@ namespace ToyStore.Service
         Product GetByID(int ID);
         void UpdateQuantity(int ID, int Quantity);
         void UpdatePurchasedCount(int ID, int PurchasedCount);
-        IEnumerable<Product> GetProductListName(string keyword);
+        List<string> GetProductListName(string keyword);
         void UpdateProduct(Product product);
         void DeleteProduct(Product product);
         void ActiveProduct(Product product);
@@ -74,10 +74,15 @@ namespace ToyStore.Service
             return this.context.ProductRepository.GetDataByID(ID);
         }
 
-        public IEnumerable<Product> GetProductListName(string keyword)
+        public List<string> GetProductListName(string keyword)
         {
             IEnumerable<Product> listProductName = this.context.ProductRepository.GetAllData(x => x.Name.Contains(keyword) && x.IsActive == true);
-            return listProductName;
+            List<string> names = new List<string>();
+            foreach (var item in listProductName)
+            {
+                names.Add(item.Name);
+            }
+            return names;
         }
 
         public IEnumerable<Product> GetProductList()

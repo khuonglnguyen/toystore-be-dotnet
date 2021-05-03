@@ -12,6 +12,29 @@
 
 <script>
     $(document).ready(function () {
+        $(".ckb").change(function () {
+            var id = $(this).prop("value");
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url: '/ProductManage/Active',
+                    data: {
+                        id: id
+                    },
+                    type: 'GET',
+                    dataType: 'json'
+                });
+            }
+            else {
+                $.ajax({
+                    url: '/ProductManage/Block',
+                    data: {
+                        id: id
+                    },
+                    type: 'GET',
+                    dataType: 'json'
+                });
+            }
+        });
         $('#btnAddNew').off('click').on('click', function () {
             $('#modalAdd').modal('show');
         });
@@ -69,7 +92,7 @@
                     data: { Prefix: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name };
+                            return { label: item, value: item };
                         }))
 
                     }
@@ -78,22 +101,6 @@
             messages: {
                 noResults: "", results: ""
             }
-        });
-        $(document).on('click', '.btnOpen', function () {
-            var id = $(this).attr('id');
-            var row = $(this).attr('value');
-            $(this).attr("class", "btn btn-link btnBlock");
-            $(this).attr("data-ajax-update", "#DivActive" + row);
-            $(this).attr("href", "/ProductManage/Block/" + id + "?row=" + row + "&amp;value=" + id + "\"");
-            $(this).html("Khóa");
-        });
-        $(document).on('click', '.btnBlock', function () {
-            var id = $(this).attr('id');
-            var row = $(this).attr('value');
-            $(this).attr("class", "btn btn-link btnOpen");
-            $(this).attr("data-ajax-update", "#DivActive" + row);
-            $(this).attr("href", "/ProductManage/Active/" + id + "?row=" + row + "&amp;value=" + id + "\"");
-            $(this).html("Mở");
         });
         $('#btnDeleteMulti').hide();
         $('#checkAll').click(function () {
@@ -146,7 +153,7 @@
                             Hình ảnh
                         </th>
                         <th>
-                            Trạng thái
+                            Kích hoạt
                         </th>
                         <th>
                             ngày cập nhật cuối
@@ -155,9 +162,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int counter1 = 0;
-                    }
                     @foreach (var item in Model)
                     {
                         @Html.Hidden(item.ID.ToString())
@@ -172,36 +176,26 @@
                                 <img src="@Url.Content("~/Content/images/" + item.Image1)" width="100" height="100" />
                             </td>
                             <td>
-                                <div id="DivActive@(counter1)">
-                                    @if (item.IsActive == true)
-                                    {
-                                        <span class="label label-success">Kích hoạt</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger">Khóa</span>
-                                    }
-                                </div>
+                                @if (item.IsActive == true)
+                                {
+                                    <label class="switch block">
+                                        <input type="checkbox" checked class="ckb" value="@item.ID">
+                                        <span class="slider round"></span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="switch active">
+                                        <input type="checkbox" class="ckb" value="@item.ID">
+                                        <span class="slider round"></span>
+                                    </label>
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.LastUpdatedDate)
                             </td>
-                            <td>
-                                @*@Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })*@
-                                <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
-                                @if (item.IsActive == true)
-                                {
-                                    @Ajax.ActionLink("Khóa", "Block", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
-                                }
-                                else
-                                {
-                                    @Ajax.ActionLink("Mở", "Active", "ProductManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnOpen", data = counter1, id = item.ID, value = counter1 })
-                                }
-                            </td>
                         </tr>
-                        @(counter1++)
                     }
-                    @(counter1 = 0)
                 </tbody>
             </table>
             @*}*@
@@ -313,10 +307,10 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Edit", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
-                    <input type="text" name="ID" id="ID" hidden/>
-                    <input type="text" name="ViewCount" id="ViewCount" hidden/>
-                    <input type="text" name="PurchasedCount" id="PurchasedCount" hidden/>
-                    <input type="text" name="CommentCount" id="CommentCount" hidden/>
+                    <input type="text" name="ID" id="ID" hidden />
+                    <input type="text" name="ViewCount" id="ViewCount" hidden />
+                    <input type="text" name="PurchasedCount" id="PurchasedCount" hidden />
+                    <input type="text" name="CommentCount" id="CommentCount" hidden />
                     <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
                     <div class="form-group">
                         <label for="Name">Tên sản phẩm:</label>

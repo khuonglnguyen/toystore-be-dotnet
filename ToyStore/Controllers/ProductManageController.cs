@@ -78,8 +78,8 @@ namespace ToyStore.Controllers
         [HttpPost]
         public JsonResult ListName(string Prefix)
         {
-            var listProductListName = _productService.GetProductListName(Prefix).ToList();
-            return Json(listProductListName, JsonRequestBehavior.AllowGet);
+            List<string> names = _productService.GetProductListName(Prefix).ToList();
+            return Json(names, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult List(string keyword)
@@ -310,7 +310,7 @@ namespace ToyStore.Controllers
             return RedirectToAction("List", new { page = page });
         }
         [HttpGet]
-        public ActionResult Block(int id, int row)
+        public ActionResult Block(int id)
         {
             if (Session["Emloyee"] == null)
             {
@@ -332,13 +332,13 @@ namespace ToyStore.Controllers
             }
             //Delete productCategory
             _productService.DeleteProduct(product);
-            //Set TempData for checking in view to show swal
-            TempData["block"] = "Success";
-            ViewBag.Row = row;
-            return PartialView("ProductActivePartial", _productService.GetByID(id));
+            return Json(new
+            {
+                status = true
+            }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public ActionResult Active(int id, int row)
+        public ActionResult Active(int id)
         {
             if (Session["Emloyee"] == null)
             {
@@ -360,11 +360,10 @@ namespace ToyStore.Controllers
             }
             //Active productCategory
             _productService.ActiveProduct(product);
-            //Set TempData for checking in view to show swal
-            TempData["acitve"] = "Success";
-            //Return RedirectToAction
-            ViewBag.Row = row;
-            return PartialView("ProductActivePartial", _productService.GetByID(id));
+            return Json(new
+            {
+                status = true
+            }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult DeleteMulti(FormCollection formCollection)
