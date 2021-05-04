@@ -1,7 +1,10 @@
 ﻿using ClosedXML.Excel;
+using Microsoft.Reporting.WebForms;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -39,27 +42,57 @@ namespace ToyStore.Controllers
             return View(products);
         }
         [HttpGet]
-        public ActionResult DownloadExcelStatisticStocking()
+        public void DownloadExcelStatisticStocking()
         {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+
             IEnumerable<Product> products = _productService.GetProductListStocking();
-            DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Mã SP"),
-                                            new DataColumn("Tên SP"),
-                                            new DataColumn("Số lượng tồn")
-                                            });
-            foreach (var product in products)
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.FullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã SP";
+            ws.Cells["B6"].Value = "Tên SP";
+            ws.Cells["C6"].Value = "Số lượng tồn";
+
+            int rowStart = 7;
+            foreach (var item in products)
             {
-                dt.Rows.Add(product.ID, product.Name, product.Quantity);
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Name;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.Quantity;
+                rowStart++;
             }
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Sản phẩm tồn kho.xlsx");
-                }
-            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "ExcelReport.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+            //DataTable dt = new DataTable("Grid");
+            //dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Mã SP"),
+            //                                new DataColumn("Tên SP"),
+            //                                new DataColumn("Số lượng tồn")
+            //                                });
+            //foreach (var product in products)
+            //{
+            //    dt.Rows.Add(product.ID, product.Name, product.Quantity);
+            //}
+            //using (XLWorkbook wb = new XLWorkbook())
+            //{
+            //    wb.Worksheets.Add(dt);
+            //    using (MemoryStream stream = new MemoryStream())
+            //    {
+            //        wb.SaveAs(stream);
+            //        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Sản phẩm tồn kho.xlsx");
+            //    }
+            //}
         }
         [HttpGet]
         public ActionResult StatisticMember()

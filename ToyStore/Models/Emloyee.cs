@@ -21,7 +21,6 @@ namespace ToyStore.Models
             this.DiscountCodes = new HashSet<DiscountCode>();
             this.ImportCoupons = new HashSet<ImportCoupon>();
             this.QAs = new HashSet<QA>();
-            this.Statistics = new HashSet<Statistic>();
         }
     
         public int ID { get; set; }
@@ -43,7 +42,5 @@ namespace ToyStore.Models
         public virtual ICollection<ImportCoupon> ImportCoupons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QA> QAs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Statistic> Statistics { get; set; }
     }
 }
