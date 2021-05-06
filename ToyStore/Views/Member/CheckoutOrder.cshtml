@@ -1,12 +1,34 @@
-﻿@model PagedList.IPagedList<ToyStore.Models.Order>
-@using PagedList.Mvc;
+﻿@model IEnumerable<ToyStore.Models.Order>
 @{
     ViewBag.Title = "Đơn Đặt Hàng";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 @{
     IEnumerable<ToyStore.Models.Member> customers = ViewBag.CustomerList as IEnumerable<ToyStore.Models.Member>;
+    IEnumerable<ToyStore.Models.Rating> ratings = ViewBag.ProductRating as IEnumerable<ToyStore.Models.Rating>;
 }
+<script>
+    function openOrder(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
 <!--breadcrumbs-->
 <div class="breadcrumbs">
     <div class="container">
@@ -16,94 +38,333 @@
         </ol>
     </div>
 </div>
-<!--//breadcrumbs-->
-@if (Model != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Mã DĐH
-                </th>
-                <th>
-                    Ngày đặt
-                </th>
-                <th>
-                    Ngày giao dự kiến
-                </th>
-                <th>
-                    Ưu đãi
-                </th>
-                <th>
-                    Duyệt
-                </th>
-                <th>
-                    Thanh toán
-                </th>
-                <th>
-                    Đã nhận
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<!-- Tab links -->
+<div class="tab">
+    <button class="tablinks" onclick="openOrder(event, 'ChuaDuyet')">Chưa duyệt</button>
+    <button class="tablinks" onclick="openOrder(event, 'DaDuyet')">Đã duyệt</button>
+    <button class="tablinks" onclick="openOrder(event, 'DaNhan')">Đã nhận</button>
+    <button class="tablinks" onclick="openOrder(event, 'DanhGia')">Đánh giá</button>
+</div>
+<!-- Tab content -->
+<div id="ChuaDuyet" class="tabcontent">
+    @if (Model.Where(x => x.IsApproved == false).Count() > 0)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateOrder)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateShip)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Offer)
-                    </td>
-                    <td>
-                        @if (item.IsApproved == true)
-                        {
-                            <span class="label label-success">Đã duyệt</span>
-                        }
-                        else
-                        {
-                            <span class="label label-warning">Chưa duyệt</span>
-                        }
-                    </td>
-                    <td>
-                        @if (item.IsPaid == true)
-                        {
-                            <span class="label label-success">Đã thanh toán</span>
-                        }
-                        else
-                        {
-                            <span class="label label-danger">Chưa thanh toán</span>
-                        }
-                    </td>
-                    <td>
-                        @if (item.IsReceived == true)
-                        {
-                            <span class="label label-success">Đã nhận</span>
-                        }
-                        else
-                        {
-                            <span class="label label-danger">Chưa nhận</span>
-                        }
-                    </td>
-                    <td>
-                        @Html.ActionLink("Chi tiết", "OrderDetail", new { ID = item.ID })
-                    </td>
+                    <th>
+                        Mã DĐH
+                    </th>
+                    <th>
+                        Ngày đặt
+                    </th>
+                    <th>
+                        Ngày giao dự kiến
+                    </th>
+                    <th>
+                        Ưu đãi
+                    </th>
+                    <th>
+                        Duyệt
+                    </th>
+                    <th>
+                        Thanh toán
+                    </th>
+                    <th>
+                        Đã nhận
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <br />
-    <div id='Paging' style="text-align: center">
-        @Html.PagedListPager(Model, page => Url.Action("CheckoutOrder", new { page }))
-    </div>
-}
-else
-{
-    <p>Bạn chưa có đơn hàng</p>
-}
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.IsApproved == false))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateShip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Offer)
+                        </td>
+                        <td>
+                            @if (item.IsApproved == true)
+                            {
+                                <span class="label label-success">Đã duyệt</span>
+                            }
+                            else
+                            {
+                                <span class="label label-warning">Chưa duyệt</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsPaid == true)
+                            {
+                                <span class="label label-success">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Chưa thanh toán</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsReceived == true)
+                            {
+                                <span class="label label-success">Đã nhận</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Chưa nhận</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Chi tiết", "OrderDetail", new { ID = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Bạn chưa có đơn hàng</p>
+    }
+</div>
+<div id="DaDuyet" class="tabcontent">
+    @if (Model.Where(x => x.IsApproved == true && x.IsDelivere == false).Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Mã DĐH
+                    </th>
+                    <th>
+                        Ngày đặt
+                    </th>
+                    <th>
+                        Ngày giao dự kiến
+                    </th>
+                    <th>
+                        Ưu đãi
+                    </th>
+                    <th>
+                        Duyệt
+                    </th>
+                    <th>
+                        Thanh toán
+                    </th>
+                    <th>
+                        Đã nhận
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.IsApproved == true && x.IsDelivere == false))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateShip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Offer)
+                        </td>
+                        <td>
+                            @if (item.IsApproved == true)
+                            {
+                                <span class="label label-success">Đã duyệt</span>
+                            }
+                            else
+                            {
+                                <span class="label label-warning">Chưa duyệt</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsPaid == true)
+                            {
+                                <span class="label label-success">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Chưa thanh toán</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsReceived == true)
+                            {
+                                <span class="label label-success">Đã nhận</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Chưa nhận</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Chi tiết", "OrderDetail", new { ID = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Bạn chưa có đơn hàng</p>
+    }
+</div>
+<div id="DaNhan" class="tabcontent">
+    @if (Model.Where(x => x.IsReceived == true).Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Mã DĐH
+                    </th>
+                    <th>
+                        Ngày đặt
+                    </th>
+                    <th>
+                        Ngày giao dự kiến
+                    </th>
+                    <th>
+                        Ưu đãi
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.IsReceived == true))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateShip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Offer)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Chi tiết", "OrderDetail", new { ID = item.ID }, new { @class = "btn btn-info" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Bạn chưa có đơn hàng</p>
+    }
+</div>
+<div id="DanhGia" class="tabcontent">
+    @if (Model.Where(x => x.IsReceived == true).Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Tên SP
+                    </th>
+                    <th>
+                        Hình ảnh
+                    </th>
+                    <th>
+                        Nội dung
+                    </th>
+                    <th>
+                        Sao
+                    </th>
+                    <th>
+                        Trạng thái
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{bool status = false; }
+                @foreach (var item in ratings)
+                {
+                    if (status == false)
+                    {
+                        foreach (var order in Model)
+                        {
+                            foreach (var orderDetail in order.OrderDetails)
+                            {
+                                if (orderDetail.IsRating == false)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => orderDetail.Product.Name)
+                                        </td>
+                                        <td>
+                                            <img src="@Url.Content("~/Content/images/"+orderDetail.Product.Image1)" style="height:100px;width:100px" class="img-responsive" alt="item" />
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <span class="label label-warning">Chưa đánh giá</span>
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Đánh giá", "OrderDetail", new { ID = item.ID }, new { @class = "btn btn-info" })
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom:1px solid silver">
+                                        <td colspan="100"></td>
+                                    </tr>
+                                }
+                            }
+                            status = true;
+                        }
+                    }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td>
+                            <img src="@Url.Content("~/Content/images/"+item.Product.Image1)" style="height:100px;width:100px" class="img-responsive" alt="item" />
+                        </td>
+                        <td>
+                            <span class="label label-primary">@item.Content</span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Star)
+                        </td>
+                        <td>
+                            <span class="label label-success">Đã đánh giá</span>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Sửa nội dung", "OrderDetail", new { ID = item.ID }, new { @class = "btn btn-default" })
+                        </td>
+                    </tr>
+
+                    <tr style="border-bottom:1px solid silver">
+                        <td colspan="100"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Bạn chưa có đơn hàng</p>
+    }
+</div>

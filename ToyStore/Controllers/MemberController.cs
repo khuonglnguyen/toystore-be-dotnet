@@ -18,13 +18,15 @@ namespace ToyStore.Controllers
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
         private IProductService _productService;
-        public MemberController(IMemberService memberService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService)
+        private IRatingService _ratingService;
+        public MemberController(IMemberService memberService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService)
         {
             _memberService = memberService;
             _orderService = orderService;
             _orderDetailService = orderDetailService;
             _customerService = customerService;
             _productService = productService;
+            _ratingService = ratingService;
         }
         [HttpGet]
         public ActionResult ConfirmEmail(int ID)
@@ -108,9 +110,9 @@ namespace ToyStore.Controllers
             if (customer != null)
             {
                 var orders = _orderService.GetByCustomerID(customer.ID);
-                int pageSize = 10;
-                PagedList<Order> listOrderPaging = new PagedList<Order>(orders, page, pageSize);
-                return View(listOrderPaging);
+                Member member = Session["Member"] as Member;
+                ViewBag.ProductRating = _ratingService.GetListAllRating().Where(x => x.MemberID == member.ID);
+                return View(orders);
             }
             return View();
         }

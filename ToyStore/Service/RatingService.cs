@@ -12,6 +12,7 @@ namespace ToyStore.Service
         void AddRating(Rating rating);
         int GetRating(int ProductID);
         IEnumerable<Rating> GetListRating(int ProductID);
+        IEnumerable<Rating> GetListAllRating();
     }
     public class RatingService : IRatingService
     {
@@ -23,6 +24,11 @@ namespace ToyStore.Service
         public void AddRating(Rating rating)
         {
             context.RatingRepository.Insert(rating);
+        }
+
+        public IEnumerable<Rating> GetListAllRating()
+        {
+            return context.RatingRepository.GetAllData();
         }
 
         public IEnumerable<Rating> GetListRating(int ProductID)

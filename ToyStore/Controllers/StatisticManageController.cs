@@ -75,24 +75,6 @@ namespace ToyStore.Controllers
             Response.AddHeader("content-disposition", "attachment: filename=" + "ExcelReport.xlsx");
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
-            //DataTable dt = new DataTable("Grid");
-            //dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Mã SP"),
-            //                                new DataColumn("Tên SP"),
-            //                                new DataColumn("Số lượng tồn")
-            //                                });
-            //foreach (var product in products)
-            //{
-            //    dt.Rows.Add(product.ID, product.Name, product.Quantity);
-            //}
-            //using (XLWorkbook wb = new XLWorkbook())
-            //{
-            //    wb.Worksheets.Add(dt);
-            //    using (MemoryStream stream = new MemoryStream())
-            //    {
-            //        wb.SaveAs(stream);
-            //        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Sản phẩm tồn kho.xlsx");
-            //    }
-            //}
         }
         [HttpGet]
         public ActionResult StatisticMember()
