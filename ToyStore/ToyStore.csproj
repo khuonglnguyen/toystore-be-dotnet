@@ -195,8 +195,8 @@
     <Compile Include="Controllers\ImportProductManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OrderManageController.cs" />
-    <Compile Include="Controllers\ProductCategoryManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductCategoryManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Controllers\QAManageController.cs" />
@@ -560,13 +560,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ProductCategoryManage\Edit.cshtml" />
     <Content Include="Views\Layout\AdminLayout.cshtml" />
-    <Content Include="Views\ProductCategoryManage\List.cshtml" />
-    <Content Include="Views\ProductCategoryManage\Index.cshtml" />
-    <Content Include="Views\ProductCategoryManage\Create.cshtml" />
     <Content Include="Views\Layout\HomeLayout.cshtml" />
-    <Content Include="Views\ProductManage\List.cshtml" />
     <Content Include="Views\Home\HeaderTopPartial.cshtml" />
     <Content Include="Views\Home\MenuPartial.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
@@ -627,6 +622,8 @@
     <Content Include="Views\StatisticManage\StatisticProductSold.cshtml" />
     <Content Include="Views\StatisticManage\StatisticOrder.cshtml" />
     <Content Include="Views\StatisticManage\StatisticAccessTime.cshtml" />
+    <Content Include="Views\ProductManage\Index.cshtml" />
+    <Content Include="Views\ProductCategoryManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

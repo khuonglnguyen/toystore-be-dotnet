@@ -2,7 +2,7 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -19,9 +19,7 @@
                     url: '/ProductManage/Active',
                     data: {
                         id: id
-                    },
-                    type: 'GET',
-                    dataType: 'json'
+                    }
                 });
             }
             else {
@@ -29,9 +27,7 @@
                     url: '/ProductManage/Block',
                     data: {
                         id: id
-                    },
-                    type: 'GET',
-                    dataType: 'json'
+                    }
                 });
             }
         });
@@ -194,6 +190,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.LastUpdatedDate)
                             </td>
+                            <td>
+                                <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -339,17 +338,17 @@
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 1:</label>
-                        <input type="text" class="form-control" name="Image1" id="TextImage1">
+                        <input type="text" class="form-control" name="Image1" id="TextImage1" readonly>
                         <input type="file" name="ImageUpload" id="Image1" />
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 2:</label>
-                        <input type="text" class="form-control" name="Image2" id="TextImage2">
+                        <input type="text" class="form-control" name="Image2" id="TextImage2" readonly>
                         <input type="file" name="ImageUpload" id="Image2" />
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 3:</label>
-                        <input type="text" class="form-control" name="Image3" id="TextImage3">
+                        <input type="text" class="form-control" name="Image3" id="TextImage3" readonly>
                         <input type="file" name="ImageUpload" id="Image3" />
                     </div>
                     <div class="form-group">

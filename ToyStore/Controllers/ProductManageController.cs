@@ -39,7 +39,7 @@ namespace ToyStore.Controllers
         #endregion
         // GET: Product
         [HttpGet]
-        public ActionResult List(int page = 1)
+        public ActionResult Index(int page = 1)
         {
             if (Session["Emloyee"] == null)
             {
@@ -61,6 +61,7 @@ namespace ToyStore.Controllers
             int pageSize = 5;
             //Get proudct category list
             var products = _productService.GetProductListForManage().OrderBy(x => x.Name);
+            ViewBag.Products = products;
             PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
             //Check null
             if (listProduct != null)
@@ -183,7 +184,7 @@ namespace ToyStore.Controllers
             //Create productCategory
             _productService.AddProduct(product);
             //Return view
-            return RedirectToAction("List", new { page = 1 });
+            return RedirectToAction("Index", new { page = 1 });
         }
         [HttpGet]
         public ActionResult Edit(int id)
@@ -307,63 +308,21 @@ namespace ToyStore.Controllers
             product.GenderID = GenderIDEdit;
             _productService.UpdateProduct(product);
             string Url = Request.Url.ToString();
-            return RedirectToAction("List", new { page = page });
+            return RedirectToAction("Index", new { page = page });
         }
-        [HttpGet]
-        public ActionResult Block(int id)
+        public void Block(int id)
         {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            //Check id null
-            if (id == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
             //Get productCategory by ID
             var product = _productService.GetByID(id);
-            //Check null
-            if (product == null)
-            {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             //Delete productCategory
             _productService.DeleteProduct(product);
-            return Json(new
-            {
-                status = true
-            }, JsonRequestBehavior.AllowGet);
         }
-        [HttpGet]
-        public ActionResult Active(int id)
+        public void Active(int id)
         {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            //Check id null
-            if (id == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
             //Get productCategory by ID
             var product = _productService.GetByID(id);
-            //Check null
-            if (product == null)
-            {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             //Active productCategory
             _productService.ActiveProduct(product);
-            return Json(new
-            {
-                status = true
-            }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult DeleteMulti(FormCollection formCollection)
@@ -376,7 +335,7 @@ namespace ToyStore.Controllers
             _productService.MultiDeleteProduct(Ids);
             //Set TempData for checking in view to show swal
             TempData["deleteMulti"] = "Success";
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
         public ActionResult ProductActivePartial(int ID)
         {
