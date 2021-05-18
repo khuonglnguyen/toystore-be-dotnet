@@ -13,13 +13,14 @@ namespace ToyStore.Controllers
 {
     public class MemberController : Controller
     {
-        private IMemberService _memberService;
-        private ICustomerService _customerService;
-        private IOrderService _orderService;
-        private IOrderDetailService _orderDetailService;
-        private IProductService _productService;
-        private IRatingService _ratingService;
-        public MemberController(IMemberService memberService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService)
+        IMemberService _memberService;
+        ICustomerService _customerService;
+        IOrderService _orderService;
+        IOrderDetailService _orderDetailService;
+        IProductService _productService;
+        IRatingService _ratingService;
+        IMemberDiscountCodeService _memberDiscountCodeService;
+        public MemberController(IMemberService memberService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService, IMemberDiscountCodeService memberDiscountCodeService)
         {
             _memberService = memberService;
             _orderService = orderService;
@@ -27,6 +28,7 @@ namespace ToyStore.Controllers
             _customerService = customerService;
             _productService = productService;
             _ratingService = ratingService;
+            _memberDiscountCodeService = memberDiscountCodeService;
         }
         [HttpGet]
         public ActionResult ConfirmEmail(int ID)
@@ -62,6 +64,8 @@ namespace ToyStore.Controllers
             if (member != null)
             {
                 ViewBag.Message = "EmailConfirmed";
+                //Gift
+                _memberDiscountCodeService.GiftForNewMember(member.ID);
                 return View();
             }
             ViewBag.Message = "Mã xác minh tài khoản không đúng";
@@ -75,6 +79,8 @@ namespace ToyStore.Controllers
             if (member != null)
             {
                 ViewBag.Message = "EmailConfirmed";
+                //Gift
+                _memberDiscountCodeService.GiftForNewMember(member.ID);
                 return View();
             }
             ViewBag.Message = "Mã xác minh tài khoản không đúng";
@@ -103,7 +109,7 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult CheckoutOrder(int ID, int page=1)
+        public ActionResult CheckoutOrder(int ID, int page = 1)
         {
             string Name = _memberService.GetByID(ID).FullName;
             Customer customer = _customerService.GetAll().FirstOrDefault(x => x.FullName.Contains(Name));
@@ -166,11 +172,11 @@ namespace ToyStore.Controllers
 
             Member member = Session["Member"] as Member;
             //Update AmountPurchased for member
-            if (member!=null)
+            if (member != null)
             {
                 _memberService.UpdateAmountPurchased(member.ID, _orderService.GetByID(OrderID).Total.Value);
-            }    
-            return RedirectToAction("OrderDetail",new { ID =OrderID});
+            }
+            return RedirectToAction("OrderDetail", new { ID = OrderID });
         }
     }
 }

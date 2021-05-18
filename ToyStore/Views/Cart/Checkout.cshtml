@@ -106,7 +106,7 @@
                         <div class="cart-item-info">
                             <h4><a href="single.html"> @item.Name </a></h4>
                             <ul class="qty">
-                                <li><p>Số lượng: @item.Quantity</p></li>
+                                <li><p>Số lượng:@item.Quantity</p></li>
                                 <li><p>Đơn giá: @item.Price.ToString("#,##")₫</p></li>
                                 <li><p>Thành tiền: @item.Total.ToString("#,##")₫</p></li>
                             </ul>
@@ -126,12 +126,16 @@
                             <h4>Đăng nhập để mua hàng nhanh chóng <br> Bạn chưa có tài khoản? <a href="@Url.Action("SignUp","Home")">  Đăng Ký Ngay »</a> </h4>
                         </div>
                         <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
-                            @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Get))
+                            @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Post))
                             {
-                                <input type="text" class="user" name="FullName" placeholder="Họ tên" required="">
-                                <input type="text" name="PhoneNumber" class="user" placeholder="Số điện thoại">
-                                <input type="text" name="Email" class="user" placeholder="Email">
-                                <input type="text" name="Address" class="user" placeholder="Địa chỉ nhận hàng">
+                                <input type="text" class="user" name="FullName" placeholder="Họ tên" required maxlength="50">
+                                <input type="text" name="PhoneNumber" class="user" placeholder="Số điện thoại" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 sô!">
+                                <input type="text" name="Email" class="user" placeholder="Email" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail của bạn (vd: abc@gmail.com)">
+                                <input type="text" name="Address" class="user" placeholder="Địa chỉ nhận hàng" required maxlength="200">
+                                <label>Mã giảm giá (nếu có)</label><br />
+                                <input type="button" value="Chọn mã Code" id="btnChoose" /><br />
+                                <label>Thành tiền</label>
+                                <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
                             }
                         </div>
@@ -173,7 +177,7 @@
                                     <label>Mã giảm giá (nếu có)</label><br />
                                     <input type="button" value="Chọn mã Code" id="btnChoose" /><br />
                                     <label>Thành tiền</label>
-                                    <input type="text" name="Address" class="user" value="@Cart.Sum(x=>x.Total).ToString("#,##")₫" readonly>
+                                    <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
                                 <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
                             }
@@ -216,7 +220,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Name">Số lượng:</label>
-                        <input type="number" class="form-control" name="Quantity" id="Quantity">
+                        <input type="number" class="form-control" name="Quantity" id="Quantity" min="1" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
@@ -239,19 +243,22 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Choose", "Cart", FormMethod.Post))
                 {
+                    if (memberDiscountCodes != null)
+                    {
+                        <div class="form-group">
+                            <label>Mã giảm giá của bạn:</label>
+                            @*@Html.DropDownList("Code", null, new { @class = "form-control" })*@
+                            <select class="form-control" name="Code">
+                                <option value="0">Chọn mã giảm giá</option>
+                                @foreach (var item in memberDiscountCodes)
+                                {
+                                    <option value="@item.DiscountCodeDetail.Code">Mã: @item.DiscountCodeDetail.Code (Giảm @item.DiscountCodeDetail.DiscountCode.NumberDiscount% - Ngày hết hạn: @item.DiscountCodeDetail.DiscountCode.ExpirationDate.Value.ToShortDateString())</option>
+                                }
+                            </select>
+                        </div>
+                    }
                     <div class="form-group">
-                        <label>Mã giảm giá của bạn:</label>
-                        @*@Html.DropDownList("Code", null, new { @class = "form-control" })*@
-                        <select class="form-control" name="Code">
-                            <option value="0">Chọn mã giảm giá</option>
-                            @foreach (var item in memberDiscountCodes)
-                            {
-                                <option value="@item.DiscountCodeDetail.Code">Mã: @item.DiscountCodeDetail.Code (Giảm @item.DiscountCodeDetail.DiscountCode.NumberDiscount% - Ngày hết hạn: @item.DiscountCodeDetail.DiscountCode.ExpirationDate.Value.ToShortDateString())</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="Name">Hoặc nhập mã tại đây:</label>
+                        <label for="Name">Nhập mã tại đây:</label>
                         <input type="number" class="form-control" name="CodeInput" id="Code">
                     </div>
                     <div class="modal-footer">

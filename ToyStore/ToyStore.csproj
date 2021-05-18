@@ -322,6 +322,7 @@
     <Compile Include="Service\GenderService.cs" />
     <Compile Include="Service\ImportCouponDetailService.cs" />
     <Compile Include="Service\ImportCouponService.cs" />
+    <Compile Include="Service\MemberDiscountCodeService.cs" />
     <Compile Include="Service\MemberTypeService.cs" />
     <Compile Include="Service\MemberService.cs" />
     <Compile Include="Service\OrderDetailService.cs" />

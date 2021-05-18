@@ -235,6 +235,8 @@ namespace ToyStore.Controllers
         }
         public ActionResult ProductPartial(Product product)
         {
+            //Get rating
+            ViewBag.Rating = _ratingService.GetRating(product.ID);
             return PartialView(product);
         }
         public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int discount = 0, int page = 1)

@@ -5,8 +5,20 @@
 }
 @{
     IEnumerable<ToyStore.Models.Product> productsNew = ViewBag.ListProductNew;
-    IEnumerable<ToyStore.Models.Product> products4 = ViewBag.ListProduct4;
+    IEnumerable<ToyStore.Models.Product> products = ViewBag.ListProduct;
 }
+<script>
+    $(document).ready(function () {
+        $('.AddItemCart').on('click', function () {
+            swal({
+                title: "Thông báo",
+                text: "Thêm vào giỏ hàng thành công!",
+                icon: "success",
+                timer: 1500
+            });
+        });
+    });
+</script>
 <!--banner-->
 <div class="banner">
     <div class="container">
@@ -96,7 +108,7 @@
                             <div class="new-text">
                                 <ul>
                                     <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 </ul>
                             </div>
                         </div>
@@ -126,7 +138,7 @@
                             <div class="new-text">
                                 <ul>
                                     <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 </ul>
                             </div>
                         </div>
@@ -155,7 +167,7 @@
                             <div class="new-text">
                                 <ul>
                                     <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 </ul>
                             </div>
                         </div>
@@ -184,7 +196,7 @@
                             <div class="new-text">
                                 <ul>
                                     <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 </ul>
                             </div>
                         </div>
@@ -219,7 +231,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit curabitur </p>
         </div>
         <div class="gallery-info">
-            @foreach (var item in products4)
+            @foreach (var item in products)
             {
                 if (counter2 == 1)
                 {
@@ -228,10 +240,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace },null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -245,10 +257,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -262,10 +274,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -279,10 +291,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -296,10 +308,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -313,10 +325,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -330,10 +342,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -347,10 +359,10 @@
                         <div class="gallery-text simpleCart_shelfItem">
                             <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})">@item.Name </a></h5>
                             <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            <h4 class="sizes">Còn lại: @item.Quantity</h4>
+                            <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, null)</li>
+                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>

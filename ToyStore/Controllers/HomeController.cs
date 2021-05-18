@@ -42,9 +42,8 @@ namespace ToyStore.Controllers
             //Get list product New
             var listProdudctNew = _productService.GetProductListIsNew();
             ViewBag.ListProductNew = listProdudctNew;
-            //Get list product 4
-            var listProdudct4 = _productService.GetProductListForDiscount();
-            ViewBag.ListProduct4 = listProdudct4;
+            var listProdudct = _productService.GetProductListIndex();
+            ViewBag.listProduct = listProdudct;
 
             return View();
         }

@@ -47,12 +47,12 @@ namespace ToyStore.Controllers
                 if (TotalRevenue < 1000000)
                 {
                     TotalRevenue = TotalRevenue / 1000;
-                    ViewBag.TotalRevenue = (int)TotalRevenue+"K";
+                    ViewBag.TotalRevenue = TotalRevenue.ToString("0.##") + "K";
                 }
                 else
                 {
                     TotalRevenue = TotalRevenue / 1000000;
-                    ViewBag.TotalRevenue = (int)TotalRevenue + "M";
+                    ViewBag.TotalRevenue = TotalRevenue.ToString("0.##") + "M";
                 }
                 ViewBag.TotalOrder = _orderService.GetTotalOrder();
                 return View();

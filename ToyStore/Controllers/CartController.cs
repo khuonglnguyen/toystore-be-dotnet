@@ -162,8 +162,15 @@ namespace ToyStore.Controllers
         {
             ViewBag.TotalQuantity = GetTotalQuanity();
             Member member = Session["Member"] as Member;
-            ViewBag.DiscountCodeDetailListByMemer = _discountCodeDetailService.GetDiscountCodeDetailListByMember(member.ID);
-            return View();
+            try
+            {
+                ViewBag.DiscountCodeDetailListByMemer = _discountCodeDetailService.GetDiscountCodeDetailListByMember(member.ID);
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
         [HttpGet]
         public ActionResult EditCart(int ID)
@@ -261,7 +268,7 @@ namespace ToyStore.Controllers
             return PartialView("CheckoutPartial");
         }
         [HttpPost]
-        public ActionResult AddOrder(Customer customer, int NumberDiscountPass=0, string CodePass="")
+        public ActionResult AddOrder(Customer customer, int NumberDiscountPass = 0, string CodePass = "")
         {
             //Check null session cart
             if (Session["Cart"] == null)
@@ -316,7 +323,7 @@ namespace ToyStore.Controllers
             order.IsApproved = false;
             order.IsReceived = false;
             order.IsCancel = false;
-            order.Offer = NumberDiscountPass; 
+            order.Offer = NumberDiscountPass;
             _orderService.AddOrder(order);
             //Add order detail
             List<Cart> listCart = GetCart();
@@ -330,8 +337,11 @@ namespace ToyStore.Controllers
                 orderDetail.Price = item.Price;
                 _orderDetailService.AddOrderDetail(orderDetail);
                 sumtotal += orderDetail.Quantity * orderDetail.Price;
-                //Remove Cart
-                _cartService.RemoveCart(item.ProductID, item.MemberID);
+                if (Session["member"] != null)
+                {
+                    //Remove Cart
+                    _cartService.RemoveCart(item.ProductID, item.MemberID);
+                }
             }
             if (NumberDiscountPass != 0)
             {
@@ -351,11 +361,11 @@ namespace ToyStore.Controllers
             Session["Cart"] = null;
             if (status)
             {
-                SentMail("Đặt hàng thành công", customercheck.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "<br/>Nhập mã đơn hàng vào ô tìm kiếm để xem thông tin và theo dõi đơn hàng của bạn</p>");
+                SentMail("Đặt hàng thành công", customercheck.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "</p>");
             }
             else
             {
-                SentMail("Đặt hàng thành công", customerNew.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "<br/>Nhập mã đơn hàng vào ô tìm kiếm để xem thông tin và theo dõi đơn hàng của bạn</p>");
+                SentMail("Đặt hàng thành công", customerNew.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "</p>");
             }
             return RedirectToAction("Message");
         }

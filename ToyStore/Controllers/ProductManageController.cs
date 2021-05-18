@@ -39,7 +39,7 @@ namespace ToyStore.Controllers
         #endregion
         // GET: Product
         [HttpGet]
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int page = 1, string keyword = "")
         {
             if (Session["Emloyee"] == null)
             {
@@ -60,20 +60,42 @@ namespace ToyStore.Controllers
 
             int pageSize = 5;
             //Get proudct category list
-            var products = _productService.GetProductListForManage().OrderBy(x => x.Name);
-            ViewBag.Products = products;
-            PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
-            //Check null
-            if (listProduct != null)
+            if (keyword != "")
             {
-                ViewBag.Page = page;
-                //Return view
-                return View(listProduct);
+                var products = _productService.GetProductListForManage().Where(x=>x.Name.Contains(keyword)).OrderBy(x => x.Name);
+                ViewBag.Products = products;
+                PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
+                ViewBag.KeyWord = keyword;
+                //Check null
+                if (listProduct != null)
+                {
+                    ViewBag.Page = page;
+                    //Return view
+                    return View(listProduct);
+                }
+                else
+                {
+                    //return 404
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
             else
             {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var products = _productService.GetProductListForManage().OrderBy(x => x.Name);
+                ViewBag.Products = products;
+                PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
+                //Check null
+                if (listProduct != null)
+                {
+                    ViewBag.Page = page;
+                    //Return view
+                    return View(listProduct);
+                }
+                else
+                {
+                    //return 404
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
         }
         [HttpPost]

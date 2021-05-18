@@ -124,24 +124,22 @@
             </ul>
             <hr />
             <div class="w3-search-box">
-                <form action="~/ProductManage/List" method="post">
+                <form action="~/ProductManage/Index" method="get">
                     <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
                     <input type="submit" value="">
                 </form>
+                @if (ViewBag.KeyWord != null)
+                {
+                    <h5>Tìm kiếm với từ khóa "@ViewBag.KeyWord"</h5>
+                }
             </div><!--//end-search-box-->
             <p>@ViewBag.message</p>
             <div class="clearfix"> </div>
             <hr />
             <h2>Danh sách sản phẩm</h2>
-            @*@using (Html.BeginForm("DeleteMulti", "ProductManage", FormMethod.Post))
-                {*@
-            <input type="submit" value="Xóa mục đã chọn" class="btn btn-default" id="btnDeleteMulti" />
             <table id="table">
                 <thead>
                     <tr>
-                        <th>
-                            <input type="checkbox" id="checkAll" />
-                        </th>
                         <th>
                             Tên sản phẩm
                         </th>
@@ -162,9 +160,6 @@
                     {
                         @Html.Hidden(item.ID.ToString())
                         <tr>
-                            <td>
-                                <input type="checkbox" class="cbProductCategory" value="@item.ID" name="IDDelete" />
-                            </td>
                             <td style="color:brown">
                                 <b>@Html.DisplayFor(modelItem => item.Name)</b>
                             </td>
@@ -197,10 +192,9 @@
                     }
                 </tbody>
             </table>
-            @*}*@
             <br />
             <div id='Paging' style="text-align: center">
-                @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, keyword = ViewBag.KeyWord }))
             </div>
         </div>
     </div>
@@ -220,7 +214,7 @@
                 {
                     <div class="form-group">
                         <label for="Name">Tên sản phẩm:</label>
-                        <input type="text" class="form-control" name="Name" id="NameAdd">
+                        <input type="text" class="form-control" name="Name" id="NameAdd" pattern=".{,50}" required title="Tên sản phẩm tối đa ký tự!">
                         <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
                         <input type="hidden" id="hidID" value="0" />
                     </div>
@@ -246,27 +240,27 @@
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 1:</label>
-                        <input type="file" name="ImageUpload" id="Image1Add" />
+                        <input type="file" name="ImageUpload" id="Image1Add" required accept="image/png, image/gif, image/jpeg" />
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 2:</label>
-                        <input type="file" name="ImageUpload" id="Image2Add" />
+                        <input type="file" name="ImageUpload" id="Image2Add" accept="image/png, image/gif, image/jpeg" />
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 3:</label>
-                        <input type="file" name="ImageUpload" id="Image3Add" />
+                        <input type="file" name="ImageUpload" id="Image3Add" accept="image/png, image/gif, image/jpeg" />
                     </div>
                     <div class="form-group">
                         <label>Giá bán:</label>
-                        <input type="number" class="form-control" name="Price" id="PriceAdd">
+                        <input type="number" class="form-control" name="Price" id="PriceAdd" min="0" required>
                     </div>
                     <div class="form-group">
                         <label>Khuyến mãi(%):</label>
-                        <input type="number" class="form-control" name="Discount" id="DiscountAdd" value="0">
+                        <input type="number" class="form-control" name="Discount" id="DiscountAdd" value="0" min="0" max="99">
                     </div>
                     <div class="form-group">
                         <label>Mô tả:</label>
-                        <input type="text" class="form-control" name="Description" id="DescriptionAdd">
+                        <textarea class="form-control" name="Description" id="DescriptionAdd" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Hiển thị trang chủ:</label>
@@ -313,7 +307,7 @@
                     <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
                     <div class="form-group">
                         <label for="Name">Tên sản phẩm:</label>
-                        <input type="text" class="form-control" name="Name" id="Name">
+                        <input type="text" class="form-control" name="Name" id="Name" pattern=".{,50}" required title="Tên sản phẩm tối đa ký tự!">
                         <input type="hidden" id="hidID" value="0" />
                     </div>
                     <div class="form-group">
@@ -339,29 +333,29 @@
                     <div class="form-group">
                         <label>Hình ảnh 1:</label>
                         <input type="text" class="form-control" name="Image1" id="TextImage1" readonly>
-                        <input type="file" name="ImageUpload" id="Image1" />
+                        <input type="file" name="ImageUpload" id="Image1" accept="image/png, image/gif, image/jpeg" />
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 2:</label>
                         <input type="text" class="form-control" name="Image2" id="TextImage2" readonly>
-                        <input type="file" name="ImageUpload" id="Image2" />
+                        <input type="file" name="ImageUpload" id="Image2" accept="image/png, image/gif, image/jpeg" />
                     </div>
                     <div class="form-group">
                         <label>Hình ảnh 3:</label>
                         <input type="text" class="form-control" name="Image3" id="TextImage3" readonly>
-                        <input type="file" name="ImageUpload" id="Image3" />
+                        <input type="file" name="ImageUpload" id="Image3" accept="image/png, image/gif, image/jpeg" />
                     </div>
                     <div class="form-group">
                         <label>Giá bán:</label>
-                        <input type="number" class="form-control" name="Price" id="Price">
+                        <input type="number" class="form-control" name="Price" id="Price" min="0" required>
                     </div>
                     <div class="form-group">
                         <label>Khuyến mãi(%):</label>
-                        <input type="number" class="form-control" name="Discount" id="Discount">
+                        <input type="number" class="form-control" name="Discount" id="Discount" min="0" max="99">
                     </div>
                     <div class="form-group">
                         <label>Mô tả:</label>
-                        <input type="text" class="form-control" name="Description" id="Description">
+                        <textarea class="form-control" name="Description" id="Description" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Hiển thị trang chủ:</label>
