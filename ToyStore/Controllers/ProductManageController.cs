@@ -62,7 +62,7 @@ namespace ToyStore.Controllers
             //Get proudct category list
             if (keyword != "")
             {
-                var products = _productService.GetProductListForManage().Where(x=>x.Name.Contains(keyword)).OrderBy(x => x.Name);
+                var products = _productService.GetProductListForManage().Where(x=>x.Name.Contains(keyword)).OrderByDescending(x => x.LastUpdatedDate.Date);
                 ViewBag.Products = products;
                 PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
                 ViewBag.KeyWord = keyword;
@@ -81,7 +81,7 @@ namespace ToyStore.Controllers
             }
             else
             {
-                var products = _productService.GetProductListForManage().OrderBy(x => x.Name);
+                var products = _productService.GetProductListForManage().OrderByDescending(x => x.LastUpdatedDate.Date);
                 ViewBag.Products = products;
                 PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
                 //Check null
