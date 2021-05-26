@@ -57,6 +57,7 @@ namespace ToyStore.Controllers
             }
             return null;
         }
+        [HttpPost]
         public ActionResult AddItemCart(int ID)
         {
             //Check product already exists in DB
@@ -69,7 +70,6 @@ namespace ToyStore.Controllers
             }
             //Get cart
             List<Cart> listCart = GetCart();
-
             //If member
             Member member = Session["Member"] as Member;
             if (member != null)
@@ -83,15 +83,15 @@ namespace ToyStore.Controllers
                 {
                     //Case 2: If product does not exist in Member Cart
                     //Get product
-                    Product productAdd = _productService.GetByID(ID);
                     Cart itemCart = new Cart();
-                    itemCart.ProductID = productAdd.ID;
-                    itemCart.Price = (decimal)productAdd.PromotionPrice;
-                    itemCart.Name = productAdd.Name;
+                    itemCart.ProductID = product.ID;
+                    itemCart.Price = (decimal)product.PromotionPrice;
+                    itemCart.Name = product.Name;
                     itemCart.Quantity = 1;
                     itemCart.Total = itemCart.Price * itemCart.Quantity;
-                    itemCart.Image = productAdd.Image1;
-                    _cartService.AddCartIntoMember(itemCart, member.ID);
+                    itemCart.Image = product.Image1;
+                    itemCart.MemberID = member.ID;
+                    _cartService.AddCartIntoMember(itemCart);
                 }
                 List<Cart> carts = _cartService.GetCart(member.ID);
                 Session["Cart"] = carts;
@@ -127,6 +127,81 @@ namespace ToyStore.Controllers
             ViewBag.TotalQuanity = GetTotalQuanity();
             ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
             return PartialView("CartPartial");
+        }
+        [HttpPost]
+        public ActionResult CheckQuantityAdd(int ID)
+        {
+            //Check product already exists in DB
+            Product product = _productService.GetByID(ID);
+            if (product == null)
+            {
+                //product does not exist
+                Response.StatusCode = 404;
+                return null;
+            }
+            //Get cart
+            List<Cart> listCart = GetCart();
+            //Check quantity
+            if (listCart != null)
+            {
+                int sum = 0;
+                foreach (Cart item in listCart.Where(x => x.ProductID == ID))
+                {
+                    sum += item.Quantity;
+                }
+                if (product.Quantity > sum)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        status = false
+                    });
+                }
+            }
+            else
+            {
+                if (product.Quantity > 0)
+                {
+
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        status = false
+                    });
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult CheckQuantityUpdate(int ID, int Quantity)
+        {
+            //Check product already exists in DB
+            Product product = _productService.GetByID(ID);
+            if (product.Quantity >= Quantity)
+            {
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    status = false
+                });
+            }
         }
         public ActionResult CartPartial()
         {
@@ -207,26 +282,22 @@ namespace ToyStore.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult EditCart(Cart cart)
+        public ActionResult EditCart(int ID, int Quantity)
         {
             //Check stock quantity
-            Product product = _productService.GetByID(cart.ProductID);
-            if (product.Quantity < cart.Quantity)
-            {
-                return View("ThongBao");
-            }
+            Product product = _productService.GetByID(ID);
             //Updated quantity in cart Session
             List<Cart> listCart = GetCart();
             //Get products from within listCart to update
-            Cart itemCartUpdate = listCart.Find(n => n.ProductID == cart.ProductID);
-            itemCartUpdate.Quantity = cart.Quantity;
+            Cart itemCartUpdate = listCart.Find(n => n.ProductID == ID);
+            itemCartUpdate.Quantity = Quantity;
             itemCartUpdate.Total = itemCartUpdate.Quantity * itemCartUpdate.Price;
 
             Member member = Session["Member"] as Member;
             if (member != null)
             {
                 //Update Cart Quantity Member
-                _cartService.UpdateQuantityCartMember(cart.Quantity, cart.ProductID, member.ID);
+                _cartService.UpdateQuantityCartMember(Quantity, ID, member.ID);
                 Session["Cart"] = listCart;
             }
 
@@ -316,7 +387,7 @@ namespace ToyStore.Controllers
                 order.CustomerID = customerNew.ID;
             }
             order.DateOrder = DateTime.Now;
-            order.DateShip = DateTime.Now;
+            order.DateShip = DateTime.Now.AddDays(3);
             order.IsPaid = false;
             order.IsDelete = false;
             order.IsDelivere = false;
@@ -414,6 +485,12 @@ namespace ToyStore.Controllers
                 Session["Code"] = Code;
                 Session["num"] = num;
             }
+            return RedirectToAction("Checkout");
+        }
+        public ActionResult CancelDiscount()
+        {
+            Session["Code"] = null;
+            Session["num"] = null;
             return RedirectToAction("Checkout");
         }
     }

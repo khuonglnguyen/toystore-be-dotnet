@@ -33,13 +33,10 @@ namespace ToyStore.Models
         public string Image2 { get; set; }
         public string Image3 { get; set; }
         public string Image4 { get; set; }
-        public string ClipReview { get; set; }
         public decimal Price { get; set; }
         public decimal PromotionPrice { get; set; }
         public int Quantity { get; set; }
         public string Description { get; set; }
-        public bool HomeFlag { get; set; }
-        public bool HotFlag { get; set; }
         public Nullable<int> ViewCount { get; set; }
         public Nullable<int> CommentCount { get; set; }
         public Nullable<int> PurchasedCount { get; set; }

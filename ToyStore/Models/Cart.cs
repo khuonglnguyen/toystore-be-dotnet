@@ -10,9 +10,9 @@
 namespace ToyStore.Models
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Cart
     {
         public Cart(int iID)
@@ -26,10 +26,7 @@ namespace ToyStore.Models
             this.Quantity = 1;
             this.Total = Price * Quantity;
         }
-        public Cart()
-        {
-
-        }
+        public Cart() {  }
         public int ID { get; set; }
         public int MemberID { get; set; }
         public int ProductID { get; set; }

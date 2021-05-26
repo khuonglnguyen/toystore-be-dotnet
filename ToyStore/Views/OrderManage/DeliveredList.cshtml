@@ -45,7 +45,7 @@
                             Ưu đãi
                         </th>
                         <th>
-                            Thanh toán
+                            Tình trạng
                         </th>
                     </tr>
                 </thead>
@@ -70,14 +70,7 @@
                                 @Html.DisplayFor(modelItem => item.Offer)
                             </td>
                             <td>
-                                @if (item.IsPaid == true)
-                                {
-                                    <span class="label label-success">Đã thanh toán</span>
-                                }
-                                else
-                                {
-                                    <span class="label label-danger">Chưa thanh toán</span>
-                                }
+                                <span class="label label-success">Đang giao hàng</span>
                             </td>
                         </tr>
                     }

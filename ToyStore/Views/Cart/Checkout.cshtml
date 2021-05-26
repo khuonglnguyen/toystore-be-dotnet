@@ -24,7 +24,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == true) {
-                        $('#ID').val(response.ID);
+                        $('#btnSave').attr('data-id', response.ProductID);
                         $('#Price').val(response.Price);
                         $('#ProductID').val(response.ProductID);
                         $('#Quantity').val(response.Quantity);
@@ -69,6 +69,50 @@
         });
         $(document).on('click', '#btnChoose', function () {
             $('#modalChoose').modal('show');
+        });
+        $('.Save').click(function (e) {
+            var id = $(this).attr("data-id");
+            var quantity = $("#Quantity").val();
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityUpdate",
+                data: {
+                    ID: id,
+                    Quantity: quantity
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/EditCart",
+                            data: {
+                                ID: id,
+                                Quantity: quantity
+                            },
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Cập nhật giỏ hàng thành công!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                window.setTimeout(function () {
+                                    window.location.reload();
+                                }, 500);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
         });
     });
 </script>
@@ -129,13 +173,29 @@
                             @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Post))
                             {
                                 <input type="text" class="user" name="FullName" placeholder="Họ tên" required maxlength="50">
-                                <input type="text" name="PhoneNumber" class="user" placeholder="Số điện thoại" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 sô!">
+                                <input type="text" name="PhoneNumber" class="user" placeholder="Số điện thoại" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 số!">
                                 <input type="text" name="Email" class="user" placeholder="Email" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail của bạn (vd: abc@gmail.com)">
                                 <input type="text" name="Address" class="user" placeholder="Địa chỉ nhận hàng" required maxlength="200">
-                                <label>Mã giảm giá (nếu có)</label><br />
-                                <input type="button" value="Chọn mã Code" id="btnChoose" /><br />
-                                <label>Thành tiền</label>
-                                <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
+                                if (Session["num"] != null)
+                                {
+                                    <label>Mã giảm giá</label><br />
+                                    <input type="text" name="NumberDiscount" class="user" value="@Session["Code"] (-@Session["num"]%)" readonly>
+                                    <input type="text" name="NumberDiscountPass" hidden="hidden" value="@Session["num"]">
+                                    <input type="text" name="CodePass" hidden="hidden" value="@Session["Code"]">
+                                    <input type="button" value="Chọn mã Code khác" id="btnChoose" />
+                                    @Html.ActionLink("Bỏ chọn mã giảm giá", "CancelDiscount")<br />
+                                    decimal total = @Cart.Sum(x => x.Total) - (@Cart.Sum(x => x.Total) / 100 * (int)@Session["num"]);
+                                    <label>Thành tiền</label><br />
+                                    <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
+                                    <h4 style="color:brown">@total.ToString("#,##")₫</h4>
+                                }
+                                else
+                                {
+                                    <label>Mã giảm giá (nếu có)</label><br />
+                                    <input type="button" value="Chọn mã Code" id="btnChoose" /><br />
+                                    <label>Thành tiền</label>
+                                    <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
+                                }
                                 <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
                             }
                         </div>
@@ -166,7 +226,8 @@
                                     <input type="text" name="NumberDiscount" class="user" value="@Session["Code"] (-@Session["num"]%)" readonly>
                                     <input type="text" name="NumberDiscountPass" hidden="hidden" value="@Session["num"]">
                                     <input type="text" name="CodePass" hidden="hidden" value="@Session["Code"]">
-                                    <input type="button" value="Chọn mã Code khác" id="btnChoose" /><br />
+                                    <input type="button" value="Chọn mã Code khác" id="btnChoose" />
+                                    @Html.ActionLink("Bỏ chọn mã giảm giá", "CancelDiscount")<br />
                                     decimal total = @Cart.Sum(x => x.Total) - (@Cart.Sum(x => x.Total) / 100 * (int)@Session["num"]);
                                     <label>Thành tiền</label><br />
                                     <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
@@ -203,30 +264,26 @@
                 <h4 class="modal-title">Chỉnh sửa</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("EditCart", "Cart", FormMethod.Post))
-                {
-                    <input type="text" name="ID" id="ID" hidden="hidden" />
-                    <div class="form-group">
-                        <label for="Name">Mã sản phẩm:</label>
-                        <input type="text" class="form-control" name="ProductID" id="ProductID" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh:</label>
-                        <img name="Image" id="Image" style="height:200px;width:200px" />
-                    </div>
-                    <div class="form-group">
-                        <label for="Name">Đơn giá:</label>
-                        <input type="text" class="form-control" name="Price" id="Price" readonly="readonly">
-                    </div>
-                    <div class="form-group">
-                        <label for="Name">Số lượng:</label>
-                        <input type="number" class="form-control" name="Quantity" id="Quantity" min="1" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
+                <div class="form-group">
+                    <label for="Name">Mã sản phẩm:</label>
+                    <input type="text" class="form-control" name="ProductID" id="ProductID" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label>Hình ảnh:</label>
+                    <img name="Image" id="Image" style="height:200px;width:200px" />
+                </div>
+                <div class="form-group">
+                    <label for="Name">Đơn giá:</label>
+                    <input type="text" class="form-control" name="Price" id="Price" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label for="Name">Số lượng:</label>
+                    <input type="number" class="form-control" name="Quantity" id="Quantity" min="1" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary Save" id="btnSave">Lưu</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                </div>
             </div>
         </div>
     </div>

@@ -289,9 +289,6 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ToyStoreModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

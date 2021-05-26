@@ -20,6 +20,9 @@ namespace ToyStore.Service
         void DeleteMember(Member member);
         void UpdateAmountPurchased(int ID, decimal AmountPurchased);
         IEnumerable<Member> GetMemberListForStatistic();
+        bool CheckEmail(string Email);
+        bool CheckUsername(string Username);
+        bool CheckPhoneNumber(string PhoneNumber);
         void Save();
     }
     public class MemberService : IMemberService
@@ -50,6 +53,17 @@ namespace ToyStore.Service
             return null;
         }
 
+        public bool CheckEmail(string Email)
+        {
+            var check = context.MemberRepository.GetAllData(x => x.Email == Email);
+            if (check.Count() > 0)
+            {
+                Console.Write("Đã tồn tại email");
+                return true;
+            }
+            return true;
+        }
+
         public Member CheckLogin(string username, string password)
         {
             Member member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Username == username && x.Password == password && x.EmailConfirmed == true);
@@ -58,6 +72,26 @@ namespace ToyStore.Service
                 member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Email == username && x.Password == password && x.EmailConfirmed == true);
             }
             return member;
+        }
+
+        public bool CheckPhoneNumber(string PhoneNumber)
+        {
+            var check = context.MemberRepository.GetAllData(x => x.PhoneNumber == PhoneNumber);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckUsername(string Username)
+        {
+            var check = context.MemberRepository.GetAllData(x => x.Username == Username);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
         }
 
         public void DeleteMember(Member member)

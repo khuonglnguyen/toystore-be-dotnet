@@ -33,6 +33,46 @@
                 timer: 1500
             });
         });
+        $('.AddItemCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+        });
     });
 </script>
 <!--banner-->
@@ -253,9 +293,9 @@
                 <div class="quantity">
                     <p class="qty"> Đã bán :</p> @Model.PurchasedCount
                 </div>
-                <p>Etiam faucibus viverra libero vel efficitur. Ut semper nisl ut laoreet ultrices. Maecenas dictum arcu purus, sit amet volutpat purus viverra sit amet. Quisque lacinia quam sed tortor interdum, malesuada congue nunc ornare. Cum sociis natoque penatibus et magnis dis parturient montes</p>
                 <div class="btn_form">
-                    @Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = Model.ID}, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class= "add-cart item_add" })
+                    <a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a>
+                    @*@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = Model.ID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "add-cart item_add" })*@
                 </div>
             </div>
             <div class="clearfix"> </div>
@@ -361,30 +401,30 @@
                             {
                                 <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng câu hỏi</a>
                             }
-                        <div id="qaContainer">
-                            <hr />
-                            @if (qAs.Count() > 0)
-                            {
-                                foreach (var item in qAs)
+                            <div id="qaContainer">
+                                <hr />
+                                @if (qAs.Count() > 0)
                                 {
-                                    <p><label style="color:black">@item.Member.FullName:</label>  @item.DateQuestion</p>
-                                    <p style="color:black">@item.Question</p>
-                                    if (item.Answer != null)
+                                    foreach (var item in qAs)
                                     {
-                                        <div style="background-color:lightgray">
-                                            <p><label style="color:brown">@item.Emloyee.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
-                                            <p style="color:black">@item.Answer</p>
-                                        </div>
+                                        <p><label style="color:black">@item.Member.FullName:</label>  @item.DateQuestion</p>
+                                        <p style="color:black">@item.Question</p>
+                                        if (item.Answer != null)
+                                        {
+                                            <div style="background-color:lightgray">
+                                                <p><label style="color:brown">@item.Emloyee.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
+                                                <p style="color:black">@item.Answer</p>
+                                            </div>
+                                        }
+                                        <hr />
                                     }
-                                    <hr />
                                 }
-                            }
-                            else
-                            {
-                                <p>Chưa có câu hỏi nào</p>
-                            }
+                                else
+                                {
+                                    <p>Chưa có câu hỏi nào</p>
+                                }
 
-                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>

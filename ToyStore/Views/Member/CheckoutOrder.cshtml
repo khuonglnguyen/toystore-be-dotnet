@@ -40,13 +40,14 @@
 </div>
 <!-- Tab links -->
 <div class="tab">
-    <button class="tablinks" onclick="openOrder(event, 'ChuaDuyet')">Chưa duyệt</button>
+    <button class="tablinks" onclick="openOrder(event, 'ChoDuyet')">Chờ duyệt</button>
     <button class="tablinks" onclick="openOrder(event, 'DaDuyet')">Đã duyệt</button>
+    <button class="tablinks" onclick="openOrder(event, 'DangGiaoHang')">Đang giao hàng</button>
     <button class="tablinks" onclick="openOrder(event, 'DaNhan')">Đã nhận</button>
-    <button class="tablinks" onclick="openOrder(event, 'DanhGia')">Đánh giá</button>
+    @*<button class="tablinks" onclick="openOrder(event, 'DanhGia')">Đánh giá</button>*@
 </div>
 <!-- Tab content -->
-<div id="ChuaDuyet" class="tabcontent">
+<div id="ChoDuyet" class="tabcontent">
     @if (Model.Where(x => x.IsApproved == false).Count() > 0)
     {
         <table class="table">
@@ -66,12 +67,6 @@
                     </th>
                     <th>
                         Duyệt
-                    </th>
-                    <th>
-                        Thanh toán
-                    </th>
-                    <th>
-                        Đã nhận
                     </th>
                 </tr>
             </thead>
@@ -102,26 +97,6 @@
                             }
                         </td>
                         <td>
-                            @if (item.IsPaid == true)
-                            {
-                                <span class="label label-success">Đã thanh toán</span>
-                            }
-                            else
-                            {
-                                <span class="label label-danger">Chưa thanh toán</span>
-                            }
-                        </td>
-                        <td>
-                            @if (item.IsReceived == true)
-                            {
-                                <span class="label label-success">Đã nhận</span>
-                            }
-                            else
-                            {
-                                <span class="label label-danger">Chưa nhận</span>
-                            }
-                        </td>
-                        <td>
                             @Html.ActionLink("Chi tiết", "OrderDetail", new { ID = item.ID })
                         </td>
                     </tr>
@@ -131,7 +106,7 @@
     }
     else
     {
-        <p>Bạn chưa có đơn hàng</p>
+        <p>Chưa có đơn hàng đang chờ duyệt</p>
     }
 </div>
 <div id="DaDuyet" class="tabcontent">
@@ -154,12 +129,6 @@
                     </th>
                     <th>
                         Duyệt
-                    </th>
-                    <th>
-                        Thanh toán
-                    </th>
-                    <th>
-                        Đã nhận
                     </th>
                 </tr>
             </thead>
@@ -190,24 +159,59 @@
                             }
                         </td>
                         <td>
-                            @if (item.IsPaid == true)
-                            {
-                                <span class="label label-success">Đã thanh toán</span>
-                            }
-                            else
-                            {
-                                <span class="label label-danger">Chưa thanh toán</span>
-                            }
+                            @Html.ActionLink("Chi tiết", "OrderDetail", new { ID = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Chưa có đơn hàng đã duyệt</p>
+    }
+</div>
+<div id="DangGiaoHang" class="tabcontent">
+    @if (Model.Where(x => x.IsDelivere == true && x.IsReceived == false).Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Mã DĐH
+                    </th>
+                    <th>
+                        Ngày đặt
+                    </th>
+                    <th>
+                        Ngày giao dự kiến
+                    </th>
+                    <th>
+                        Ưu đãi
+                    </th>
+                    <th>
+                        Tình trạng
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.IsDelivere == true && x.IsReceived == false))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td>
-                            @if (item.IsReceived == true)
-                            {
-                                <span class="label label-success">Đã nhận</span>
-                            }
-                            else
-                            {
-                                <span class="label label-danger">Chưa nhận</span>
-                            }
+                            @Html.DisplayFor(modelItem => item.DateOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateShip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Offer)
+                        </td>
+                        <td>
+                            <span class="label label-success">Đang vận chuyển</span>
                         </td>
                         <td>
                             @Html.ActionLink("Chi tiết", "OrderDetail", new { ID = item.ID })
@@ -219,7 +223,7 @@
     }
     else
     {
-        <p>Bạn chưa có đơn hàng</p>
+        <p>Chưa có đơn hàng nào đang giao cho bạn</p>
     }
 </div>
 <div id="DaNhan" class="tabcontent">
@@ -269,7 +273,7 @@
     }
     else
     {
-        <p>Bạn chưa có đơn hàng</p>
+        <p>Chưa có đơn hàng đã nhận</p>
     }
 </div>
 <div id="DanhGia" class="tabcontent">
@@ -365,6 +369,6 @@
     }
     else
     {
-        <p>Bạn chưa có đơn hàng</p>
+        <p>Chưa có sản phẩm đã đánh giá</p>
     }
 </div>

@@ -244,8 +244,6 @@ namespace ToyStore.Controllers
                     Price = product.Price,
                     Discount = product.Discount,
                     Description = product.Description,
-                    HomeFlag = product.HomeFlag,
-                    HotFlag = product.HotFlag,
                     IsNew = product.IsNew,
                     IsActive = product.IsActive,
                     ViewCount = product.ViewCount,

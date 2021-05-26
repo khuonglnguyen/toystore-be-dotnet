@@ -48,7 +48,7 @@ namespace ToyStore.Controllers
         #endregion
         public ActionResult Search(string keyword, int page = 1)
         {
-            var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
+            var listProduct = _productService.GetProductList(keyword);
             ViewBag.ListProduct = listProduct;
             if (keyword == null)
             {
@@ -56,23 +56,10 @@ namespace ToyStore.Controllers
                 return null;
             }
             ViewBag.Keyword = keyword;
-            //Get proudct category list with keyword
             var products = _productService.GetProductList(keyword);
             PagedList<Product> listProductSearch = new PagedList<Product>(products, page, 12);
-            //Check null
-            if (listProduct != null)
-            {
-                ViewBag.message = "Hiển thị kết quả tìm kiếm với '" + keyword + "";
-                //Return view
-                return View(listProductSearch);
-            }
-            else
-            {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            return View(listProductSearch);
         }
-        // GET: Product
         public ActionResult Details(int ID)
         {
             var product = _productService.GetByID(ID);

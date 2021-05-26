@@ -9,7 +9,7 @@ namespace ToyStore.Service
 {
     public interface ICartService
     {
-        void AddCartIntoMember(Cart cart, int MemberID);
+        void AddCartIntoMember(Cart cart);
         bool CheckCartMember(int MemberID);
         void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID);
         void AddQuantityProductCartMember(int ProductID, int MemberID);
@@ -32,9 +32,8 @@ namespace ToyStore.Service
             context.CartRepository.Insert(cart);
         }
 
-        public void AddCartIntoMember(Cart cart, int MemberID)
+        public void AddCartIntoMember(Cart cart)
         {
-            cart.MemberID = MemberID;
             context.CartRepository.Insert(cart);
         }
 

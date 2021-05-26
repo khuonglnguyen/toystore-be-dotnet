@@ -101,6 +101,7 @@ namespace ToyStore.Service
             Order order = context.OrderRepository.GetDataByID(ID);
             order.IsReceived = true;
             order.IsPaid = true;
+            order.DateShip = DateTime.Now;
             context.OrderRepository.Update(order);
             //Update PurchasedCount
             IEnumerable<OrderDetail> orderDetails = context.OrderDetailRepository.GetAllData(x => x.OrderID == ID);

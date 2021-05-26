@@ -45,15 +45,12 @@
                             Ưu đãi
                         </th>
                         <th>
-                            Thanh toán
+                            Trình trạng
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int counter1 = 0;
-                    }
                     @foreach (var item in Model.Join(customers, c => c.CustomerID, m => m.ID, (c, m) => new { c, m })
                         .Select(n => new { CustomerName = n.m.FullName, ID = n.c.ID, DateOrder = n.c.DateOrder, DateShip = n.c.DateShip, Offer = n.c.Offer, IsPaid = n.c.IsPaid }))
                     {
@@ -74,30 +71,18 @@
                                 @Html.DisplayFor(modelItem => item.Offer)
                             </td>
                             <td>
-                                <div id="DivActive@(counter1)">
-                                    @if (item.IsPaid == true)
-                                    {
-                                        <span class="label label-success">Đã thanh toán</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger">Chưa thanh toán</span>
-                                    }
-                                </div>
-                            </td>
+                                <span class="label label-success">Đã duyệt</span>
                             <td>
                                 @Html.ActionLink("Giao Hàng", "Delivered", new { ID = item.ID })
                             </td>
                         </tr>
-                        @(counter1++)
                     }
-                    @(counter1 = 0)
-                </tbody>
-            </table>
-            <br />
-            <div id='Paging' style="text-align: center">
-                @Html.PagedListPager(Model, page => Url.Action("Unpaid", new { page }))
+                    </tbody>
+                </table>
+                <br />
+                <div id='Paging' style="text-align: center">
+                    @Html.PagedListPager(Model, page => Url.Action("Unpaid", new { page }))
+                </div>
             </div>
         </div>
     </div>
-</div>
