@@ -22,7 +22,6 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListByGender(int GenderID);
         IEnumerable<Product> GetProductListByAge(int AgeID);
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
-        IEnumerable<Product> GetProductListBySupplier(int SupplierID);
         IEnumerable<Product> GetProductListIsNew();
         IEnumerable<Product> GetProductListViewedByMemberID(int MemberID);
         IEnumerable<Product> GetProductList(string keyWord);
@@ -233,12 +232,6 @@ namespace ToyStore.Service
         public IEnumerable<Product> GetProductListAlmostOver()
         {
             return context.ProductRepository.GetAllData().OrderBy(x => x.Quantity);
-        }
-
-        public IEnumerable<Product> GetProductListBySupplier(int SupplierID)
-        {
-            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.SupplierID == SupplierID && x.IsActive == true);
-            return listProduct;
         }
 
         public void AddViewCount(int ID)

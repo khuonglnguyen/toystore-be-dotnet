@@ -202,6 +202,7 @@
     <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Controllers\QAManageController.cs" />
     <Compile Include="Controllers\StatisticManageController.cs" />
+    <Compile Include="Controllers\SupplierManageController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
@@ -212,12 +213,6 @@
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Age.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Cart.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Comment.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer.cs">
@@ -245,6 +240,9 @@
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ImportCouponDetail.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ItemCart.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Member.cs">
@@ -309,7 +307,6 @@
     <Compile Include="Service\AccessTimesCountService.cs" />
     <Compile Include="Service\AgeService.cs" />
     <Compile Include="Service\CartService.cs" />
-    <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\DecentralizationService.cs" />
     <Compile Include="Service\DiscountCodeDetailService.cs" />
@@ -732,6 +729,8 @@
     <Content Include="Views\ProductManage\Index.cshtml" />
     <Content Include="Views\ProductCategoryManage\Index.cshtml" />
     <Content Include="Views\ProducerManage\Index.cshtml" />
+    <Content Include="Views\SupplierManage\Index.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

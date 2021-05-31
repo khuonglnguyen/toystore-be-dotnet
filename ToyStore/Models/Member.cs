@@ -17,8 +17,7 @@ namespace ToyStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Member()
         {
-            this.Carts = new HashSet<Cart>();
-            this.Comments = new HashSet<Comment>();
+            this.ItemCarts = new HashSet<ItemCart>();
             this.ProductVieweds = new HashSet<ProductViewed>();
             this.QAs = new HashSet<QA>();
             this.Ratings = new HashSet<Rating>();
@@ -38,9 +37,7 @@ namespace ToyStore.Models
         public Nullable<decimal> AmountPurchased { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<ItemCart> ItemCarts { get; set; }
         public virtual MemberType MemberType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductViewed> ProductVieweds { get; set; }

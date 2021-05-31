@@ -4,7 +4,7 @@
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 @{
-    List<ToyStore.Models.Cart> Cart = Session["Cart"] as List<ToyStore.Models.Cart>;
+    List<ToyStore.Models.ItemCart> Cart = Session["Cart"] as List<ToyStore.Models.ItemCart>;
     ToyStore.Models.Member Member = Session["Member"] as ToyStore.Models.Member;
     List<ToyStore.Models.MemberDiscountCode> memberDiscountCodes = ViewBag.DiscountCodeDetailListByMemer as List<ToyStore.Models.MemberDiscountCode>;
 }

@@ -20,7 +20,6 @@ namespace ToyStore.Controllers
         private IAgeService _ageService;
         private IProductCategoryParentService _productCategoryParentService;
         private IGenderService _genderService;
-        private ICommentService _commentService;
         private IMemberService _memberService;
         private IQAService _qaService;
         private IEmloyeeService _emloyeeService;
@@ -28,7 +27,7 @@ namespace ToyStore.Controllers
         private IRatingService _ratingService;
         private IOrderDetailService _orderDetailService;
 
-        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService, IQAService qAService, IEmloyeeService emloyeeService, IProductViewedService productViewedService, IRatingService ratingService, IOrderDetailService orderDetailService)
+        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, IMemberService memberService, IQAService qAService, IEmloyeeService emloyeeService, IProductViewedService productViewedService, IRatingService ratingService, IOrderDetailService orderDetailService)
         {
             _productService = productService;
             _producerService = producerService;
@@ -37,7 +36,6 @@ namespace ToyStore.Controllers
             _ageService = ageService;
             _productCategoryParentService = productCategoryParentService;
             _genderService = genderService;
-            _commentService = commentService;
             _memberService = memberService;
             _qaService = qAService;
             _emloyeeService = emloyeeService;
@@ -65,9 +63,6 @@ namespace ToyStore.Controllers
             var product = _productService.GetByID(ID);
             var listProduct = _productService.GetProductListByCategory(product.CategoryID);
             ViewBag.ListProduct = listProduct;
-
-            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(ID).OrderByDescending(x => x.Date);
-            ViewBag.CommentList = listComment;
             IEnumerable<QA> listQA = _qaService.GetQAByProductID(ID).OrderByDescending(x => x.DateQuestion);
             ViewBag.CommentQA = listQA;
             IEnumerable<Member> listMember = _memberService.GetMemberList();
@@ -252,23 +247,6 @@ namespace ToyStore.Controllers
                 return null;
             }
         }
-
-        [HttpGet]
-        public ActionResult AddComment(int productID, int memberID, string content)
-        {
-            Comment comment = new Comment();
-            comment.MemberID = memberID;
-            comment.Content = content;
-            comment.ProductID = productID;
-            comment.Date = DateTime.Now;
-            _commentService.AddComment(comment);
-
-            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(productID).OrderByDescending(x => x.Date);
-            ViewBag.CommentList = listComment;
-            IEnumerable<Member> listMember = _memberService.GetMemberList();
-            ViewBag.MemberList = listMember;
-            return PartialView("_CommentPartial");
-        }
         [HttpGet]
         public ActionResult AddQuestion(int productID, int memberID, string Question)
         {
@@ -289,8 +267,6 @@ namespace ToyStore.Controllers
         }
         public ActionResult CommentPartial(int ID)
         {
-            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(ID).OrderByDescending(x => x.Date);
-            ViewBag.CommentList = listComment;
             IEnumerable<Member> listMember = _memberService.GetMemberList();
             ViewBag.MemberList = listMember;
             return PartialView("_CommentPartial");

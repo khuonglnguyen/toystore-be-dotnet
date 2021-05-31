@@ -6,7 +6,6 @@
 }
 @{
     IEnumerable<Product> products = ViewBag.ListProduct as IEnumerable<Product>;
-    IEnumerable<Comment> comments = ViewBag.CommentList as IEnumerable<Comment>;
     IEnumerable<QA> qAs = ViewBag.CommentQA as IEnumerable<QA>;
     IEnumerable<Rating> ratings = ViewBag.ListRating as IEnumerable<Rating>;
     Member member = Session["Member"] as Member;
@@ -282,9 +281,6 @@
                     <p class="qty"> Thương Hiệu :</p> @Model.Producer.Name
                 </div>
                 <div class="quantity">
-                    <p class="qty"> Nhà Cung Cấp :</p> @Model.Supplier.Name
-                </div>
-                <div class="quantity">
                     <p class="qty"> Lứa Tuổi :</p> @Model.Age.Name
                 </div>
                 <div class="quantity">
@@ -422,73 +418,6 @@
                                 else
                                 {
                                     <p>Chưa có câu hỏi nào</p>
-                                }
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default wow fadeInUp animated" data-wow-delay=".8s">
-                    <div class="panel-heading" role="tab" id="headingFour">
-                        <h4 class="panel-title">
-                            @if (comments.Count() > 0)
-                            {
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    Bình Luận (@comments.Count())
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    Bình Luận
-                                </a>
-                            }
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                        <div class="panel-body">
-                            @if (Session["Member"] != null)
-                            {
-                                using (Ajax.BeginForm("AddComment", "Product", new AjaxOptions
-                                {
-                                    InsertionMode = InsertionMode.Replace,
-                                    HttpMethod = "GET",
-                                    LoadingElementId = "ajax-loader",
-                                    UpdateTargetId = "commentContainer",
-
-                                }))
-                                {
-                                    <input value="@member.ID" hidden="hidden" name="memberID" />
-                                    <input value="@Model.ID" hidden="hidden" name="productID" />
-                                    <div class="form-group mx-sm-3 mb-2">
-                                        <label for="inputPassword2" class="sr-only">Nội dung</label>
-                                        <textarea class="form-control" id="Textarea1" style="resize:none" rows="3" placeholder="Viết bình luận tại đây..."></textarea>
-                                    </div>
-                                    <input type="text" name="content" id="content" hidden="hidden" />
-                                    <button type="submit" class="btn btn-warning btnPost">Đăng Bình Luận</button>
-                                    <img id="ajax-loader"
-                                         src="@Url.Content("~/Content/images/loading.gif")"
-                                         style="display:none" />
-                                }
-                                <div class="ajax-loader"></div>
-                            }
-                            else
-                            {
-                                <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng bình luận</a>
-                            }
-                            <div id="commentContainer">
-                                <hr />
-                                @if (comments.Count() > 0)
-                                {
-                                    foreach (var item in comments)
-                                    {
-                                        <label style="color:black">@item.Member.FullName</label> @item.Date
-                                        <p style="color:black">@item.Content</p>
-                                    }
-                                }
-                                else
-                                {
-                                    <p>Chưa có bình luận</p>
                                 }
 
                             </div>

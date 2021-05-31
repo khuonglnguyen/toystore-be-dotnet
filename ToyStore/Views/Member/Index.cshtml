@@ -1,0 +1,153 @@
+﻿@using ToyStore.Models;
+@model Member
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Views/Layout/ProductDetailsLayout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('.btnEditName').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdateName').modal('show');
+            $.ajax({
+                url: '/Member/EditName',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#IDEditName').val(response.ID);
+                        $('#FullNameEditName').val(response.FullName);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $('.btnEditAddress').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdateAddress').modal('show');
+            $.ajax({
+                url: '/Member/EditAddress',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#IDEditAddress').val(response.ID);
+                        $('#AdressEditAdress').val(response.Address);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script>
+
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Sản Phẩm</li>
+        </ol>
+    </div>
+</div>
+<!--//breadcrumbs-->
+<!--single-page-->
+<div class="single">
+    <div class="container">
+        <div class="single-info">
+            <div class="col-md-6 single-top wow fadeInLeft animated" data-wow-delay=".5s">
+                <div class="flexslider">
+                    <ul class="slides">
+                        @*<li data-thumb="@Url.Content("~/Content/images/" + Model.Image1)">
+                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image1)" data-imagezoom="true" class="img-responsive" alt=""> </div>
+                            </li>*@
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 single-top-left simpleCart_shelfItem wow fadeInRight animated" data-wow-delay=".5s">
+                <div class="quantity">
+                    <p class="qty"> Họ tên :</p> @Model.FullName <button class="btn btn-link btnEditName" value="@Model.ID">Chỉnh sửa</button>
+                </div>
+                <div class="quantity">
+                    <p class="qty"> Địa chỉ :</p> @Model.Address <button class="btn btn-link btnEditAddress" value="@Model.ID">Chỉnh sửa</button>
+                </div>
+                <div class="quantity">
+                    <p class="qty"> Số điện thoại :</p> @Model.PhoneNumber
+                </div>
+                <div class="quantity">
+                    <p class="qty"> Email :</p> @Model.Email
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!--//single-page-->
+<div class="modal fade" id="modalUpdateName" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditName", "Member", FormMethod.Post))
+                {
+                    <input type="text" name="ID" id="IDEditName" hidden />
+                    <div class="form-group">
+                        <label for="Name">Họ tên:</label>
+                        <input type="text" class="form-control" name="FullName" id="FullNameEditName" pattern=".{,30}" required title="Tên thành viên tối đa 30 ký tự!">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalUpdateAddress" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditAddress", "Member", FormMethod.Post))
+                {
+                    <input type="text" name="ID" id="IDEditAddress" hidden />
+                    <div class="form-group">
+                        <label for="Name">Địa chỉ:</label>
+                        <input type="text" class="form-control" name="Address" id="AdressEditAdress" pattern=".{,100}" required title="Địa chỉ tối đa 100 ký tự!">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

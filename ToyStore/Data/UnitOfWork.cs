@@ -22,12 +22,11 @@ namespace ToyStore.Data
         private GenericRepository<Customer> customerRepository;
         private GenericRepository<Order> orderRepository;
         private GenericRepository<OrderDetail> orderDetailRepository;
-        private GenericRepository<Comment> commentRepository;
         private GenericRepository<QA> qARepository;
         private GenericRepository<Emloyee> emloyeeRepository;
         private GenericRepository<EmloyeeType> emloyeeTypeRepository;
         private GenericRepository<AccessTimesCount> accessTimesCountRepository;
-        private GenericRepository<Cart> cartRepository;
+        private GenericRepository<ItemCart> itemCartRepository;
         private GenericRepository<ImportCoupon> importCouponRepository;
         private GenericRepository<ImportCouponDetail> importCouponDetailRepository;
         private GenericRepository<ProductViewed> productViewedRepository;
@@ -169,17 +168,6 @@ namespace ToyStore.Data
                 return orderDetailRepository;
             }
         }
-        public GenericRepository<Comment> CommentRepository
-        {
-            get
-            {
-                if (this.commentRepository == null)
-                {
-                    this.commentRepository = new GenericRepository<Comment>(DbContext);
-                }
-                return commentRepository;
-            }
-        }
         public GenericRepository<QA> QARepository
         {
             get
@@ -224,15 +212,15 @@ namespace ToyStore.Data
                 return accessTimesCountRepository;
             }
         }
-        public GenericRepository<Cart> CartRepository
+        public GenericRepository<ItemCart> CartRepository
         {
             get
             {
-                if (this.cartRepository == null)
+                if (this.itemCartRepository == null)
                 {
-                    this.cartRepository = new GenericRepository<Cart>(DbContext);
+                    this.itemCartRepository = new GenericRepository<ItemCart>(DbContext);
                 }
-                return cartRepository;
+                return itemCartRepository;
             }
         }
         public GenericRepository<ImportCoupon> ImportCouponRepository

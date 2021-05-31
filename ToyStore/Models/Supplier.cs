@@ -18,7 +18,6 @@ namespace ToyStore.Models
         public Supplier()
         {
             this.ImportCoupons = new HashSet<ImportCoupon>();
-            this.Products = new HashSet<Product>();
         }
     
         public int ID { get; set; }
@@ -32,7 +31,5 @@ namespace ToyStore.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImportCoupon> ImportCoupons { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
     }
 }

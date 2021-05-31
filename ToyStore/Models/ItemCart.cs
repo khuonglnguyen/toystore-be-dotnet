@@ -13,9 +13,9 @@ namespace ToyStore.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Cart
+    public partial class ItemCart
     {
-        public Cart(int iID)
+        public ItemCart(int iID)
         {
             ToyStore2021Entities db = new ToyStore2021Entities();
             this.ProductID = iID;
@@ -26,16 +26,19 @@ namespace ToyStore.Models
             this.Quantity = 1;
             this.Total = Price * Quantity;
         }
-        public Cart() {  }
+        public ItemCart()
+        {
+
+        }
         public int ID { get; set; }
         public int MemberID { get; set; }
         public int ProductID { get; set; }
-        public string Name { get; set; }
         public int Quantity { get; set; }
-        public decimal Price { get; set; }
         public decimal Total { get; set; }
+        public decimal Price { get; set; }
+        public string Name { get; set; }
         public string Image { get; set; }
-    
+
         public virtual Member Member { get; set; }
         public virtual Product Product { get; set; }
     }

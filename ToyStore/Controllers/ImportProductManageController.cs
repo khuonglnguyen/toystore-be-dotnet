@@ -41,7 +41,6 @@ namespace ToyStore.Controllers
                 return RedirectToAction("Login", "Admin");
             }
             ViewBag.listSupplier = _supplierService.GetSupplierList();
-            ViewBag.ListProduct = _productService.GetProductListBySupplier(ID);
             ViewBag.SupplierID = ID;
             ViewBag.SupplierName = _supplierService.GetByID(ID).Name;
             return View();
@@ -109,28 +108,28 @@ namespace ToyStore.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public ActionResult ImportProductSingle(ImportCouponDetail importCouponDetail, int page)
-        {
-            ImportCoupon importCoupon = new ImportCoupon();
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            importCoupon.EmloyeeID = emloyee.ID;
-            importCoupon.Date = DateTime.Now;
-            importCoupon.IsDelete = false;
-            //Update quantity product
-            Product product;
-            product = _productService.GetByID(importCouponDetail.ProductID);
-            product.Quantity += importCouponDetail.Quantity;
-            _productService.UpdateProduct(product);
-            //Add import coupon
-            importCoupon.SupplierID = product.SupplierID;
-            _importCouponService.AddImportCoupon(importCoupon);
-            //Set ImportCouponID for all ImportCouponDetail
-            importCouponDetail.ImportCouponID = importCoupon.ID;
+        //[HttpPost]
+        //public ActionResult ImportProductSingle(ImportCouponDetail importCouponDetail, int page)
+        //{
+            //ImportCoupon importCoupon = new ImportCoupon();
+            //Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            //importCoupon.EmloyeeID = emloyee.ID;
+            //importCoupon.Date = DateTime.Now;
+            //importCoupon.IsDelete = false;
+            ////Update quantity product
+            //Product product;
+            //product = _productService.GetByID(importCouponDetail.ProductID);
+            //product.Quantity += importCouponDetail.Quantity;
+            //_productService.UpdateProduct(product);
+            ////Add import coupon
+            //importCoupon.SupplierID = product.SupplierID;
+            //_importCouponService.AddImportCoupon(importCoupon);
+            ////Set ImportCouponID for all ImportCouponDetail
+            //importCouponDetail.ImportCouponID = importCoupon.ID;
 
-            _importCouponDeatilService.AddImportCouponDetail(importCouponDetail);
-            return RedirectToAction("ProductListIsAlmostOver", new { page = page });
-        }
+            //_importCouponDeatilService.AddImportCouponDetail(importCouponDetail);
+            //return RedirectToAction("ProductListIsAlmostOver", new { page = page });
+        //}
         [HttpGet]
         public ActionResult Delete(int ID, int page)
         {

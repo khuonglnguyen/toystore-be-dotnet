@@ -17,9 +17,8 @@ namespace ToyStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.Carts = new HashSet<Cart>();
-            this.Comments = new HashSet<Comment>();
             this.ImportCouponDetails = new HashSet<ImportCouponDetail>();
+            this.ItemCarts = new HashSet<ItemCart>();
             this.OrderDetails = new HashSet<OrderDetail>();
             this.ProductVieweds = new HashSet<ProductViewed>();
             this.QAs = new HashSet<QA>();
@@ -40,7 +39,6 @@ namespace ToyStore.Models
         public Nullable<int> ViewCount { get; set; }
         public Nullable<int> CommentCount { get; set; }
         public Nullable<int> PurchasedCount { get; set; }
-        public int SupplierID { get; set; }
         public int ProducerID { get; set; }
         public bool IsNew { get; set; }
         public bool IsActive { get; set; }
@@ -50,18 +48,15 @@ namespace ToyStore.Models
         public int Discount { get; set; }
     
         public virtual Age Age { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
         public virtual Gender Gender { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImportCouponDetail> ImportCouponDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemCart> ItemCarts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual Producer Producer { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
-        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductViewed> ProductVieweds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

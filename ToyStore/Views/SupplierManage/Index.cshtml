@@ -1,0 +1,275 @@
+﻿@model PagedList.IPagedList<ToyStore.Models.Supplier>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lý nhà cung cấp";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".ckb").change(function () {
+            var id = $(this).prop("value");
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url: '/SupplierManage/Active',
+                    data: {
+                        id: id
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    url: '/SupplierManage/Block',
+                    data: {
+                        id: id
+                    }
+                });
+            }
+        });
+        $('#btnAddNew').off('click').on('click', function () {
+            $('#modalAdd').modal('show');
+        });
+        $('.btnEdit').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/SupplierManage/Edit',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#IDEdit').val(response.ID);
+                        $('#NameEdit').val(response.Name);
+                        $('#AddressEdit').val(response.Address);
+                        $('#PhoneEdit').val(response.Phone);
+                        $('#EmailEdit').val(response.Email);
+                        $('#TotalAmountEdit').val(response.TotalAmount);
+                        $('#IsActiveEdit').prop("checked", response.IsActive);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $("#keyword").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/SupplierManage/ListName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item, value: item };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+        function onchange(e) {
+            var country = document.getElementById('search').ej2_instances[0];
+            country.filterType = e.itemData.value;
+        }
+    });
+</script>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Admin")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Nhà cung cấp</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <ul class="bt-list">
+                <li><a href="#" class="hvr-icon-float-away col-24" style="background-color:green" id="btnAddNew">Thêm mới</a></li>
+            </ul>
+            <hr />
+            <div class="w3-search-box">
+                <form action="~/SupplierManage/Index" method="post">
+                    <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
+                    <input type="submit" value="">
+                </form>
+            </div><!--//end-search-box-->
+            <div class="clearfix"> </div>
+            <hr />
+            <h2>Danh sách nhà cung cấp</h2>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên nhà cung cấp
+                        </th>
+                        <th>
+                            Địa chỉ
+                        </th>
+                        <th>
+                            Số điện thoại
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Ngày cập nhật cuối
+                        </th>
+                        <th>
+                            Doanh số
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="color:brown">
+                                <b>@Html.DisplayFor(modelItem => item.Name)</b>
+                            </td>
+                            <td>
+                                <b>@Html.DisplayFor(modelItem => item.Address)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                            </td>
+                            <td>
+                                @if (item.IsActive == true)
+                                {
+                                    <label class="switch block">
+                                        <input type="checkbox" checked class="ckb" value="@item.ID">
+                                        <span class="slider round"></span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="switch active">
+                                        <input type="checkbox" class="ckb" value="@item.ID">
+                                        <span class="slider round"></span>
+                                    </label>
+                                }
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <div id='Paging' style="text-align: center">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAdd" role="dialog">
+    <div class="modal-dialog">
+
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thêm mới</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "SupplierManage", FormMethod.Post))
+                {
+                    <input type="text" name="ID" id="IDAdd" hidden />
+                    <div class="form-group">
+                        <label for="Name">Tên nhà cung cấp:</label>
+                        <input type="text" class="form-control" name="Name" id="NameAdd" required maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Địa chỉ:</label>
+                        <input type="text" class="form-control" name="Address" id="AddressAdd" required maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Số điện thoại:</label>
+                        <input type="text" class="form-control" name="Phone" id="PhoneAdd" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 số!">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="text" class="form-control" name="Email" id="EmailAdd" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail (vd: abc@gmail.com)">
+                    </div>
+                    <div class="form-group">
+                        <label>Kích hoạt:</label>
+                        <input class="form-control" data-val="true" id="IsActiveAdd" name="IsActive" type="checkbox" value="true">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalUpdate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Edit", "SupplierManage", FormMethod.Post))
+                {
+                    <input type="text" name="ID" id="IDEdit" hidden />
+                    <input type="text" name="TotalAmount" id="TotalAmountEdit" hidden/>
+                    <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="Name">Tên nhà cung cấp:</label>
+                        <input type="text" class="form-control" name="Name" id="NameEdit" required maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Địa chỉ:</label>
+                        <input type="text" class="form-control" name="Address" id="AddressEdit" required maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Số điện thoại:</label>
+                        <input type="text" class="form-control" name="Phone" id="PhoneEdit" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 số!">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="text" class="form-control" name="Email" id="EmailEdit" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail (vd: abc@gmail.com)">
+                    </div>
+                    <div class="form-group">
+                        <label>Kích hoạt:</label>
+                        <input class="form-control" data-val="true" id="IsActiveEdit" name="IsActive" type="checkbox" value="true">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

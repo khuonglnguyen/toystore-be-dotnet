@@ -27,8 +27,6 @@ namespace ToyStore.Models
     
         public virtual DbSet<AccessTimesCount> AccessTimesCounts { get; set; }
         public virtual DbSet<Age> Ages { get; set; }
-        public virtual DbSet<Cart> Carts { get; set; }
-        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Decentralization> Decentralizations { get; set; }
         public virtual DbSet<DiscountCode> DiscountCodes { get; set; }
@@ -38,6 +36,7 @@ namespace ToyStore.Models
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<ImportCoupon> ImportCoupons { get; set; }
         public virtual DbSet<ImportCouponDetail> ImportCouponDetails { get; set; }
+        public virtual DbSet<ItemCart> ItemCarts { get; set; }
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberDiscountCode> MemberDiscountCodes { get; set; }
         public virtual DbSet<MemberType> MemberTypes { get; set; }

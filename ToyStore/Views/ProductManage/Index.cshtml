@@ -49,7 +49,6 @@
                         $('#ID').val(response.ID);
                         $('#Name').val(response.Name);
                         $('#CategoryIDEdit').val(response.CategoryID);
-                        $('#SupplierIDEdit').val(response.SupplierID);
                         $('#ProducerIDEdit').val(response.ProducerID);
                         $('#AgeIDEdit').val(response.AgeID);
                         $('#GenderIDEdit').val(response.GenderID);
@@ -222,10 +221,6 @@
                         @Html.DropDownList("CategoryID", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label>Nhà cung cấp:</label>
-                        @Html.DropDownList("SupplierID", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
                         <label>Nhà sản xuất:</label>
                         @Html.DropDownList("ProducerID", null, new { @class = "form-control" })
                     </div>
@@ -304,10 +299,6 @@
                     <div class="form-group">
                         <label>Danh mục:</label>
                         @Html.DropDownList("CategoryIDEdit", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Nhà cung cấp:</label>
-                        @Html.DropDownList("SupplierIDEdit", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label>Nhà sản xuất:</label>

@@ -31,6 +31,72 @@ namespace ToyStore.Controllers
             _memberDiscountCodeService = memberDiscountCodeService;
         }
         [HttpGet]
+        public ActionResult Index()
+        {
+            Member member = Session["Member"] as Member;
+            return View(member);
+        }
+        [HttpGet]
+        public ActionResult EditName(int id)
+        {
+            var member = _memberService.GetByID(id);
+            //Check null
+            if (member != null)
+            {
+                //Return view
+                return Json(new
+                {
+                    ID = member.ID,
+                    FullName = member.FullName,
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //Return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+        [HttpPost]
+        public ActionResult EditName(int ID, string FullName)
+        {
+            Member member = _memberService.GetByID(ID);
+            member.FullName = FullName;
+            _memberService.UpdateMember(member);
+            Session["Member"] = member;
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult EditAddress(int id)
+        {
+            var member = _memberService.GetByID(id);
+            //Check null
+            if (member != null)
+            {
+                //Return view
+                return Json(new
+                {
+                    ID = member.ID,
+                    Address = member.Address,
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //Return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+        [HttpPost]
+        public ActionResult EditAddress(int ID, string Address)
+        {
+            Member member = _memberService.GetByID(ID);
+            member.Address = Address;
+            _memberService.UpdateMember(member);
+            Session["Member"] = member;
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
         public ActionResult ConfirmEmail(int ID)
         {
             if (_memberService.GetByID(ID).EmailConfirmed)

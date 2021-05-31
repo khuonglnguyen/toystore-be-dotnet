@@ -127,13 +127,13 @@ namespace ToyStore.Controllers
                     {
                         if (_cartService.CheckCartMember(memberCheck.ID))
                         {
-                            List<Cart> carts = _cartService.GetCart(memberCheck.ID);
+                            List<ItemCart> carts = _cartService.GetCart(memberCheck.ID);
                             Session["Cart"] = carts;
                             return RedirectToAction("Index");
                         }
                         if (Session["Cart"] != null)
                         {
-                            List<Cart> listCart = Session["Cart"] as List<Cart>;
+                            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
                             foreach (var item in listCart)
                             {
                                 item.MemberID = memberCheck.ID;

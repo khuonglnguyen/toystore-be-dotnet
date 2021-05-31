@@ -29,12 +29,12 @@ namespace ToyStore.Controllers
             AgeService ageService,
             GenderService genderService)
         {
-            this._productService = productService;
-            this._productCategoryService = productCategoryService;
-            this._supplierService = supplierService;
-            this._producerService = producerService;
-            this._ageService = ageService;
-            this._genderService = genderService;
+            _productService = productService;
+            _productCategoryService = productCategoryService;
+            _supplierService = supplierService;
+            _producerService = producerService;
+            _ageService = ageService;
+            _genderService = genderService;
         }
         #endregion
         // GET: Product
@@ -220,7 +220,6 @@ namespace ToyStore.Controllers
 
             //Get data for DropdownList
             ViewBag.CategoryIDEdit = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
-            ViewBag.SupplierIDEdit = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
             ViewBag.ProducerIDEdit = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
             ViewBag.AgeIDEdit = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
             ViewBag.GenderIDEdit = new SelectList(_genderService.GetGenderList(), "ID", "Name", product.GenderID);
@@ -234,7 +233,6 @@ namespace ToyStore.Controllers
                     ID = product.ID,
                     Name = product.Name,
                     CategoryID = product.CategoryID,
-                    SupplierID = product.SupplierID,
                     ProducerID = product.ProducerID,
                     AgeID = product.AgeID,
                     GenderID = product.GenderID,
@@ -259,7 +257,7 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page, int CategoryIDEdit, int SupplierIDEdit, int ProducerIDEdit, int AgeIDEdit, int GenderIDEdit)
+        public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page, int CategoryIDEdit, int ProducerIDEdit, int AgeIDEdit, int GenderIDEdit)
         {
             if (Session["Emloyee"] == null)
             {
@@ -267,7 +265,6 @@ namespace ToyStore.Controllers
             }
             //Get data for DropdownList
             ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
-            ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
             ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
             ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
             ViewBag.GenderID = new SelectList(_genderService.GetGenderList(), "ID", "Name", product.GenderID);
@@ -322,7 +319,6 @@ namespace ToyStore.Controllers
             TempData["edit"] = "Success";
             //Update productCategory
             product.CategoryID = CategoryIDEdit;
-            product.SupplierID = SupplierIDEdit;
             product.ProducerID = ProducerIDEdit;
             product.AgeID = AgeIDEdit;
             product.GenderID = GenderIDEdit;

@@ -9,14 +9,14 @@ namespace ToyStore.Service
 {
     public interface ICartService
     {
-        void AddCartIntoMember(Cart cart);
+        void AddCartIntoMember(ItemCart cart);
         bool CheckCartMember(int MemberID);
         void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID);
         void AddQuantityProductCartMember(int ProductID, int MemberID);
         void RemoveCart(int ProductID, int MemberID);
-        void AddCart(Cart cart);
-        List<Cart> GetCart(int MemberID);
-        Cart GetCartByID(int ID);
+        void AddCart(ItemCart cart);
+        List<ItemCart> GetCart(int MemberID);
+        ItemCart GetCartByID(int ID);
         bool CheckProductInCart(int ProductID, int MemberID);
     }
     public class CartService : ICartService
@@ -27,19 +27,19 @@ namespace ToyStore.Service
             this.context = repositoryContext;
         }
 
-        public void AddCart(Cart cart)
+        public void AddCart(ItemCart cart)
         {
             context.CartRepository.Insert(cart);
         }
 
-        public void AddCartIntoMember(Cart cart)
+        public void AddCartIntoMember(ItemCart cart)
         {
             context.CartRepository.Insert(cart);
         }
 
         public void AddQuantityProductCartMember(int ProductID, int MemberID)
         {
-            Cart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
+            ItemCart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
             cartUpdate.Quantity += 1;
             context.CartRepository.Update(cartUpdate);
         }
@@ -58,27 +58,27 @@ namespace ToyStore.Service
             return false;
         }
 
-        public List<Cart> GetCart(int MemberID)
+        public List<ItemCart> GetCart(int MemberID)
         {
             return context.CartRepository.GetAllData().Where(x => x.MemberID == MemberID).ToList();
         }
 
-        public Cart GetCartByID(int ID)
+        public ItemCart GetCartByID(int ID)
         {
             return context.CartRepository.GetDataByID(ID);
         }
 
         public void RemoveCart(int ProductID, int MemberID)
         {
-            Cart cart = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
+            ItemCart cart = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
             context.CartRepository.Remove(cart);
         }
 
         public void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID)
         {
-            Cart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
+            ItemCart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
             cartUpdate.Quantity = Quantity;
-            cartUpdate.Total = cartUpdate.Quantity * cartUpdate.Price;
+            cartUpdate.Total = cartUpdate.Quantity * cartUpdate.Product.PromotionPrice;
             context.CartRepository.Update(cartUpdate);
         }
     }
