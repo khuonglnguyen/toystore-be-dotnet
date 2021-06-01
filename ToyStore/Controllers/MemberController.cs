@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -94,6 +95,29 @@ namespace ToyStore.Controllers
             member.Address = Address;
             _memberService.UpdateMember(member);
             Session["Member"] = member;
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public ActionResult EditAvatar(HttpPostedFileBase Avatar)
+        {
+            if (Avatar != null)
+            {
+                //Get file name
+                var fileName = Path.GetFileName(Avatar.FileName);
+                //Get path
+                var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                //Check exitst
+                if (!System.IO.File.Exists(path))
+                {
+                    //Add image into folder
+                    Avatar.SaveAs(path);
+                }
+                Member member = Session["Member"] as Member;
+                Member memberupdate = _memberService.GetByID(member.ID);
+                memberupdate.Avatar = Avatar.FileName;
+                _memberService.UpdateMember(memberupdate);
+                Session["Member"] = memberupdate;
+            }
             return RedirectToAction("Index");
         }
         [HttpGet]

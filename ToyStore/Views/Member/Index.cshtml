@@ -54,6 +54,9 @@
                 }
             });
         });
+        $('.btnEditAvatar').off('click').on('click', function () {
+            $('#modalUpdateAvatar').modal('show');
+        });
     });
 </script>
 
@@ -74,18 +77,18 @@
             <div class="col-md-6 single-top wow fadeInLeft animated" data-wow-delay=".5s">
                 <div class="flexslider">
                     <ul class="slides">
-                        @*<li data-thumb="@Url.Content("~/Content/images/" + Model.Image1)">
-                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image1)" data-imagezoom="true" class="img-responsive" alt=""> </div>
-                            </li>*@
+                        <li data-thumb="@Url.Content("~/Content/images/" + Model.Avatar)">
+                            <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Avatar)" style="height:300px;width:250px"><input type="button" class="btn btn-link btnEditAvatar" value="✎" data-id="@Model.ID"/></div>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-6 single-top-left simpleCart_shelfItem wow fadeInRight animated" data-wow-delay=".5s">
                 <div class="quantity">
-                    <p class="qty"> Họ tên :</p> @Model.FullName <button class="btn btn-link btnEditName" value="@Model.ID">Chỉnh sửa</button>
+                    <p class="qty"> Họ tên :</p> @Model.FullName <button class="btn btn-link btnEditName" value="@Model.ID">✎</button>
                 </div>
                 <div class="quantity">
-                    <p class="qty"> Địa chỉ :</p> @Model.Address <button class="btn btn-link btnEditAddress" value="@Model.ID">Chỉnh sửa</button>
+                    <p class="qty"> Địa chỉ :</p> @Model.Address <button class="btn btn-link btnEditAddress" value="@Model.ID">✎</button>
                 </div>
                 <div class="quantity">
                     <p class="qty"> Số điện thoại :</p> @Model.PhoneNumber
@@ -141,6 +144,32 @@
                     <div class="form-group">
                         <label for="Name">Địa chỉ:</label>
                         <input type="text" class="form-control" name="Address" id="AdressEditAdress" pattern=".{,100}" required title="Địa chỉ tối đa 100 ký tự!">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalUpdateAvatar" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditAvatar", "Member", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                {
+                    <input type="text" name="ID" id="IDEditAvatar" hidden />
+                    <div class="form-group">
+                        <label>Avatar:</label>
+                        <input type="file" name="Avatar" id="Avatar" required accept="image/png, image/gif, image/jpeg" />
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>

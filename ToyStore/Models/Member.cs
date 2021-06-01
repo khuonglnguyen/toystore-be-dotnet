@@ -35,6 +35,7 @@ namespace ToyStore.Models
         public bool EmailConfirmed { get; set; }
         public string Capcha { get; set; }
         public Nullable<decimal> AmountPurchased { get; set; }
+        public string Avatar { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemCart> ItemCarts { get; set; }
