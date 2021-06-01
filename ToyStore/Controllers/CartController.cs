@@ -38,6 +38,17 @@ namespace ToyStore.Controllers
                 if (_cartService.CheckCartMember(member.ID))
                 {
                     List<ItemCart> listCart = _cartService.GetCart(member.ID);
+                    foreach (ItemCart item in listCart)
+                    {
+                        if (item.Image == null || item.Image == "")
+                        {
+                            item.Image = _productService.GetByID(item.ProductID).Image1;
+                        }
+                        if (item.Price == 0)
+                        {
+                            item.Price = _productService.GetByID(item.ProductID).PromotionPrice;
+                        }
+                    }
                     Session["Cart"] = listCart;
                     return listCart;
                 }
@@ -84,9 +95,17 @@ namespace ToyStore.Controllers
                     //Case 2: If product does not exist in Member Cart
                     //Get product
                     ItemCart itemCart = new ItemCart(ID);
+                    itemCart.MemberID = member.ID;
                     _cartService.AddCartIntoMember(itemCart);
                 }
                 List<ItemCart> carts = _cartService.GetCart(member.ID);
+                foreach (ItemCart item in carts)
+                {
+                    if (item.Image == null || item.Image == "")
+                    {
+                        item.Image = _productService.GetByID(item.ProductID).Image1;
+                    }
+                }
                 Session["Cart"] = carts;
                 ViewBag.TotalQuanity = GetTotalQuanity();
                 ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
@@ -113,6 +132,7 @@ namespace ToyStore.Controllers
                     }
                     //Case 2: If product does not exist in the Session Cart
                     ItemCart item = new ItemCart(ID);
+                    item.Image = _productService.GetByID(item.ProductID).Image1;
                     listCart.Add(item);
                 }
             }
@@ -232,6 +252,7 @@ namespace ToyStore.Controllers
             Member member = Session["Member"] as Member;
             try
             {
+                Session["Cart"] = GetCart();
                 ViewBag.DiscountCodeDetailListByMemer = _discountCodeDetailService.GetDiscountCodeDetailListByMember(member.ID);
                 return View();
             }

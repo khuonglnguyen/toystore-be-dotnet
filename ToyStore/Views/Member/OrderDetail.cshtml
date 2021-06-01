@@ -93,10 +93,25 @@
             }
         </tbody>
     </table>
-    <p>Tổng: @ViewBag.Total.ToString("#,##")₫ (<del>@Model.Sum(x => x.Price * x.Quantity).ToString("#,##")₫</del>)</p>
+    {
+        decimal total = ViewBag.Total;
+        decimal total2 = Model.Sum(x => x.Price * x.Quantity);
+        if (total == total2)
+        {
+            <p style="text-align:right">
+                Tổng: @ViewBag.Total.ToString("#,##")₫
+            </p>
+        }
+        else
+        {
+            <p style="text-align:right">Tổng: @ViewBag.Total.ToString("#,##")₫ (<del>@Model.Sum(x => x.Price * x.Quantity).ToString("#,##")₫</del>)</p>
+        }
+    }
     if (ViewBag.Received != "Received" && ViewBag.Delivere == "Delivere")
     {
-        @Html.ActionLink("Đã nhận được hàng", "Received", new { OrderID = ViewBag.OrderID })
+        <div style="text-align:right">
+            <a href="@Url.Action("Received", new { OrderID = ViewBag.OrderID })" class="btn btn-default">Đã nhận được hàng</a>
+        </div>
     }
     <br />
 }

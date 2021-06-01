@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.Order>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Đơn Hàng Đã Giao Cho Đối Tác Vận Chuyển";
+    ViewBag.Title = "Đơn Hàng Đang Vận Chuyển";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 @{
@@ -25,7 +25,7 @@
             <p>@ViewBag.message</p>
             <div class="clearfix"> </div>
             <hr />
-            <h2>Danh sách đơn đặt hàng đã giao cho đối tác vận chuyển</h2>
+            <h2>Danh sách đơn đặt hàng đang vận chuyển</h2>
             <table id="table">
                 <thead>
                     <tr>

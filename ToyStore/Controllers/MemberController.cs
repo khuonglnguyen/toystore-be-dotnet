@@ -64,6 +64,15 @@ namespace ToyStore.Controllers
             Member member = _memberService.GetByID(ID);
             member.FullName = FullName;
             _memberService.UpdateMember(member);
+            IEnumerable<Customer> customers = _customerService.GetAll();
+            foreach (Customer item in customers)
+            {
+                if(item.PhoneNumber==member.PhoneNumber)
+                {
+                    item.FullName = member.FullName;
+                    _customerService.Update(item);
+                }    
+            }
             Session["Member"] = member;
             return RedirectToAction("Index");
         }
@@ -201,8 +210,8 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult CheckoutOrder(int ID, int page = 1)
         {
-            string Name = _memberService.GetByID(ID).FullName;
-            Customer customer = _customerService.GetAll().FirstOrDefault(x => x.FullName.Contains(Name));
+            string Phone = _memberService.GetByID(ID).PhoneNumber;
+            Customer customer = _customerService.GetAll().FirstOrDefault(x => x.PhoneNumber == Phone);
             if (customer != null)
             {
                 var orders = _orderService.GetByCustomerID(customer.ID);
@@ -267,6 +276,16 @@ namespace ToyStore.Controllers
                 _memberService.UpdateAmountPurchased(member.ID, _orderService.GetByID(OrderID).Total.Value);
             }
             return RedirectToAction("OrderDetail", new { ID = OrderID });
+        }
+        public JsonResult Cancel(int ID)
+        {
+            Order order = _orderService.GetByID(ID);
+            order.IsCancel = true;
+            _orderService.Update(order);
+            return Json(new
+            {
+                status = true
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

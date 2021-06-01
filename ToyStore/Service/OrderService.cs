@@ -68,22 +68,22 @@ namespace ToyStore.Service
 
         public IEnumerable<Order> GetDelivered()
         {
-            return context.OrderRepository.GetAllData(x => x.IsDelivere == true);
+            return context.OrderRepository.GetAllData(x => x.IsDelivere == true && x.IsCancel == false && x.IsReceived==false);
         }
 
         public IEnumerable<Order> GetOrderDeliveredAndPaid()
         {
-            return context.OrderRepository.GetAllData(x => x.IsPaid == true && x.IsDelivere == true);
+            return context.OrderRepository.GetAllData(x => x.IsPaid == true && x.IsDelivere == true && x.IsCancel == false);
         }
 
         public IEnumerable<Order> GetOrderNotDelivery()
         {
-            return context.OrderRepository.GetAllData(x => x.IsDelivere == false);
+            return context.OrderRepository.GetAllData(x => x.IsDelivere == false && x.IsCancel == false);
         }
 
         public IEnumerable<Order> GetOrderNotApproval()
         {
-            return context.OrderRepository.GetAllData(x => x.IsApproved == false);
+            return context.OrderRepository.GetAllData(x => x.IsApproved == false && x.IsCancel==false);
         }
 
         public void Update(Order order)

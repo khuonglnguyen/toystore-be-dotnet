@@ -12,6 +12,7 @@ namespace ToyStore.Service
         Customer AddCustomer(Customer customer);
         IEnumerable<Customer> GetAll();
         string GetEmailByID(int ID);
+        void Update(Customer customer);
         void Save();
     }
     public class CustomerService : ICustomerService
@@ -40,6 +41,11 @@ namespace ToyStore.Service
         public void Save()
         {
             throw new NotImplementedException();
+        }
+
+        public void Update(Customer customer)
+        {
+            context.CustomerRepository.Update(customer);
         }
     }
 }
