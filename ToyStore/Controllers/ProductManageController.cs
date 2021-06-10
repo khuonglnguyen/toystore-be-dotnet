@@ -29,17 +29,17 @@ namespace ToyStore.Controllers
             AgeService ageService,
             GenderService genderService)
         {
-            this._productService = productService;
-            this._productCategoryService = productCategoryService;
-            this._supplierService = supplierService;
-            this._producerService = producerService;
-            this._ageService = ageService;
-            this._genderService = genderService;
+            _productService = productService;
+            _productCategoryService = productCategoryService;
+            _supplierService = supplierService;
+            _producerService = producerService;
+            _ageService = ageService;
+            _genderService = genderService;
         }
         #endregion
         // GET: Product
         [HttpGet]
-        public ActionResult List(int page = 1)
+        public ActionResult Index(int page = 1, string keyword = "")
         {
             if (Session["Emloyee"] == null)
             {
@@ -60,19 +60,42 @@ namespace ToyStore.Controllers
 
             int pageSize = 5;
             //Get proudct category list
-            var products = _productService.GetProductListForManage().OrderBy(x => x.Name);
-            PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
-            //Check null
-            if (listProduct != null)
+            if (keyword != "")
             {
-                ViewBag.Page = page;
-                //Return view
-                return View(listProduct);
+                var products = _productService.GetProductListForManage().Where(x=>x.Name.Contains(keyword)).OrderByDescending(x => x.LastUpdatedDate.Date);
+                ViewBag.Products = products;
+                PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
+                ViewBag.KeyWord = keyword;
+                //Check null
+                if (listProduct != null)
+                {
+                    ViewBag.Page = page;
+                    //Return view
+                    return View(listProduct);
+                }
+                else
+                {
+                    //return 404
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
             else
             {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var products = _productService.GetProductListForManage().OrderByDescending(x => x.LastUpdatedDate.Date);
+                ViewBag.Products = products;
+                PagedList<Product> listProduct = new PagedList<Product>(products, page, pageSize);
+                //Check null
+                if (listProduct != null)
+                {
+                    ViewBag.Page = page;
+                    //Return view
+                    return View(listProduct);
+                }
+                else
+                {
+                    //return 404
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
         }
         [HttpPost]
@@ -183,7 +206,7 @@ namespace ToyStore.Controllers
             //Create productCategory
             _productService.AddProduct(product);
             //Return view
-            return RedirectToAction("List", new { page = 1 });
+            return RedirectToAction("Index", new { page = 1 });
         }
         [HttpGet]
         public ActionResult Edit(int id)
@@ -197,7 +220,6 @@ namespace ToyStore.Controllers
 
             //Get data for DropdownList
             ViewBag.CategoryIDEdit = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
-            ViewBag.SupplierIDEdit = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
             ViewBag.ProducerIDEdit = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
             ViewBag.AgeIDEdit = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
             ViewBag.GenderIDEdit = new SelectList(_genderService.GetGenderList(), "ID", "Name", product.GenderID);
@@ -211,7 +233,6 @@ namespace ToyStore.Controllers
                     ID = product.ID,
                     Name = product.Name,
                     CategoryID = product.CategoryID,
-                    SupplierID = product.SupplierID,
                     ProducerID = product.ProducerID,
                     AgeID = product.AgeID,
                     GenderID = product.GenderID,
@@ -221,8 +242,6 @@ namespace ToyStore.Controllers
                     Price = product.Price,
                     Discount = product.Discount,
                     Description = product.Description,
-                    HomeFlag = product.HomeFlag,
-                    HotFlag = product.HotFlag,
                     IsNew = product.IsNew,
                     IsActive = product.IsActive,
                     ViewCount = product.ViewCount,
@@ -238,7 +257,7 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page, int CategoryIDEdit, int SupplierIDEdit, int ProducerIDEdit, int AgeIDEdit, int GenderIDEdit)
+        public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page, int CategoryIDEdit, int ProducerIDEdit, int AgeIDEdit, int GenderIDEdit)
         {
             if (Session["Emloyee"] == null)
             {
@@ -246,7 +265,6 @@ namespace ToyStore.Controllers
             }
             //Get data for DropdownList
             ViewBag.CategoryID = new SelectList(_productCategoryService.GetProductCategoryList().OrderBy(x => x.Name), "ID", "Name", product.CategoryID);
-            ViewBag.SupplierID = new SelectList(_supplierService.GetSupplierList().OrderBy(x => x.Name), "ID", "Name", product.SupplierID);
             ViewBag.ProducerID = new SelectList(_producerService.GetProducerList().OrderBy(x => x.Name), "ID", "Name", product.ProducerID);
             ViewBag.AgeID = new SelectList(_ageService.GetAgeList(), "ID", "Name", product.AgeID);
             ViewBag.GenderID = new SelectList(_genderService.GetGenderList(), "ID", "Name", product.GenderID);
@@ -301,69 +319,26 @@ namespace ToyStore.Controllers
             TempData["edit"] = "Success";
             //Update productCategory
             product.CategoryID = CategoryIDEdit;
-            product.SupplierID = SupplierIDEdit;
             product.ProducerID = ProducerIDEdit;
             product.AgeID = AgeIDEdit;
             product.GenderID = GenderIDEdit;
             _productService.UpdateProduct(product);
             string Url = Request.Url.ToString();
-            return RedirectToAction("List", new { page = page });
+            return RedirectToAction("Index", new { page = page });
         }
-        [HttpGet]
-        public ActionResult Block(int id)
+        public void Block(int id)
         {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            //Check id null
-            if (id == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
             //Get productCategory by ID
             var product = _productService.GetByID(id);
-            //Check null
-            if (product == null)
-            {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             //Delete productCategory
             _productService.DeleteProduct(product);
-            return Json(new
-            {
-                status = true
-            }, JsonRequestBehavior.AllowGet);
         }
-        [HttpGet]
-        public ActionResult Active(int id)
+        public void Active(int id)
         {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            //Check id null
-            if (id == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
             //Get productCategory by ID
             var product = _productService.GetByID(id);
-            //Check null
-            if (product == null)
-            {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             //Active productCategory
             _productService.ActiveProduct(product);
-            return Json(new
-            {
-                status = true
-            }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult DeleteMulti(FormCollection formCollection)
@@ -376,7 +351,7 @@ namespace ToyStore.Controllers
             _productService.MultiDeleteProduct(Ids);
             //Set TempData for checking in view to show swal
             TempData["deleteMulti"] = "Success";
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
         public ActionResult ProductActivePartial(int ID)
         {

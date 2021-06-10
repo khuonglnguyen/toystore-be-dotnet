@@ -27,7 +27,6 @@ namespace ToyStore
             container.RegisterType<ICustomerService, CustomerService>();
             container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IOrderDetailService, OrderDetailService>();
-            container.RegisterType<ICommentService, CommentService>();
             container.RegisterType<IQAService, QAService>();
             container.RegisterType<IEmloyeeTypeService, EmloyeeTypeService>();
             container.RegisterType<IEmloyeeService, EmloyeeService>();
@@ -41,6 +40,7 @@ namespace ToyStore
             container.RegisterType<IDiscountCodeService, DiscountCodeService>();
             container.RegisterType<IDiscountCodeDetailService, DiscountCodeDetailService>();
             container.RegisterType<IRoleService, RoleService>();
+            container.RegisterType<IMemberDiscountCodeService, MemberDiscountCodeService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

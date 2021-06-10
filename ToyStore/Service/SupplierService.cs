@@ -12,11 +12,13 @@ namespace ToyStore.Service
         Supplier AddSupplier(Supplier supplier);
         IEnumerable<Supplier> GetSupplierList();
         IEnumerable<Supplier> GetSupplierList(string keyWord);
-        IEnumerable<Supplier> GetSupplierListName(string keyword);
+        List<string> GetSupplierListName(string keyword);
         Supplier GetByID(int ID);
         void UpdateSupplier(Supplier supplier);
         void DeleteSupplier(Supplier supplier);
         void MultiDeleteSupplier(string[] IDs);
+        void Block(int ID);
+        void Active(int ID);
         void Save();
     }
     public class SupplierService : ISupplierService
@@ -55,7 +57,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Supplier> GetSupplierList()
         {
-            IEnumerable<Supplier> listSupplier = this.context.SupplierRepository.GetAllData().OrderByDescending(x=>x.TotalAmount);
+            IEnumerable<Supplier> listSupplier = this.context.SupplierRepository.GetAllData().OrderByDescending(x => x.TotalAmount);
             return listSupplier;
         }
 
@@ -76,10 +78,29 @@ namespace ToyStore.Service
             return listSupplier;
         }
 
-        public IEnumerable<Supplier> GetSupplierListName(string keyword)
+        public void Block(int ID)
         {
-            IEnumerable<Supplier> listSupplierName = this.context.SupplierRepository.GetAllData(x => x.Name.Contains(keyword));
-            return listSupplierName;
+            Supplier supplier = context.SupplierRepository.GetDataByID(ID);
+            supplier.IsActive = false;
+            context.SupplierRepository.Update(supplier);
+        }
+
+        public void Active(int ID)
+        {
+            Supplier supplier = context.SupplierRepository.GetDataByID(ID);
+            supplier.IsActive = true;
+            context.SupplierRepository.Update(supplier);
+        }
+
+        public List<string> GetSupplierListName(string keyword)
+        {
+            IEnumerable<Supplier> listSupplierName = this.context.SupplierRepository.GetAllData(x => x.Name.Contains(keyword) && x.IsActive == true);
+            List<string> names = new List<string>();
+            foreach (var item in listSupplierName)
+            {
+                names.Add(item.Name);
+            }
+            return names;
         }
     }
 }

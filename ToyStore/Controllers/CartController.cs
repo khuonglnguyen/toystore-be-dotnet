@@ -30,26 +30,37 @@ namespace ToyStore.Controllers
             _discountCodeDetailService = discountCodeDetailService;
         }
         // GET: Cart
-        public List<Cart> GetCart()
+        public List<ItemCart> GetCart()
         {
             Member member = Session["Member"] as Member;
             if (member != null)
             {
                 if (_cartService.CheckCartMember(member.ID))
                 {
-                    List<Cart> listCart = _cartService.GetCart(member.ID);
+                    List<ItemCart> listCart = _cartService.GetCart(member.ID);
+                    foreach (ItemCart item in listCart)
+                    {
+                        if (item.Image == null || item.Image == "")
+                        {
+                            item.Image = _productService.GetByID(item.ProductID).Image1;
+                        }
+                        if (item.Price == 0)
+                        {
+                            item.Price = _productService.GetByID(item.ProductID).PromotionPrice;
+                        }
+                    }
                     Session["Cart"] = listCart;
                     return listCart;
                 }
             }
             else
             {
-                List<Cart> listCart = Session["Cart"] as List<Cart>;
+                List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
                 //Check null session Cart
                 if (listCart == null)
                 {
                     //Initialization listCart
-                    listCart = new List<Cart>();
+                    listCart = new List<ItemCart>();
                     Session["Cart"] = listCart;
                     return listCart;
                 }
@@ -57,6 +68,7 @@ namespace ToyStore.Controllers
             }
             return null;
         }
+        [HttpPost]
         public ActionResult AddItemCart(int ID)
         {
             //Check product already exists in DB
@@ -68,8 +80,7 @@ namespace ToyStore.Controllers
                 return null;
             }
             //Get cart
-            List<Cart> listCart = GetCart();
-
+            List<ItemCart> listCart = GetCart();
             //If member
             Member member = Session["Member"] as Member;
             if (member != null)
@@ -83,17 +94,18 @@ namespace ToyStore.Controllers
                 {
                     //Case 2: If product does not exist in Member Cart
                     //Get product
-                    Product productAdd = _productService.GetByID(ID);
-                    Cart itemCart = new Cart();
-                    itemCart.ProductID = productAdd.ID;
-                    itemCart.Price = (decimal)productAdd.PromotionPrice;
-                    itemCart.Name = productAdd.Name;
-                    itemCart.Quantity = 1;
-                    itemCart.Total = itemCart.Price * itemCart.Quantity;
-                    itemCart.Image = productAdd.Image1;
-                    _cartService.AddCartIntoMember(itemCart, member.ID);
+                    ItemCart itemCart = new ItemCart(ID);
+                    itemCart.MemberID = member.ID;
+                    _cartService.AddCartIntoMember(itemCart);
                 }
-                List<Cart> carts = _cartService.GetCart(member.ID);
+                List<ItemCart> carts = _cartService.GetCart(member.ID);
+                foreach (ItemCart item in carts)
+                {
+                    if (item.Image == null || item.Image == "")
+                    {
+                        item.Image = _productService.GetByID(item.ProductID).Image1;
+                    }
+                }
                 Session["Cart"] = carts;
                 ViewBag.TotalQuanity = GetTotalQuanity();
                 ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
@@ -104,7 +116,7 @@ namespace ToyStore.Controllers
                 if (listCart != null)
                 {
                     //Case 1: If product already exists in session Cart
-                    Cart itemCart = listCart.SingleOrDefault(n => n.ProductID == ID);
+                    ItemCart itemCart = listCart.SingleOrDefault(n => n.ProductID == ID);
                     if (itemCart != null)
                     {
                         //Check inventory before letting customers make a purchase
@@ -113,20 +125,95 @@ namespace ToyStore.Controllers
                             return View("ThongBao");
                         }
                         itemCart.Quantity++;
-                        itemCart.Total = itemCart.Quantity * itemCart.Price;
+                        itemCart.Total = itemCart.Quantity * product.PromotionPrice;
                         ViewBag.TotalQuanity = GetTotalQuanity();
                         ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
                         return PartialView("CartPartial");
                     }
-
                     //Case 2: If product does not exist in the Session Cart
-                    Cart item = new Cart(ID);
+                    ItemCart item = new ItemCart(ID);
+                    item.Image = _productService.GetByID(item.ProductID).Image1;
                     listCart.Add(item);
                 }
             }
             ViewBag.TotalQuanity = GetTotalQuanity();
             ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
             return PartialView("CartPartial");
+        }
+        [HttpPost]
+        public ActionResult CheckQuantityAdd(int ID)
+        {
+            //Check product already exists in DB
+            Product product = _productService.GetByID(ID);
+            if (product == null)
+            {
+                //product does not exist
+                Response.StatusCode = 404;
+                return null;
+            }
+            //Get cart
+            List<ItemCart> listCart = GetCart();
+            //Check quantity
+            if (listCart != null)
+            {
+                int sum = 0;
+                foreach (ItemCart item in listCart.Where(x => x.ProductID == ID))
+                {
+                    sum += item.Quantity;
+                }
+                if (product.Quantity > sum)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        status = false
+                    });
+                }
+            }
+            else
+            {
+                if (product.Quantity > 0)
+                {
+
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        status = false
+                    });
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult CheckQuantityUpdate(int ID, int Quantity)
+        {
+            //Check product already exists in DB
+            Product product = _productService.GetByID(ID);
+            if (product.Quantity >= Quantity)
+            {
+                return Json(new
+                {
+                    status = true
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    status = false
+                });
+            }
         }
         public ActionResult CartPartial()
         {
@@ -142,7 +229,7 @@ namespace ToyStore.Controllers
         }
         public double GetTotalQuanity()
         {
-            List<Cart> listCart = Session["Cart"] as List<Cart>;
+            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
             if (listCart == null)
             {
                 return 0;
@@ -150,8 +237,9 @@ namespace ToyStore.Controllers
             return listCart.Sum(n => n.Quantity);
         }
         public decimal GetTotalPrice()
-        {//Lấy giỏ hàng
-            List<Cart> listCart = Session["Cart"] as List<Cart>;
+        {
+            //Lấy giỏ hàng
+            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
             if (listCart == null)
             {
                 return 0;
@@ -162,8 +250,16 @@ namespace ToyStore.Controllers
         {
             ViewBag.TotalQuantity = GetTotalQuanity();
             Member member = Session["Member"] as Member;
-            ViewBag.DiscountCodeDetailListByMemer = _discountCodeDetailService.GetDiscountCodeDetailListByMember(member.ID);
-            return View();
+            try
+            {
+                Session["Cart"] = GetCart();
+                ViewBag.DiscountCodeDetailListByMemer = _discountCodeDetailService.GetDiscountCodeDetailListByMember(member.ID);
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
         [HttpGet]
         public ActionResult EditCart(int ID)
@@ -181,9 +277,9 @@ namespace ToyStore.Controllers
                 return null;
             }
             //Get cart
-            List<Cart> listCart = GetCart();
+            List<ItemCart> listCart = GetCart();
             //Check if the product exists in the shopping cart
-            Cart item = listCart.SingleOrDefault(n => n.ProductID == ID);
+            ItemCart item = listCart.SingleOrDefault(n => n.ProductID == ID);
             if (item == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -200,26 +296,22 @@ namespace ToyStore.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult EditCart(Cart cart)
+        public ActionResult EditCart(int ID, int Quantity)
         {
             //Check stock quantity
-            Product product = _productService.GetByID(cart.ProductID);
-            if (product.Quantity < cart.Quantity)
-            {
-                return View("ThongBao");
-            }
+            Product product = _productService.GetByID(ID);
             //Updated quantity in cart Session
-            List<Cart> listCart = GetCart();
+            List<ItemCart> listCart = GetCart();
             //Get products from within listCart to update
-            Cart itemCartUpdate = listCart.Find(n => n.ProductID == cart.ProductID);
-            itemCartUpdate.Quantity = cart.Quantity;
+            ItemCart itemCartUpdate = listCart.Find(n => n.ProductID == ID);
+            itemCartUpdate.Quantity = Quantity;
             itemCartUpdate.Total = itemCartUpdate.Quantity * itemCartUpdate.Price;
 
             Member member = Session["Member"] as Member;
             if (member != null)
             {
                 //Update Cart Quantity Member
-                _cartService.UpdateQuantityCartMember(cart.Quantity, cart.ProductID, member.ID);
+                _cartService.UpdateQuantityCartMember(Quantity, ID, member.ID);
                 Session["Cart"] = listCart;
             }
 
@@ -241,9 +333,9 @@ namespace ToyStore.Controllers
                 return null;
             }
             //Get cart
-            List<Cart> listCart = GetCart();
+            List<ItemCart> listCart = GetCart();
             //Check if the product exists in the shopping cart
-            Cart item = listCart.SingleOrDefault(n => n.ProductID == ID);
+            ItemCart item = listCart.SingleOrDefault(n => n.ProductID == ID);
             if (item == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -254,14 +346,14 @@ namespace ToyStore.Controllers
             if (member != null)
             {
                 _cartService.RemoveCart(ID, member.ID);
-                List<Cart> carts = _cartService.GetCart(member.ID);
+                List<ItemCart> carts = _cartService.GetCart(member.ID);
                 Session["Cart"] = carts;
             }
             ViewBag.TotalQuantity = GetTotalQuanity();
             return PartialView("CheckoutPartial");
         }
         [HttpPost]
-        public ActionResult AddOrder(Customer customer, int NumberDiscountPass=0, string CodePass="")
+        public ActionResult AddOrder(Customer customer, int NumberDiscountPass = 0, string CodePass = "")
         {
             //Check null session cart
             if (Session["Cart"] == null)
@@ -309,19 +401,19 @@ namespace ToyStore.Controllers
                 order.CustomerID = customerNew.ID;
             }
             order.DateOrder = DateTime.Now;
-            order.DateShip = DateTime.Now;
+            order.DateShip = DateTime.Now.AddDays(3);
             order.IsPaid = false;
             order.IsDelete = false;
             order.IsDelivere = false;
             order.IsApproved = false;
             order.IsReceived = false;
             order.IsCancel = false;
-            order.Offer = NumberDiscountPass; 
+            order.Offer = NumberDiscountPass;
             _orderService.AddOrder(order);
             //Add order detail
-            List<Cart> listCart = GetCart();
+            List<ItemCart> listCart = GetCart();
             decimal sumtotal = 0;
-            foreach (Cart item in listCart)
+            foreach (ItemCart item in listCart)
             {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.OrderID = order.ID;
@@ -330,8 +422,11 @@ namespace ToyStore.Controllers
                 orderDetail.Price = item.Price;
                 _orderDetailService.AddOrderDetail(orderDetail);
                 sumtotal += orderDetail.Quantity * orderDetail.Price;
-                //Remove Cart
-                _cartService.RemoveCart(item.ProductID, item.MemberID);
+                if (Session["member"] != null)
+                {
+                    //Remove Cart
+                    _cartService.RemoveCart(item.ProductID, item.MemberID);
+                }
             }
             if (NumberDiscountPass != 0)
             {
@@ -351,11 +446,11 @@ namespace ToyStore.Controllers
             Session["Cart"] = null;
             if (status)
             {
-                SentMail("Đặt hàng thành công", customercheck.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "<br/>Nhập mã đơn hàng vào ô tìm kiếm để xem thông tin và theo dõi đơn hàng của bạn</p>");
+                SentMail("Đặt hàng thành công", customercheck.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "</p>");
             }
             else
             {
-                SentMail("Đặt hàng thành công", customerNew.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "<br/>Nhập mã đơn hàng vào ô tìm kiếm để xem thông tin và theo dõi đơn hàng của bạn</p>");
+                SentMail("Đặt hàng thành công", customerNew.Email, "lapankhuongnguyen@gmail.com", "khuongpro2000fx18g399!@#<>?googlelapankhuongnguyen", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID + "</p>");
             }
             return RedirectToAction("Message");
         }
@@ -386,7 +481,7 @@ namespace ToyStore.Controllers
             if (CodeInput != "")
             {
                 int numcheck = _discountCodeDetailService.GetDiscountByCode(CodeInput);
-                if (numcheck != null)
+                if (numcheck != -1)
                 {
                     Session["Code"] = CodeInput;
                     Session["num"] = numcheck;
@@ -394,6 +489,11 @@ namespace ToyStore.Controllers
                 else
                 {
                     int num = _discountCodeDetailService.GetDiscountByCode(Code);
+                    if (num == -1)
+                    {
+                        TempData["Message"] = "Mã giảm giá không đúng";
+                        return RedirectToAction("Checkout");
+                    }
                     Session["Code"] = Code;
                     Session["num"] = num;
                 }
@@ -401,9 +501,20 @@ namespace ToyStore.Controllers
             else
             {
                 int num = _discountCodeDetailService.GetDiscountByCode(Code);
+                if (num == -1)
+                {
+                    TempData["Message"] = "Mã giảm giá không đúng";
+                    return RedirectToAction("Checkout");
+                }
                 Session["Code"] = Code;
                 Session["num"] = num;
             }
+            return RedirectToAction("Checkout");
+        }
+        public ActionResult CancelDiscount()
+        {
+            Session["Code"] = null;
+            Session["num"] = null;
             return RedirectToAction("Checkout");
         }
     }

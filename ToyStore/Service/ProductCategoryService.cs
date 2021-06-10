@@ -13,10 +13,11 @@ namespace ToyStore.Service
         IEnumerable<ProductCategory> GetProductCategoryList();
         ProductCategory GetProductCategoryByName(string Name);
         IEnumerable<ProductCategory> GetProductCategoryList(string keyWord);
-        IEnumerable<ProductCategory> GetProductCategoryListName(string keyword);
+        List<string> GetProductCategoryListName(string keyword);
         ProductCategory GetByID(int ID);
         void UpdateProductCategory(ProductCategory productCategory);
-        void DeleteProductCategory(ProductCategory productCategory);
+        void Block(ProductCategory productCategory);
+        void Active(ProductCategory productCategory);
         void MultiDeleteProductCategory(string[] IDs);
         void Save();
     }
@@ -34,19 +35,15 @@ namespace ToyStore.Service
             return productCategory;
         }
 
-        public void DeleteProductCategory(ProductCategory productCategory)
+        public void Block(ProductCategory productCategory)
         {
             productCategory.IsActive = false;
-            IEnumerable<Product> products = this.context.ProductRepository.GetAllData(x => x.CategoryID == productCategory.ID);
-            foreach (var item in products)
-            {
-                if (item.IsActive != productCategory.IsActive)
-                {
-                    item.IsActive = productCategory.IsActive;
-                }
-                this.context.ProductRepository.Delete(item);
-            }
-            this.context.ProductCategoryRepository.Delete(productCategory);
+            this.context.ProductCategoryRepository.Update(productCategory);
+        }
+        public void Active(ProductCategory productCategory)
+        {
+            productCategory.IsActive = true;
+            this.context.ProductCategoryRepository.Update(productCategory);
         }
         public void MultiDeleteProductCategory(string[] IDs)
         {
@@ -95,10 +92,15 @@ namespace ToyStore.Service
             return listProductCategory;
         }
 
-        public IEnumerable<ProductCategory> GetProductCategoryListName(string keyword)
+        public List<string> GetProductCategoryListName(string keyword)
         {
-            IEnumerable<ProductCategory> listProductCategoryName = this.context.ProductCategoryRepository.GetAllData(x=>x.Name.Contains(keyword));
-            return listProductCategoryName;
+            IEnumerable<ProductCategory> listProductCategoryName = this.context.ProductCategoryRepository.GetAllData(x => x.Name.Contains(keyword) && x.IsActive == true);
+            List<string> names = new List<string>();
+            foreach (var item in listProductCategoryName)
+            {
+                names.Add(item.Name);
+            }
+            return names;
         }
 
         public ProductCategory GetProductCategoryByName(string Name)

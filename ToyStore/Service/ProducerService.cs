@@ -15,7 +15,8 @@ namespace ToyStore.Service
         IEnumerable<Producer> GetProducerListName(string keyword);
         Producer GetByID(int ID);
         void UpdateProducer(Producer producer);
-        void DeleteProducer(Producer producer);
+        void Block(Producer producer);
+        void Active(Producer producer);
         void MultiDeleteProducer(string[] IDs);
         void Save();
     }
@@ -31,12 +32,6 @@ namespace ToyStore.Service
             producer.LastUpdatedDate = DateTime.Now;
             this.context.ProducerRepository.Insert(producer);
             return producer;
-        }
-
-        public void DeleteProducer(Producer producer)
-        {
-            producer.IsActive = false;
-            this.context.ProducerRepository.Delete(producer);
         }
         public void MultiDeleteProducer(string[] IDs)
         {
@@ -80,6 +75,18 @@ namespace ToyStore.Service
         {
             IEnumerable<Producer> listProducerName = this.context.ProducerRepository.GetAllData(x => x.Name.Contains(keyword));
             return listProducerName;
+        }
+
+        public void Block(Producer producer)
+        {
+            producer.IsActive = false;
+            this.context.ProducerRepository.Delete(producer);
+        }
+
+        public void Active(Producer producer)
+        {
+            producer.IsActive = true;
+            this.context.ProducerRepository.Update(producer);
         }
     }
 }

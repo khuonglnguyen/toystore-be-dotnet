@@ -56,7 +56,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 }
 body{
 	margin:0;
-	font-family: 'Raleway', sans-serif;
+	font-family: 'UVN Gio May';
 	background: #fff;
 }
 body a{
@@ -67,9 +67,9 @@ body a{
 	-ms-transition: 0.5s all;
 	text-decoration:none;
 }
-h1,h2,h3,h4,h5,h6{
-	margin:0;	
-	font-family: 'Pompiere', cursive;
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-family: 'UVN Gio May', cursive;
 }
 p{
 	margin:0;
@@ -91,14 +91,14 @@ body a:hover{
 .navbar-right {
     margin-right: 0;
 }
-.top-header p,.top-header h2 {
+.top-header p, .top-header h2 {
     font-size: 0.9em;
     color: #353F49;
     line-height: 1.8em;
     margin-top: .8em;
     letter-spacing: 1px;
     font-weight: 500;
-	font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
 }
 .top-header p a,.top-header h2 a{
     color: #ff5a10;
@@ -196,10 +196,10 @@ span.tag {
     display: block;
     font-size: .3em;
     color: #999;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
     letter-spacing: 1px;
     margin-top: 6px;
-	font-weight: 400;
+    font-weight: 400;
 }
 .header-two-right {
     text-align: right;
@@ -290,7 +290,7 @@ b.caret {
     text-transform: uppercase;
     margin-bottom: 0.4em;
     font-weight: 700;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
 }
 .menu-grids.menulist1 ul {
     display: inline-block;
@@ -336,12 +336,12 @@ ul.multi-column-dropdown:nth-child(3) {
     min-height: 210px;
 }
 .new-add2 h6 {
-    font-family: 'Fascinate', cursive;
+    font-family: 'UVN Gio May';
     font-size: 2.1em;
     color: #000;
 }
 .new-add h5 {
-    font-family: 'Fascinate', cursive;
+    font-family: 'UVN Gio May';
     font-size: 3em;
     padding: 1em 1em;
     color: #000;
@@ -790,7 +790,7 @@ h3.title span {
 .trend-slider h4 {
     font-size: 2.8em;
     color: #000;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
     font-weight: 200;
 }
 
@@ -804,7 +804,7 @@ h3.title span {
     color: #014A5F;
     margin-top: .5em;
     text-align: center;
-    font-family: 'Fascinate', cursive;
+    font-family: 'UVN Gio May';
 }
 .trend-slider p {
     font-size: 1em;
@@ -1104,7 +1104,7 @@ input.item_quantity:hover{
     font-size: 1.2em;
     color: #353F49;
     text-transform: uppercase;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
     font-weight: 700;
     margin-bottom: 1.2em;
 }
@@ -1285,7 +1285,7 @@ input#amount {
     margin-top: 2em;
 }
 .rsidebar .gallery-text h4.sizes {
-    font-family: 'Pompiere', cursive;
+    font-family: 'UVN Gio May';
     font-size: 1.4em;
     color: #353F49;
     text-transform: inherit;
@@ -1293,7 +1293,7 @@ input#amount {
 .rsidebar .gallery-grid  h6 {
     font-size: 1.2em;
     color: #353F49;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
     font-weight: 700;
     margin-bottom: 1em;
     text-align: center;
@@ -1381,7 +1381,7 @@ input#amount {
     font-size: 2em;
     color: #353F49;
     font-weight: 700;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
 }
 .single-info p {
     font-size: 1em;
@@ -1417,13 +1417,13 @@ input#amount {
     display: inline-block;
     margin: 1em 1em 1em 0;
 }
-.single-top-left ul li a {
-    color: #999;
-    font-weight: 600;
-    font-family: 'Pompiere', cursive;
-    font-size: 1em;
-    letter-spacing: 1px;
-}
+    .single-top-left ul li a {
+        color: #999;
+        font-weight: 600;
+        font-family: 'UVN Gio May';
+        font-size: 1em;
+        letter-spacing: 1px;
+    }
 .single-top-left ul li a:hover{
     color: #ff590f;
 }
@@ -1623,7 +1623,7 @@ h4.panel-title a {
     color: #353F49;
     font-weight: 800;
     margin: 1em 0;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'UVN Gio May';
 }
 /*--//login-page--*/
 /*--contact--*/

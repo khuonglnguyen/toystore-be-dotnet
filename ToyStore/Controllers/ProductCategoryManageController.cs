@@ -33,12 +33,15 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult List(int page = 1)
+        public ActionResult Index(int page = 1)
         {
             if (Session["Emloyee"] == null)
             {
                 return RedirectToAction("Login");
             }
+            //Get data for DropdownList
+            ViewBag.ParentIDEdit = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.ParentID = ViewBag.ParentIDEdit;
             int pageSize = 5;
             //Get proudct category list
             var productCategories = _productCategoryService.GetProductCategoryList();
@@ -46,6 +49,7 @@ namespace ToyStore.Controllers
             //Check null
             if (listProductCategory != null)
             {
+                ViewBag.Page = page;
                 //Return view
                 return View(listProductCategory);
             }
@@ -58,8 +62,8 @@ namespace ToyStore.Controllers
         [HttpPost]
         public JsonResult ListName(string Prefix)
         {
-            var listProductCategoryListName = _productCategoryService.GetProductCategoryListName(Prefix).ToList();
-            return Json(listProductCategoryListName, JsonRequestBehavior.AllowGet);
+            List<string> names = _productCategoryService.GetProductCategoryListName(Prefix);
+            return Json(names, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult List(string keyword)
@@ -68,6 +72,8 @@ namespace ToyStore.Controllers
             {
                 return RedirectToAction("Login");
             }
+            //Get data for DropdownList
+            ViewBag.ParentIDEdit = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name");
             int pageSize = 5;
             if (keyword == null)
             {
@@ -103,7 +109,7 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(ProductCategory productCategory, HttpPostedFileBase ImageUpload)
+        public ActionResult Create(ProductCategory productCategory, HttpPostedFileBase ImageUpload, int page)
         {
             if (Session["Emloyee"] == null)
             {
@@ -148,7 +154,7 @@ namespace ToyStore.Controllers
             //Create productCategory
             _productCategoryService.AddProductCategory(productCategory);
             //Return view
-            return RedirectToAction("List");
+            return RedirectToAction("Index", new { page = 1 });
         }
         [HttpGet]
         public ActionResult Edit(int id)
@@ -159,13 +165,24 @@ namespace ToyStore.Controllers
             }
             //Get product catetgory
             var productCategory = _productCategoryService.GetByID(id);
+
             //Get data for DropdownList
-            ViewBag.ParentID = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name", productCategory.ParentID);
+            ViewBag.ParentIDEdit = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name", productCategory.ParentID);
+
             //Check null
             if (productCategory != null)
             {
                 //Return view
-                return View(productCategory);
+                return Json(new
+                {
+                    ID = productCategory.ID,
+                    Name = productCategory.Name,
+                    ParentID = productCategory.ParentID,
+                    Description = productCategory.Description,
+                    Image = productCategory.Image,
+                    IsActive = productCategory.IsActive,
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -174,7 +191,7 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(ProductCategory productCategory, HttpPostedFileBase ImageUpload)
+        public ActionResult Edit(ProductCategory productCategory, HttpPostedFileBase ImageUpload, int page, int ParentIDEdit)
         {
             if (Session["Emloyee"] == null)
             {
@@ -217,37 +234,28 @@ namespace ToyStore.Controllers
             //Set TempData for checking in view to show swal
             TempData["edit"] = "Success";
             //Update productCategory
+            productCategory.ParentID = ParentIDEdit;
             _productCategoryService.UpdateProductCategory(productCategory);
             //Return view
-            return RedirectToAction("List");
+            return RedirectToAction("Index",new { page=page});
         }
-        [HttpGet]
-        public ActionResult Delete(int id)
+        public void Block(int id)
         {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            //Check id null
-            if (id == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
             //Get productCategory by ID
             var productCategory = _productCategoryService.GetByID(id);
-            //Check null
-            if (productCategory == null)
-            {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //Delete productCategory
-            _productCategoryService.DeleteProductCategory(productCategory);
+            //Block productCategory
+            _productCategoryService.Block(productCategory);
             //Set TempData for checking in view to show swal
             TempData["delete"] = "Success";
-            //Return RedirectToAction
-            return RedirectToAction("List");
+        }
+        public void Active(int id)
+        {
+            //Get productCategory by ID
+            var productCategory = _productCategoryService.GetByID(id);
+            //Block productCategory
+            _productCategoryService.Active(productCategory);
+            //Set TempData for checking in view to show swal
+            TempData["delete"] = "Success";
         }
         [HttpPost]
         public ActionResult DeleteMulti(FormCollection formCollection)
@@ -260,7 +268,7 @@ namespace ToyStore.Controllers
             _productCategoryService.MultiDeleteProductCategory(Ids);
             //Set TempData for checking in view to show swal
             TempData["deleteMulti"] = "Success";
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
     }
 }

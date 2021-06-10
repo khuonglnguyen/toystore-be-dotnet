@@ -22,14 +22,13 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListByGender(int GenderID);
         IEnumerable<Product> GetProductListByAge(int AgeID);
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
-        IEnumerable<Product> GetProductListBySupplier(int SupplierID);
         IEnumerable<Product> GetProductListIsNew();
         IEnumerable<Product> GetProductListViewedByMemberID(int MemberID);
         IEnumerable<Product> GetProductList(string keyWord);
         IEnumerable<Product> GetProductListForManage();
         IEnumerable<Product> GetProductListForManage(string keyWord);
         IEnumerable<Product> GetProductListForHomePage(int productCategoryID);
-        IEnumerable<Product> GetProductListForDiscount();
+        IEnumerable<Product> GetProductListIndex();
         IEnumerable<Product> GetProductListRandom();
         IEnumerable<Product> GetProductListAlmostOver();
         IEnumerable<Product> GetProductListStocking();
@@ -132,11 +131,11 @@ namespace ToyStore.Service
             return listProduct;
         }
 
-        public IEnumerable<Product> GetProductListForDiscount()
+        public IEnumerable<Product> GetProductListIndex()
         {
             IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData()
-                .Where(x => x.HomeFlag == true)
-                .OrderByDescending(x => x.LastUpdatedDate)
+                .Where(x => x.IsActive == true && x.Quantity > 0 && x.PurchasedCount > 0)
+                .OrderByDescending(x => x.PurchasedCount)
                 .Take(10);
             return listProduct;
         }
@@ -235,12 +234,6 @@ namespace ToyStore.Service
             return context.ProductRepository.GetAllData().OrderBy(x => x.Quantity);
         }
 
-        public IEnumerable<Product> GetProductListBySupplier(int SupplierID)
-        {
-            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.SupplierID == SupplierID && x.IsActive == true);
-            return listProduct;
-        }
-
         public void AddViewCount(int ID)
         {
             Product product = context.ProductRepository.GetDataByID(ID);
@@ -285,7 +278,7 @@ namespace ToyStore.Service
             }
             if (ProductIDs.Count() > 0)
             {
-                return context.ProductRepository.GetAllData(x => x.PurchasedCount > 0 && ProductIDs.Contains(x.ID)).OrderByDescending(x=>x.PurchasedCount);
+                return context.ProductRepository.GetAllData(x => x.PurchasedCount > 0 && ProductIDs.Contains(x.ID)).OrderByDescending(x => x.PurchasedCount);
             }
             return null;
         }

@@ -29,33 +29,47 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- lined-icons -->
     <link rel="stylesheet" href="~/Content/css/icon-font.min.css" type='text/css' />
     <!-- //lined-icons -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
 </head>
 <body>
+    @if (ViewBag.Message == "Success")
+    {
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Tên đăng nhập hoặc tài khoản không đúng!",
+        icon: "error",
+        timer: 1500
+    });
+</script>
+    @(ViewBag.Message = null)
+    }
     <div class="main-wthree">
         <div class="container">
             <div class="sin-w3-agile">
                 <h2>Đăng Nhập</h2>
-                @using (Html.BeginForm("Login","Admin",FormMethod.Post))
+                @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
                 {
-                    <div class="username">
-                        <span class="username">Tên đăng nhập:</span>
-                        <input type="text" name="Username" class="name" placeholder="" required="">
-                        <div class="clearfix"></div>
-                    </div>
+    <div class="username">
+        <span class="username">Mã nhân viên:</span>
+        <input type="text" name="ID" class="name" placeholder="" required="">
+        <div class="clearfix"></div>
+    </div>
                     <div class="password-agileits">
                         <span class="username">Mật khẩu:</span>
                         <input type="password" name="Password" class="password" placeholder="" required="">
                         <div class="clearfix"></div>
                     </div>
-                    <div class="rem-for-agile">
-                        <input type="checkbox" name="remember" class="remember">Nhớ mật khẩu<br>
-                        <a href="#">Quên mật khẩu</a><br>
-                    </div>
-                    <div class="login-w3">
-                        <input type="submit" class="login" value="Đăng nhập">
-                    </div>
-                    <div class="clearfix"></div>
-                }
+                                    <div class="rem-for-agile">
+                                        <input type="checkbox" name="remember" class="remember">Nhớ mật khẩu<br>
+                                        <a href="#">Quên mật khẩu</a><br>
+                                    </div>
+                                                    <div class="login-w3">
+                                                        <input type="submit" class="login" value="Đăng nhập">
+                                                    </div>
+                                                                    <div class="clearfix"></div>
+                                                                                    <p class="text text-danger">@ViewBag.Message</p>}
                 <div class="back">
                     <a href="/Home/Index">Về trang chủ</a>
                 </div>

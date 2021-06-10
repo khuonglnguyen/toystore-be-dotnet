@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ToyStore.Models;
 using ToyStore.Service;
+using System.Data.Entity;
 
 namespace ToyStore.Controllers
 {
@@ -18,6 +19,7 @@ namespace ToyStore.Controllers
         private IProductService _productService;
         private IMemberService _memberService;
         private IEmloyeeService _emloyeeService;
+        ToyStore2021Entities context = new ToyStore2021Entities();
         public QAManageController(IQAService qAService, IProductService productService, IMemberService memberService, IEmloyeeService emloyeeService)
         {
             _qAService = qAService;
@@ -73,22 +75,32 @@ namespace ToyStore.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult Edit(QA qA, string DateQuestion, int page)
+        public ActionResult Edit(QA qA, int page)
         {
-            qA.DateQuestion = DateTime.Parse(DateQuestion);
             Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            qA.EmloyeeID = emloyee.ID;
-            _qAService.UpdateQA(qA);
+            QA qa = _qAService.GetQAByID(qA.ID);
+            qa.EmloyeeID = emloyee.ID;
+            qa.Answer = qA.Answer;
+            qa.DateAnswer = DateTime.Now;
+            _qAService.UpdateQA(qa);
+            TempData["ModifiedQA"] = "Success";
             return RedirectToAction("List", new { page = page });
         }
-        [HttpPost]
-        public ActionResult Answer(QA qA, string DateQuestion, int page)
+        [HttpGet]
+        public ActionResult Delete(int ID, int ProductID)
         {
-            qA.DateQuestion = DateTime.Parse(DateQuestion);
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            qA.EmloyeeID = emloyee.ID;
-            _qAService.UpdateQA(qA);
-            return RedirectToAction("List", new { page = page });
+            _qAService.Delete(ID);
+            IEnumerable<QA> listQA = context.QAs.Include(x => x.Emloyee).Include(x => x.Member).Where(x => x.ProductID == ID).OrderByDescending(x => x.DateQuestion).ToList();
+            ViewBag.QAList = listQA;
+            return RedirectToAction("QAPartial","Product",new { ID=ProductID});
+        }
+        [HttpGet]
+        public ActionResult EditQuestion(QA qA, int ProductID)
+        {
+            QA qa = _qAService.GetQAByID(qA.ID);
+            qa.Question = qA.Question;
+            _qAService.UpdateQA(qa);
+            return RedirectToAction("QAPartial", "Product", new { ID = ProductID });
         }
     }
 }

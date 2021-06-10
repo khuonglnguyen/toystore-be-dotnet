@@ -45,27 +45,20 @@
                             Ưu đãi
                         </th>
                         <th>
-                            Thanh toán
-                        </th>
-                        <th>
                             Tình trạng giao hàng
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int counter1 = 0;
-                    }
-                    @foreach (var item in Model.Join(customers, c => c.CustomerID, m => m.ID, (c, m) => new { c, m })
-                        .Select(n => new { CustomerName = n.m.FullName, ID = n.c.ID, DateOrder = n.c.DateOrder, DateShip = n.c.DateShip, Offer = n.c.Offer, IsPaid = n.c.IsPaid, IsDelivere = n.c.IsDelivere }))
+                    @foreach (var item in Model)
                     {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ID)
                             </td>
                             <td style="color:brown">
-                                <b>@Html.DisplayFor(modelItem => item.CustomerName)</b>
+                                <b>@Html.DisplayFor(modelItem => item.Customer.FullName)</b>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DateOrder)
@@ -77,37 +70,13 @@
                                 @Html.DisplayFor(modelItem => item.Offer)
                             </td>
                             <td>
-                                <div id="DivActive@(counter1)">
-                                    @if (item.IsPaid == true)
-                                    {
-                                        <span class="label label-success">Đã thanh toán</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger">Chưa thanh toán</span>
-                                    }
-                                </div>
-                            </td>
-
-                            <td>
-                                <div id="DivActive@(counter1)">
-                                    @if (item.IsPaid == true)
-                                    {
-                                        <span class="label label-success">Đã giao</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-warning">Chưa giao</span>
-                                    }
-                                </div>
+                                <span class="label label-warning">Chưa giao</span>
                             </td>
                             <td>
                                 @Html.ActionLink("Giao Hàng", "Delivered", new { ID = item.ID })
                             </td>
                         </tr>
-                        @(counter1++)
                     }
-                    @(counter1 = 0)
                 </tbody>
             </table>
             <br />

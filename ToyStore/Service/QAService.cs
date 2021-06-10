@@ -14,6 +14,7 @@ namespace ToyStore.Service
         QA GetQAByID(int ID);
         void UpdateQA(QA qA);
         IEnumerable<QA> GetQAList();
+        void Delete(int ID);
     }
     public class QAService : IQAService
     {
@@ -26,6 +27,12 @@ namespace ToyStore.Service
         {
             this.context.QARepository.Insert(qA);
             return qA;
+        }
+
+        public void Delete(int ID)
+        {
+            QA qA = this.context.QARepository.GetDataByID(ID);
+            this.context.QARepository.Remove(qA);
         }
 
         public QA GetQAByID(int ID)

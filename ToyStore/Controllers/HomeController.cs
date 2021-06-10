@@ -42,9 +42,8 @@ namespace ToyStore.Controllers
             //Get list product New
             var listProdudctNew = _productService.GetProductListIsNew();
             ViewBag.ListProductNew = listProdudctNew;
-            //Get list product 4
-            var listProdudct4 = _productService.GetProductListForDiscount();
-            ViewBag.ListProduct4 = listProdudct4;
+            var listProdudct = _productService.GetProductListIndex();
+            ViewBag.listProduct = listProdudct;
 
             return View();
         }
@@ -73,19 +72,34 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult SignUp(Member member)
         {
-            if (ModelState.IsValid)
+            bool fail = false;
+            //Check email
+            if (_memberService.CheckEmail(member.Email) == false)
             {
-                if (member == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    Member member1 = _memberService.AddMember(member);
-                    return RedirectToAction("ConfirmEmail", "Member", new { ID = member1.ID });
-                }
+                ViewBag.MessageEmail = "Email đã tồn tại";
+                fail = true;
             }
-            return null;
+            //Check username
+            if (_memberService.CheckUsername(member.Username) == false)
+            {
+                ViewBag.MessageUsername = "Username đã tồn tại";
+                fail = true;
+            }
+            //Check phonenumber
+            if (_memberService.CheckPhoneNumber(member.PhoneNumber) == false)
+            {
+                ViewBag.MessagePhoneNumber = "Số điện thoại đã tồn tại";
+                fail = true;
+            }
+            if (fail)
+            {
+                return View(member);
+            }
+            else
+            {
+                Member member1 = _memberService.AddMember(member);
+                return RedirectToAction("ConfirmEmail", "Member", new { ID = member1.ID });
+            }
         }
         [HttpGet]
         public ActionResult SignIn()
@@ -113,16 +127,17 @@ namespace ToyStore.Controllers
                     {
                         if (_cartService.CheckCartMember(memberCheck.ID))
                         {
-                            List<Cart> carts = _cartService.GetCart(memberCheck.ID);
+                            List<ItemCart> carts = _cartService.GetCart(memberCheck.ID);
                             Session["Cart"] = carts;
                             return RedirectToAction("Index");
                         }
                         if (Session["Cart"] != null)
                         {
-                            List<Cart> listCart = Session["Cart"] as List<Cart>;
+                            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
                             foreach (var item in listCart)
                             {
-                                _cartService.AddCartIntoMember(item, memberCheck.ID);
+                                item.MemberID = memberCheck.ID;
+                                _cartService.AddCartIntoMember(item);
                             }
                         }
                     }
@@ -141,6 +156,6 @@ namespace ToyStore.Controllers
             Session["Cart"] = null;
             return RedirectToAction("Index");
         }
-        
+
     }
 }

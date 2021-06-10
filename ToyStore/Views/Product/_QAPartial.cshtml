@@ -1,23 +1,49 @@
 ﻿@using ToyStore.Models
 @model Product
-@{
-    IEnumerable<QA> qAs = ViewBag.QAList as IEnumerable<QA>;
-    IEnumerable<Member> members = ViewBag.MemberList as IEnumerable<Member>;
-}
+@{ IEnumerable<QA> qAs = ViewBag.QAList as IEnumerable<QA>;
+    Member member = Session["Member"] as Member; }
 
 <hr />
-@foreach (var item in qAs
-                                    .Join(members, c => c.MemberID, m => m.ID, (c, m) => new { c, m })
-                                    .Select(n => new { FullName = n.m.FullName, Question = n.c.Question, Answer = n.c.Answer, DateQuesion = n.c.DateQuestion, DateAnswer = n.c.DateAnswer }))
+@if (qAs.Count() > 0)
 {
-    <p><label style="color:black">@item.FullName:</label>  @item.DateQuesion</p>
-    <p style="color:black">@item.Question</p>
-    if (item.Answer != null)
+    foreach (var item in qAs)
     {
-        <div style="background-color:lightgray">
-            <p><label style="color:brown">Nguyễn Văn A  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
-            <p style="color:black">@item.Answer</p>
-        </div>
-    }
-    <hr />
+<label style="color:black">@item.Member.FullName:</label> @item.DateQuestion
+                    <p style="color:black">@item.Question</p> if (item.Answer != null)
+                    {
+<div style="background-color:lightgray">
+    <p><label style="color:brown">@item.Emloyee.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
+    <p style="color:black">@item.Answer</p>
+</div> }
+<p>
+    @if (item.MemberID == member.ID)
+    {
+        using (Ajax.BeginForm("DeleteQA", "Product", new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "GET",
+            LoadingElementId = "ajax-loader",
+            UpdateTargetId = "qaContainer",
+        }))
+        {
+<input type="text" name="ID" value="@item.ID" hidden="hidden" />
+                            <input type="text" name="ProductID" value="@item.ProductID" hidden="hidden" />
+                                                        <button>Xóa</button> }
+                            <div class="ajax-loader"></div>}
+
+</p>
+                    <p>
+                        @if (item.Answer == null && member != null)
+                        {
+                            if (item.MemberID == member.ID)
+                            {
+    <button class="btnEdit" value="@item.ID" data-productid="@item.ProductID">Sửa</button>}
 }
+                    </p>
+
+                                        <hr />
+ }
+                                }
+                                else
+                                {
+                    <p>Chưa có câu hỏi nào</p>}

@@ -15,10 +15,11 @@ namespace ToyStore.Data.Repository
     {
         private ToyStore2021Entities DbContext;
         private IDbSet<T> dbEntity;
+
         public GenericRepository(ToyStore2021Entities DbContext)
         {
             this.DbContext = DbContext;
-            dbEntity = DbContext.Set<T>();
+                dbEntity = DbContext.Set<T>();
         }
         public void Insert(T Model)
         {

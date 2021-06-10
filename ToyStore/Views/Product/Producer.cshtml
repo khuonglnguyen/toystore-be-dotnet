@@ -10,6 +10,50 @@
 }
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.AddItemCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
 <!--breadcrumbs-->
 <div class="breadcrumbs">
     <div class="container">
@@ -94,7 +138,7 @@
         <div class="col-md-3 rsidebar">
             <div class="rsidebar-top">
                 <div class="slider-left">
-                    <h4>Filter By Price</h4>
+                    <h4>Lọc khoảng giá</h4>
                     <div id="slider-range"></div>
                     <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
                     <!---->
@@ -118,33 +162,7 @@
                     <!---->
                 </div>
                 <div class="sidebar-row">
-                    <h4> Clothes & Shoes </h4>
-                    <ul class="faq">
-                        <li class="item1">
-                            <a href="#">Frocks & Dresses<span class="glyphicon glyphicon-menu-down"></span></a>
-                            <ul>
-                                <li class="subitem1"><a href="#">Party Wear</a></li>
-                                <li class="subitem1"><a href="#">Night Wear</a></li>
-                                <li class="subitem1"><a href="#">Bath Time</a></li>
-                            </ul>
-                        </li>
-                        <li class="item2">
-                            <a href="#">Shorts & Jeans<span class="glyphicon glyphicon-menu-down"></span></a>
-                            <ul>
-                                <li class="subitem1"><a href="#">Girls</a></li>
-                                <li class="subitem1"><a href="#">Boys</a></li>
-                                <li class="subitem1"><a href="#">Baby by age</a></li>
-                            </ul>
-                        </li>
-                        <li class="item3">
-                            <a href="#">Protection <span class="glyphicon glyphicon-menu-down"></span></a>
-                            <ul>
-                                <li class="subitem1"><a href="#">Sweaters</a></li>
-                                <li class="subitem1"><a href="#">Rain Jackets</a></li>
-                                <li class="subitem1"><a href="#">Caps & Gloves</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    
                     <!-- script for tabs -->
                     <script type="text/javascript">
                         $(function () {
@@ -171,25 +189,16 @@
                     <!-- script for tabs -->
                 </div>
                 <div class="sidebar-row">
-                    <h4>DISCOUNTS</h4>
+                    <h4>Khuyến mãi</h4>
                     <div class="row row1 scroll-pane">
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Upto - 10% (20)</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>70% - 60% (5)</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>50% - 40% (7)</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>30% - 20% (2)</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>10% - 5% (5)</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>30% - 20% (7)</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>10% - 5% (2)</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Other(50)</label>
-                    </div>
-                </div>
-                <div class="sidebar-row">
-                    <h4>Color</h4>
-                    <div class="row row1 scroll-pane">
-                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>White</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Pink</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Gold</label>
-                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Silver</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>80 - 90%</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>60% - 70%</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>50% - 60%</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>40% - 50%</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>30% - 40%</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>20% - 30%</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>10% - 20%</label>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Other(5)</label>
                     </div>
                 </div>
             </div>

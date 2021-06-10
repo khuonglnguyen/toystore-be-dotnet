@@ -1,18 +1,14 @@
 ﻿@using ToyStore.Models;
 @model Product
-@{
-    ViewBag.Title = Model.Name;
-    Layout = "~/Views/Layout/ProductDetailsLayout.cshtml";
-}
-@{
-    IEnumerable<Product> products = ViewBag.ListProduct as IEnumerable<Product>;
-    IEnumerable<Comment> comments = ViewBag.CommentList as IEnumerable<Comment>;
+@{ ViewBag.Title = Model.Name;
+    Layout = "~/Views/Layout/ProductDetailsLayout.cshtml"; }
+@{ IEnumerable<Product> products = ViewBag.ListProduct as IEnumerable<Product>;
     IEnumerable<QA> qAs = ViewBag.CommentQA as IEnumerable<QA>;
     IEnumerable<Rating> ratings = ViewBag.ListRating as IEnumerable<Rating>;
     Member member = Session["Member"] as Member;
-    int counter = 1;
-}
+    int counter = 1; }
 
+<script src="~/Scripts/bootbox.js"></script>
 <script>
     $(document).ready(function () {
         $('#Textarea1').change(function () {
@@ -23,7 +19,83 @@
         });
         $(".btnPost").on("click", function () {
             $("#Textarea1").val("");
-            $("#Textarea2").val("");
+            $("#Textarea2").val("");    
+        });
+        $('.item_add').on('click', function () {
+            swal({
+                title: "Thông báo",
+                text: "Thêm vào giỏ hàng thành công!",
+                icon: "success",
+                timer: 1500
+            });
+        });
+        $('.AddItemCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+        });
+        $('.btnEdit').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/Product/GetDataQuesion',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#ID').val(response.ID);
+                        $('#Question').val(response.Question);
+                        $('#ProductID').val(response.ProductID);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $('#btnSave').off('click').on('click', function () {
+            $('#modalUpdate').modal('hide');
         });
     });
 </script>
@@ -116,16 +188,14 @@
                         </li>
                         @if (Model.Image2 != null)
                         {
-                            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image2)">
-                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image2)" data-imagezoom="true" class="img-responsive" alt=""> </div>
-                            </li>
-                        }
+            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image2)">
+                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image2)" data-imagezoom="true" class="img-responsive" alt=""> </div>
+            </li>}
                         @if (Model.Image3 != null)
                         {
-                            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image3)">
-                                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image3)" data-imagezoom="true" class="img-responsive" alt=""> </div>
-                            </li>
-                        }
+            <li data-thumb="@Url.Content("~/Content/images/" + Model.Image3)">
+                <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Image3)" data-imagezoom="true" class="img-responsive" alt=""> </div>
+            </li>}
                     </ul>
                 </div>
             </div>
@@ -133,95 +203,85 @@
                 <h3>@Model.Name</h3>
                 <div class="single-rating">
                     <span class="starRating">
-                        @{
-                            if (ViewBag.Rating == 5)
+                        @{ if (ViewBag.Rating == 5)
                             {
-                                <input id="rating5" type="radio" name="rating" value="5" checked>
+                <input id="rating5" type="radio" name="rating" value="5" checked>
                                 <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label>
-                            }
-                            else if (ViewBag.Rating == 4)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4" checked>
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label>
-                            }
-                            else if (ViewBag.Rating == 3)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3" checked>
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label>
-                            }
-                            else if (ViewBag.Rating == 2)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2" checked>
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label>
-                            }
-                            else if (ViewBag.Rating == 1)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1" checked>
-                                <label for="rating1">1</label>
-                            }
-                            else
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label>
-                            }
-                        }
+                                                <input id="rating4" type="radio" name="rating" value="4">
+                                                                <label for="rating4">4</label>
+                                                                                <input id="rating3" type="radio" name="rating" value="3">
+                                                                                                <label for="rating3">3</label>
+                                                                                                                <input id="rating2" type="radio" name="rating" value="2">
+                                                                                                                                <label for="rating2">2</label>
+                                                                                                                                                <input id="rating1" type="radio" name="rating" value="1">
+                                                                                                                                                                <label for="rating1">1</label> }
+                                                                                                                                                            else if (ViewBag.Rating == 4)
+                                                                                                                                                            {
+                                                                                                                                                <input id="rating5" type="radio" name="rating" value="5">
+                                                                                                                                                                <label for="rating5">5</label>
+                                                                                                                                                                                <input id="rating4" type="radio" name="rating" value="4" checked>
+                                                                                                                                                                                                <label for="rating4">4</label>
+                                                                                                                                                                                                                <input id="rating3" type="radio" name="rating" value="3">
+                                                                                                                                                                                                                                <label for="rating3">3</label>
+                                                                                                                                                                                                                                                <input id="rating2" type="radio" name="rating" value="2">
+                                                                                                                                                                                                                                                                <label for="rating2">2</label>
+                                                                                                                                                                                                                                                                                <input id="rating1" type="radio" name="rating" value="1">
+                                                                                                                                                                                                                                                                                                <label for="rating1">1</label> }
+                                                                                                                                                                                                                                                                                            else if (ViewBag.Rating == 3)
+                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                <input id="rating5" type="radio" name="rating" value="5">
+                                                                                                                                                                                                                                                                                                <label for="rating5">5</label>
+                                                                                                                                                                                                                                                                                                                <input id="rating4" type="radio" name="rating" value="4">
+                                                                                                                                                                                                                                                                                                                                <label for="rating4">4</label>
+                                                                                                                                                                                                                                                                                                                                                <input id="rating3" type="radio" name="rating" value="3" checked>
+                                                                                                                                                                                                                                                                                                                                                                <label for="rating3">3</label>
+                                                                                                                                                                                                                                                                                                                                                                                <input id="rating2" type="radio" name="rating" value="2">
+                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating2">2</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating1" type="radio" name="rating" value="1">
+                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating1">1</label> }
+                                                                                                                                                                                                                                                                                                                                                                                                                            else if (ViewBag.Rating == 2)
+                                                                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating5" type="radio" name="rating" value="5">
+                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating5">5</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating4" type="radio" name="rating" value="4">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating4">4</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating3" type="radio" name="rating" value="3">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating3">3</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating2" type="radio" name="rating" value="2" checked>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating2">2</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating1" type="radio" name="rating" value="1">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating1">1</label> }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            else if (ViewBag.Rating == 1)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating5" type="radio" name="rating" value="5">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating5">5</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating4" type="radio" name="rating" value="4">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating4">4</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating3" type="radio" name="rating" value="3">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating3">3</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating2" type="radio" name="rating" value="2">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating2">2</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating1" type="radio" name="rating" value="1" checked>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating1">1</label> }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            else
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating5" type="radio" name="rating" value="5">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating5">5</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating4" type="radio" name="rating" value="4">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating4">4</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating3" type="radio" name="rating" value="3">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating3">3</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating2" type="radio" name="rating" value="2">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating2">2</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input id="rating1" type="radio" name="rating" value="1">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="rating1">1</label> } }
                     </span>
                     @if (@ViewBag.Rating > 0)
                     {
-                        <p>@ViewBag.Rating / 5</p>
-                    }
-                    else
-                    {
-                        <p>Chưa có đánh giá</p>
-                    }
+        <p>@ViewBag.Rating / 5</p> }
+    else
+    {
+<p>Chưa có đánh giá</p>}
                     <a href="#">Đánh giá sau khi mua hàng</a>
                 </div>
                 <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p>
@@ -234,9 +294,6 @@
                     <p class="qty"> Thương Hiệu :</p> @Model.Producer.Name
                 </div>
                 <div class="quantity">
-                    <p class="qty"> Nhà Cung Cấp :</p> @Model.Supplier.Name
-                </div>
-                <div class="quantity">
                     <p class="qty"> Lứa Tuổi :</p> @Model.Age.Name
                 </div>
                 <div class="quantity">
@@ -245,9 +302,9 @@
                 <div class="quantity">
                     <p class="qty"> Đã bán :</p> @Model.PurchasedCount
                 </div>
-                <p>Etiam faucibus viverra libero vel efficitur. Ut semper nisl ut laoreet ultrices. Maecenas dictum arcu purus, sit amet volutpat purus viverra sit amet. Quisque lacinia quam sed tortor interdum, malesuada congue nunc ornare. Cum sociis natoque penatibus et magnis dis parturient montes</p>
                 <div class="btn_form">
-                    <a href="@Url.Action("AddItemCart","Cart",new {ID=Model.ID,@strURL=Request.Url.ToString()})" class="add-cart item_add">THÊM VÀO GIỎ</a>
+                    <a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a>
+                    @*@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = Model.ID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "add-cart item_add" })*@
                 </div>
             </div>
             <div class="clearfix"> </div>
@@ -275,12 +332,10 @@
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 @if (ratings.Count() > 0)
                                 {
-                                    <span>Đánh Giá (@ratings.Count())</span>
-                                }
+                    <span>Đánh Giá (@ratings.Count())</span> }
                                 else
                                 {
-                                    <span>Đánh Giá</span>
-                                }
+                    <span>Đánh Giá</span>}
                             </a>
                         </h4>
                     </div>
@@ -290,17 +345,15 @@
                             {
                                 foreach (var item in ratings)
                                 {
-                                    <p><label style="color:black">@item.Member.FullName</label>: (@ViewBag.Rating/5)</p>
+                <p><label style="color:black">@item.Member.FullName</label>: (@ViewBag.Rating/5)</p>
                                     <div style="background-color:lightgray">
                                         <p style="color:black">@item.Content</p>
                                     </div>
-                                    <hr />
-                                }
-                            }
-                            else
-                            {
-                                <p>Chưa có đánh giá</p>
-                            }
+                                                        <hr /> }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                        <p>Chưa có đánh giá</p>}
                         </div>
                     </div>
                 </div>
@@ -309,16 +362,14 @@
                         <h4 class="panel-title">
                             @if (qAs.Count() > 0)
                             {
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Hỏi Đáp (@qAs.Count())
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Hỏi Đáp
-                                </a>
-                            }
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Hỏi Đáp (@qAs.Count())
+                </a> }
+            else
+            {
+<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+    Hỏi Đáp
+</a>}
                         </h4>
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
@@ -334,115 +385,66 @@
 
                                 }))
                                 {
-                                    <input value="@member.ID" hidden="hidden" name="memberID" />
+                <input value="@member.ID" hidden="hidden" name="memberID" />
                                     <input value="@Model.ID" hidden="hidden" name="productID" />
-                                    <div class="form-group mx-sm-3 mb-2">
-                                        <label for="inputPassword2" class="sr-only">Nội dung câu hỏi</label>
-                                        <textarea class="form-control" id="Textarea2" style="resize:none" rows="3" placeholder="Viết câu hỏi tại đây..."></textarea>
-                                    </div>
-                                    <input type="text" name="Question" id="content2" hidden="hidden" />
-                                    <button type="submit" class="btn btn-warning btnPost">Đăng Câu Hỏi</button>
-                                    <img id="ajax-loader"
-                                         src="@Url.Content("~/Content/images/loading.gif")"
-                                         style="display:none" />
-
-                                }
-                                <div class="ajax-loader"></div>
-                            }
-                            else
-                            {
-                                <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng câu hỏi</a>
-                            }
-                        <div id="qaContainer">
-                            <hr />
-                            @if (qAs.Count() > 0)
-                            {
-                                foreach (var item in qAs)
-                                {
-                                    <p><label style="color:black">@item.Member.FullName:</label>  @item.DateQuestion</p>
-                                    <p style="color:black">@item.Question</p>
-                                    if (item.Answer != null)
-                                    {
-                                        <div style="background-color:lightgray">
-                                            <p><label style="color:brown">@item.Emloyee.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
-                                            <p style="color:black">@item.Answer</p>
-                                        </div>
-                                    }
-                                    <hr />
-                                }
-                            }
-                            else
-                            {
-                                <p>Chưa có câu hỏi nào</p>
-                            }
-
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default wow fadeInUp animated" data-wow-delay=".8s">
-                    <div class="panel-heading" role="tab" id="headingFour">
-                        <h4 class="panel-title">
-                            @if (comments.Count() > 0)
-                            {
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    Bình Luận (@comments.Count())
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    Bình Luận
-                                </a>
-                            }
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                        <div class="panel-body">
-                            @if (Session["Member"] != null)
-                            {
-                                using (Ajax.BeginForm("AddComment", "Product", new AjaxOptions
-                                {
-                                    InsertionMode = InsertionMode.Replace,
-                                    HttpMethod = "GET",
-                                    LoadingElementId = "ajax-loader",
-                                    UpdateTargetId = "commentContainer",
-
-                                }))
-                                {
-                                    <input value="@member.ID" hidden="hidden" name="memberID" />
-                                    <input value="@Model.ID" hidden="hidden" name="productID" />
-                                    <div class="form-group mx-sm-3 mb-2">
-                                        <label for="inputPassword2" class="sr-only">Nội dung</label>
-                                        <textarea class="form-control" id="Textarea1" style="resize:none" rows="3" placeholder="Viết bình luận tại đây..."></textarea>
-                                    </div>
-                                    <input type="text" name="content" id="content" hidden="hidden" />
-                                    <button type="submit" class="btn btn-warning btnPost">Đăng Bình Luận</button>
-                                    <img id="ajax-loader"
-                                         src="@Url.Content("~/Content/images/loading.gif")"
-                                         style="display:none" />
-                                }
-                                <div class="ajax-loader"></div>
-                            }
-                            else
-                            {
-                                <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng bình luận</a>
-                            }
-                            <div id="commentContainer">
+                                                        <div class="form-group mx-sm-3 mb-2">
+                                                            <label for="inputPassword2" class="sr-only">Nội dung câu hỏi</label>
+                                                            <textarea class="form-control" id="Textarea2" style="resize:none" rows="3" placeholder="Viết câu hỏi tại đây..."></textarea>
+                                                        </div>
+                                                                            <input type="text" name="Question" id="content2" hidden="hidden" required/>
+                                                                                                <button type="submit" class="btn btn-warning btnPost">Đăng Câu Hỏi</button>
+                                                                                                                    <img id="ajax-loader"
+                                                                                                                         src="@Url.Content("~/Content/images/loading.gif")"
+                                                                                                                         style="display:none" /> }
+                                                                                                                    <div class="ajax-loader"></div> }
+                                                                                                                                else
+                                                                                                                                {
+                                                                                                                    <a class="btn btn-warning btnPost" href="@Url.Action("SignIn","Home")">Đăng nhập để đăng câu hỏi</a>}
+                            <div id="qaContainer">
                                 <hr />
-                                @if (comments.Count() > 0)
+                                @if (qAs.Count() > 0)
                                 {
-                                    foreach (var item in comments)
+                                    foreach (var item in qAs)
                                     {
-                                        <label style="color:black">@item.Member.FullName</label> @item.Date
-                                        <p style="color:black">@item.Content</p>
-                                    }
-                                }
-                                else
-                                {
-                                    <p>Chưa có bình luận</p>
-                                }
+                    <label style="color:black">@item.Member.FullName:</label> @item.DateQuestion
+                                        <p style="color:black">@item.Question</p> if (item.Answer != null)
+                                        {
+                    <div style="background-color:lightgray">
+                        <p><label style="color:brown">@item.Emloyee.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
+                        <p style="color:black">@item.Answer</p>
+                    </div> }
+                                        <p>
+                                            @if (item.MemberID == member.ID)
+                                            {
+                                                using (Ajax.BeginForm("DeleteQA", "Product", new AjaxOptions
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    HttpMethod = "GET",
+                                                    LoadingElementId = "ajax-loader",
+                                                    UpdateTargetId = "qaContainer",
+                                                }))
+                                                {
+                        <input type="text" name="ID" value="@item.ID" hidden="hidden" />
+                                                    <input type="text" name="ProductID" value="@item.ProductID" hidden="hidden" />
+                                                                                <button>Xóa</button> }
+                                                                                <div class="ajax-loader"></div>
+                                                                            }
 
+                                        </p>
+                                                            <p>
+                                                                @if (item.Answer == null && member != null)
+                                                                {
+                                                                    if (item.MemberID == member.ID)
+                                                                    {
+                                            <button class="btnEdit" value="@item.ID" data-productid="@item.ProductID">Sửa</button>}
+                                                                }
+                                                            </p>
+
+                                                                                <hr /> }
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                <p>Chưa có câu hỏi nào</p>}
                             </div>
                         </div>
                     </div>
@@ -461,120 +463,116 @@
                 {
                     if (counter == 1)
                     {
-                        <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay=".5s">
-                            <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                                <div class="new-text">
-                                    <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
-                                <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        counter++;
-                    }
-                    else if (counter == 2)
-                    {
-                        <div class="col-md-3 new-grid new-mdl simpleCart_shelfItem wow flipInY animated" data-wow-delay=".7s">
-                            <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                                <div class="new-text">
-                                    <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
-                                <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        counter++;
-                    }
-                    else if (counter == 3)
-                    {<div class="col-md-3 new-grid new-mdl1 simpleCart_shelfItem wow flipInY animated" data-wow-delay=".9s">
-                            <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                                <div class="new-text">
-                                    <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
-                                <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        counter++;
-                    }
-                    else if (counter == 4)
-                    {
-                        <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay="1.1s">
-                            <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                                <div class="new-text">
-                                    <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
-                                <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        break;
-                    }
-                }
+    <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay=".5s">
+        <div class="new-top">
+            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+            <div class="new-text">
+                <ul>
+                    <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
+                    <li><a href="single.html">Xem Chi Tiết </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="new-bottom">
+            <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
+            <div class="rating">
+                <span class="on">☆</span>
+                <span class="on">☆</span>
+                <span class="on">☆</span>
+                <span class="on">☆</span>
+                <span>☆</span>
+            </div>
+            <div class="ofr">
+                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
+            </div>
+        </div>
+    </div> counter++;
+}
+else if (counter == 2)
+{
+<div class="col-md-3 new-grid new-mdl simpleCart_shelfItem wow flipInY animated" data-wow-delay=".7s">
+    <div class="new-top">
+        <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+        <div class="new-text">
+            <ul>
+                <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
+                <li><a href="single.html">Xem Chi Tiết </a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="new-bottom">
+        <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
+        <div class="rating">
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span>☆</span>
+        </div>
+        <div class="ofr">
+            <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
+        </div>
+    </div>
+</div> counter++;
+}
+else if (counter == 3)
+{<div class="col-md-3 new-grid new-mdl1 simpleCart_shelfItem wow flipInY animated" data-wow-delay=".9s">
+    <div class="new-top">
+        <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+        <div class="new-text">
+            <ul>
+                <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
+                <li><a href="single.html">Xem Chi Tiết </a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="new-bottom">
+        <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
+        <div class="rating">
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span>☆</span>
+        </div>
+        <div class="ofr">
+            <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
+        </div>
+    </div>
+</div> counter++;
+}
+else if (counter == 4)
+{
+<div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay="1.1s">
+    <div class="new-top">
+        <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+        <div class="new-text">
+            <ul>
+                <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
+                <li><a href="single.html">Xem Chi Tiết </a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="new-bottom">
+        <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
+        <div class="rating">
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span class="on">☆</span>
+            <span>☆</span>
+        </div>
+        <div class="ofr">
+            <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+            <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
+        </div>
+    </div>
+</div>break;
+}
+}
                 <div class="clearfix"> </div>
             </div>
         </div>
@@ -582,3 +580,36 @@
     </div>
 </div>
 <!--//single-page-->
+<div class="modal fade" id="modalUpdate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("EditQuestion", "Product", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "GET",
+                    LoadingElementId = "ajax-loader",
+                    UpdateTargetId = "qaContainer",
+                }))
+                {
+                <input type="text" name="ID" id="ID" hidden="hidden" />
+                <input type="text" name="ProductID" id="ProductID" hidden="hidden" />
+                <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
+                <div class="form-group">
+                    <label for="Name">Câu hỏi:</label>
+                    <input type="text" class="form-control" name="Question" id="Question">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btnSave" id="btnSave" >Lưu</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                </div>}
+            </div>
+        </div>
+    </div>
+</div>

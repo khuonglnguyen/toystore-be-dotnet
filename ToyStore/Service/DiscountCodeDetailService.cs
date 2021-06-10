@@ -30,7 +30,14 @@ namespace ToyStore.Service
 
         public int GetDiscountByCode(string Code)
         {
-            return (int)context.DiscountCodeDetailRepository.GetAllData().SingleOrDefault(x => x.Code.Contains(Code)).DiscountCode.NumberDiscount;
+            try
+            {
+                return (int)context.DiscountCodeDetailRepository.GetAllData().SingleOrDefault(x => x.Code.Contains(Code)).DiscountCode.NumberDiscount;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
         }
 
         public IEnumerable<DiscountCodeDetail> GetDiscountCodeDetailList()

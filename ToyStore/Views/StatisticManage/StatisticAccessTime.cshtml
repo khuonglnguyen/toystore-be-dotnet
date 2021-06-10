@@ -12,7 +12,8 @@
 
 
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Admin")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Chọn hình thức thống kê</a> <i class="fa fa-angle-right"></i></li>
     <li class="breadcrumb-item"><a href="@Url.Action("List")">Thống kê lượt truy cập</a> <i class="fa fa-angle-right"></i></li>
 </ol>
 
@@ -28,7 +29,7 @@
             <ul class="bt-list">
                 <li><a href="@Url.Action("DownloadExcelStatisticStatisticAccessTime","StatisticManage",new { from=ViewBag.from,to=ViewBag.to})" class="hvr-icon-up col-24" style="background-color:green" id="btnAddNew">Xuất Excel</a></li>
             </ul>
-            @if (Model != null)
+            @if (Model.Count() > 0)
             {
                 <table id="table">
                     <thead>

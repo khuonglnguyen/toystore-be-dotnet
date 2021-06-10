@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Nhập Hàng";
+    ViewBag.Title = "Chọn hình thức thống kê";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 <script src="~/Scripts/bootbox.js"></script>
@@ -13,22 +13,6 @@
         $('#modalSupplier').modal('show');
     });
 </script>
-@{
-    if (TempData["ImportProduct"] != null)
-    {
-        <script type="text/javascript">
-            window.onload = function () {
-                swal({
-                    title: "Thông báo",
-                    text: "Nhập hàng     thành công!",
-                    icon: "success",
-                    timer: 1500
-                });
-            };
-
-        </script>
-    }
-}
 <div class="agile-grids">
     <div class="agile-tables">
         <div class="w3l-table-info">
@@ -53,10 +37,10 @@
                         <label>Hình Thức Thống Kê:</label>
                         <br />
                         <a href="@Url.Action("StatisticStocking","StatisticManage")" class="btn btn-default">Tồn kho</a><br />
-                        <a href="@Url.Action("StatisticMember","StatisticManage")" class="btn btn-default">Khách hàng tiềm năng</a><br />
+                        <a href="@Url.Action("StatisticMember","StatisticManage")" class="btn btn-default">Khách hàng thành viên tiềm năng</a><br />
                         <a href="@Url.Action("StatisticSupplier","StatisticManage")" class="btn btn-default">Nhà cung cấp tốt nhất</a><br />
                         <a href="@Url.Action("StatisticProductSold","StatisticManage",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-default">Sản phẩm bán chạy</a><br />
-                        <a href="@Url.Action("StatisticOrder","StatisticManage",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-default">Đơn đặt hàng hoàn thành</a><br />
+                        <a href="@Url.Action("StatisticOrder","StatisticManage",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-default">Đơn đặt hàng</a><br />
                         <a href="@Url.Action("StatisticAccessTime","StatisticManage",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-default">Lượt truy cập</a>
                     </div>
                 }

@@ -1,17 +1,16 @@
-﻿@{
+﻿@model ToyStore.Models.Member
+@{
     ViewBag.Title = "Đăng Ký";
     Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 <script>
     $(document).ready(function () {
-        $('#Password, #confirm_password').on('keyup', function () {
-            if ($('#Password').val() == $('#confirm_password').val()) {
-                $('#message').html('Đúng').css('color', 'green');
-            } else
-                $('#message').html('Không đúng').css('color', 'red');
-        });
-        $('#btnSignIn').off('click').on('click', function () {
-            var check = $('#message').html();
+        $(function () {
+            $("#phonenumber").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+            });
         });
     });
 </script>
@@ -34,20 +33,38 @@
     </div>
     <div class="widget-shadow">
         <div class="login-top wow fadeInUp animated" data-wow-delay=".7s">
-            <h4>Chào mừng bạn đến với KMD ToyStore ! <br> Bạn chưa có tài khoản? <a href="register.html">  Đăng Ký Ngay »</a> </h4>
+            <h4>Chào mừng bạn đến với  ToyStore ! <br> Bạn chưa có tài khoản? <a href="register.html">  Đăng Ký Ngay »</a> </h4>
         </div>
         <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
             @using (Html.BeginForm("SignUp", "Home", FormMethod.Post))
             {
-                <input type="text" class="user" name="Username" placeholder="Tên đăng nhập" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào tên đăng nhập')" oninput="setCustomValidity('')">
-                <input type="password" id="Password" name="Password" class="lock" placeholder="Mật Khẩu" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào mật khẩu')" oninput="setCustomValidity('')">
-                <input type="password" id="confirm_password" name="confirm_password" class="lock" placeholder="Nhập lại mật Khẩu" required="" oninvalid="this.setCustomValidity('Vui lòng nhập lại mật khẩu')" oninput="setCustomValidity('')">
-                <span id='message'></span>
-                <input type="text" class="user" name="FullName" placeholder="Họ tên" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào họ tên')" oninput="setCustomValidity('')">
-                <input type="text" class="user" name="Email" placeholder="Email của bạn" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào Email')" oninput="setCustomValidity('')">
-                <input type="text" class="user" name="PhoneNumber" placeholder="Số điện thoại" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào số điện thoại')" oninput="setCustomValidity('')">
-                <input type="text" class="user" name="Address" placeholder="Địa chỉ" required="" oninvalid="this.setCustomValidity('Vui lòng nhập vào địa chỉ')" oninput="setCustomValidity('')">
-                <input type="submit" id="btnSignIn" name="Sign In" value="Đăng Ký">
+                if (Model != null)
+                {
+                    <p class="text-danger">@ViewBag.MessageUsername</p>
+                    <input type="text" class="user" name="Username" value="@Model.Username" placeholder="Tên đăng nhập" pattern=".{6,20}" required title="Tên đăng nhập phải từ 6 đến 20 ký tự!">
+                    <input type="password" id="Password" name="Password" value="@Model.Password" class="lock" placeholder="Mật Khẩu" pattern=".{8,}" required title="Mật khẩu phải từ 8 ký tự trở lên!">
+                    <input type="password" id="confirm_password" name="confirm_password" class="lock" placeholder="Nhập lại mật Khẩu" pattern=".{8,}" required title="Mật khẩu phải từ 8 ký tự trở lên!" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Nhập lại mật khẩu chưa trùng khớp!' : '');">
+                    <span id='message'></span>
+                    <input type="text" class="user" name="FullName" placeholder="Họ tên" value="@Model.FullName" required maxlength="30">
+                    <p class="text-danger">@ViewBag.MessageEmail</p>
+                    <input type="text" class="user" name="Email" placeholder="Email của bạn" value="@Model.Email" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail của bạn (vd: abc@gmail.com)">
+                    <p class="text-danger">@ViewBag.MessagePhoneNumber</p>
+                    <input type="text" class="user" id="phonenumber" name="PhoneNumber" placeholder="Số điện thoại" value="@Model.PhoneNumber" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 số!">
+                    <input type="text" class="user" name="Address" placeholder="Địa chỉ" value="@Model.Address" required maxlength="200">
+                    <input type="submit" id="btnSignIn" name="Sign In" value="Đăng Ký">
+                }
+                else
+                {
+                    <input type="text" class="user" name="Username" placeholder="Tên đăng nhập" pattern=".{6,20}" required title="Tên đăng nhập phải từ 6 đến 20 ký tự!">
+                    <input type="password" id="Password" name="Password" class="lock" placeholder="Mật Khẩu" pattern=".{8,}" required title="Mật khẩu phải từ 8 ký tự trở lên!">
+                    <input type="password" id="confirm_password" name="confirm_password" class="lock" placeholder="Nhập lại mật Khẩu" pattern=".{8,}" required title="Mật khẩu phải từ 8 ký tự trở lên!" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Nhập lại mật khẩu chưa trùng khớp!' : '');">
+                    <span id='message'></span>
+                    <input type="text" class="user" name="FullName" placeholder="Họ tên" required maxlength="30">
+                    <input type="text" class="user" name="Email" placeholder="Email của bạn" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail của bạn (vd: abc@gmail.com)">
+                    <input type="text" class="user" id="phonenumber" name="PhoneNumber" placeholder="Số điện thoại" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 số!">
+                    <input type="text" class="user" name="Address" placeholder="Địa chỉ" required maxlength="200">
+                    <input type="submit" id="btnSignIn" name="Sign In" value="Đăng Ký">
+                }
             }
         </div>
     </div>

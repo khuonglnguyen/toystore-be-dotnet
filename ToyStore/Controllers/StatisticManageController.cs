@@ -72,7 +72,7 @@ namespace ToyStore.Controllers
             ws.Cells["A:AZ"].AutoFitColumns();
             Response.Clear();
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment: filename=" + "ExcelReport.xlsx");
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Danh sách tồn kho.xlsx");
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
@@ -83,31 +83,52 @@ namespace ToyStore.Controllers
             return View(members);
         }
         [HttpGet]
-        public ActionResult DownloadExcelStatisticMember()
+        public void DownloadExcelStatisticMember()
         {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+
             IEnumerable<Member> members = _memberService.GetMemberListForStatistic();
-            DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[7] { new DataColumn("Mã Thành viên"),
-                                            new DataColumn("Tên thành viên"),
-                                            new DataColumn("Địa chỉ"),
-                                            new DataColumn("Email"),
-                                            new DataColumn("Số điện thoại"),
-                                            new DataColumn("Loại thành viên"),
-                                            new DataColumn("Doanh số")
-                                            });
-            foreach (var member in members)
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.FullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã Thành Viên";
+            ws.Cells["B6"].Value = "Tên Thành Viên";
+            ws.Cells["C6"].Value = "Địa Chỉ";
+            ws.Cells["D6"].Value = "Email";
+            ws.Cells["E6"].Value = "Số Điện Thoại";
+            ws.Cells["F6"].Value = "Loại Thành Viên";
+            ws.Cells["G6"].Value = "Doanh Số";
+
+            int rowStart = 7;
+            foreach (var item in members)
             {
-                dt.Rows.Add(member.ID, member.FullName, member.Address, member.Email, member.PhoneNumber, member.MemberType.Name, "đ" + member.AmountPurchased.Value.ToString("#,##"));
-            }
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.FullName;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.Address;
+                ws.Cells[string.Format("D{0}", rowStart)].Value = item.Email;
+                ws.Cells[string.Format("E{0}", rowStart)].Value = item.PhoneNumber;
+                if (item.MemberTypeID == 1)
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Thường";
+                else
                 {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Khách hàng thành viên tiềm năng.xlsx");
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "VIP";
                 }
+                ws.Cells[string.Format("G{0}", rowStart)].Value = item.AmountPurchased;
+                rowStart++;
             }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Danh sách thành viên.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
         }
         [HttpGet]
         public ActionResult StatisticSupplier()
@@ -116,40 +137,52 @@ namespace ToyStore.Controllers
             return View(suppliers);
         }
         [HttpGet]
-        public ActionResult DownloadExcelStatisticSupplier()
+        public void DownloadExcelStatisticSupplier()
         {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+
             IEnumerable<Supplier> suppliers = _supplierService.GetSupplierList();
-            DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[7] { new DataColumn("Mã nhà cung cấp"),
-                                            new DataColumn("Tên nhà cung cấp"),
-                                            new DataColumn("Địa chỉ"),
-                                            new DataColumn("Email"),
-                                            new DataColumn("Số điện thoại"),
-                                            new DataColumn("Tình trạng"),
-                                            new DataColumn("Doanh số")
-                                            });
-            foreach (var supplier in suppliers)
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.FullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã Nhà Cung Cấp";
+            ws.Cells["B6"].Value = "Tên Nhà Cung Cấp";
+            ws.Cells["C6"].Value = "Địa Chỉ";
+            ws.Cells["D6"].Value = "Email";
+            ws.Cells["E6"].Value = "Số Điện Thoại";
+            ws.Cells["F6"].Value = "Tình Trạng";
+            ws.Cells["G6"].Value = "Doanh Số";
+
+            int rowStart = 7;
+            foreach (var item in suppliers)
             {
-                string status = "";
-                if (supplier.IsActive)
-                {
-                    status = "Đang hợp tác";
-                }
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Name;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.Address;
+                ws.Cells[string.Format("D{0}", rowStart)].Value = item.Email;
+                ws.Cells[string.Format("E{0}", rowStart)].Value = item.Phone;
+                if (item.IsActive)
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Đang hợp tác";
                 else
                 {
-                    status = "Ngừng hợp tác";
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Đã ngừng hợp tác";
                 }
-                dt.Rows.Add(supplier.ID, supplier.Name, supplier.Address, supplier.Email, supplier.Phone, status, "đ" + supplier.TotalAmount.Value.ToString("#,##"));
+                ws.Cells[string.Format("G{0}", rowStart)].Value = item.TotalAmount;
+                rowStart++;
             }
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Những nhà cung cấp tốt nhất.xlsx");
-                }
-            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Nhà cung cấp tốt nhất.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
         }
         [HttpGet]
         public ActionResult StatisticProductSold(DateTime from, DateTime to)
@@ -160,27 +193,39 @@ namespace ToyStore.Controllers
             return View(products);
         }
         [HttpGet]
-        public ActionResult DownloadExcelStatisticProductSold(DateTime from, DateTime to)
+        public void DownloadExcelStatisticProductSold(DateTime from, DateTime to)
         {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+
             IEnumerable<Product> products = _productService.GetProductListSold(from, to);
-            DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[3] { new DataColumn("Mã SP"),
-                                            new DataColumn("Tên SP"),
-                                            new DataColumn("Số lượng đã bán")
-                                            });
-            foreach (var product in products)
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.FullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã SP";
+            ws.Cells["B6"].Value = "Tên SP";
+            ws.Cells["C6"].Value = "Só Lượng Đã Bán";
+
+            int rowStart = 7;
+            foreach (var item in products)
             {
-                dt.Rows.Add(product.ID, product.Name, product.PurchasedCount);
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Name;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.PurchasedCount;
+                rowStart++;
             }
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Những sản phẩm bán chạy.xlsx");
-                }
-            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Sản phẩm đã bán.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
         }
         [HttpGet]
         public ActionResult StatisticOrder(DateTime from, DateTime to)
@@ -191,40 +236,52 @@ namespace ToyStore.Controllers
             return View(orders);
         }
         [HttpGet]
-        public ActionResult DownloadExcelStatisticOrder(DateTime from, DateTime to)
+        public void DownloadExcelStatisticOrder(DateTime from, DateTime to)
         {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+
             IEnumerable<Order> orders = _orderService.GetListOrderStatistic(from, to);
-            DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[7] { new DataColumn("Mã hóa đơn"),
-                                            new DataColumn("Tên khách hàng"),
-                                            new DataColumn("Ngày đặt"),
-                                            new DataColumn("Ngày giao"),
-                                            new DataColumn("Ưu đãi"),
-                                            new DataColumn("Tình trạng"),
-                                            new DataColumn("Thành tiển")
-                                            });
-            foreach (var order in orders)
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.FullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã Hóa Đơn";
+            ws.Cells["B6"].Value = "Tên Khách Hàng Thành Viên";
+            ws.Cells["C6"].Value = "Ngày Đặt";
+            ws.Cells["D6"].Value = "Ngày Giao";
+            ws.Cells["E6"].Value = "Ưu Đãi";
+            ws.Cells["F6"].Value = "Tình Trạng";
+            ws.Cells["G6"].Value = "Thành Tiền";
+
+            int rowStart = 7;
+            foreach (var item in orders)
             {
-                string status = "";
-                if (order.IsReceived)
-                {
-                    status = "Hoàn thành";
-                }
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Customer.FullName;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.DateOrder;
+                ws.Cells[string.Format("D{0}", rowStart)].Value = item.DateShip;
+                ws.Cells[string.Format("E{0}", rowStart)].Value = item.Offer+"%";
+                if (item.IsReceived)
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Hoàn thành";
                 else
                 {
-                    status = "Chưa hoàn thành";
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Chưa hoàn thành";
                 }
-                dt.Rows.Add(order.ID, order.Customer.FullName, order.DateOrder, order.DateShip, order.Offer, status, "đ" + order.Total.Value.ToString("#,##"));
+                ws.Cells[string.Format("G{0}", rowStart)].Value = item.Total;
+                rowStart++;
             }
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Đơn đặt hàng hoàn thành.xlsx");
-                }
-            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Đơn đặt hàng.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
         }
         [HttpGet]
         public ActionResult StatisticAccessTime(DateTime from, DateTime to)
@@ -235,26 +292,37 @@ namespace ToyStore.Controllers
             return View(accessTimesCounts);
         }
         [HttpGet]
-        public ActionResult DownloadExcelStatisticStatisticAccessTime(DateTime from, DateTime to)
+        public void DownloadExcelStatisticStatisticAccessTime(DateTime from, DateTime to)
         {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+
             IEnumerable<AccessTimesCount> accessTimesCounts = _accessTimesCountService.GetListAccessTimeCountStatistic(from, to);
-            DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Ngày"),
-                                            new DataColumn("Số lượt truy cập")
-                                            });
-            foreach (var access in accessTimesCounts)
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.FullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Ngày";
+            ws.Cells["B6"].Value = "Số Lượng Truy Cập";
+
+            int rowStart = 7;
+            foreach (var item in accessTimesCounts)
             {
-                dt.Rows.Add(access.Date.ToShortDateString(), access.AccessTimes);
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.Date.ToShortDateString();
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.AccessTimes;
+                rowStart++;
             }
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Thống kê lượt truy cập.xlsx");
-                }
-            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Số lượng truy cập.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
         }
     }
 }

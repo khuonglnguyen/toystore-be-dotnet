@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using ToyStore.Models;
 using ToyStore.Service;
+using System.Data.Entity;
 
 namespace ToyStore.Controllers
 {
@@ -20,15 +21,16 @@ namespace ToyStore.Controllers
         private IAgeService _ageService;
         private IProductCategoryParentService _productCategoryParentService;
         private IGenderService _genderService;
-        private ICommentService _commentService;
         private IMemberService _memberService;
-        private IQAService _qaService;
+        private IQAService _qAService;
         private IEmloyeeService _emloyeeService;
         private IProductViewedService _productViewedService;
         private IRatingService _ratingService;
         private IOrderDetailService _orderDetailService;
 
-        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, ICommentService commentService, IMemberService memberService, IQAService qAService, IEmloyeeService emloyeeService, IProductViewedService productViewedService, IRatingService ratingService, IOrderDetailService orderDetailService)
+        ToyStore2021Entities context = new ToyStore2021Entities();
+
+        public ProductController(IProductService productService, IProducerService producerService, ISupplierService supplierService, IProductCategoryService productCategoryService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, IMemberService memberService, IQAService qAService, IEmloyeeService emloyeeService, IProductViewedService productViewedService, IRatingService ratingService, IOrderDetailService orderDetailService)
         {
             _productService = productService;
             _producerService = producerService;
@@ -37,9 +39,8 @@ namespace ToyStore.Controllers
             _ageService = ageService;
             _productCategoryParentService = productCategoryParentService;
             _genderService = genderService;
-            _commentService = commentService;
             _memberService = memberService;
-            _qaService = qAService;
+            _qAService = qAService;
             _emloyeeService = emloyeeService;
             _productViewedService = productViewedService;
             _ratingService = ratingService;
@@ -48,7 +49,7 @@ namespace ToyStore.Controllers
         #endregion
         public ActionResult Search(string keyword, int page = 1)
         {
-            var listProduct = _productService.GetProductList().OrderByDescending(x => x.ViewCount).Take(5);
+            var listProduct = _productService.GetProductList(keyword);
             ViewBag.ListProduct = listProduct;
             if (keyword == null)
             {
@@ -56,32 +57,16 @@ namespace ToyStore.Controllers
                 return null;
             }
             ViewBag.Keyword = keyword;
-            //Get proudct category list with keyword
             var products = _productService.GetProductList(keyword);
             PagedList<Product> listProductSearch = new PagedList<Product>(products, page, 12);
-            //Check null
-            if (listProduct != null)
-            {
-                ViewBag.message = "Hiển thị kết quả tìm kiếm với '" + keyword + "";
-                //Return view
-                return View(listProductSearch);
-            }
-            else
-            {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            return View(listProductSearch);
         }
-        // GET: Product
         public ActionResult Details(int ID)
         {
             var product = _productService.GetByID(ID);
             var listProduct = _productService.GetProductListByCategory(product.CategoryID);
             ViewBag.ListProduct = listProduct;
-
-            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(ID).OrderByDescending(x => x.Date);
-            ViewBag.CommentList = listComment;
-            IEnumerable<QA> listQA = _qaService.GetQAByProductID(ID).OrderByDescending(x => x.DateQuestion);
+            IEnumerable<QA> listQA = _qAService.GetQAByProductID(ID).OrderByDescending(x => x.DateQuestion);
             ViewBag.CommentQA = listQA;
             IEnumerable<Member> listMember = _memberService.GetMemberList();
             ViewBag.MemberList = listMember;
@@ -235,6 +220,8 @@ namespace ToyStore.Controllers
         }
         public ActionResult ProductPartial(Product product)
         {
+            //Get rating
+            ViewBag.Rating = _ratingService.GetRating(product.ID);
             return PartialView(product);
         }
         public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int discount = 0, int page = 1)
@@ -263,23 +250,6 @@ namespace ToyStore.Controllers
                 return null;
             }
         }
-
-        [HttpGet]
-        public ActionResult AddComment(int productID, int memberID, string content)
-        {
-            Comment comment = new Comment();
-            comment.MemberID = memberID;
-            comment.Content = content;
-            comment.ProductID = productID;
-            comment.Date = DateTime.Now;
-            _commentService.AddComment(comment);
-
-            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(productID).OrderByDescending(x => x.Date);
-            ViewBag.CommentList = listComment;
-            IEnumerable<Member> listMember = _memberService.GetMemberList();
-            ViewBag.MemberList = listMember;
-            return PartialView("_CommentPartial");
-        }
         [HttpGet]
         public ActionResult AddQuestion(int productID, int memberID, string Question)
         {
@@ -289,29 +259,20 @@ namespace ToyStore.Controllers
             qa.ProductID = productID;
             qa.DateQuestion = DateTime.Now;
             qa.DateAnswer = DateTime.Now;
-            qa.EmloyeeID = 1;
-            _qaService.AddQA(qa);
-
-            IEnumerable<QA> listQA = _qaService.GetQAByProductID(productID).OrderByDescending(x => x.DateQuestion);
-            ViewBag.QAList = listQA;
-            IEnumerable<Member> listMember = _memberService.GetMemberList();
-            ViewBag.MemberList = listMember;
-            return PartialView("_QAPartial");
+            qa.EmloyeeID = 2;
+            _qAService.AddQA(qa);
+            return RedirectToAction("QAPartial",new { ID= productID });
         }
         public ActionResult CommentPartial(int ID)
         {
-            IEnumerable<Comment> listComment = _commentService.GetCommentByProductID(ID).OrderByDescending(x => x.Date);
-            ViewBag.CommentList = listComment;
             IEnumerable<Member> listMember = _memberService.GetMemberList();
             ViewBag.MemberList = listMember;
             return PartialView("_CommentPartial");
         }
         public ActionResult QAPartial(int ID)
         {
-            IEnumerable<QA> listQA = _qaService.GetQAByProductID(ID).OrderByDescending(x => x.DateQuestion);
+            IEnumerable<QA> listQA = context.QAs.Include(x=>x.Emloyee).Include(x => x.Member).Where(x=>x.ProductID==ID).OrderByDescending(x => x.DateQuestion).ToList();
             ViewBag.QAList = listQA;
-            IEnumerable<Member> listMember = _memberService.GetMemberList();
-            ViewBag.MemberList = listMember;
             return PartialView("_QAPartial");
         }
         [HttpPost]
@@ -323,6 +284,45 @@ namespace ToyStore.Controllers
             _orderDetailService.SetIsRating(OrderDetailID);
             string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
             return Redirect(urlBase);
+        }
+        [HttpGet]
+        public ActionResult GetDataQuesion(int id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+            //Get product catetgory
+            var qAs = _qAService.GetQAByID(id);
+            if (qAs == null)
+            {
+                return null;
+            }
+            return Json(new
+            {
+                ID = qAs.ID,
+                MemberID = qAs.MemberID,
+                ProductID = qAs.ProductID,
+                Question = qAs.Question,
+                Answer = qAs.Answer,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult DeleteQA(int ID, int ProductID)
+        {
+            _qAService.Delete(ID);
+            IEnumerable<QA> listQA = context.QAs.Include(x => x.Emloyee).Include(x => x.Member).Where(x => x.ProductID == ID).OrderByDescending(x => x.DateQuestion).ToList();
+            ViewBag.QAList = listQA;
+            return RedirectToAction("QAPartial", new { ID = ProductID });
+        }
+        [HttpGet]
+        public ActionResult EditQuestion(QA qA, int ProductID)
+        {
+            QA qa = _qAService.GetQAByID(qA.ID);
+            qa.Question = qA.Question;
+            _qAService.UpdateQA(qa);
+            return RedirectToAction("QAPartial", new { ID = ProductID });
         }
     }
 }

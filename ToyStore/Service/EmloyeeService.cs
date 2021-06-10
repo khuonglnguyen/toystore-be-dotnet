@@ -9,7 +9,7 @@ namespace ToyStore.Service
 {
     public interface IEmloyeeService
     {
-        Emloyee CheckLogin(string username, string password);
+        Emloyee CheckLogin(int id, string password);
         IEnumerable<Emloyee> GetList();
         int GetTotalEmloyee();
     }
@@ -20,13 +20,9 @@ namespace ToyStore.Service
         {
             this.context = repositoryContext;
         }
-        public Emloyee CheckLogin(string username, string password)
+        public Emloyee CheckLogin(int id, string password)
         {
-            Emloyee emloyee = this.context.EmloyeeRepository.GetAllData().SingleOrDefault(x => x.Username == username && x.Password == password);
-            if (emloyee == null)
-            {
-                emloyee = this.context.EmloyeeRepository.GetAllData().SingleOrDefault(x => x.Email == username && x.Password == password);
-            }
+            Emloyee emloyee = this.context.EmloyeeRepository.GetAllData().SingleOrDefault(x => x.ID == id && x.Password == password);
             return emloyee;
         }
 

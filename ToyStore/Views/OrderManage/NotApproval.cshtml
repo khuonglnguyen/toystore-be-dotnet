@@ -25,7 +25,7 @@
             <p>@ViewBag.message</p>
             <div class="clearfix"> </div>
             <hr />
-            <h2>Danh sách đơn đặt hàng chưa thanh toán</h2>
+            <h2>Danh sách đơn đặt hàng chưa duyệt</h2>
             <table id="table">
                 <thead>
                     <tr>
@@ -44,16 +44,10 @@
                         <th>
                             Ưu đãi
                         </th>
-                        <th>
-                            Thanh toán
-                        </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int counter1 = 0;
-                    }
                     @foreach (var item in Model.Join(customers, c => c.CustomerID, m => m.ID, (c, m) => new { c, m })
                         .Select(n => new { CustomerName = n.m.FullName, ID = n.c.ID, DateOrder = n.c.DateOrder, DateShip = n.c.DateShip, Offer = n.c.Offer, IsPaid = n.c.IsPaid }))
                     {
@@ -74,24 +68,10 @@
                                 @Html.DisplayFor(modelItem => item.Offer)
                             </td>
                             <td>
-                                <div id="DivActive@(counter1)">
-                                    @if (item.IsPaid == true)
-                                    {
-                                        <span class="label label-success">Đã thanh toán</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger">Chưa thanh toán</span>
-                                    }
-                                </div>
-                            </td>
-                            <td>
-                                @Html.ActionLink("Chi Tiết", "Detail",new { ID=item.ID})
+                                @Html.ActionLink("Chi Tiết", "Detail", new { ID = item.ID })
                             </td>
                         </tr>
-                        @(counter1++)
                     }
-                    @(counter1 = 0)
                 </tbody>
             </table>
             <br />

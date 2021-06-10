@@ -47,12 +47,12 @@ namespace ToyStore.Controllers
                 if (TotalRevenue < 1000000)
                 {
                     TotalRevenue = TotalRevenue / 1000;
-                    ViewBag.TotalRevenue = (int)TotalRevenue+"K";
+                    ViewBag.TotalRevenue = TotalRevenue.ToString("0.##") + "K";
                 }
                 else
                 {
                     TotalRevenue = TotalRevenue / 1000000;
-                    ViewBag.TotalRevenue = (int)TotalRevenue + "M";
+                    ViewBag.TotalRevenue = TotalRevenue.ToString("0.##") + "M";
                 }
                 ViewBag.TotalOrder = _orderService.GetTotalOrder();
                 return View();
@@ -68,7 +68,7 @@ namespace ToyStore.Controllers
         public ActionResult Login(Emloyee emloyee)
         {
             //Check login
-            Emloyee emloyeeCheck = _emloyeeService.CheckLogin(emloyee.Username, emloyee.Password);
+            Emloyee emloyeeCheck = _emloyeeService.CheckLogin(emloyee.ID, emloyee.Password);
             if (emloyeeCheck != null)
             {
 
@@ -80,18 +80,22 @@ namespace ToyStore.Controllers
                 }
 
                 role = role.Substring(0, role.Length - 1);
-                Decentralization(emloyeeCheck.Username, role);
+                Decentralization(emloyeeCheck.ID, role);
 
                 Session["Emloyee"] = emloyeeCheck;
                 return RedirectToAction("Index");
             }
+            else
+            {
+                ViewBag.Message = "Success";
+            }
             return View();
         }
-        private void Decentralization(string Username, string Role)
+        private void Decentralization(int ID, string Role)
         {
             FormsAuthentication.Initialize();
             var ticket = new FormsAuthenticationTicket(1,
-                Username,
+                ID.ToString(),
                 DateTime.Now,
                 DateTime.Now.AddHours(3),
                 false,
