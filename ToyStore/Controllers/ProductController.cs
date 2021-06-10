@@ -216,6 +216,7 @@ namespace ToyStore.Controllers
         {
             Member member = Session["Member"] as Member;
             _productViewedService.Delete(member.ID);
+            TempData["DeleteHistoryView"] = "Sucess";
             return RedirectToAction("ProductViewed");
         }
         public ActionResult ProductPartial(Product product)

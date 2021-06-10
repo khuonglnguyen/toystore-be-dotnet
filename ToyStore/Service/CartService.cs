@@ -18,6 +18,7 @@ namespace ToyStore.Service
         List<ItemCart> GetCart(int MemberID);
         ItemCart GetCartByID(int ID);
         bool CheckProductInCart(int ProductID, int MemberID);
+        void RemoveCartDeleteAccount(int MemberID);
     }
     public class CartService : ICartService
     {
@@ -72,6 +73,18 @@ namespace ToyStore.Service
         {
             ItemCart cart = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
             context.CartRepository.Remove(cart);
+        }
+
+        public void RemoveCartDeleteAccount(int MemberID)
+        {
+            List<ItemCart> cart = GetCart(MemberID);
+            if(cart!=null)
+            {
+                foreach (ItemCart item in cart)
+                {
+                    context.CartRepository.Remove(item);
+                }
+            }    
         }
 
         public void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID)

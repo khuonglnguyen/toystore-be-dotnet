@@ -53,7 +53,7 @@
     <div class="container">
         <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
             <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
-            <li class="active">Hàng Mới</li>
+            <li class="active">Tìm Kiếm</li>
         </ol>
     </div>
 </div>
@@ -68,177 +68,63 @@
                 {
                     if (couter == 1)
                     {
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 2)
 {
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 3)
 {
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 4)
 {
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 5)
 {
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 6)
 {
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 7)
 {
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 8)
 {
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
+<div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div> couter++;
 }
 else if (couter == 9)
 {
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div>break;
-}
-}
-foreach (var item in Model)
-{
-if (couter == 1)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 2)
-{
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 3)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 4)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 5)
-{
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 6)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 7)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 8)
-{
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 9)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div>break;
-}
-}
-foreach (var item in Model)
-{
-if (couter == 1)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 2)
-{
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 3)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 4)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 5)
-{
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 6)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 7)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".5s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 8)
-{
-    <div class="product-grids product-grids-mdl simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".7s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div> couter++;
-}
-else if (couter == 9)
-{
-    <div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
-        @Html.Action("ProductPartial", "Product", new { product = item })
-    </div>break;
+<div class="product-grids simpleCart_shelfItem wow fadeInUp animated" data-wow-delay=".9s">
+    @Html.Action("ProductPartial", "Product", new { product = item })
+</div>break;
 }
 }
 }
 else
 {
-    <h3>Không tìm thấy sản phẩm</h3>}
+<h3>Không tìm thấy sản phẩm</h3>}
 
 
         </div>

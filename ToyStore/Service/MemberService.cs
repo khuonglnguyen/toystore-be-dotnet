@@ -37,6 +37,7 @@ namespace ToyStore.Service
         {
             member.MemberTypeID = 1;
             member.AmountPurchased = 0;
+            member.IsDeleted = false;
             this.context.MemberRepository.Insert(member);
             return member;
         }
@@ -66,10 +67,10 @@ namespace ToyStore.Service
 
         public Member CheckLogin(string username, string password)
         {
-            Member member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Username == username && x.Password == password && x.EmailConfirmed == true);
+            Member member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Username == username && x.Password == password && x.EmailConfirmed == true && x.IsDeleted == false);
             if (member == null)
             {
-                member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Email == username && x.Password == password && x.EmailConfirmed == true);
+                member = this.context.MemberRepository.GetAllData().SingleOrDefault(x => x.Email == username && x.Password == password && x.EmailConfirmed == true && x.IsDeleted == false);
             }
             return member;
         }
@@ -96,7 +97,8 @@ namespace ToyStore.Service
 
         public void DeleteMember(Member member)
         {
-
+            member.IsDeleted = true;
+            this.context.MemberRepository.Update(member);
         }
 
         public Member GetByID(int ID)

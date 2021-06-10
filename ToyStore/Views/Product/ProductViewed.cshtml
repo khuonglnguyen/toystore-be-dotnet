@@ -1,10 +1,19 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.Product>
 @using PagedList.Mvc;
-@{
-    ViewBag.Title = "Sản Phẩm Đã Xem";
-    Layout = "~/Views/Layout/ProductLayout.cshtml";
+@{ ViewBag.Title = "Sản Phẩm Đã Xem";
+                Layout = "~/Views/Layout/ProductLayout.cshtml"; }
+@if (TempData["DeleteHistoryView"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Xóa lịch sử xem hàng thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script>
+@(TempData["DeleteHistoryView"] = null)
 }
-
 <!--breadcrumbs-->
 <div class="breadcrumbs">
     <div class="container">
@@ -20,12 +29,11 @@
     <div class="container">
         @if (Model.Count() > 0)
         {
-            <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Lịch Sử Xem Sản Phẩm</h3>
-            <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
-                @Html.ActionLink("Xóa Lịch Sử", "DeleteHistoryView","Product")
-            </div>
-            foreach (var item in Model)
-            {
+<h3 class="wow fadeInUp animated" data-wow-delay=".5s">Lịch Sử Xem Sản Phẩm</h3>
+                <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
+                    @Html.ActionLink("Xóa Lịch Sử", "DeleteHistoryView", "Product")
+                </div> foreach (var item in Model)
+                                {
                 <div class="cart-header wow fadeInUp animated" data-wow-delay=".5s">
                     <div class="cart-sec simpleCart_shelfItem">
                         <div class="cart-item cyc">
@@ -40,13 +48,11 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                </div>
-            }
-        }
-        else
-        {
-            <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Chưa Có Lịch Sử Xem Sản Phẩm</h3>
-        }
+                </div> }
+                            }
+                            else
+                            {
+                <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Chưa Có Lịch Sử Xem Sản Phẩm</h3>}
         <div id='Paging' style="text-align: center">
             @Html.PagedListPager(Model, page => Url.Action("ProductViewed", new { ID = ViewBag.GenderID, page }))
         </div>

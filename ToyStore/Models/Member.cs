@@ -59,6 +59,8 @@ public partial class Member
 
     public string Avatar { get; set; }
 
+    public Nullable<bool> IsDeleted { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

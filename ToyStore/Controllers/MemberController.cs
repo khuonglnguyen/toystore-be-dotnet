@@ -21,7 +21,8 @@ namespace ToyStore.Controllers
         IProductService _productService;
         IRatingService _ratingService;
         IMemberDiscountCodeService _memberDiscountCodeService;
-        public MemberController(IMemberService memberService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService, IMemberDiscountCodeService memberDiscountCodeService)
+        ICartService _cartService;
+        public MemberController(IMemberService memberService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService, IMemberDiscountCodeService memberDiscountCodeService,ICartService cartService)
         {
             _memberService = memberService;
             _orderService = orderService;
@@ -30,6 +31,7 @@ namespace ToyStore.Controllers
             _productService = productService;
             _ratingService = ratingService;
             _memberDiscountCodeService = memberDiscountCodeService;
+            _cartService = cartService;
         }
         [HttpGet]
         public ActionResult Index()
@@ -67,13 +69,14 @@ namespace ToyStore.Controllers
             IEnumerable<Customer> customers = _customerService.GetAll();
             foreach (Customer item in customers)
             {
-                if(item.PhoneNumber==member.PhoneNumber)
+                if (item.PhoneNumber == member.PhoneNumber)
                 {
                     item.FullName = member.FullName;
                     _customerService.Update(item);
-                }    
+                }
             }
             Session["Member"] = member;
+            TempData["EditName"] = "Sucess";
             return RedirectToAction("Index");
         }
         [HttpGet]
@@ -104,6 +107,7 @@ namespace ToyStore.Controllers
             member.Address = Address;
             _memberService.UpdateMember(member);
             Session["Member"] = member;
+            TempData["EditAddress"] = "Sucess";
             return RedirectToAction("Index");
         }
         [HttpPost]
@@ -126,6 +130,7 @@ namespace ToyStore.Controllers
                 memberupdate.Avatar = Avatar.FileName;
                 _memberService.UpdateMember(memberupdate);
                 Session["Member"] = memberupdate;
+                TempData["EditAvatar"] = "Sucess";
             }
             return RedirectToAction("Index");
         }
@@ -285,6 +290,38 @@ namespace ToyStore.Controllers
             return Json(new
             {
                 status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult DeleteAccount()
+        {
+            Member member = Session["Member"] as Member;
+            return View(member);
+        }
+        [HttpPost]
+        public JsonResult DeleteAccount(string Password)
+        {
+            Member member = Session["Member"] as Member;
+            Member memberCheck = _memberService.CheckLogin(member.Email, Password);
+            if (memberCheck != null)
+            {
+                _memberService.DeleteMember(memberCheck);
+                _cartService.RemoveCartDeleteAccount(memberCheck.ID);
+                TempData["DeleteAccount"] = "Success";
+                Session["Member"] = null;
+                Session["Cart"] = null;
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                TempData["IncorretPassword"] = "true";
+            }
+            return Json(new
+            {
+                status = false
             }, JsonRequestBehavior.AllowGet);
         }
     }

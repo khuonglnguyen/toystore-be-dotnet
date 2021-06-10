@@ -22,8 +22,9 @@ public partial class ToyStore2021Entities : DbContext
 {
     public ToyStore2021Entities()
         : base("name=ToyStore2021Entities")
-        {
-        }
+    {
+
+    }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {

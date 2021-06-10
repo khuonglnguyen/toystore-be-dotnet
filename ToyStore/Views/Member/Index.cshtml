@@ -1,9 +1,38 @@
 ﻿@using ToyStore.Models;
 @model Member
-@{
-    ViewBag.Title = "Thông tin tài khoản";
-    Layout = "~/Views/Layout/ProductDetailsLayout.cshtml";
-}
+@{ ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Views/Layout/ProductDetailsLayout.cshtml"; }
+@if (TempData["EditName"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Cập nhật tên tài khoản thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script> @(TempData["DeleteHistoryView"] = null)}
+@if (TempData["EditAddress"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Cập nhật địa chỉ thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script> @(TempData["DeleteHistoryView"] = null)}
+@if (TempData["EditAvatar"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Cập nhật ảnh đại diện thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script>
+@(TempData["DeleteHistoryView"] = null)}
 <script>
     $(document).ready(function () {
         $('.btnEditName').off('click').on('click', function () {
@@ -78,7 +107,7 @@
                 <div class="flexslider">
                     <ul class="slides">
                         <li data-thumb="@Url.Content("~/Content/images/" + Model.Avatar)">
-                            <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Avatar)" style="height:300px;width:250px"><input type="button" class="btn btn-link btnEditAvatar" value="✎" data-id="@Model.ID"/></div>
+                            <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.Avatar)" style="height:300px;width:250px"><input type="button" class="btn btn-link btnEditAvatar" value="✎" data-id="@Model.ID" /></div>
                         </li>
                     </ul>
                 </div>
@@ -95,6 +124,20 @@
                 </div>
                 <div class="quantity">
                     <p class="qty"> Email :</p> @Model.Email
+                </div>
+                <div class="quantity">
+                    @{ 
+                        string pass = "";
+                        for (int i = 0; i < @Model.Password.Length; i++)
+                        {
+                            pass += "☺";
+                        }
+                    }
+                    <p class="qty"> Mật khẩu :</p> @pass <button class="btn btn-link btnEditPassword" value="@Model.ID">✎</button>
+                </div>
+                
+                <div class="quantity">
+                    @Html.ActionLink("Hủy tài khoản", "DeleteAccount", null, new { @class = "btn btn-danger" })
                 </div>
             </div>
             <div class="clearfix"> </div>
@@ -114,16 +157,15 @@
             <div class="modal-body">
                 @using (Html.BeginForm("EditName", "Member", FormMethod.Post))
                 {
-                    <input type="text" name="ID" id="IDEditName" hidden />
+    <input type="text" name="ID" id="IDEditName" hidden />
                     <div class="form-group">
                         <label for="Name">Họ tên:</label>
                         <input type="text" class="form-control" name="FullName" id="FullNameEditName" pattern=".{,30}" required title="Tên thành viên tối đa 30 ký tự!">
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                    </div>}
             </div>
         </div>
     </div>
@@ -140,16 +182,15 @@
             <div class="modal-body">
                 @using (Html.BeginForm("EditAddress", "Member", FormMethod.Post))
                 {
-                    <input type="text" name="ID" id="IDEditAddress" hidden />
+    <input type="text" name="ID" id="IDEditAddress" hidden />
                     <div class="form-group">
                         <label for="Name">Địa chỉ:</label>
-                        <input type="text" class="form-control" name="Address" id="AdressEditAdress" pattern=".{,100}" required title="Địa chỉ tối đa 100 ký tự!">
+                        <input type="text" class="form-control" name="Address" id="AdressEditAdress" pattern=".{,200}" required title="Địa chỉ tối đa 100 ký tự!">
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                    </div>}
             </div>
         </div>
     </div>
@@ -166,16 +207,15 @@
             <div class="modal-body">
                 @using (Html.BeginForm("EditAvatar", "Member", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
-                    <input type="text" name="ID" id="IDEditAvatar" hidden />
+    <input type="text" name="ID" id="IDEditAvatar" hidden />
                     <div class="form-group">
                         <label>Avatar:</label>
                         <input type="file" name="Avatar" id="Avatar" required accept="image/png, image/gif, image/jpeg" />
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                    </div>}
             </div>
         </div>
     </div>
