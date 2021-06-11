@@ -23,6 +23,7 @@ namespace ToyStore.Service
         bool CheckEmail(string Email);
         bool CheckUsername(string Username);
         bool CheckPhoneNumber(string PhoneNumber);
+        void ResetPassword(int MemberID, string NewPassword);
         void Save();
     }
     public class MemberService : IMemberService
@@ -56,7 +57,7 @@ namespace ToyStore.Service
 
         public bool CheckEmail(string Email)
         {
-            var check = context.MemberRepository.GetAllData(x => x.Email == Email);
+            var check = context.MemberRepository.GetAllData(x => x.Email == Email && x.IsDeleted == false);
             if (check.Count() > 0)
             {
                 Console.Write("Đã tồn tại email");
@@ -77,7 +78,7 @@ namespace ToyStore.Service
 
         public bool CheckPhoneNumber(string PhoneNumber)
         {
-            var check = context.MemberRepository.GetAllData(x => x.PhoneNumber == PhoneNumber);
+            var check = context.MemberRepository.GetAllData(x => x.PhoneNumber == PhoneNumber && x.IsDeleted == false);
             if (check.Count() > 0)
             {
                 return false;
@@ -87,7 +88,7 @@ namespace ToyStore.Service
 
         public bool CheckUsername(string Username)
         {
-            var check = context.MemberRepository.GetAllData(x => x.Username == Username);
+            var check = context.MemberRepository.GetAllData(x => x.Username == Username && x.IsDeleted == false);
             if (check.Count() > 0)
             {
                 return false;
@@ -114,13 +115,20 @@ namespace ToyStore.Service
 
         public IEnumerable<Member> GetMemberListForStatistic()
         {
-            IEnumerable<Member> listMember = this.context.MemberRepository.GetAllData(x => x.AmountPurchased > 0).OrderByDescending(x => x.AmountPurchased);
+            IEnumerable<Member> listMember = this.context.MemberRepository.GetAllData(x => x.AmountPurchased > 0 && x.IsDeleted == false).OrderByDescending(x => x.AmountPurchased);
             return listMember;
         }
 
         public int GetTotalMember()
         {
             return context.MemberRepository.GetAllData().Count();
+        }
+
+        public void ResetPassword(int MemberID, string NewPassword)
+        {
+            Member member = GetByID(MemberID);
+            member.Password = NewPassword;
+            context.MemberRepository.Update(member);
         }
 
         public void Save()

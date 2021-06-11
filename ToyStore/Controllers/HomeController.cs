@@ -53,7 +53,7 @@ namespace ToyStore.Controllers
         }
         public ActionResult MenuPartial()
         {
-            ViewBag.ListProductCategory = _productCategoryService.GetProductCategoryList();
+            ViewBag.ListProductCategory = _productCategoryService.GetProductCategoryHome();
             ViewBag.ListProducer = _producerService.GetProducerList();
             ViewBag.ListAge = _ageService.GetAgeList();
             ViewBag.ListParent = _productCategoryParentService.GetProductCategoryParentList();

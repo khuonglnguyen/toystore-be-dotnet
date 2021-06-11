@@ -2,6 +2,17 @@
 @model Member
 @{ ViewBag.Title = "Thông tin tài khoản";
     Layout = "~/Views/Layout/ProductDetailsLayout.cshtml"; }
+@if (TempData["ResetPassword"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Đổi mật khẩu thành công!",
+        icon: "success",
+        timer: 3000
+    });
+</script>
+@(TempData["ResetPassword"] = null)}
 @if (TempData["EditName"] != null)
 {
 <script>
@@ -11,7 +22,8 @@
         icon: "success",
         timer: 1500
     });
-</script> @(TempData["DeleteHistoryView"] = null)}
+</script>
+@(TempData["DeleteHistoryView"] = null)}
 @if (TempData["EditAddress"] != null)
 {
 <script>
@@ -21,7 +33,8 @@
         icon: "success",
         timer: 1500
     });
-</script> @(TempData["DeleteHistoryView"] = null)}
+</script>
+@(TempData["DeleteHistoryView"] = null)}
 @if (TempData["EditAvatar"] != null)
 {
 <script>
@@ -31,8 +44,7 @@
         icon: "success",
         timer: 1500
     });
-</script>
-@(TempData["DeleteHistoryView"] = null)}
+</script> @(TempData["DeleteHistoryView"] = null)}
 <script>
     $(document).ready(function () {
         $('.btnEditName').off('click').on('click', function () {
@@ -126,16 +138,14 @@
                     <p class="qty"> Email :</p> @Model.Email
                 </div>
                 <div class="quantity">
-                    @{ 
-                        string pass = "";
-                        for (int i = 0; i < @Model.Password.Length; i++)
-                        {
-                            pass += "☺";
-                        }
-                    }
-                    <p class="qty"> Mật khẩu :</p> @pass <button class="btn btn-link btnEditPassword" value="@Model.ID">✎</button>
+                    @{ string pass = "";
+                                    for (int i = 0; i < @Model.Password.Length; i++)
+                                    {
+                                        pass += "☺";
+                                    } }
+                    <p class="qty"> Mật khẩu :</p> @pass <a class="btn btn-link" href="/Member/ResetPassword">✎</a>
                 </div>
-                
+
                 <div class="quantity">
                     @Html.ActionLink("Hủy tài khoản", "DeleteAccount", null, new { @class = "btn btn-danger" })
                 </div>

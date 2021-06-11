@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.ProductCategory>
 @using PagedList.Mvc;
 @{ ViewBag.Title = "Danh mục";
-    Layout = "~/Views/Layout/AdminLayout.cshtml"; }
+                Layout = "~/Views/Layout/AdminLayout.cshtml"; }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -15,7 +15,8 @@
         icon: "success",
         timer: 1500
     });
-</script> @(TempData["create"] = null)}
+</script>
+@(TempData["create"] = null)}
 @if (TempData["edit"] != null)
 {
 <script>
@@ -25,7 +26,8 @@
         icon: "success",
         timer: 1500
     });
-</script> @(TempData["edit"] = null)}
+</script>
+@(TempData["edit"] = null)}
 <script>
     $(document).ready(function () {
         $(".ckb").change(function () {
@@ -37,12 +39,6 @@
                         id: id
                     }
                 });
-                swal({
-                    title: "Thông báo",
-                    text: "Kích hoạt danh mục sản phẩm thành công!",
-                    icon: "success",
-                    timer: 1500
-                });
             }
             else {
                 $.ajax({
@@ -50,12 +46,6 @@
                     data: {
                         id: id
                     }
-                });
-                swal({
-                    title: "Thông báo",
-                    text: "Khóa danh mục sản phẩm thành công!",
-                    icon: "success",
-                    timer: 1500
                 });
             }
         });
@@ -176,8 +166,8 @@
     <input type="checkbox" checked class="ckb" value="@item.ID">
     <span class="slider round"></span>
 </label> }
-else
-{
+                else
+                {
 <label class="switch active">
     <input type="checkbox" class="ckb" value="@item.ID">
     <span class="slider round"></span>
@@ -186,13 +176,12 @@ else
             <td>
                 <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
             </td>
-        </tr>
-}
+        </tr>}
                 </tbody>
             </table>
             <br />
             <div id='Paging' style="text-align: center">
-                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                @Html.PagedListPager(Model, page => Url.Action("Search", new { keyword = @ViewBag.Keyword, page }))
             </div>
         </div>
     </div>
@@ -265,3 +254,4 @@ else
         </div>
     </div>
 </div>
+

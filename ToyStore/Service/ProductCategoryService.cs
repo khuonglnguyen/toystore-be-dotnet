@@ -11,6 +11,7 @@ namespace ToyStore.Service
     {
         ProductCategory AddProductCategory(ProductCategory productCategory);
         IEnumerable<ProductCategory> GetProductCategoryList();
+        IEnumerable<ProductCategory> GetProductCategoryHome();
         ProductCategory GetProductCategoryByName(string Name);
         IEnumerable<ProductCategory> GetProductCategoryList(string keyWord);
         List<string> GetProductCategoryListName(string keyword);
@@ -62,7 +63,7 @@ namespace ToyStore.Service
 
         public IEnumerable<ProductCategory> GetProductCategoryList()
         {
-            IEnumerable<ProductCategory> listProductCategory = this.context.ProductCategoryRepository.GetAllData();
+            IEnumerable<ProductCategory> listProductCategory = this.context.ProductCategoryRepository.GetAllData().OrderByDescending(x=>x.LastUpdatedDate);
             return listProductCategory;
         }
 
@@ -107,6 +108,12 @@ namespace ToyStore.Service
         {
             ProductCategory productCategory = this.context.ProductCategoryRepository.GetAllData().SingleOrDefault(x => x.Name == Name);
             return productCategory;
+        }
+
+        public IEnumerable<ProductCategory> GetProductCategoryHome()
+        {
+            IEnumerable<ProductCategory> listProductCategory = this.context.ProductCategoryRepository.GetAllData(x=>x.IsActive==true);
+            return listProductCategory;
         }
     }
 }

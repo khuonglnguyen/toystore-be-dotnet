@@ -731,8 +731,10 @@
     <Content Include="Views\ProducerManage\Index.cshtml" />
     <Content Include="Views\SupplierManage\Index.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Member\DeleteAccount.cshtml" />
+    <Content Include="Views\Member\ResetPassword.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\ProductCategoryManage\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -46,6 +46,8 @@ namespace ToyStore.Models
         public string Image { get; set; }
         public decimal Price { get; set; }
 
+
+
         public virtual Member Member { get; set; }
 
         public virtual Product Product { get; set; }

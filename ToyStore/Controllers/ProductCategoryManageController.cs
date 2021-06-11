@@ -17,7 +17,7 @@ namespace ToyStore.Controllers
         private IProductCategoryService _productCategoryService;
         private IProductCategoryParentService _productCategoryParentService;
 
-        public ProductCategoryManageController(IProductCategoryService productCategoryService,ProductCategoryParentService productCategoryParentService)
+        public ProductCategoryManageController(IProductCategoryService productCategoryService, ProductCategoryParentService productCategoryParentService)
         {
             this._productCategoryService = productCategoryService;
             this._productCategoryParentService = productCategoryParentService;
@@ -42,7 +42,7 @@ namespace ToyStore.Controllers
             //Get data for DropdownList
             ViewBag.ParentIDEdit = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name");
             ViewBag.ParentID = ViewBag.ParentIDEdit;
-            int pageSize = 5;
+            int pageSize = 10;
             //Get proudct category list
             var productCategories = _productCategoryService.GetProductCategoryList();
             PagedList<ProductCategory> listProductCategory = new PagedList<ProductCategory>(productCategories, page, pageSize);
@@ -65,8 +65,8 @@ namespace ToyStore.Controllers
             List<string> names = _productCategoryService.GetProductCategoryListName(Prefix);
             return Json(names, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public ActionResult List(string keyword)
+        [HttpGet]
+        public ActionResult Search(string keyword, int page = 1)
         {
             if (Session["Emloyee"] == null)
             {
@@ -74,18 +74,16 @@ namespace ToyStore.Controllers
             }
             //Get data for DropdownList
             ViewBag.ParentIDEdit = new SelectList(_productCategoryParentService.GetProductCategoryParentList().OrderBy(x => x.Name), "ID", "Name");
-            int pageSize = 5;
-            if (keyword == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
-            //Get proudct category list with keyword
-            var ProductCategories = _productCategoryService.GetProductCategoryList(keyword);
-            PagedList<ProductCategory> listProductCategory = new PagedList<ProductCategory>(ProductCategories, 1, pageSize);
+            ViewBag.ParentID = ViewBag.ParentIDEdit;
+            int pageSize = 10;
+            //Get proudct category list
+            var productCategories = _productCategoryService.GetProductCategoryList().Where(x => x.Name.Contains(keyword));
+            PagedList<ProductCategory> listProductCategory = new PagedList<ProductCategory>(productCategories, page, pageSize);
             //Check null
             if (listProductCategory != null)
             {
+                ViewBag.KeyWord = keyword;
+                ViewBag.Page = page;
                 //Return view
                 return View(listProductCategory);
             }
@@ -109,45 +107,11 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(ProductCategory productCategory, HttpPostedFileBase ImageUpload, int page)
+        public ActionResult Create(ProductCategory productCategory, int page)
         {
             if (Session["Emloyee"] == null)
             {
                 return RedirectToAction("Login");
-            }
-            //Declare a errorCount
-            int errorCount = 0;
-            //Check content image
-            if (ImageUpload != null && ImageUpload.ContentLength > 0)
-            {
-                //Check format iamge
-                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
-                {
-                    //Set viewbag
-                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
-                    //increase by 1 unit errorCount
-                    errorCount++;
-                }
-                else
-                {
-                    //Get file name
-                    var fileName = Path.GetFileName(ImageUpload.FileName);
-                    //Get path
-                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-                    //Check exitst
-                    if (!System.IO.File.Exists(path))
-                    {
-                        //Add image into folder
-                        ImageUpload.SaveAs(path);
-                    }
-                }
-                if (errorCount > 0)
-                {
-                    ViewBag.Messag = "Failed";
-                    return View(productCategory);
-                }
-                //Set new value image for productCategory
-                productCategory.Image = ImageUpload.FileName;
             }
             //Set TempData for checking in view to show swal
             TempData["create"] = "Success";
@@ -178,8 +142,6 @@ namespace ToyStore.Controllers
                     ID = productCategory.ID,
                     Name = productCategory.Name,
                     ParentID = productCategory.ParentID,
-                    Description = productCategory.Description,
-                    Image = productCategory.Image,
                     IsActive = productCategory.IsActive,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
@@ -191,45 +153,11 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(ProductCategory productCategory, HttpPostedFileBase ImageUpload, int page, int ParentIDEdit)
+        public ActionResult Edit(ProductCategory productCategory, int page, int ParentIDEdit)
         {
             if (Session["Emloyee"] == null)
             {
                 return RedirectToAction("Login");
-            }
-            //Declare a errorCount
-            int errorCount = 0;
-            //Check content image
-            if (ImageUpload != null && ImageUpload.ContentLength > 0)
-            {
-                //Check format iamge
-                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
-                {
-                    //Set viewbag
-                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
-                    //increase by 1 unit errorCount
-                    errorCount++;
-                }
-                else
-                {
-                    //Get file name
-                    var fileName = Path.GetFileName(ImageUpload.FileName);
-                    //Get path
-                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-                    //Check exitst
-                    if (!System.IO.File.Exists(path))
-                    {
-                        //Add image into folder
-                        ImageUpload.SaveAs(path);
-                    }
-                }
-                if (errorCount > 0)
-                {
-                    ViewBag.Messag = "Cập nhật danh mục thât bại!";
-                    return View(productCategory);
-                }
-                //Set new value image for productCategory
-                productCategory.Image = ImageUpload.FileName;
             }
             //Set TempData for checking in view to show swal
             TempData["edit"] = "Success";
@@ -237,7 +165,7 @@ namespace ToyStore.Controllers
             productCategory.ParentID = ParentIDEdit;
             _productCategoryService.UpdateProductCategory(productCategory);
             //Return view
-            return RedirectToAction("Index",new { page=page});
+            return RedirectToAction("Index", new { page = page });
         }
         public void Block(int id)
         {
