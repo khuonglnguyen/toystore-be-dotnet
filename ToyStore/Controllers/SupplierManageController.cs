@@ -24,7 +24,7 @@ namespace ToyStore.Controllers
             {
                 return RedirectToAction("Login");
             }
-            int pageSize = 5;
+            int pageSize = 10;
             if (keyword != "")
             {
                 //Get supplier
@@ -34,6 +34,7 @@ namespace ToyStore.Controllers
                 if (listProducer != null)
                 {
                     ViewBag.Page = page;
+                    ViewBag.KeyWord = keyword;
                     //Return view
                     return View(listProducer);
                 }
@@ -76,6 +77,7 @@ namespace ToyStore.Controllers
                 return RedirectToAction("Login");
             }
             _supplierService.AddSupplier(supplier);
+            TempData["create"] = "success";
             //Return view
             return RedirectToAction("Index");
         }
@@ -119,6 +121,7 @@ namespace ToyStore.Controllers
             }
             //Update supplier
             _supplierService.UpdateSupplier(supplier);
+            TempData["edit"] = "success";
             //Return view
             return RedirectToAction("Index", new { page = page });
         }
