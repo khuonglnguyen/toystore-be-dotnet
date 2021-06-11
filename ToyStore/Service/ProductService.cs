@@ -57,7 +57,6 @@ namespace ToyStore.Service
             product.Quantity = 0;
             product.ViewCount = 0;
             product.PurchasedCount = 0;
-            product.CommentCount = 0;
             this.context.ProductRepository.Insert(product);
             return product;
         }

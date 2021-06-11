@@ -58,6 +58,12 @@ namespace ToyStore.Controllers
             ViewBag.AgeIDEdit = ViewBag.AgeID;
             ViewBag.GenderIDEdit = ViewBag.GenderID;
 
+            ViewBag.CategoryIDDetail = ViewBag.CategoryID;
+            ViewBag.SupplierIDDetail = ViewBag.SupplierID;
+            ViewBag.ProducerIDDetail = ViewBag.ProducerID;
+            ViewBag.AgeIDDetail = ViewBag.AgeID;
+            ViewBag.GenderIDDetail = ViewBag.GenderID;
+
             int pageSize = 5;
             //Get proudct category list
             if (keyword != "")
@@ -246,7 +252,6 @@ namespace ToyStore.Controllers
                     IsActive = product.IsActive,
                     ViewCount = product.ViewCount,
                     PurchasedCount = product.PurchasedCount,
-                    CommentCount = product.CommentCount,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -339,19 +344,6 @@ namespace ToyStore.Controllers
             var product = _productService.GetByID(id);
             //Active productCategory
             _productService.ActiveProduct(product);
-        }
-        [HttpPost]
-        public ActionResult DeleteMulti(FormCollection formCollection)
-        {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            string[] Ids = formCollection["IDDelete"].Split(new char[] { ',' });
-            _productService.MultiDeleteProduct(Ids);
-            //Set TempData for checking in view to show swal
-            TempData["deleteMulti"] = "Success";
-            return RedirectToAction("Index");
         }
         public ActionResult ProductActivePartial(int ID)
         {

@@ -71,6 +71,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="EmloyeeTypeID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="EmloyeeType">
           <Key>
@@ -221,7 +222,6 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="ViewCount" Type="int" />
-          <Property Name="CommentCount" Type="int" />
           <Property Name="PurchasedCount" Type="int" />
           <Property Name="ProducerID" Type="int" Nullable="false" />
           <Property Name="IsNew" Type="bit" Nullable="false" />
@@ -1045,6 +1045,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EmloyeeTypeID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Decentralizations" Relationship="ToyStore2021Model.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="Decentralization" />
           <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_Emloyee" FromRole="Emloyee" ToRole="DiscountCode" />
           <NavigationProperty Name="EmloyeeType" Relationship="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="Emloyee" ToRole="EmloyeeType" />
@@ -1226,7 +1227,6 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ViewCount" Type="Int32" />
-          <Property Name="CommentCount" Type="Int32" />
           <Property Name="PurchasedCount" Type="Int32" />
           <Property Name="ProducerID" Type="Int32" Nullable="false" />
           <Property Name="IsNew" Type="Boolean" Nullable="false" />
@@ -1772,6 +1772,7 @@
           <EntitySetMapping Name="Emloyees">
             <EntityTypeMapping TypeName="ToyStore2021Model.Emloyee">
               <MappingFragment StoreEntitySet="Emloyee">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="EmloyeeTypeID" ColumnName="EmloyeeTypeID" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
@@ -1940,7 +1941,6 @@
                 <ScalarProperty Name="IsNew" ColumnName="IsNew" />
                 <ScalarProperty Name="ProducerID" ColumnName="ProducerID" />
                 <ScalarProperty Name="PurchasedCount" ColumnName="PurchasedCount" />
-                <ScalarProperty Name="CommentCount" ColumnName="CommentCount" />
                 <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />

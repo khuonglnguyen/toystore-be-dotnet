@@ -1,15 +1,32 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.Product>
 @using PagedList.Mvc;
 
-@{
-    ViewBag.Title = "Danh sách sản phẩm";
-    Layout = "~/Views/Layout/AdminLayout.cshtml";
-}
+@{ ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Layout/AdminLayout.cshtml"; }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="~/Scripts/bootbox.js"></script>
-
+@if (TempData["create"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Thêm sản phẩm thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script> @(TempData["create"] = null)}
+@if (TempData["edit"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Cập nhật sản phẩm thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script> @(TempData["edit"] = null)}
 <script>
     $(document).ready(function () {
         $(".ckb").change(function () {
@@ -21,6 +38,12 @@
                         id: id
                     }
                 });
+                swal({
+                    title: "Thông báo",
+                    text: "Kích hoạt sản phẩm thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
             }
             else {
                 $.ajax({
@@ -28,6 +51,12 @@
                     data: {
                         id: id
                     }
+                });
+                swal({
+                    title: "Thông báo",
+                    text: "Khóa sản phẩm thành công!",
+                    icon: "success",
+                    timer: 1500
                 });
             }
         });
@@ -66,7 +95,45 @@
                         $('#IsActive').prop("checked", response.IsActive);
                         $('#ViewCount').val(response.ViewCount);
                         $('#PurchasedCount').val(response.PurchasedCount);
-                        $('#CommentCount').val(response.CommentCount);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $('.btnDetail').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalDetail').modal('show');
+            $.ajax({
+                url: '/ProductManage/Edit',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#NameDetail').val(response.Name);
+                        $('#CategoryIDDetail').val(response.CategoryID);
+                        $('#ProducerIDDetail').val(response.ProducerID);
+                        $('#AgeIDDetail').val(response.AgeID);
+                        $('#GenderIDDetail').val(response.GenderID);
+                        $('#Image1Detail').attr('src', "/Content/images/" + response.Image1);
+                        $('#Image2Detail').attr('src', "/Content/images/" + response.Image2);
+                        $('#Image3Detail').attr('src', "/Content/images/" + response.Image3);
+                        $('#PriceDetail').val(response.Price);
+                        $('#DiscountDetail').val(response.Discount);
+                        $('#DescriptionDetail').val(response.Description);
+                        $('#HomeFlagDetail').prop("checked", response.HomeFlag);
+                        $('#IsNewDetail').prop("checked", response.IsNew);
+                        $('#IsActiveDetail').prop("checked", response.IsActive);
+                        $('#ViewCountDetail').val(response.ViewCount);
+                        $('#PurchasedCountDetail').val(response.PurchasedCount);
+                        $('#CommentCountDetail').val(response.CommentCount);
                     }
                     else {
                         bootbox.alert(response.message);
@@ -96,22 +163,12 @@
                 noResults: "", results: ""
             }
         });
-        $('#btnDeleteMulti').hide();
-        $('#checkAll').click(function () {
-            if ($(this).is(":checked")) {
-                $(".cbProductCategory").prop("checked", true)
-            }
-            else {
-                $(".cbProductCategory").prop("checked", false)
-            }
-            $('#btnDeleteMulti').toggle();
-        });
     });
 </script>
 
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
-    <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Admin")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","ProductManage")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
 </ol>
 
 <div class="agile-grids">
@@ -123,13 +180,12 @@
             <hr />
             <div class="w3-search-box">
                 <form action="~/ProductManage/Index" method="get">
-                    <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword">
+                    <input type="text" placeholder="Tìm kiếm..." name="keyword" id="keyword" required>
                     <input type="submit" value="">
                 </form>
                 @if (ViewBag.KeyWord != null)
                 {
-                    <h5>Tìm kiếm với từ khóa "@ViewBag.KeyWord"</h5>
-                }
+    <h5>Tìm kiếm với từ khóa "@ViewBag.KeyWord"</h5>}
             </div><!--//end-search-box-->
             <p>@ViewBag.message</p>
             <div class="clearfix"> </div>
@@ -156,7 +212,7 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        @Html.Hidden(item.ID.ToString())
+        @Html.Hidden(item.ID.ToString())
                         <tr>
                             <td style="color:brown">
                                 <b>@Html.DisplayFor(modelItem => item.Name)</b>
@@ -167,27 +223,26 @@
                             <td>
                                 @if (item.IsActive == true)
                                 {
-                                    <label class="switch block">
-                                        <input type="checkbox" checked class="ckb" value="@item.ID">
-                                        <span class="slider round"></span>
-                                    </label>
-                                }
-                                else
-                                {
-                                    <label class="switch active">
-                                        <input type="checkbox" class="ckb" value="@item.ID">
-                                        <span class="slider round"></span>
-                                    </label>
-                                }
+                <label class="switch block">
+                    <input type="checkbox" checked class="ckb" value="@item.ID">
+                    <span class="slider round"></span>
+                </label> }
+            else
+            {
+<label class="switch active">
+    <input type="checkbox" class="ckb" value="@item.ID">
+    <span class="slider round"></span>
+</label>}
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.LastUpdatedDate)
                             </td>
                             <td>
+                                <button class="btn btn-link btnDetail" value="@item.ID">Chi tiết</button>
                                 <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
                             </td>
                         </tr>
-                    }
+}
                 </tbody>
             </table>
             <br />
@@ -210,65 +265,64 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Create", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
-                    <div class="form-group">
-                        <label for="Name">Tên sản phẩm:</label>
-                        <input type="text" class="form-control" name="Name" id="NameAdd" pattern=".{,50}" required title="Tên sản phẩm tối đa ký tự!">
-                        <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
-                        <input type="hidden" id="hidID" value="0" />
-                    </div>
+    <div class="form-group">
+        <label for="Name">Tên sản phẩm:</label>
+        <input type="text" class="form-control" name="Name" id="NameAdd" pattern=".{,50}" required title="Tên sản phẩm tối đa 50 ký tự!">
+        <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
+        <input type="hidden" id="hidID" value="0" />
+    </div>
                     <div class="form-group">
                         <label>Danh mục:</label>
                         @Html.DropDownList("CategoryID", null, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label>Nhà sản xuất:</label>
-                        @Html.DropDownList("ProducerID", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Độ tuổi:</label>
-                        @Html.DropDownList("AgeID", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Giới tính:</label>
-                        @Html.DropDownList("GenderID", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh 1:</label>
-                        <input type="file" name="ImageUpload" id="Image1Add" required accept="image/png, image/gif, image/jpeg" />
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh 2:</label>
-                        <input type="file" name="ImageUpload" id="Image2Add" accept="image/png, image/gif, image/jpeg" />
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh 3:</label>
-                        <input type="file" name="ImageUpload" id="Image3Add" accept="image/png, image/gif, image/jpeg" />
-                    </div>
-                    <div class="form-group">
-                        <label>Giá bán:</label>
-                        <input type="number" class="form-control" name="Price" id="PriceAdd" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Khuyến mãi(%):</label>
-                        <input type="number" class="form-control" name="Discount" id="DiscountAdd" value="0" min="0" max="99">
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả:</label>
-                        <textarea class="form-control" name="Description" id="DescriptionAdd" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Sản phẩn mới:</label>
-                        <input class="form-control" data-val="true" id="IsNewAdd" name="IsNew" type="checkbox" value="true" checked>
-                    </div>
-                    <div class="form-group">
-                        <label>Kích hoạt:</label>
-                        <input class="form-control" data-val="true" id="IsActiveAdd" name="IsActive" type="checkbox" value="true" checked>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
+                                    <div class="form-group">
+                                        <label>Nhà sản xuất:</label>
+                                        @Html.DropDownList("ProducerID", null, new { @class = "form-control" })
+                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Độ tuổi:</label>
+                                                        @Html.DropDownList("AgeID", null, new { @class = "form-control" })
+                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Giới tính:</label>
+                                                                        @Html.DropDownList("GenderID", null, new { @class = "form-control" })
+                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>Hình ảnh 1:</label>
+                                                                                        <input type="file" name="ImageUpload" id="Image1Add" required accept="image/png, image/gif, image/jpeg" />
+                                                                                    </div>
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Hình ảnh 2:</label>
+                                                                                                        <input type="file" name="ImageUpload" id="Image2Add" accept="image/png, image/gif, image/jpeg" />
+                                                                                                    </div>
+                                                                                                                    <div class="form-group">
+                                                                                                                        <label>Hình ảnh 3:</label>
+                                                                                                                        <input type="file" name="ImageUpload" id="Image3Add" accept="image/png, image/gif, image/jpeg" />
+                                                                                                                    </div>
+                                                                                                                                    <div class="form-group">
+                                                                                                                                        <label>Giá bán:</label>
+                                                                                                                                        <input type="number" class="form-control" name="Price" id="PriceAdd" min="0" required>
+                                                                                                                                    </div>
+                                                                                                                                                    <div class="form-group">
+                                                                                                                                                        <label>Khuyến mãi(%):</label>
+                                                                                                                                                        <input type="number" class="form-control" name="Discount" id="DiscountAdd" value="0" min="0" max="99">
+                                                                                                                                                    </div>
+                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                        <label>Mô tả:</label>
+                                                                                                                                                                        <textarea class="form-control" name="Description" id="DescriptionAdd" required></textarea>
+                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                        <label>Sản phẩn mới:</label>
+                                                                                                                                                                                        <input class="form-control" data-val="true" id="IsNewAdd" name="IsNew" type="checkbox" value="true" checked>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label>Kích hoạt:</label>
+                                                                                                                                                                                                        <input class="form-control" data-val="true" id="IsActiveAdd" name="IsActive" type="checkbox" value="true" checked>
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                    <div class="modal-footer">
+                                                                                                                                                                                                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                                                                                                                                                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                                                                                                                                                                                                    </div>}
             </div>
         </div>
     </div>
@@ -286,72 +340,149 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Edit", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
-                    <input type="text" name="ID" id="ID" hidden />
+    <input type="text" name="ID" id="ID" hidden />
                     <input type="text" name="ViewCount" id="ViewCount" hidden />
-                    <input type="text" name="PurchasedCount" id="PurchasedCount" hidden />
-                    <input type="text" name="CommentCount" id="CommentCount" hidden />
-                    <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
-                    <div class="form-group">
-                        <label for="Name">Tên sản phẩm:</label>
-                        <input type="text" class="form-control" name="Name" id="Name" pattern=".{,50}" required title="Tên sản phẩm tối đa ký tự!">
-                        <input type="hidden" id="hidID" value="0" />
-                    </div>
-                    <div class="form-group">
-                        <label>Danh mục:</label>
-                        @Html.DropDownList("CategoryIDEdit", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Nhà sản xuất:</label>
-                        @Html.DropDownList("ProducerIDEdit", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Độ tuổi:</label>
-                        @Html.DropDownList("AgeIDEdit", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Giới tính:</label>
-                        @Html.DropDownList("GenderIDEdit", null, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh 1:</label>
-                        <input type="text" class="form-control" name="Image1" id="TextImage1" readonly>
-                        <input type="file" name="ImageUpload" id="Image1" accept="image/png, image/gif, image/jpeg" />
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh 2:</label>
-                        <input type="text" class="form-control" name="Image2" id="TextImage2" readonly>
-                        <input type="file" name="ImageUpload" id="Image2" accept="image/png, image/gif, image/jpeg" />
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh 3:</label>
-                        <input type="text" class="form-control" name="Image3" id="TextImage3" readonly>
-                        <input type="file" name="ImageUpload" id="Image3" accept="image/png, image/gif, image/jpeg" />
-                    </div>
-                    <div class="form-group">
-                        <label>Giá bán:</label>
-                        <input type="number" class="form-control" name="Price" id="Price" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Khuyến mãi(%):</label>
-                        <input type="number" class="form-control" name="Discount" id="Discount" min="0" max="99">
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả:</label>
-                        <textarea class="form-control" name="Description" id="Description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Sản phẩn mới:</label>
-                        <input class="form-control" data-val="true" id="IsNew" name="IsNew" type="checkbox" value="true">
-                    </div>
-                    <div class="form-group">
-                        <label>Kích hoạt:</label>
-                        <input class="form-control" data-val="true" id="IsActive" name="IsActive" type="checkbox" value="true">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>
-                }
+                                    <input type="text" name="PurchasedCount" id="PurchasedCount" hidden />
+                                                    <input type="text" name="CommentCount" id="CommentCount" hidden />
+                                                                    <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
+                                                                                    <div class="form-group">
+                                                                                        <label for="Name">Tên sản phẩm:</label>
+                                                                                        <input type="text" class="form-control" name="Name" id="Name" pattern=".{,50}" required title="Tên sản phẩm tối đa 50 ký tự!">
+                                                                                        <input type="hidden" id="hidID" value="0" />
+                                                                                    </div>
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Danh mục:</label>
+                                                                                                        @Html.DropDownList("CategoryIDEdit", null, new { @class = "form-control" })
+                                                                                                    </div>
+                                                                                                                    <div class="form-group">
+                                                                                                                        <label>Nhà sản xuất:</label>
+                                                                                                                        @Html.DropDownList("ProducerIDEdit", null, new { @class = "form-control" })
+                                                                                                                    </div>
+                                                                                                                                    <div class="form-group">
+                                                                                                                                        <label>Độ tuổi:</label>
+                                                                                                                                        @Html.DropDownList("AgeIDEdit", null, new { @class = "form-control" })
+                                                                                                                                    </div>
+                                                                                                                                                    <div class="form-group">
+                                                                                                                                                        <label>Giới tính:</label>
+                                                                                                                                                        @Html.DropDownList("GenderIDEdit", null, new { @class = "form-control" })
+                                                                                                                                                    </div>
+                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                        <label>Hình ảnh 1:</label>
+                                                                                                                                                                        <input type="text" class="form-control" name="Image1" id="TextImage1" readonly>
+                                                                                                                                                                        <input type="file" name="ImageUpload" id="Image1" accept="image/png, image/gif, image/jpeg" />
+                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                        <label>Hình ảnh 2:</label>
+                                                                                                                                                                                        <input type="text" class="form-control" name="Image2" id="TextImage2" readonly>
+                                                                                                                                                                                        <input type="file" name="ImageUpload" id="Image2" accept="image/png, image/gif, image/jpeg" />
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label>Hình ảnh 3:</label>
+                                                                                                                                                                                                        <input type="text" class="form-control" name="Image3" id="TextImage3" readonly>
+                                                                                                                                                                                                        <input type="file" name="ImageUpload" id="Image3" accept="image/png, image/gif, image/jpeg" />
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                        <label>Giá bán:</label>
+                                                                                                                                                                                                                        <input type="number" class="form-control" name="Price" id="Price" min="0" required>
+                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                                        <label>Khuyến mãi(%):</label>
+                                                                                                                                                                                                                                        <input type="number" class="form-control" name="Discount" id="Discount" min="0" max="99">
+                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                                                        <label>Mô tả:</label>
+                                                                                                                                                                                                                                                        <textarea class="form-control" name="Description" id="Description" required></textarea>
+                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                                                                        <label>Sản phẩn mới:</label>
+                                                                                                                                                                                                                                                                        <input class="form-control" data-val="true" id="IsNew" name="IsNew" type="checkbox" value="true">
+                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                                                                                                        <label>Kích hoạt:</label>
+                                                                                                                                                                                                                                                                                        <input class="form-control" data-val="true" id="IsActive" name="IsActive" type="checkbox" value="true">
+                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                    <div class="modal-footer">
+                                                                                                                                                                                                                                                                                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                                                                                                                                                                                                                                                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                                                                                                                                                                                                                                                                                    </div>}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDetail" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Xem chi tiết</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
+                <div class="form-group">
+                    <label for="Name">Tên sản phẩm:</label>
+                    <input type="text" class="form-control" name="Name" id="NameDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="Name">Lượt xem:</label>
+                    <input type="text" class="form-control" name="Name" id="ViewCountDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="Name">Lượt mua:</label>
+                    <input type="text" class="form-control" name="Name" id="PurchasedCountDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Danh mục:</label>
+                    @Html.DropDownList("CategoryIDDetail", null, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    <label>Nhà sản xuất:</label>
+                    @Html.DropDownList("ProducerIDDetail", null, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    <label>Độ tuổi:</label>
+                    @Html.DropDownList("AgeIDDetail", null, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    <label>Giới tính:</label>
+                    @Html.DropDownList("GenderIDDetail", null, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    <label>Hình ảnh 1:</label>
+                    <img name="Image" id="Image1Detail" style="height:200px;width:200px" />
+                </div>
+                <div class="form-group">
+                    <label>Hình ảnh 2:</label>
+                    <img name="Image" id="Image2Detail" style="height:200px;width:200px" />
+                </div>
+                <div class="form-group">
+                    <label>Hình ảnh 3:</label>
+                    <img name="Image" id="Image3Detail" style="height:200px;width:200px" />
+                </div>
+                <div class="form-group">
+                    <label>Giá bán:</label>
+                    <input type="number" class="form-control" name="Price" id="PriceDetail" min="0" required readonly>
+                </div>
+                <div class="form-group">
+                    <label>Khuyến mãi(%):</label>
+                    <input type="number" class="form-control" name="Discount" id="DiscountDetail" min="0" max="99" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Mô tả:</label>
+                    <textarea class="form-control" name="Description" id="DescriptionDetail" required readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Sản phẩn mới:</label>
+                    <input class="form-control" data-val="true" id="IsNewDetail" name="IsNew" type="checkbox" value="true" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Kích hoạt:</label>
+                    <input class="form-control" data-val="true" id="IsActiveDetail" name="IsActive" type="checkbox" value="true" readonly>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
             </div>
         </div>
     </div>

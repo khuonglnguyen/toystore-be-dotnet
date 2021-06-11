@@ -192,6 +192,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\DecentralizationManageController.cs" />
     <Compile Include="Controllers\DiscountCodeManageController.cs" />
+    <Compile Include="Controllers\EmloyeeManageController.cs" />
     <Compile Include="Controllers\ImportProductManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OrderManageController.cs" />
@@ -735,9 +736,11 @@
     <Content Include="Views\Member\ResetPassword.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\ProductCategoryManage\Search.cshtml" />
+    <Content Include="Views\EmloyeeManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Emloyee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />

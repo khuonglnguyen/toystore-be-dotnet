@@ -61,8 +61,6 @@ public partial class Product
 
     public Nullable<int> ViewCount { get; set; }
 
-    public Nullable<int> CommentCount { get; set; }
-
     public Nullable<int> PurchasedCount { get; set; }
 
     public int ProducerID { get; set; }
