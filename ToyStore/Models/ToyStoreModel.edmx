@@ -184,10 +184,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" />
-          <Property Name="Imfomation" Type="nvarchar" MaxLength="256" />
-          <Property Name="Logo" Type="nvarchar" MaxLength="500" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -1185,10 +1182,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Imfomation" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Logo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Products" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Producer_ProducerID" FromRole="Producer" ToRole="Product" />
         </EntityType>
         <EntityType Name="ProductCategory">
@@ -1902,10 +1896,7 @@
           <EntitySetMapping Name="Producers">
             <EntityTypeMapping TypeName="ToyStore2021Model.Producer">
               <MappingFragment StoreEntitySet="Producer">
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Logo" ColumnName="Logo" />
-                <ScalarProperty Name="Imfomation" ColumnName="Imfomation" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

@@ -31,13 +31,7 @@ public partial class Producer
 
     public string Name { get; set; }
 
-    public string Imfomation { get; set; }
-
-    public string Logo { get; set; }
-
     public bool IsActive { get; set; }
-
-    public System.DateTime LastUpdatedDate { get; set; }
 
 
 

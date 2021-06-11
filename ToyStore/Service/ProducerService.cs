@@ -12,7 +12,7 @@ namespace ToyStore.Service
         Producer AddProducer(Producer producer);
         IEnumerable<Producer> GetProducerList();
         IEnumerable<Producer> GetProducerList(string keyWord);
-        IEnumerable<Producer> GetProducerListName(string keyword);
+        List<string> GetProducerListName(string keyword);
         Producer GetByID(int ID);
         void UpdateProducer(Producer producer);
         void Block(Producer producer);
@@ -29,7 +29,6 @@ namespace ToyStore.Service
         }
         public Producer AddProducer(Producer producer)
         {
-            producer.LastUpdatedDate = DateTime.Now;
             this.context.ProducerRepository.Insert(producer);
             return producer;
         }
@@ -61,7 +60,6 @@ namespace ToyStore.Service
 
         public void UpdateProducer(Producer producer)
         {
-            producer.LastUpdatedDate = DateTime.Now;
             this.context.ProducerRepository.Update(producer);
         }
 
@@ -71,10 +69,15 @@ namespace ToyStore.Service
             return listProducer;
         }
 
-        public IEnumerable<Producer> GetProducerListName(string keyword)
+        public List<string> GetProducerListName(string keyword)
         {
-            IEnumerable<Producer> listProducerName = this.context.ProducerRepository.GetAllData(x => x.Name.Contains(keyword));
-            return listProducerName;
+            IEnumerable<Producer> listProducerName = this.context.ProducerRepository.GetAllData(x => x.Name.Contains(keyword) && x.IsActive == true);
+            List<string> names = new List<string>();
+            foreach (var item in listProducerName)
+            {
+                names.Add(item.Name);
+            }
+            return names;
         }
 
         public void Block(Producer producer)

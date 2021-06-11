@@ -22,35 +22,59 @@ namespace ToyStore.Controllers
         }
         #endregion
         [HttpGet]
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int page = 1, string keyword = "")
         {
             if (Session["Emloyee"] == null)
             {
                 return RedirectToAction("Login");
             }
-            int pageSize = 5;
-            //Get proudcer
-            var producers = _producerService.GetProducerList();
-            PagedList<Producer> listProducer = new PagedList<Producer>(producers, page, pageSize);
-            //Check null
-            if (listProducer != null)
+            if (keyword != "")
             {
-                ViewBag.Page = page;
-                //Return view
-                return View(listProducer);
+                int pageSize = 10;
+                //Get proudcer
+                var producers = _producerService.GetProducerList().Where(x => x.Name.Contains(keyword));
+                PagedList<Producer> listProducer = new PagedList<Producer>(producers, page, pageSize);
+                //Check null
+                if (listProducer != null)
+                {
+                    ViewBag.Page = page;
+                    ViewBag.KeyWord = keyword;
+                    //Return view
+                    return View(listProducer);
+                }
+                else
+                {
+                    //return 404
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
             else
             {
-                //return 404
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                int pageSize = 10;
+                //Get proudcer
+                var producers = _producerService.GetProducerList();
+                PagedList<Producer> listProducer = new PagedList<Producer>(producers, page, pageSize);
+                //Check null
+                if (listProducer != null)
+                {
+                    ViewBag.Page = page;
+                    //Return view
+                    return View(listProducer);
+                }
+                else
+                {
+                    //return 404
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
+
         }
-        //[HttpPost]
-        //public JsonResult ListName(string Prefix)
-        //{
-        //    List<string> names = _productCategoryService.GetProductCategoryListName(Prefix);
-        //    return Json(names, JsonRequestBehavior.AllowGet);
-        //}
+        [HttpPost]
+        public JsonResult ListName(string Prefix)
+        {
+            List<string> names = _producerService.GetProducerListName(Prefix);
+            return Json(names, JsonRequestBehavior.AllowGet);
+        }
         //[HttpPost]
         //public ActionResult List(string keyword)
         //{
@@ -82,50 +106,16 @@ namespace ToyStore.Controllers
         //    }
         //}
         [HttpPost]
-        public ActionResult Create(Producer producer, HttpPostedFileBase ImageUpload, int page)
+        public ActionResult Create(Producer producer, int page)
         {
             if (Session["Emloyee"] == null)
             {
                 return RedirectToAction("Login");
             }
-            //Declare a errorCount
-            int errorCount = 0;
-            //Check content image
-            if (ImageUpload != null && ImageUpload.ContentLength > 0)
-            {
-                //Check format iamge
-                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
-                {
-                    //Set viewbag
-                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
-                    //increase by 1 unit errorCount
-                    errorCount++;
-                }
-                else
-                {
-                    //Get file name
-                    var fileName = Path.GetFileName(ImageUpload.FileName);
-                    //Get path
-                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-                    //Check exitst
-                    if (!System.IO.File.Exists(path))
-                    {
-                        //Add image into folder
-                        ImageUpload.SaveAs(path);
-                    }
-                }
-                if (errorCount > 0)
-                {
-                    ViewBag.Messag = "Failed";
-                    return View(producer);
-                }
-                //Set new value image for productCategory
-                producer.Logo = ImageUpload.FileName;
-            }
-            //Set TempData for checking in view to show swal
-            TempData["create"] = "Success";
             //Create producer
             _producerService.AddProducer(producer);
+            //Set TempData for checking in view to show swal
+            TempData["create"] = "Success";
             //Return view
             return RedirectToAction("Index", new { page = 1 });
         }
@@ -146,8 +136,6 @@ namespace ToyStore.Controllers
                 {
                     ID = producer.ID,
                     Name = producer.Name,
-                    Imfomation = producer.Imfomation,
-                    Logo = producer.Logo,
                     IsActive = producer.IsActive,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
@@ -159,50 +147,16 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(Producer producer, HttpPostedFileBase ImageUpload, int page)
+        public ActionResult Edit(Producer producer, int page)
         {
             if (Session["Emloyee"] == null)
             {
                 return RedirectToAction("Login");
             }
-            //Declare a errorCount
-            int errorCount = 0;
-            //Check content image
-            if (ImageUpload != null && ImageUpload.ContentLength > 0)
-            {
-                //Check format iamge
-                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
-                {
-                    //Set viewbag
-                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
-                    //increase by 1 unit errorCount
-                    errorCount++;
-                }
-                else
-                {
-                    //Get file name
-                    var fileName = Path.GetFileName(ImageUpload.FileName);
-                    //Get path
-                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-                    //Check exitst
-                    if (!System.IO.File.Exists(path))
-                    {
-                        //Add image into folder
-                        ImageUpload.SaveAs(path);
-                    }
-                }
-                if (errorCount > 0)
-                {
-                    ViewBag.Messag = "Cập nhật nhà sản xuất thât bại!";
-                    return View(producer);
-                }
-                //Set new value image for producer
-                producer.Logo = ImageUpload.FileName;
-            }
-            //Set TempData for checking in view to show swal
-            TempData["edit"] = "Success";
             //Update producer
             _producerService.UpdateProducer(producer);
+            //Set TempData for checking in view to show swal
+            TempData["edit"] = "Success";
             //Return view
             return RedirectToAction("Index", new { page = page });
         }
@@ -220,18 +174,5 @@ namespace ToyStore.Controllers
             //Block producer
             _producerService.Active(producer);
         }
-        //[HttpPost]
-        //public ActionResult DeleteMulti(FormCollection formCollection)
-        //{
-        //    if (Session["Emloyee"] == null)
-        //    {
-        //        return RedirectToAction("Login");
-        //    }
-        //    string[] Ids = formCollection["IDDelete"].Split(new char[] { ',' });
-        //    _productCategoryService.MultiDeleteProductCategory(Ids);
-        //    //Set TempData for checking in view to show swal
-        //    TempData["deleteMulti"] = "Success";
-        //    return RedirectToAction("Index");
-        //}
     }
 }
