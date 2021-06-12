@@ -43,6 +43,7 @@ namespace ToyStore.Controllers
             ViewBag.listSupplier = _supplierService.GetSupplierList();
             ViewBag.SupplierID = ID;
             ViewBag.SupplierName = _supplierService.GetByID(ID).Name;
+            ViewBag.ListProduct = _productService.GetProductList().OrderBy(x=>x.Quantity);
             return View();
         }
         [HttpPost]
@@ -98,38 +99,12 @@ namespace ToyStore.Controllers
             return View(listImportCoupon);
         }
         [HttpGet]
-        public JsonResult GetDataForImportProductSingle(int ID)
+        public ActionResult ImportProductDetail(int ID)
         {
-            Product product = _productService.GetByID(ID);
-            return Json(new
-            {
-                Name = product.Name,
-                ID = product.ID,
-                status = true
-            }, JsonRequestBehavior.AllowGet);
+            IEnumerable<ImportCouponDetail> importCouponDetails = _importCouponDeatilService.GetByImportCouponID(ID);
+            ViewBag.ID = ID;
+            return View(importCouponDetails);
         }
-        //[HttpPost]
-        //public ActionResult ImportProductSingle(ImportCouponDetail importCouponDetail, int page)
-        //{
-            //ImportCoupon importCoupon = new ImportCoupon();
-            //Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            //importCoupon.EmloyeeID = emloyee.ID;
-            //importCoupon.Date = DateTime.Now;
-            //importCoupon.IsDelete = false;
-            ////Update quantity product
-            //Product product;
-            //product = _productService.GetByID(importCouponDetail.ProductID);
-            //product.Quantity += importCouponDetail.Quantity;
-            //_productService.UpdateProduct(product);
-            ////Add import coupon
-            //importCoupon.SupplierID = product.SupplierID;
-            //_importCouponService.AddImportCoupon(importCoupon);
-            ////Set ImportCouponID for all ImportCouponDetail
-            //importCouponDetail.ImportCouponID = importCoupon.ID;
-
-            //_importCouponDeatilService.AddImportCouponDetail(importCouponDetail);
-            //return RedirectToAction("ProductListIsAlmostOver", new { page = page });
-        //}
         [HttpGet]
         public ActionResult Delete(int ID, int page)
         {

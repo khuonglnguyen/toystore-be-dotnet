@@ -1,9 +1,16 @@
 ﻿@using ToyStore.Models
 @model ImportCoupon
-@{
-    ViewBag.Title = "Nhập Hàng";
-    Layout = "~/Views/Layout/AdminLayout.cshtml";
-}
+@{ ViewBag.Title = "Nhập Hàng";
+    Layout = "~/Views/Layout/AdminLayout.cshtml"; }
+@if (TempData["ImportProduct"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Lập phiếu nhập thành công!",
+        icon: "success",
+        timer: 1500
+    });</script> @(TempData["ImportProduct"] = null)}
 <script src="~/Scripts/bootbox.js"></script>
 <div class="agile-grids">
     <div class="agile-tables">
@@ -19,15 +26,15 @@
                             <select class="ddlProduct" id="ProductID" name="ProductID">
                                 @foreach (var item in lstProduct)
                                 {
-                                    <option value="@item.ID">@item.Name</option>
+                                    <option value="@item.ID">@item.Name - (SL: @item.Quantity)</option>
                                 }
                             </select>
                         </td>
                         <td>
-                            <input name="" class="Price" value="0" />
+                            <input name="" class="col-md-10 Price" value="1" />
                         </td>
                         <td>
-                            <input name="" class="Quantity" value="0" />
+                            <input name="" class="col-md-10 Quantity" value="1" />
                         </td>
                         <td>
                             <input class="btnDelete btn btn-danger" style="width:30px;height:30px" value="-" />
@@ -64,7 +71,6 @@
         $(".tblImportCouponDetail").append(trnoidung);
         LoadIDLenThe();
     });
-
     //Phương thức xử lý gán name cho td
     function LoadIDLenThe() {
         $(".trAppended").each(function () {
@@ -73,13 +79,11 @@
             var nameProductID = "[" + id + "].ProductID";
             var nameQuantity = "[" + id + "].Quantity";
             var namePrice = "[" + id + "].Price";
-
             $(this).find(".ddlProduct").attr("name", nameProductID); //Gán name cho ddlSanPham
             $(this).find(".Price").attr("name", namePrice); //Gán name cho txtDonGia
             $(this).find(".Quantity").attr("name", nameQuantity); //Gán name cho txtSoLuong
         })
     };
-
     //Cập nhật id
     function CapNhatID() {
         //Lấy lại tr 1
@@ -91,54 +95,58 @@
             var nameProductID = "[" + id + "].ProductID";
             var nameQuantity = "[" + id + "].Quantity";
             var namePrice = "[" + id + "].Price";
-
             $(this).find(".ddlProduct").attr("name", nameProductID); //Gán name cho ddlSanPham
             $(this).find(".Price").attr("name", namePrice); //Gán name cho txtDonGia
             $(this).find(".Quantity").attr("name", nameQuantity); //Gán name cho txtSoLuong
-
             //Cập nhật lại data-id khi xóa
             $(this).attr("data-id", i);
             i++;
         })
     };
-
     //Sự kiện xóa
     $("body").on("click", ".btnDelete", function () {
         $(this).closest("tr").remove();
         CapNhatID();
     });
-
     //Kiểm tra dữ liệu đầu vào
     $("#btnImportProduct").click(function () {
         if (KiemTraDonGia() == false) {
+            swal({
+                title: "Thông báo",
+                text: "Đơn giá không hợp lệ!",
+                icon: "error",
+                timer: 1500
+            });
             return false;
         }
         if (KiemTraSoLuong() == false) {
+            swal({
+                title: "Thông báo",
+                text: "Số lượng không hợp lệ!",
+                icon: "error",
+                timer: 1500
+            });
             return false;
         }
     });
-
     //Kiểm tra đơn giá
     function KiemTraDonGia() {
         var bl = true;
         $(".Price").each(function () {
             var giatri = $(this).val();
-            if (isNaN(giatri) == true) {
-                alert("Đơn giá không hợp lệ");
+            if (giatri < 1) {
                 bl = false;
                 return bl;
             }
         });
         return bl;
     }
-
     //Kiểm tra số lượng
-    function KiemTraDonGia() {
+    function KiemTraSoLuong() {
         var bl = true;
         $(".Quantity").each(function () {
             var giatri = $(this).val();
-            if (isNaN(giatri) == true) {
-                alert("Số lượng không hợp lệ");
+            if (giatri < 1) {
                 bl = false;
                 return bl;
             }

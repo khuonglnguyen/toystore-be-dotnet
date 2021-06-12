@@ -252,6 +252,7 @@ namespace ToyStore.Controllers
                     IsActive = product.IsActive,
                     ViewCount = product.ViewCount,
                     PurchasedCount = product.PurchasedCount,
+                    Quantity = product.Quantity,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
             }

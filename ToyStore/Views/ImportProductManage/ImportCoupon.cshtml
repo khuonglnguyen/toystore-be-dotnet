@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<ToyStore.Models.ImportCoupon>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "ProductListIsAlmostOver";
+    ViewBag.Title = "Danh Sách Phiếu Nhập";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 <ol class="breadcrumb">
@@ -13,7 +13,6 @@
     <div class="agile-tables">
         <div class="w3l-table-info">
             <h2>Danh sách phiếu nhập</h2>
-            <input type="submit" value="Xóa mục đã chọn" class="btn btn-default" id="btnDeleteMulti" />
             <table id="table">
                 <thead>
                     <tr>
@@ -28,9 +27,6 @@
                         </th>
                         <th>
                             Ngày Nhập
-                        </th>
-                        <th>
-                            Trạng Thái
                         </th>
                         <th></th>
                     </tr>
@@ -53,25 +49,7 @@
                                 @Html.DisplayFor(modelItem => item.Date)
                             </td>
                             <td>
-                                @if (item.IsDelete == true)
-                                {
-                                    <span class="label label-danger">Đã xóa</span>
-                                }
-                                else
-                                {
-                                    <span class="label label-success">Lưu trữ</span>
-                                }
-                            </td>
-                            <td>
-                                <button class="btn btn-primary btnImport" value="@item.ID">Chi Tiết</button>
-                                @if (item.IsDelete == true)
-                                {
-                                    @Html.ActionLink("P.Hồi", "Rehibilitate", "ImportProductManage", new { ID = item.ID, page = @ViewBag.Page }, new { @class = "btn btn-danger" })
-                                }
-                                else
-                                {
-                                    @Html.ActionLink("Xóa", "Delete", "ImportProductManage", new { ID = item.ID, page = @ViewBag.Page }, new { @class = "btn btn-danger" })
-                                }
+                                <a class="btn btn-primary btnImport" href="@Url.Action("ImportProductDetail","ImportProductManage",new { ID=item.ID})">Chi Tiết</a>
                             </td>
                         </tr>
                     }

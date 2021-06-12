@@ -133,7 +133,7 @@
                         $('#IsActiveDetail').prop("checked", response.IsActive);
                         $('#ViewCountDetail').val(response.ViewCount);
                         $('#PurchasedCountDetail').val(response.PurchasedCount);
-                        $('#CommentCountDetail').val(response.CommentCount);
+                        $('#QuantityDetail').val(response.Quantity);
                     }
                     else {
                         bootbox.alert(response.message);
@@ -423,6 +423,10 @@
                 <div class="form-group">
                     <label for="Name">Tên sản phẩm:</label>
                     <input type="text" class="form-control" name="Name" id="NameDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="Name">Số lượng:</label>
+                    <input type="text" class="form-control" name="Name" id="QuantityDetail" readonly>
                 </div>
                 <div class="form-group">
                     <label for="Name">Lượt xem:</label>

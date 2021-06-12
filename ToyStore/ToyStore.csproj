@@ -709,7 +709,6 @@
     <Content Include="Views\Member\OrderDetail.cshtml" />
     <Content Include="Views\Cart\CheckoutPartial.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProduct.cshtml" />
-    <Content Include="Views\ImportProductManage\ProductListIsAlmostOver.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProductBySupplierID.cshtml" />
     <Content Include="Views\ImportProductManage\ImportCoupon.cshtml" />
     <Content Include="Views\Product\ProductViewed.cshtml" />
@@ -737,6 +736,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\ProductCategoryManage\Search.cshtml" />
     <Content Include="Views\EmloyeeManage\Index.cshtml" />
+    <Content Include="Views\ImportProductManage\ImportProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
