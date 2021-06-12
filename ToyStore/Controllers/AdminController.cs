@@ -114,5 +114,9 @@ namespace ToyStore.Controllers
             Session["Emloyee"] = null;
             return RedirectToAction("Login");
         }
+        public ActionResult Incompetent()
+        {
+            return View();
+        }
     }
 }

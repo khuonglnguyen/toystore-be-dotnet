@@ -737,6 +737,7 @@
     <Content Include="Views\ProductCategoryManage\Search.cshtml" />
     <Content Include="Views\EmloyeeManage\Index.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProductDetail.cshtml" />
+    <Content Include="Views\Admin\Incompetent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

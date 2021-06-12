@@ -12,12 +12,12 @@
 namespace ToyStore.Models
 {
 
-    using System;
+using System;
     using System.Collections.Generic;
     using System.Linq;
 
     public partial class ItemCart
-    {
+{
 
         public ItemCart(int iID)
         {
@@ -50,8 +50,8 @@ namespace ToyStore.Models
 
         public virtual Member Member { get; set; }
 
-        public virtual Product Product { get; set; }
+    public virtual Product Product { get; set; }
 
-    }
+}
 
 }

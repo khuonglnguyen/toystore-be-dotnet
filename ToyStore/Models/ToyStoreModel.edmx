@@ -310,20 +310,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
-          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Emloyee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Decentralization">
-              <PropertyRef Name="EmloyeeTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Decentralization_dbo_Role_RoleID">
           <End Role="Role" Type="Self.Role" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -628,6 +614,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Decentralization_EmloyeeType">
+          <End Role="EmloyeeType" Type="Self.EmloyeeType" Multiplicity="1" />
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmloyeeType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="EmloyeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DiscountCode_Emloyee">
           <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="0..1" />
           <End Role="DiscountCode" Type="Self.DiscountCode" Multiplicity="*" />
@@ -710,10 +708,6 @@
           <AssociationSet Name="FK_dbo_Cart_dbo_Products_ProductID" Association="Self.FK_dbo_Cart_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="ItemCart" EntitySet="ItemCart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
-            <End Role="Emloyee" EntitySet="Emloyee" />
-            <End Role="Decentralization" EntitySet="Decentralization" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Decentralization_dbo_Role_RoleID" Association="Self.FK_dbo_Decentralization_dbo_Role_RoleID">
             <End Role="Role" EntitySet="Role" />
@@ -803,6 +797,10 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
+          <AssociationSet Name="FK_Decentralization_EmloyeeType" Association="Self.FK_Decentralization_EmloyeeType">
+            <End Role="EmloyeeType" EntitySet="EmloyeeType" />
+            <End Role="Decentralization" EntitySet="Decentralization" />
+          </AssociationSet>
           <AssociationSet Name="FK_DiscountCode_Emloyee" Association="Self.FK_DiscountCode_Emloyee">
             <End Role="Emloyee" EntitySet="Emloyee" />
             <End Role="DiscountCode" EntitySet="DiscountCode" />
@@ -859,12 +857,12 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" Association="ToyStore2021Model.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
-            <End Role="Emloyee" EntitySet="Emloyees" />
-            <End Role="Decentralization" EntitySet="Decentralizations" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_Decentralization_dbo_Role_RoleID" Association="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID">
             <End Role="Role" EntitySet="Roles" />
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Decentralization_EmloyeeType" Association="ToyStore2021Model.FK_Decentralization_EmloyeeType">
+            <End Role="EmloyeeType" EntitySet="EmloyeeTypes" />
             <End Role="Decentralization" EntitySet="Decentralizations" />
           </AssociationSet>
           <AssociationSet Name="FK_DiscountCode_Emloyee" Association="ToyStore2021Model.FK_DiscountCode_Emloyee">
@@ -1004,8 +1002,8 @@
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EmloyeeTypeID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Emloyee" Relationship="ToyStore2021Model.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" FromRole="Decentralization" ToRole="Emloyee" />
           <NavigationProperty Name="Role" Relationship="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID" FromRole="Decentralization" ToRole="Role" />
+          <NavigationProperty Name="EmloyeeType" Relationship="ToyStore2021Model.FK_Decentralization_EmloyeeType" FromRole="Decentralization" ToRole="EmloyeeType" />
         </EntityType>
         <EntityType Name="DiscountCode">
           <Key>
@@ -1043,7 +1041,6 @@
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EmloyeeTypeID" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Decentralizations" Relationship="ToyStore2021Model.FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="Decentralization" />
           <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_Emloyee" FromRole="Emloyee" ToRole="DiscountCode" />
           <NavigationProperty Name="EmloyeeType" Relationship="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="Emloyee" ToRole="EmloyeeType" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="ImportCoupon" />
@@ -1055,6 +1052,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Decentralizations" Relationship="ToyStore2021Model.FK_Decentralization_EmloyeeType" FromRole="EmloyeeType" ToRole="Decentralization" />
           <NavigationProperty Name="Emloyees" Relationship="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="EmloyeeType" ToRole="Emloyee" />
         </EntityType>
         <EntityType Name="Gender">
@@ -1331,20 +1329,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Decentralization_dbo_Emloyee_EmloyeeID">
-          <End Type="ToyStore2021Model.Emloyee" Role="Emloyee" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.Decentralization" Role="Decentralization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Emloyee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Decentralization">
-              <PropertyRef Name="EmloyeeTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Decentralization_dbo_Role_RoleID">
           <End Type="ToyStore2021Model.Role" Role="Role" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1356,6 +1340,18 @@
             </Principal>
             <Dependent Role="Decentralization">
               <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Decentralization_EmloyeeType">
+          <End Type="ToyStore2021Model.EmloyeeType" Role="EmloyeeType" Multiplicity="1" />
+          <End Type="ToyStore2021Model.Decentralization" Role="Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmloyeeType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="EmloyeeTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

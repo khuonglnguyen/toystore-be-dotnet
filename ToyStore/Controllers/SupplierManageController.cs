@@ -10,6 +10,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "SupplierManage")]
     public class SupplierManageController : Controller
     {
         private ISupplierService _supplierService;

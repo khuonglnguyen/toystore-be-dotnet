@@ -10,6 +10,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "DiscountCodeManage")]
     public class DiscountCodeManageController : Controller
     {
         private IDiscountCodeService _discountCodeService;

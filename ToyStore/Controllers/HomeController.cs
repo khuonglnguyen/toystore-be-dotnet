@@ -156,6 +156,5 @@ namespace ToyStore.Controllers
             Session["Cart"] = null;
             return RedirectToAction("Index");
         }
-
     }
 }

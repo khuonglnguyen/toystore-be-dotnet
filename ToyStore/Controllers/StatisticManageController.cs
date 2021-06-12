@@ -30,11 +30,13 @@ namespace ToyStore.Controllers
             _accessTimesCountService = accessTimesCountService;
         }
         // GET: Statistic
+        [Authorize(Roles = "StatisticManage")]
         [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
+        [Authorize(Roles = "StatisticStocking")]
         [HttpGet]
         public ActionResult StatisticStocking()
         {
@@ -76,6 +78,7 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
+        [Authorize(Roles = "StatisticMember")]
         [HttpGet]
         public ActionResult StatisticMember()
         {
@@ -130,6 +133,7 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
+        [Authorize(Roles = "StatisticSupplier")]
         [HttpGet]
         public ActionResult StatisticSupplier()
         {
@@ -184,6 +188,7 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
+        [Authorize(Roles = "StatisticProductSold")]
         [HttpGet]
         public ActionResult StatisticProductSold(DateTime from, DateTime to)
         {
@@ -227,6 +232,7 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
+        [Authorize(Roles = "StatisticOrder")]
         [HttpGet]
         public ActionResult StatisticOrder(DateTime from, DateTime to)
         {
@@ -283,6 +289,7 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
+        [Authorize(Roles = "StatisticAccessTime")]
         [HttpGet]
         public ActionResult StatisticAccessTime(DateTime from, DateTime to)
         {

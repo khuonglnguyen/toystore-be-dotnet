@@ -22,6 +22,8 @@ public partial class EmloyeeType
     public EmloyeeType()
     {
 
+        this.Decentralizations = new HashSet<Decentralization>();
+
         this.Emloyees = new HashSet<Emloyee>();
 
     }
@@ -32,6 +34,10 @@ public partial class EmloyeeType
     public string Name { get; set; }
 
 
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Decentralization> Decentralizations { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

@@ -28,9 +28,9 @@ public partial class Decentralization
 
 
 
-    public virtual Emloyee Emloyee { get; set; }
-
     public virtual Role Role { get; set; }
+
+    public virtual EmloyeeType EmloyeeType { get; set; }
 
 }
 

@@ -11,6 +11,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "EmloyeeManage")]
     public class EmloyeeManageController : Controller
     {
         IEmloyeeService _emloyeeService;

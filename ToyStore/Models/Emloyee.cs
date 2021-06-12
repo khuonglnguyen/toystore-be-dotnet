@@ -22,8 +22,6 @@ public partial class Emloyee
     public Emloyee()
     {
 
-        this.Decentralizations = new HashSet<Decentralization>();
-
         this.DiscountCodes = new HashSet<DiscountCode>();
 
         this.ImportCoupons = new HashSet<ImportCoupon>();
@@ -52,10 +50,6 @@ public partial class Emloyee
     public Nullable<bool> IsActive { get; set; }
 
 
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-    public virtual ICollection<Decentralization> Decentralizations { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

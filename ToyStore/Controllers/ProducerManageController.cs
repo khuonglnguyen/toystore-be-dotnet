@@ -11,6 +11,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "ProducerManage")]
     public class ProducerManageController : Controller
     {
         #region Initialize
