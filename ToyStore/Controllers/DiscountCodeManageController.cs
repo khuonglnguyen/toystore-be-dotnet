@@ -31,31 +31,18 @@ namespace ToyStore.Controllers
             Emloyee emloyee = Session["Emloyee"] as Emloyee;
             discountCode.EmloyeeID = emloyee.ID;
             _discountCodeService.AddDiscountCode(discountCode, Quantity);
+            TempData["create"] = "success";
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public ActionResult Block(int id, int row)
+        public void Block(int id)
         {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            //Block discountcode
             _discountCodeService.Block(id);
-            ViewBag.Row = row;
-            return PartialView("DiscountCodePartial", _discountCodeService.GetByID(id));
         }
         [HttpGet]
-        public ActionResult Active(int id, int row)
+        public void Active(int id)
         {
-            if (Session["Emloyee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            //Block discountcode
             _discountCodeService.Active(id);
-            ViewBag.Row = row;
-            return PartialView("DiscountCodePartial", _discountCodeService.GetByID(id));
         }
     }
 }

@@ -9,27 +9,51 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="~/Scripts/bootbox.js"></script>
-
+@if (TempData["create"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Thêm mã giảm giá thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script> @(TempData["create"] = null)}
 <script>
     $(document).ready(function () {
         $('#btnAddNew').off('click').on('click', function () {
             $('#modalAdd').modal('show');
         });
-        $(document).on('click', '.btnOpen', function () {
-            var id = $(this).attr('id');
-            var row = $(this).attr('value');
-            $(this).attr("class", "btn btn-link btnBlock");
-            $(this).attr("data-ajax-update", "#DivActive" + row);
-            $(this).attr("href", "/DiscountCodeManage/Block/" + id + "?row=" + row + "&amp;value=" + id + "\"");
-            $(this).html("Khóa");
-        });
-        $(document).on('click', '.btnBlock', function () {
-            var id = $(this).attr('id');
-            var row = $(this).attr('value');
-            $(this).attr("class", "btn btn-link btnOpen");
-            $(this).attr("data-ajax-update", "#DivActive" + row);
-            $(this).attr("href", "/DiscountCodeManage/Active/" + id + "?row=" + row + "&amp;value=" + id + "\"");
-            $(this).html("Mở");
+        $(".ckb").change(function () {
+            var id = $(this).prop("value");
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url: '/DiscountCodeManage/Active',
+                    data: {
+                        id: id
+                    }
+                });
+                swal({
+                    title: "Thông báo",
+                    text: "Kích hoạt mã giảm giá thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            }
+            else {
+                $.ajax({
+                    url: '/DiscountCodeManage/Block',
+                    data: {
+                        id: id
+                    }
+                });
+                swal({
+                    title: "Thông báo",
+                    text: "Khóa mã giảm giá thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            }
         });
     });
 </script>
@@ -70,13 +94,9 @@
                         <th>
                             Tạo Bởi
                         </th>
-                        <th>Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int counter1 = 0;
-                    }
                     @foreach (var item in Model)
                     {
                         @Html.Hidden(item.ID.ToString())
@@ -94,39 +114,29 @@
                                 @Html.DisplayFor(modelItem => item.DiscountCodeDetails.Where(x => x.IsUsed == false).ToList().Count)
                             </td>
                             <td>
-                                <div id="DivActive@(counter1)">
                                     @if (item.IsActive == true)
                                     {
-                                        <span class="label label-success">Kích hoạt</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger">Khóa</span>
-                                    }
-                                </div>
+                                <label class="switch block">
+                                    <input type="checkbox" checked class="ckb" value="@item.ID">
+                                    <span class="slider round"></span>
+                                </label> }
+                            else
+                            {
+                                <label class="switch active">
+                                    <input type="checkbox" class="ckb" value="@item.ID">
+                                    <span class="slider round"></span>
+                                </label>}
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Emloyee.FullName)
                             </td>
-                            <td>
-                                @if (item.IsActive == true)
-                                {
-                                    @Ajax.ActionLink("Khóa", "Block", "DiscountCodeManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnBlock", data = counter1, id = item.ID, value = counter1 })
-                                }
-                                else
-                                {
-                                    @Ajax.ActionLink("Mở", "Active", "DiscountCodeManage", new { ID = item.ID, row = counter1 }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivActive" + counter1, InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-link btnOpen", data = counter1, id = item.ID, value = counter1 })
-                                }
-                            </td>
                         </tr>
-                        @(counter1++)
                     }
-                    @(counter1 = 0)
                 </tbody>
             </table>
             <br />
             <div id='Paging' style="text-align: center">
-                @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
             </div>
         </div>
     </div>
@@ -146,15 +156,15 @@
                 {
                     <div class="form-group">
                         <label>Khuyến mãi(%):</label>
-                        <input type="number" class="form-control" name="NumberDiscount" id="NumberDiscount">
+                        <input type="number" class="form-control" name="NumberDiscount" id="NumberDiscount" required min="1" max="99">
                     </div>
                     <div class="form-group">
                         <label>Số lượng:</label>
-                        <input type="number" class="form-control" name="Quantity" id="Quantity">
+                        <input type="number" class="form-control" name="Quantity" id="Quantity" required min="1">
                     </div>
                     <div class="form-group">
                         <label>Ngày hết hạn:</label>
-                        <input type="date" class="form-control" name="ExpirationDate" id="ExpirationDate">
+                        <input type="date" class="form-control" name="ExpirationDate" id="ExpirationDate" required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Thêm</button>
