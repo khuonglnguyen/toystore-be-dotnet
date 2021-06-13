@@ -18,6 +18,7 @@ namespace ToyStore.Service
         void Update(Emloyee emloyee);
         void Block(Emloyee emloyee);
         void Active(Emloyee emloyee);
+        void ResetPassword(int EmloyeeID, string NewPassword);
     }
     public class EmloyeeService : IEmloyeeService
     {
@@ -76,6 +77,13 @@ namespace ToyStore.Service
         public int GetTotalEmloyee()
         {
             return context.EmloyeeRepository.GetAllData().Count();
+        }
+
+        public void ResetPassword(int EmloyeeID, string NewPassword)
+        {
+            Emloyee emloyee = GetByID(EmloyeeID);
+            emloyee.Password = NewPassword;
+            context.EmloyeeRepository.Update(emloyee);
         }
 
         public void Update(Emloyee emloyee)

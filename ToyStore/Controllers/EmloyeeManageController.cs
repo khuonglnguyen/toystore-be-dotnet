@@ -206,8 +206,13 @@ namespace ToyStore.Controllers
             //Set TempData for checking in view to show swal
             TempData["edit"] = "Success";
             //Update emloyeetype
-            emloyee.EmloyeeTypeID = EmloyeeTypeIDEdit;
-            _emloyeeService.Update(emloyee);
+            Emloyee e = _emloyeeService.GetByID(emloyee.ID);
+            e.FullName = emloyee.FullName;
+            e.Address = emloyee.Address;
+            e.Email = emloyee.Email;
+            e.Image = emloyee.Image;
+            e.EmloyeeTypeID = EmloyeeTypeIDEdit;
+            _emloyeeService.Update(e);
             string Url = Request.Url.ToString();
             return RedirectToAction("Index", new { page = page });
         }

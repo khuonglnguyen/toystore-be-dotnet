@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -116,6 +118,118 @@ namespace ToyStore.Controllers
         }
         public ActionResult Incompetent()
         {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult InfoEmloyee()
+        {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            return View(emloyee);
+        }
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            //Get emloyee
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            //Check null
+            if (emloyee != null)
+            {
+                //Return view
+                return Json(new
+                {
+                    ID = emloyee.ID,
+                    FullName = emloyee.FullName,
+                    Address = emloyee.Address,
+                    Email = emloyee.Email,
+                    PhoneNumber = emloyee.PhoneNumber,
+                    Image = emloyee.Image,
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //Return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+        [HttpPost]
+        public ActionResult Edit(Emloyee emloyee, HttpPostedFileBase ImageUpload)
+        {
+            if (Session["Emloyee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            //Get data for DropdownList
+            ViewBag.EmloyeeTypeIDEdit = new SelectList(_emloyeeTypeService.GetListEmloyeeType().OrderBy(x => x.Name), "ID", "Name");
+
+            if (ImageUpload != null)
+            {
+                int errorCount = 0;
+                //Check content image
+                if (ImageUpload != null && ImageUpload.ContentLength > 0)
+                {
+                    //Check format iamge
+                    if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
+                    {
+                        //Set viewbag
+                        ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
+                        //increase by 1 unit errorCount
+                        errorCount++;
+                    }
+                    else
+                    {
+                        //Get file name
+                        var fileName = Path.GetFileName(ImageUpload.FileName);
+                        //Get path
+                        var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                        //Check exitst
+                        if (!System.IO.File.Exists(path))
+                        {
+                            //Add image into folder
+                            ImageUpload.SaveAs(path);
+                        }
+                    }
+                }
+                //Set new value image for emloyee
+                emloyee.Image = ImageUpload.FileName;
+            }
+            //Set TempData for checking in view to show swal
+            TempData["edit"] = "Success";
+            //Update emloyeetype
+            Emloyee e = _emloyeeService.GetByID(emloyee.ID);
+            e.FullName = emloyee.FullName;
+            e.Address = emloyee.Address;
+            e.Email = emloyee.Email;
+            e.Image = emloyee.Image;
+            _emloyeeService.Update(e);
+            Session["Emloyee"] = e;
+            string Url = Request.Url.ToString();
+            return RedirectToAction("InfoEmloyee");
+        }
+        [HttpGet]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(string CurrentPassword, string NewPassword)
+        {
+            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            Emloyee emloyeeCheck = _emloyeeService.CheckLogin(emloyee.ID, CurrentPassword);
+            if (emloyeeCheck != null)
+            {
+                _emloyeeService.ResetPassword(emloyeeCheck.ID, NewPassword);
+                TempData["ResetPassword"] = "Success";
+                return RedirectToAction("InfoEmloyee");
+            }
+            else
+            {
+                ViewBag.Message = "Mật khẩu hiện tại không đúng!";
+            }
             return View();
         }
     }

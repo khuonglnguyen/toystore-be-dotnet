@@ -738,10 +738,11 @@
     <Content Include="Views\EmloyeeManage\Index.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProductDetail.cshtml" />
     <Content Include="Views\Admin\Incompetent.cshtml" />
+    <Content Include="Views\Admin\ResetPassword.cshtml" />
+    <Content Include="Views\Admin\InfoEmloyee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Emloyee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
