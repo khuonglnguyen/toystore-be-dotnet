@@ -29,7 +29,7 @@ namespace ToyStore.Controllers
             if (keyword != "")
             {
                 //Get supplier
-                var suppliers = _supplierService.GetSupplierList().Where(x=>x.Name.Contains(keyword)).OrderByDescending(x => x.LastUpdatedDate.Date);
+                var suppliers = _supplierService.GetSupplierList().Where(x => x.Name.Contains(keyword)).OrderByDescending(x => x.LastUpdatedDate.Date);
                 PagedList<Supplier> listProducer = new PagedList<Supplier>(suppliers, page, pageSize);
                 //Check null
                 if (listProducer != null)
@@ -135,6 +135,51 @@ namespace ToyStore.Controllers
         {
             //Active supplier
             _supplierService.Active(id);
+        }
+        [HttpPost]
+        public JsonResult CheckName(string name)
+        {
+            if (_supplierService.CheckName(name))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult CheckPhoneNumber(string phoneNumber)
+        {
+            if (_supplierService.CheckPhoneNumber(phoneNumber))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult CheckEmail(string email)
+        {
+            if (_supplierService.CheckEmail(email))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

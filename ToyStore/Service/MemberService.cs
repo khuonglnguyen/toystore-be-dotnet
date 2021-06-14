@@ -60,8 +60,7 @@ namespace ToyStore.Service
             var check = context.MemberRepository.GetAllData(x => x.Email == Email && x.IsDeleted == false);
             if (check.Count() > 0)
             {
-                Console.Write("Đã tồn tại email");
-                return true;
+                return false;
             }
             return true;
         }

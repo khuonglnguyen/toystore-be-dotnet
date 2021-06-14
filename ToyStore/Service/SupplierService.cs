@@ -19,7 +19,9 @@ namespace ToyStore.Service
         void MultiDeleteSupplier(string[] IDs);
         void Block(int ID);
         void Active(int ID);
-        void Save();
+        bool CheckPhoneNumber(string PhoneNumber);
+        bool CheckName(string Name);
+        bool CheckEmail(string Email);
     }
     public class SupplierService : ISupplierService
     {
@@ -101,6 +103,35 @@ namespace ToyStore.Service
                 names.Add(item.Name);
             }
             return names;
+        }
+        public bool CheckPhoneNumber(string PhoneNumber)
+        {
+            var check = context.SupplierRepository.GetAllData(x => x.Phone == PhoneNumber && x.IsActive == false);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckName(string Name)
+        {
+            var check = context.SupplierRepository.GetAllData(x => x.Name == Name && x.IsActive == false);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckEmail(string Email)
+        {
+            var check = context.SupplierRepository.GetAllData(x => x.Email == Email && x.IsActive == false);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -14,7 +14,8 @@
         text: "Thêm nhà cung cấp thành công!",
         icon: "success",
         timer: 1500
-    });</script> @(TempData["create"] = null)}
+    });</script>
+@(TempData["create"] = null)}
 @if (TempData["edit"] != null)
 {
 <script>
@@ -23,7 +24,8 @@
         text: "Cập nhật nhà cung cấp thành công!",
         icon: "success",
         timer: 1500
-    });</script> @(TempData["edit"] = null)}
+    });</script>
+@(TempData["edit"] = null)}
 <script>
     $(document).ready(function () {
         $(".ckb").change(function () {
@@ -88,6 +90,104 @@
                     console.log(err);
                 }
             });
+        });
+        function checkName() {
+            var name = $("#NameAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/SupplierManage/CheckName',
+                data: {
+                    name: name
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckPhoneNumber() {
+            var phone = $("#PhoneAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/SupplierManage/CheckPhoneNumber',
+                data: {
+                    phoneNumber: phone
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckEmail() {
+            var email = $("#EmailAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/SupplierManage/CheckEmail',
+                data: {
+                    email: email
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formAdd', function (e) {
+            if (checkName() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên nhà cung cấp đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckPhoneNumber() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Số điện thoại đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckEmail() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Email đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
         });
         $("#keyword").autocomplete({
             source: function (request, response) {
@@ -201,8 +301,7 @@ else
             <td>
                 <button class="btn btn-primary btnEdit" value="@item.ID">Sửa</button>
             </td>
-        </tr>
-}
+        </tr>}
                 </tbody>
             </table>
             <br />
@@ -222,7 +321,7 @@ else
                 <h4 class="modal-title">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "SupplierManage", FormMethod.Post))
+                @using (Html.BeginForm("Create", "SupplierManage", FormMethod.Post, new { id = "formAdd" }))
                 {
     <input type="text" name="ID" id="IDAdd" hidden />
                     <div class="form-group">
@@ -246,7 +345,7 @@ else
                                                                                         <input class="form-control" data-val="true" id="IsActiveAdd" name="IsActive" type="checkbox" value="true">
                                                                                     </div>
                                                                                                     <div class="modal-footer">
-                                                                                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                                                                                                        <button type="submit" class="btn btn-primary" id="btnSaveAdd">Lưu</button>
                                                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                                                                                                     </div>}
             </div>
