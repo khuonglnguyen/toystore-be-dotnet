@@ -199,5 +199,41 @@ namespace ToyStore.Controllers
             TempData["deleteMulti"] = "Success";
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public JsonResult CheckName(string name, int id = 0)
+        {
+            ProductCategory productCategory = _productCategoryService.GetByName(name);
+            if (productCategory != null)
+            {
+                if (productCategory.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_productCategoryService.CheckName(name))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            if (_productCategoryService.CheckName(name))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

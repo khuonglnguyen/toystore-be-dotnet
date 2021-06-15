@@ -21,6 +21,8 @@ namespace ToyStore.Service
         void Active(ProductCategory productCategory);
         void MultiDeleteProductCategory(string[] IDs);
         void Save();
+        ProductCategory GetByName(string Name);
+        bool CheckName(string Name);
     }
     public class ProductCategoryService : IProductCategoryService
     {
@@ -114,6 +116,20 @@ namespace ToyStore.Service
         {
             IEnumerable<ProductCategory> listProductCategory = this.context.ProductCategoryRepository.GetAllData(x=>x.IsActive==true);
             return listProductCategory;
+        }
+        public ProductCategory GetByName(string Name)
+        {
+            ProductCategory productCategory = context.ProductCategoryRepository.GetAllData().FirstOrDefault(x => x.Name == Name);
+            return productCategory;
+        }
+        public bool CheckName(string Name)
+        {
+            var check = context.ProductCategoryRepository.GetAllData(x => x.Name == Name && x.IsActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
