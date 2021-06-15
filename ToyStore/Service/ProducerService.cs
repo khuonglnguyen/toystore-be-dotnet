@@ -19,6 +19,8 @@ namespace ToyStore.Service
         void Active(Producer producer);
         void MultiDeleteProducer(string[] IDs);
         void Save();
+        Producer GetByName(string Name);
+        bool CheckName(string Name);
     }
     public class ProducerService : IProducerService
     {
@@ -90,6 +92,20 @@ namespace ToyStore.Service
         {
             producer.IsActive = true;
             this.context.ProducerRepository.Update(producer);
+        }
+        public Producer GetByName(string Name)
+        {
+            Producer producer = context.ProducerRepository.GetAllData().FirstOrDefault(x => x.Name == Name);
+            return producer;
+        }
+        public bool CheckName(string Name)
+        {
+            var check = context.ProducerRepository.GetAllData(x => x.Name == Name && x.IsActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

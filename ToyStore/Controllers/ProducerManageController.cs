@@ -175,5 +175,41 @@ namespace ToyStore.Controllers
             //Block producer
             _producerService.Active(producer);
         }
+        [HttpPost]
+        public JsonResult CheckName(string name, int id = 0)
+        {
+            Producer producer = _producerService.GetByName(name);
+            if (producer != null)
+            {
+                if (producer.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_producerService.CheckName(name))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            if (_producerService.CheckName(name))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
