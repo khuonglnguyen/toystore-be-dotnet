@@ -228,5 +228,113 @@ namespace ToyStore.Controllers
             var emloyee = _emloyeeService.GetByID(id);
             _emloyeeService.Active(emloyee);
         }
+        [HttpPost]
+        public JsonResult CheckName(string name, int id=0)
+        {
+            Emloyee emloyee = _emloyeeService.GetByName(name);
+            if (emloyee != null)
+            {
+                if (emloyee.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_emloyeeService.CheckName(name))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            if (_emloyeeService.CheckName(name))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult CheckPhoneNumber(string phoneNumber, int id = 0)
+        {
+            Emloyee emloyee = _emloyeeService.GetByPhoneNumber(phoneNumber);
+            if (emloyee != null)
+            {
+                if (emloyee.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_emloyeeService.CheckPhoneNumber(phoneNumber))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            if (_emloyeeService.CheckPhoneNumber(phoneNumber))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult CheckEmail(string email, int id=0)
+        {
+            Emloyee emloyee = _emloyeeService.GetByEmail(email);
+            if (emloyee != null)
+            {
+                if (emloyee.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_emloyeeService.CheckEmail(email))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            if (_emloyeeService.CheckEmail(email))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

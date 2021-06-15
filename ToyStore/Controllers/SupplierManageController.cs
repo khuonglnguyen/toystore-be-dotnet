@@ -137,8 +137,29 @@ namespace ToyStore.Controllers
             _supplierService.Active(id);
         }
         [HttpPost]
-        public JsonResult CheckName(string name)
+        public JsonResult CheckName(string name, int id=0)
         {
+            Supplier supplier = _supplierService.GetByName(name);
+            if (supplier != null)
+            {
+                if (supplier.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_supplierService.CheckName(name))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
             if (_supplierService.CheckName(name))
             {
                 return Json(new
@@ -152,8 +173,29 @@ namespace ToyStore.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult CheckPhoneNumber(string phoneNumber)
+        public JsonResult CheckPhoneNumber(string phoneNumber, int id=0)
         {
+            Supplier supplier = _supplierService.GetByPhoneNumber(phoneNumber);
+            if (supplier != null)
+            {
+                if (supplier.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_supplierService.CheckPhoneNumber(phoneNumber))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
             if (_supplierService.CheckPhoneNumber(phoneNumber))
             {
                 return Json(new
@@ -167,8 +209,29 @@ namespace ToyStore.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult CheckEmail(string email)
+        public JsonResult CheckEmail(string email, int id=0)
         {
+            Supplier supplier = _supplierService.GetByEmail(email);
+            if (supplier != null)
+            {
+                if (supplier.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_supplierService.CheckEmail(email))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
             if (_supplierService.CheckEmail(email))
             {
                 return Json(new

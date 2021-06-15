@@ -19,6 +19,12 @@ namespace ToyStore.Service
         void Block(Emloyee emloyee);
         void Active(Emloyee emloyee);
         void ResetPassword(int EmloyeeID, string NewPassword);
+        bool CheckPhoneNumber(string PhoneNumber);
+        bool CheckName(string Name);
+        bool CheckEmail(string Email);
+        Emloyee GetByPhoneNumber(string PhoneNumber);
+        Emloyee GetByName(string Name);
+        Emloyee GetByEmail(string Email);
     }
     public class EmloyeeService : IEmloyeeService
     {
@@ -89,6 +95,52 @@ namespace ToyStore.Service
         public void Update(Emloyee emloyee)
         {
             this.context.EmloyeeRepository.Update(emloyee);
+        }
+        public bool CheckPhoneNumber(string PhoneNumber)
+        {
+            var check = context.EmloyeeRepository.GetAllData(x => x.PhoneNumber == PhoneNumber && x.IsActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckName(string Name)
+        {
+            var check = context.EmloyeeRepository.GetAllData(x => x.FullName == Name && x.IsActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckEmail(string Email)
+        {
+            var check = context.EmloyeeRepository.GetAllData(x => x.Email == Email && x.IsActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        public Emloyee GetByPhoneNumber(string PhoneNumber)
+        {
+            Emloyee emloyee = context.EmloyeeRepository.GetAllData().FirstOrDefault(x => x.PhoneNumber == PhoneNumber);
+            return emloyee;
+        }
+
+        public Emloyee GetByName(string Name)
+        {
+            Emloyee emloyee = context.EmloyeeRepository.GetAllData().FirstOrDefault(x => x.FullName == Name);
+            return emloyee;
+        }
+
+        public Emloyee GetByEmail(string Email)
+        {
+            Emloyee emloyee = context.EmloyeeRepository.GetAllData().FirstOrDefault(x => x.Email == Email);
+            return emloyee;
         }
     }
 }

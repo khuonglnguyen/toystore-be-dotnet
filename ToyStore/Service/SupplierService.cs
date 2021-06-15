@@ -19,6 +19,9 @@ namespace ToyStore.Service
         void MultiDeleteSupplier(string[] IDs);
         void Block(int ID);
         void Active(int ID);
+        Supplier GetByPhoneNumber(string PhoneNumber);
+        Supplier GetByName(string Name);
+        Supplier GetByEmail(string Email);
         bool CheckPhoneNumber(string PhoneNumber);
         bool CheckName(string Name);
         bool CheckEmail(string Email);
@@ -106,7 +109,7 @@ namespace ToyStore.Service
         }
         public bool CheckPhoneNumber(string PhoneNumber)
         {
-            var check = context.SupplierRepository.GetAllData(x => x.Phone == PhoneNumber && x.IsActive == false);
+            var check = context.SupplierRepository.GetAllData(x => x.Phone == PhoneNumber && x.IsActive == true);
             if (check.Count() > 0)
             {
                 return false;
@@ -116,7 +119,7 @@ namespace ToyStore.Service
 
         public bool CheckName(string Name)
         {
-            var check = context.SupplierRepository.GetAllData(x => x.Name == Name && x.IsActive == false);
+            var check = context.SupplierRepository.GetAllData(x => x.Name == Name && x.IsActive == true);
             if (check.Count() > 0)
             {
                 return false;
@@ -126,12 +129,30 @@ namespace ToyStore.Service
 
         public bool CheckEmail(string Email)
         {
-            var check = context.SupplierRepository.GetAllData(x => x.Email == Email && x.IsActive == false);
+            var check = context.SupplierRepository.GetAllData(x => x.Email == Email && x.IsActive == true);
             if (check.Count() > 0)
             {
                 return false;
             }
             return true;
+        }
+
+        public Supplier GetByPhoneNumber(string PhoneNumber)
+        {
+            Supplier supplier = context.SupplierRepository.GetAllData().FirstOrDefault(x => x.Phone == PhoneNumber);
+            return supplier;
+        }
+
+        public Supplier GetByName(string Name)
+        {
+            Supplier supplier = context.SupplierRepository.GetAllData().FirstOrDefault(x => x.Name == Name);
+            return supplier;
+        }
+
+        public Supplier GetByEmail(string Email)
+        {
+            Supplier supplier = context.SupplierRepository.GetAllData().FirstOrDefault(x => x.Email == Email);
+            return supplier;
         }
     }
 }

@@ -91,7 +91,7 @@
                 }
             });
         });
-        function checkName() {
+        function checkNameAdd() {
             var name = $("#NameAdd").val();
             var status = false;
             $.ajax({
@@ -115,7 +115,7 @@
                 return false;
             }
         }
-        function CheckPhoneNumber() {
+        function CheckPhoneNumberAdd() {
             var phone = $("#PhoneAdd").val();
             var status = false;
             $.ajax({
@@ -139,7 +139,7 @@
                 return false;
             }
         }
-        function CheckEmail() {
+        function CheckEmailAdd() {
             var email = $("#EmailAdd").val();
             var status = false;
             $.ajax({
@@ -164,7 +164,7 @@
             }
         }
         $(document).on('submit', '#formAdd', function (e) {
-            if (checkName() == false) {
+            if (checkNameAdd() == false) {
                 swal({
                     title: "Thông báo",
                     text: "Tên nhà cung cấp đã tồn tại!",
@@ -172,7 +172,7 @@
                 });
                 return false;
             }
-            if (CheckPhoneNumber() == false) {
+            if (CheckPhoneNumberAdd() == false) {
                 swal({
                     title: "Thông báo",
                     text: "Số điện thoại đã tồn tại!",
@@ -180,7 +180,111 @@
                 });
                 return false;
             }
-            if (CheckEmail() == false) {
+            if (CheckEmailAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Email đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+        function checkNameEdit() {
+            var name = $("#NameEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/SupplierManage/CheckName',
+                data: {
+                    name: name,
+                    id:id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckPhoneNumberEdit() {
+            var phone = $("#PhoneEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/SupplierManage/CheckPhoneNumber',
+                data: {
+                    phoneNumber: phone,
+                    id:id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckEmailEdit() {
+            var email = $("#EmailEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/SupplierManage/CheckEmail',
+                data: {
+                    email: email,
+                    id:id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formEdit', function (e) {
+            if (checkNameEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên nhà cung cấp đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckPhoneNumberEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Số điện thoại đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckEmailEdit() == false) {
                 swal({
                     title: "Thông báo",
                     text: "Email đã tồn tại!",
@@ -362,7 +466,7 @@ else
                 <h4 class="modal-title">Chỉnh sửa</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Edit", "SupplierManage", FormMethod.Post))
+                @using (Html.BeginForm("Edit", "SupplierManage", FormMethod.Post, new { id = "formEdit" }))
                 {
     <input type="text" name="ID" id="IDEdit" hidden />
                     <input type="text" name="TotalAmount" id="TotalAmountEdit" hidden />
