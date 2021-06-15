@@ -42,6 +42,8 @@ namespace ToyStore.Service
         void ActiveProduct(Product product);
         void MultiDeleteProduct(string[] IDs);
         void Save();
+        Product GetByName(string Name);
+        bool CheckName(string Name);
     }
     public class ProductService : IProductService
     {
@@ -280,6 +282,20 @@ namespace ToyStore.Service
                 return context.ProductRepository.GetAllData(x => x.PurchasedCount > 0 && ProductIDs.Contains(x.ID)).OrderByDescending(x => x.PurchasedCount);
             }
             return null;
+        }
+        public Product GetByName(string Name)
+        {
+            Product product = context.ProductRepository.GetAllData().FirstOrDefault(x => x.Name == Name);
+            return product;
+        }
+        public bool CheckName(string Name)
+        {
+            var check = context.ProductRepository.GetAllData(x => x.Name == Name && x.IsActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

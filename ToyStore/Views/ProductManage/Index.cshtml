@@ -144,6 +144,76 @@
                 }
             });
         });
+        function checkNameAdd() {
+            var name = $("#NameAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/ProductManage/CheckName',
+                data: {
+                    name: name
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formAdd', function (e) {
+            if (checkNameAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên nhà cung cấp đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+        function checkNameEdit() {
+            var name = $("#Name").val();
+            var id = $("#ID").val();
+            var status = false;
+            $.ajax({
+                url: '/ProductManage/CheckName',
+                data: {
+                    name: name,
+                    id: id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formEdit', function (e) {
+            if (checkNameEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên sản phẩm đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
         $("#keyword").autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -263,7 +333,7 @@
                 <h4 class="modal-title">Thêm mới</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Create", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data" ,id="formAdd"}))
                 {
     <div class="form-group">
         <label for="Name">Tên sản phẩm:</label>
@@ -338,7 +408,7 @@
                 <h4 class="modal-title">Chỉnh sửa</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Edit", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Edit", "ProductManage", FormMethod.Post, new { @enctype = "multipart/form-data", id = "formEdit" }))
                 {
     <input type="text" name="ID" id="ID" hidden />
                     <input type="text" name="ViewCount" id="ViewCount" hidden />

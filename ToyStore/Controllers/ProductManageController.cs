@@ -354,5 +354,41 @@ namespace ToyStore.Controllers
             }
             return PartialView("ProductActivePartial", _productService.GetByID(ID));
         }
+        [HttpPost]
+        public JsonResult CheckName(string name, int id = 0)
+        {
+            Product product = _productService.GetByName(name);
+            if (product != null)
+            {
+                if (product.ID == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_productService.CheckName(name))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            if (_productService.CheckName(name))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
