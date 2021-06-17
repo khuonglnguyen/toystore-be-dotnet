@@ -29,6 +29,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListForManage(string keyWord);
         IEnumerable<Product> GetProductListForHomePage(int productCategoryID);
         IEnumerable<Product> GetProductListIndex();
+        IEnumerable<Product> GetProductListDiscount();
         IEnumerable<Product> GetProductListRandom();
         IEnumerable<Product> GetProductListAlmostOver();
         IEnumerable<Product> GetProductListStocking();
@@ -296,6 +297,11 @@ namespace ToyStore.Service
                 return false;
             }
             return true;
+        }
+
+        public IEnumerable<Product> GetProductListDiscount()
+        {
+            return context.ProductRepository.GetAllData(x => x.Discount > 0 && x.IsActive == true).Skip(3);
         }
     }
 }

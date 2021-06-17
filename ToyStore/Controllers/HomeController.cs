@@ -44,6 +44,8 @@ namespace ToyStore.Controllers
             ViewBag.ListProductNew = listProdudctNew;
             var listProdudct = _productService.GetProductListIndex();
             ViewBag.listProduct = listProdudct;
+            var listProdudctDisocunt = _productService.GetProductListDiscount();
+            ViewBag.listProductDiscount = listProdudctDisocunt;
 
             return View();
         }

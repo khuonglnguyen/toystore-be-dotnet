@@ -6,15 +6,48 @@
 @{
     IEnumerable<ToyStore.Models.Product> productsNew = ViewBag.ListProductNew;
     IEnumerable<ToyStore.Models.Product> products = ViewBag.ListProduct;
+    IEnumerable<ToyStore.Models.Product> productsDiscount = ViewBag.ListProductDiscount;
 }
 <script>
     $(document).ready(function () {
-        $('.AddItemCart').on('click', function () {
-            swal({
-                title: "Thông báo",
-                text: "Thêm vào giỏ hàng thành công!",
-                icon: "success",
-                timer: 1500
+        $('.AddItemCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
             });
         });
     });
@@ -28,15 +61,15 @@
                 <h4>Nhận mã giả giá 10%</h4>
                 <div class="count main-row">
                     <ul id="example">
-                        <li><span class="hours">00</span><p class="hours_text">Hours</p></li>
-                        <li><span class="minutes">00</span><p class="minutes_text">Minutes</p></li>
-                        <li><span class="seconds">00</span><p class="seconds_text">Seconds</p></li>
+                        <li><span class="hours">00</span><p class="hours_text">Giờ</p></li>
+                        <li><span class="minutes">00</span><p class="minutes_text">Phút</p></li>
+                        <li><span class="seconds">00</span><p class="seconds_text">Giây</p></li>
                     </ul>
                     <div class="clearfix"> </div>
                     <script type="text/javascript" src="~/Content/js/jquery.countdown.min.js"></script>
                     <script type="text/javascript">
                         $('#example').countdown({
-                            date: '12/24/2020 15:59:59',
+                            date: '06/30/2021 15:59:59',
                             offset: -8,
                             day: 'Day',
                             days: 'Days'
@@ -51,18 +84,13 @@
                 <section class="slider grid">
                     <div class="flexslider">
                         <ul class="slides">
-                            <li>
-                                <h4>-30%</h4>
-                                <img src="~/Content/images/b1.png" alt="">
-                            </li>
-                            <li>
-                                <h4>-25%</h4>
-                                <img src="~/Content/images/b2.png" alt="">
-                            </li>
-                            <li>
-                                <h4>-32%</h4>
-                                <img src="~/Content/images/b3.png" alt="">
-                            </li>
+                            @foreach (var item in productsDiscount)
+                            {
+                                <li>
+                                    <h4>-@item.Discount%</h4>
+                                    <a href="/Product/Details/@item.ID"><img src="~/Content/images/@item.Image1" alt="" style="width:180px;height:230px;"></a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </section>
@@ -102,29 +130,7 @@
                 if (counter1 == 1)
                 {
                     <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay=".5s">
-                        <div class="new-top">
-                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                            <div class="new-text">
-                                <ul>
-                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="new-bottom">
-                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                            <div class="rating">
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span>☆</span>
-                            </div>
-                            <div class="ofr">
-                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            </div>
-                        </div>
+                        @Html.Action("ProductPartial", "Product", new { product = item })
                     </div>
                     counter1++;
                 }
@@ -132,87 +138,21 @@
                 {
 
                     <div class="col-md-3 new-grid new-mdl simpleCart_shelfItem wow flipInY animated" data-wow-delay=".7s">
-                        <div class="new-top">
-                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                            <div class="new-text">
-                                <ul>
-                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="new-bottom">
-                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                            <div class="rating">
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span>☆</span>
-                            </div>
-                            <div class="ofr">
-                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            </div>
-                        </div>
+                        @Html.Action("ProductPartial", "Product", new { product = item })
                     </div>
                     counter1++;
                 }
                 else if (counter1 == 3)
                 {
                     <div class="col-md-3 new-grid new-mdl1 simpleCart_shelfItem wow flipInY animated" data-wow-delay=".9s">
-                        <div class="new-top">
-                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                            <div class="new-text">
-                                <ul>
-                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="new-bottom">
-                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                            <div class="rating">
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span>☆</span>
-                            </div>
-                            <div class="ofr">
-                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            </div>
-                        </div>
+                        @Html.Action("ProductPartial", "Product", new { product = item })
                     </div>
                     counter1++;
                 }
                 else if (counter1 == 4)
                 {
                     <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay="1.1s">
-                        <div class="new-top">
-                            <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
-                            <div class="new-text">
-                                <ul>
-                                    <li><a href="@Url.Action("Details","Product",new { ID=item.ID})">Xem Chi Tiết </a></li>
-                                    <li>@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="new-bottom">
-                            <h5><a class="name" href="@Url.Action("Details","Product",new { ID=item.ID})" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                            <div class="rating">
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span class="on">☆</span>
-                                <span>☆</span>
-                            </div>
-                            <div class="ofr">
-                                <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
-                            </div>
-                        </div>
+                        @Html.Action("ProductPartial", "Product", new { product = item })
                     </div>
                     counter1++;
                 }
@@ -242,7 +182,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -259,7 +199,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -276,7 +216,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -293,7 +233,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -310,7 +250,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -327,7 +267,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -344,7 +284,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
@@ -361,7 +301,7 @@
                             <h4 class="sizes">Đã bán: @item.PurchasedCount</h4>
                             <ul>
                                 <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                                <li>@Ajax.RawActionLink(string.Format("<span class=\"glyphicon glyphicon glyphicon-shopping-cart\" aria-hidden=\"true\"></span>"), "AddItemCart", "Cart", new { ID = item.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "AddItemCart" })</li>
+                                <li><span class="glyphicon glyphicon glyphicon-shopping-cart AddItemCart" aria-hidden="true" data-id="@item.ID" style="cursor:pointer"></span></li>
                                 <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
                             </ul>
                         </div>
