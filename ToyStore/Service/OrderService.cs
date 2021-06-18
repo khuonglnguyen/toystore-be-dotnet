@@ -11,6 +11,7 @@ namespace ToyStore.Service
     public interface IOrderService
     {
         Order AddOrder(Order order);
+        IEnumerable<Order> GetAll();
         IEnumerable<Order> GetOrderNotApproval();
         IEnumerable<Order> GetOrderNotDelivery();
         IEnumerable<Order> GetOrderDeliveredAndPaid();
@@ -27,7 +28,7 @@ namespace ToyStore.Service
         void UpdateTotal(int OrderID, decimal Total);
         IEnumerable<Order> GetListOrderStatistic(DateTime from, DateTime to);
     }
-    public class OrderService : IOrderService 
+    public class OrderService : IOrderService
     {
         private readonly UnitOfWork context;
         public OrderService(UnitOfWork repositoryContext)
@@ -145,6 +146,11 @@ namespace ToyStore.Service
                 return context.OrderRepository.GetAllData(x => x.IsReceived == true && OrderIDs.Contains(x.ID)).OrderByDescending(x => x.Total);
             }
             return null;
+        }
+
+        public IEnumerable<Order> GetAll()
+        {
+            return context.OrderRepository.GetAllData();
         }
     }
 }

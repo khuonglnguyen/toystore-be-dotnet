@@ -283,8 +283,7 @@ namespace ToyStore.Controllers
             rating.MemberID = member.ID;
             _ratingService.AddRating(rating);
             _orderDetailService.SetIsRating(OrderDetailID);
-            string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
-            return Redirect(urlBase);
+            return RedirectToAction("Details", "Product",new { ID=rating.ProductID});
         }
         [HttpGet]
         public ActionResult GetDataQuesion(int id)

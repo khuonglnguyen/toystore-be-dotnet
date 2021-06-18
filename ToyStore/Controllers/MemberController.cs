@@ -219,7 +219,7 @@ namespace ToyStore.Controllers
             Customer customer = _customerService.GetAll().FirstOrDefault(x => x.PhoneNumber == Phone);
             if (customer != null)
             {
-                var orders = _orderService.GetByCustomerID(customer.ID);
+                var orders = _orderService.GetAll().Where(x=>x.Customer.PhoneNumber==customer.PhoneNumber&&x.Customer.IsMember==true);
                 Member member = Session["Member"] as Member;
                 ViewBag.ProductRating = _ratingService.GetListAllRating().Where(x => x.MemberID == member.ID);
                 return View(orders);
