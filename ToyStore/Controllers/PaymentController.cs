@@ -9,11 +9,17 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ToyStore.Config;
 using ToyStore.Models;
+using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
     public class PaymentController : Controller
     {
+        private IOrderService _orderService;
+        public PaymentController(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
         // GET: Payment
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
@@ -61,19 +67,32 @@ namespace ToyStore.Controllers
                     //If executed payment failed then we will show payment failure message to user  
                     if (executedPayment.state.ToLower() != "approved")
                     {
-                        return View("FailureView");
+                        return RedirectToAction("Message", "Cart", new { mess = "Lỗi" });
                     }
                 }
             }
             catch (Exception ex)
             {
-                return View("FailureView");
+                return RedirectToAction("Message", "Cart", new
+                {
+                    mess = ex.Message
+                });
             }
-            //on successful payment, show success page to user.  
-            return View("SuccessView");
+            Session["Code"] = null;
+            Session["num"] = null;
+            Session["Cart"] = null;
+            //update paid
+            if (_orderService.Paid(Convert.ToInt32(Session["OrderId"])))
+            {
+                //on successful payment, show success page to user.  
+                return RedirectToAction("Message","Cart", new { mess = "Đặt hàng và thanh toán thành công" });
+            }
+            return RedirectToAction("Message", "Cart", new { mess = "Lỗi" });
         }
 
         private PayPal.Api.Payment payment;
+
+
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution()
@@ -126,7 +145,7 @@ namespace ToyStore.Controllers
                 {
                     tax = "0",
                     shipping = "0",
-                    subtotal = itemList.items.Sum(x=>int.Parse(x.price)* int.Parse(x.quantity)).ToString()
+                    subtotal = itemList.items.Sum(x => int.Parse(x.price) * int.Parse(x.quantity)).ToString()
                 };
 
                 var amount = new Amount()
@@ -155,87 +174,6 @@ namespace ToyStore.Controllers
             }
 
             return this.payment.Create(apicontext);
-        }
-
-        //private Payment CreatePayment(APIContext apiContext, string redirectUrl)
-        //{
-        //    //create itemlist and add item objects to it  
-        //    var itemList = new ItemList()
-        //    {
-        //        items = new List<Item>()
-        //    };
-        //    //Adding Item Details like name, currency, price etc  
-        //    //itemList.items.Add(new Item()
-        //    //{
-        //    //    name = "Item Name comes here",
-        //    //    currency = "USD",
-        //    //    price = "1",
-        //    //    quantity = "1",
-        //    //    sku = "sku"
-        //    //});
-        //    itemList.items.Add(new Item()
-        //    {
-        //        name = "re",
-        //        currency = "USD",
-        //        price = "1",
-        //        quantity = "1",
-        //        sku = "sku"
-        //    });
-
-        //    var payer = new Payer()
-        //    {
-        //        payment_method = "paypal"
-        //    };
-        //    // Configure Redirect Urls here with RedirectUrls object  
-        //    var redirUrls = new RedirectUrls()
-        //    {
-        //        cancel_url = redirectUrl + "&Cancel=true",
-        //        return_url = redirectUrl
-        //    };
-        //    // Adding Tax, shipping and Subtotal details  
-        //    var details = new Details()
-        //    {
-        //        tax = "1",
-        //        shipping = "1",
-        //        subtotal = "1"
-        //    };
-        //    //Final amount with details  
-        //    var amount = new Amount()
-        //    {
-        //        currency = "USD",
-        //        total = "3",
-        //        details = details
-        //    };
-        //    var transactionList = new List<Transaction>();
-        //    // Adding description about the transaction  
-        //    transactionList.Add(new Transaction()
-        //    {
-        //        description = "Transaction description",
-        //        invoice_number = "your generated invoice number", //Generate an Invoice No  
-        //        amount = amount,
-        //        item_list = itemList
-        //    });
-        //    this.payment = new Payment()
-        //    {
-        //        intent = "sale",
-        //        payer = payer,
-        //        transactions = transactionList,
-        //        redirect_urls = redirUrls
-        //    };
-        //    // Create a payment using a APIContext  
-        //    return this.payment.Create(apiContext);
-        //}
-
-        public decimal GetTotalPrice()
-        {
-            List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
-            if (listCart == null)
-            {
-                return 0;
-            }
-            var sum = (listCart.Sum(n => n.Total));
-            var d = GetCurrencyExchange("VND", "USD");
-            return Math.Round(sum * d, 0);
         }
 
         public Decimal GetCurrencyExchange(String localCurrency, String foreignCurrency)
