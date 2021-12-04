@@ -27,6 +27,7 @@ namespace ToyStore.Service
         void Update(Order order);
         void UpdateTotal(int OrderID, decimal Total);
         IEnumerable<Order> GetListOrderStatistic(DateTime from, DateTime to);
+        bool Paid(int ID);
     }
     public class OrderService : IOrderService
     {
@@ -115,6 +116,15 @@ namespace ToyStore.Service
             }
             return order;
         }
+
+        public bool Paid(int ID)
+        {
+            Order order = context.OrderRepository.GetDataByID(ID);
+            order.IsPaid = true;
+            context.OrderRepository.Update(order);
+            return true;
+        }
+
         public decimal GetTotalRevenue()
         {
             return context.OrderDetailRepository.GetAllData(x => x.Order.IsPaid == true).Sum(x => x.Price);

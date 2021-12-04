@@ -210,6 +210,10 @@
                                     <input type="button" value="Chọn mã Code khác" id="btnChoose" />
                                     @Html.ActionLink("Bỏ chọn mã giảm giá", "CancelDiscount")<br />
                                     decimal total = @Cart.Sum(x => x.Total) - (@Cart.Sum(x => x.Total) / 100 * (int)@Session["num"]);
+                                    <select name="payment">
+                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                        <option value="paypal">Thanh toán qua Paypal</option>
+                                    </select><br />
                                     <label>Thành tiền</label><br />
                                     <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
                                     <h4 style="color:brown">@total.ToString("#,##")₫</h4>
@@ -218,15 +222,20 @@
                                 {
                                     <label>Mã giảm giá (nếu có)</label><br />
                                     <input type="button" value="Chọn mã Code" id="btnChoose" /><br />
-                                    if (TempData["Message"]!=null)
+                                    if (TempData["Message"] != null)
                                     {
                                         <p class="text text-danger">@TempData["Message"].ToString()</p>
                                         TempData["Message"] = null;
                                     }
+                                    <select name="payment">
+                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                        <option value="paypal">Thanh toán qua Paypal</option>
+                                    </select> <br />
                                     <label>Thành tiền</label>
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
                                 <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
+                                <a href="@Url.Action("PaymentWithPaypal","Payment")">Thanh toán Paypal</a>
                             }
                         </div>
                     </div>
@@ -259,6 +268,10 @@
                                     <input type="button" value="Chọn mã Code khác" id="btnChoose" />
                                     @Html.ActionLink("Bỏ chọn mã giảm giá", "CancelDiscount")<br />
                                     decimal total = @Cart.Sum(x => x.Total) - (@Cart.Sum(x => x.Total) / 100 * (int)@Session["num"]);
+                                    <select name="payment">
+                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                        <option value="paypal">Thanh toán qua Paypal</option>
+                                    </select> <br />
                                     <label>Thành tiền</label><br />
                                     <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
                                     <h4 style="color:brown">@total.ToString("#,##")₫</h4>
@@ -267,15 +280,20 @@
                                 {
                                     <label>Mã giảm giá (nếu có)</label><br />
                                     <input type="button" value="Chọn mã Code" id="btnChoose" /><br />
-                                     if (TempData["Message"]!=null)
+                                    if (TempData["Message"] != null)
                                     {
                                         <p class="text text-danger">@TempData["Message"].ToString()</p>
                                         TempData["Message"] = null;
                                     }
+                                    <select name="payment">
+                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                        <option value="paypal">Thanh toán qua Paypal</option>
+                                    </select> <br />
                                     <label>Thành tiền</label>
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
                                 <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
+                                <a href="@Url.Action("PaymentWithPaypal","Payment")">Thanh toán Paypal</a>
                             }
                         </div>
                     </div>
