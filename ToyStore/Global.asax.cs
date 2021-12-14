@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
+using TableDependency.SqlClient;
 using ToyStore.Data;
 using ToyStore.Models;
 
@@ -14,7 +15,7 @@ namespace ToyStore
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        UnitOfWork context=new UnitOfWork();
+        UnitOfWork context = new UnitOfWork();
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

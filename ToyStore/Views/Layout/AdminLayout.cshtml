@@ -18,10 +18,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- Custom CSS -->
     <link href="~/Content/css/style.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="~/Content/css/morris.css" type="text/css" />
-
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
-
     <!-- Graph CSS -->
     <link href="~/Content/css/font-awesome.css" rel="stylesheet">
     <!-- jQuery -->
@@ -33,7 +31,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link rel="stylesheet" href="~/Content/css/icon-font.min.css" type='text/css' />
     <!-- //lined-icons -->
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
 
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Bootstrap Core CSS -->
@@ -154,8 +151,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </ul>
                                 </li>
                                 <li class="dropdown head-dpdn">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">3</span></a>
-                                    <ul class="dropdown-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue" id="orderTotalNoti">3</span></a>
+                                    <ul class="dropdown-menu" id="orderNoti">
                                         <li>
                                             <div class="notification_header">
                                                 <h3>You have 3 new notification</h3>
@@ -164,26 +161,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <li>
                                             <a href="#">
                                                 <div class="user_img"><img src="~/Content/images/in8.jpg" alt=""></div>
-                                                <div class="notification_desc">
-                                                    <p>Lorem ipsum dolor</p>
-                                                    <p><span>1 hour ago</span></p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </a>
-                                        </li>
-                                        <li class="odd">
-                                            <a href="#">
-                                                <div class="user_img"><img src="~/Content/images/in6.jpg" alt=""></div>
-                                                <div class="notification_desc">
-                                                    <p>Lorem ipsum dolor</p>
-                                                    <p><span>1 hour ago</span></p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="user_img"><img src="~/Content/images/in7.jpg" alt=""></div>
                                                 <div class="notification_desc">
                                                     <p>Lorem ipsum dolor</p>
                                                     <p><span>1 hour ago</span></p>
@@ -262,7 +239,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <div class="clearfix"> </div>
                         </div>
                         <!--notification menu end -->
-
                         <div class="clearfix"> </div>
                     </div>
                     @{ ToyStore.Models.Emloyee emloyee = Session["Emloyee"] as ToyStore.Models.Emloyee; }
@@ -292,8 +268,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </ul>
                         </div>
                     }
-                    else 
-                    { 
+                    else
+                    {
                         <div class="profile_details w3l">
                             <ul>
                                 <li class="dropdown profile_details_drop">
@@ -635,7 +611,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <!-- /script-for sticky-nav -->
                 <!--inner block start here-->
                 <div class="inner-block">
-
                 </div>
                 <!--inner block end here-->
                 <!--copy rights start here-->
@@ -714,6 +689,63 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- morris JavaScript -->
     <script src="~/Content/js/raphael-min.js"></script>
     <script src="~/Content/js/morris.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var order = $.connection.orderHubs
+
+            order.client.displayOrderStatus = function () {
+                getData();
+            }
+
+            $.connection.hub.start();
+            getData();
+        })
+
+        function getData() {
+            var $noti = $('#orderNoti')
+            var $totalNofi = $('#orderTotalNoti')
+            $.ajax({
+                url: location.origin + "/OrderManage/GetOrderJson",
+                type: 'GET',
+                dataType: 'JSON',
+                success: function (data) {
+                    $noti.empty()
+                    $totalNofi.empty()
+                    if (data.length > 0) {
+                        $totalNofi.append(
+                            data.length
+                        )
+                        $.each(data, function (i, model) {
+                            $noti.append(
+                                '<li>' +
+                                '<a href="' + location.origin + '/OrderManage/Detail/' + model.ID + '">' +
+                                '<div class="user_img"><img src="~/Content/images/in8.jpg" alt=""></div>' +
+                                '<div class="notification_desc">' +
+                                '<p>Đơn hàng: ' + model.ID + '</p>' +
+                                '<p>Khách hàng: ' + model.CustomerName + '</p>' +
+                                '<p><span>Thời điểm: ' + model.DateOrder + ' phút trước</span></p>' +
+                                '</div>' +
+                                '<div class="clearfix"></div>' +
+                                '</a>' +
+                                '</li>'
+                            );
+                        })
+                    } else {
+                        $totalNofi.append(
+                            0
+                        )
+                        $noti.append(
+                            '<li>' +
+                            '<p><span>Chưa có đơn hàng</span></p>' +
+                            '</li>'
+                        );
+                    }
+                }
+            })
+        }
+    </script>
     <script>
         $(document).ready(function () {
             //BOX BUTTON SHOW AND CLOSE

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using TableDependency.SqlClient;
+using TableDependency.SqlClient.Base.EventArgs;
+using ToyStore.ListenerModels;
 using ToyStore.Models;
 using ToyStore.Service;
 
@@ -57,9 +61,11 @@ namespace ToyStore.Controllers
                     ViewBag.TotalRevenue = TotalRevenue.ToString("0.##") + "M";
                 }
                 ViewBag.TotalOrder = _orderService.GetTotalOrder();
+
                 return View();
             }
         }
+
         // GET: Admin
         [HttpGet]
         public ActionResult Login()

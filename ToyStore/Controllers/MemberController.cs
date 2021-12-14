@@ -158,7 +158,7 @@ namespace ToyStore.Controllers
             string email = _memberService.GetByID(ID).Email;
             ViewBag.Email = "Mã xác minh đã được gửi đến: " + email;
             _memberService.UpdateCapcha(ID, captcha);
-            SentMail("Mã xác minh tài khoản ToyStore", email, "lapankhuongnguyen@gmail.com", "googlelapankhuongnguyen", "<p>Mã xác minh của bạn: " + captcha + "<br/>Hoặc xác minh nhanh bằng cách click vào link: " + urlBase + "/Member/ConfirmEmailLink/" + ID + "?Capcha=" + captcha + "</p>");
+            SentMail("Mã xác minh tài khoản ToyStore", email, "khuongip564gb@gmail.com", "googlekhuongip564gb", "<p>Mã xác minh của bạn: " + captcha + "<br/>Hoặc xác minh nhanh bằng cách click vào link: " + urlBase + "/Member/ConfirmEmailLink/" + ID + "?Capcha=" + captcha + "</p>");
             return View();
         }
         [HttpGet]
