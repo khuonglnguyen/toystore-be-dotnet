@@ -102,7 +102,7 @@
                                 </div>
                             </td>
                             <td>
-                                <button class="btn btn-primary btnDetail" value="@item.ID">Chi Tiết</button>
+                                <a class="btn btn-primary btnDetail" href="@Url.Action("Detail","OrderManage",new { ID=item.ID})">Chi Tiết</a>
                             </td>
                         </tr>
                         @(counter1++)

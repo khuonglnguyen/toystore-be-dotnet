@@ -1,81 +1,81 @@
 ﻿@using ToyStore.Models;
-@model EmloyeeType
-@{
-    ViewBag.Title = "PhanQuyen";
-    Layout = "~/Views/Layout/AdminLayout.cshtml";
-}
-<div class="agile-grids">
-    <div class="agile-tables">
-        <div class="w3l-table-info">
-            <h1>Phân quyền</h1>
-            <h2>Loại nhân viên: <b style="color:crimson;">@Model.Name</b></h2>
-            <br />
-            @{
-                IEnumerable<Role> roles = (IEnumerable<Role>)ViewBag.RoleList;
-                IEnumerable<Decentralization> decentralizations = (IEnumerable<Decentralization>)ViewBag.ListDecentralization;
-            }
-            @using (Html.BeginForm("Decentralization", "DecentralizationManage",FormMethod.Post))
-            {
-                //Mã loại tv
-                @Html.Hidden("EmloyeeTypeID", Model.ID)
-                if (decentralizations.Count() > 0)
+@model UserType
+    @{
+        ViewBag.Title = "PhanQuyen";
+        Layout = "~/Views/Layout/AdminLayout.cshtml";
+    }
+    <div class="agile-grids">
+        <div class="agile-tables">
+            <div class="w3l-table-info">
+                <h1>Phân quyền</h1>
+                <h2>Loại User: <b style="color:crimson;">@Model.Name</b></h2>
+                <br />
+                @{
+                    IEnumerable<Role> roles = (IEnumerable<Role>)ViewBag.RoleList;
+                    IEnumerable<Decentralization> decentralizations = (IEnumerable<Decentralization>)ViewBag.ListDecentralization;
+                }
+                @using (Html.BeginForm("Decentralization", "DecentralizationManage", FormMethod.Post))
                 {
-                    //Đối với trường hợp loại thành viên đã phân quyền rồi
-                    for (int i = 0; i < roles.Count(); i++)
+                    //Mã loại tv
+                    @Html.Hidden("UserTypeID", Model.ID)
+                    if (decentralizations.Count() > 0)
                     {
-                        int k = 0;
-                        for (int j = 0; j < decentralizations.Count(); j++)
+                        //Đối với trường hợp loại thành viên đã phân quyền rồi
+                        for (int i = 0; i < roles.Count(); i++)
                         {
-                            if (roles.ElementAt(i).ID == decentralizations.ElementAt(j).RoleID)
+                            int k = 0;
+                            for (int j = 0; j < decentralizations.Count(); j++)
                             {
-                                k++;
-                                break;
+                                if (roles.ElementAt(i).ID == decentralizations.ElementAt(j).RoleID)
+                                {
+                                    k++;
+                                    break;
+                                }
                             }
+                            if (k != 0)
+                            {
+                                <div class="col-md-4" style="font-size:15pt;">
+                                    <input class="ckb_click" checked="checked" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).ID" />
+                                    <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-4" style="font-size:15pt;">
+                                    <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].MaQuyen")" value="@roles.ElementAt(i).ID" />
+                                    <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
+                                </div>
+                            }
+                            k = 0;
                         }
-                        if (k != 0)
-                        {
-                            <div class="col-md-4" style="font-size:15pt;">
-                                <input class="ckb_click" checked="checked" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).ID" />
-                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-md-4" style="font-size:15pt;">
-                                <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].MaQuyen")" value="@roles.ElementAt(i).ID" />
-                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
-                            </div>
-                        }
-                        k = 0;
                     }
-                }
-                else
-                {
-                    //Đối với trường hợp loại thành viên chưa phân quyền rồi
-                    for (int i = 0; i < roles.Count(); i++)
+                    else
                     {
-                        //Lấy danh danh sách quyền
-                        <div class="col-md-4" style="font-size:15pt;">
-                            <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).ID" />
-                            <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
-                        </div>
+                        //Đối với trường hợp loại thành viên chưa phân quyền rồi
+                        for (int i = 0; i < roles.Count(); i++)
+                        {
+                            //Lấy danh danh sách quyền
+                            <div class="col-md-4" style="font-size:15pt;">
+                                <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).ID" />
+                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).NameDisplay</label><br>
+                            </div>
+                        }
                     }
+                    <div class="clearfix"></div>
+                    <input type="submit" class="btn btn-success" value="Lưu" />
                 }
-                <div class="clearfix"></div>
-                <input type="submit" class="btn btn-success" value="Lưu" />
-            }
+            </div>
         </div>
     </div>
-</div>
-@*Xử lý duyệt lại [i]*@
-<script>
-    $(".ckb_click").click(function () {
-        i = 0;
-        $(".ckb_click").each(function () {
-            if ($(this).is(':checked')) {
-                $(this).attr("name", "[" + i + "].RoleID");
-                i++;
-            }
+    @*Xử lý duyệt lại [i]*@
+    <script>
+        $(".ckb_click").click(function () {
+            i = 0;
+            $(".ckb_click").each(function () {
+                if ($(this).is(':checked')) {
+                    $(this).attr("name", "[" + i + "].RoleID");
+                    i++;
+                }
+            })
         })
-    })
-</script>
+    </script>

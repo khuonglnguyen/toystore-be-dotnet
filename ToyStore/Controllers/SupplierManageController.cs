@@ -21,7 +21,7 @@ namespace ToyStore.Controllers
         // GET: SupplierManage
         public ActionResult Index(int page = 1, string keyword = "")
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -73,7 +73,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Create(Supplier supplier)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -85,7 +85,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -116,7 +116,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Edit(Supplier supplier, int page)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }

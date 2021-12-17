@@ -22,7 +22,7 @@ public partial class Rating
 
     public int ProductID { get; set; }
 
-    public int MemberID { get; set; }
+    public int UserID { get; set; }
 
     public int Star { get; set; }
 
@@ -30,9 +30,9 @@ public partial class Rating
 
 
 
-    public virtual Member Member { get; set; }
-
     public virtual Product Product { get; set; }
+
+    public virtual User User { get; set; }
 
 }
 

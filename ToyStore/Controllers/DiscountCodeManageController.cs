@@ -29,8 +29,8 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Create(DiscountCode discountCode, int Quantity)
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            discountCode.EmloyeeID = emloyee.ID;
+            User user = Session["User"] as User;
+            discountCode.UserID = user.ID;
             _discountCodeService.AddDiscountCode(discountCode, Quantity);
             TempData["create"] = "success";
             return RedirectToAction("Index");

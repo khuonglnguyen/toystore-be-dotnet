@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<ToyStore.Models.OrderDetail>
 @{
-    ViewBag.Title = "Chi Tiết Đơn Đặt Hàng";
-    Layout = "~/Views/Layout/AdminLayout.cshtml";
+                /**/
+
+                ViewBag.Title = "Chi Tiết Đơn Đặt Hàng";
+                Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 @{
     IEnumerable<ToyStore.Models.Customer> customers = ViewBag.CustomerList as IEnumerable<ToyStore.Models.Customer>;
@@ -10,7 +12,6 @@
     <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
     <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
 </ol>
-
 <div class="agile-grids">
     <div class="agile-tables">
         <div class="w3l-table-info">
@@ -63,7 +64,10 @@
                     }
                 </tbody>
             </table>
-            @Html.ActionLink("Duyệt", "OrderApproval", new { ID = ViewBag.OrderID },new { @class="btn btn-primary"})
+            @if (ViewBag.IsApproved)
+            {
+                Html.ActionLink("Duyệt", "OrderApproval", new { ID = ViewBag.OrderID }, new { @class = "btn btn-primary" });
+            }
             <br />
         </div>
     </div>

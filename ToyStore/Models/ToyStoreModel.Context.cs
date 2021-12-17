@@ -44,10 +44,6 @@ public partial class ToyStore2021Entities : DbContext
 
     public virtual DbSet<DiscountCodeDetail> DiscountCodeDetails { get; set; }
 
-    public virtual DbSet<Emloyee> Emloyees { get; set; }
-
-    public virtual DbSet<EmloyeeType> EmloyeeTypes { get; set; }
-
     public virtual DbSet<Gender> Genders { get; set; }
 
     public virtual DbSet<ImportCoupon> ImportCoupons { get; set; }
@@ -56,11 +52,7 @@ public partial class ToyStore2021Entities : DbContext
 
     public virtual DbSet<ItemCart> ItemCarts { get; set; }
 
-    public virtual DbSet<Member> Members { get; set; }
-
-    public virtual DbSet<MemberDiscountCode> MemberDiscountCodes { get; set; }
-
-    public virtual DbSet<MemberType> MemberTypes { get; set; }
+    public virtual DbSet<Message> Messages { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
@@ -83,6 +75,12 @@ public partial class ToyStore2021Entities : DbContext
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserDiscountCode> UserDiscountCodes { get; set; }
+
+    public virtual DbSet<UserType> UserTypes { get; set; }
 
 }
 

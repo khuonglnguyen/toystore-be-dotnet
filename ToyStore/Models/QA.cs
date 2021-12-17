@@ -22,7 +22,7 @@ public partial class QA
 
     public int ProductID { get; set; }
 
-    public int MemberID { get; set; }
+    public int UserAskID { get; set; }
 
     public bool Status { get; set; }
 
@@ -34,15 +34,13 @@ public partial class QA
 
     public Nullable<System.DateTime> DateAnswer { get; set; }
 
-    public int EmloyeeID { get; set; }
+    public int UserAnswerID { get; set; }
 
 
-
-    public virtual Emloyee Emloyee { get; set; }
-
-    public virtual Member Member { get; set; }
 
     public virtual Product Product { get; set; }
+
+    public virtual User User { get; set; }
 
 }
 

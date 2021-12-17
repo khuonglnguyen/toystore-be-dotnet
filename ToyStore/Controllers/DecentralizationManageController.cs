@@ -12,25 +12,25 @@ namespace ToyStore.Controllers
     [Authorize(Roles = "DecentralizationManage")]
     public class DecentralizationManageController : Controller
     {
-        private IEmloyeeTypeService _emloyeeTypeService;
+        private IUserTypeService _userTypeService;
         private IRoleService _roleService;
         private IDecentralizationService _decentralizationService;
-        public DecentralizationManageController(IEmloyeeTypeService emloyeeTypeService,IRoleService roleService,IDecentralizationService decentralizationService)
+        public DecentralizationManageController(IUserTypeService userTypeService,IRoleService roleService,IDecentralizationService decentralizationService)
         {
-            _emloyeeTypeService = emloyeeTypeService;
+            _userTypeService = userTypeService;
             _roleService = roleService;
             _decentralizationService = decentralizationService;
         }
         // GET: DecentralizationManage
         public ActionResult Index(int page=1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
-            IEnumerable<EmloyeeType> emloyeeTypes = _emloyeeTypeService.GetListEmloyeeType();
-            PagedList<EmloyeeType> emloyeeTypesList = new PagedList<EmloyeeType>(emloyeeTypes, page, 10);
-            return View(emloyeeTypesList);
+            IEnumerable<UserType> UserTypes = _userTypeService.GetListUserType();
+            PagedList<UserType> UserTypesList = new PagedList<UserType>(UserTypes, page, 10);
+            return View(UserTypesList);
         }
         [HttpGet]
         public ActionResult Decentralization(int id)
@@ -40,21 +40,21 @@ namespace ToyStore.Controllers
                 Response.StatusCode = 404;
                 return null;
             }
-            EmloyeeType emloyeeType = _emloyeeTypeService.GetEmloyeeTypeByID(id);
-            if (emloyeeType == null)
+            UserType UserType = _userTypeService.GetUserTypeByID(id);
+            if (UserType == null)
             {
                 return HttpNotFound();
             }
             ViewBag.RoleList = _roleService.GetRoleList();
-            ViewBag.ListDecentralization = _decentralizationService.GetDecentralizationByEmloyeeTypeID(id);
-            return View(emloyeeType);
+            ViewBag.ListDecentralization = _decentralizationService.GetDecentralizationByUserTypeID(id);
+            return View(UserType);
         }
         [HttpPost]
-        public ActionResult Decentralization(int EmloyeeTypeID, IEnumerable<Decentralization> decentralizations)
+        public ActionResult Decentralization(int UserTypeID, IEnumerable<Decentralization> decentralizations)
         {
             //Trường hợp: Nếu đã tiến hành phân quyền rồi nhưng muốn phân quyền lại
-            //Bước 1: Xóa những quyền cũ thuộc loại tv đó
-            var ListDecentralization = _decentralizationService.GetDecentralizationByEmloyeeTypeID(EmloyeeTypeID);
+            //Bước 1: Xóa những quyền cũ thuộc loại user đó
+            var ListDecentralization = _decentralizationService.GetDecentralizationByUserTypeID(UserTypeID);
             if (ListDecentralization.Count() != 0)
             {
                 _decentralizationService.RemoveRange(ListDecentralization);
@@ -64,7 +64,7 @@ namespace ToyStore.Controllers
                 //Kiểm tra danh sách quyền được check
                 foreach (var item in decentralizations)
                 {
-                    item.EmloyeeTypeID = EmloyeeTypeID;
+                    item.UserTypeID = UserTypeID;
                     //Nếu được check thì insert dữ liệu vào bảng phân quyền
                     _decentralizationService.Add(item);
                 }

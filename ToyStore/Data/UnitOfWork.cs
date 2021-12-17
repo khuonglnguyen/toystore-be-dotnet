@@ -17,14 +17,12 @@ namespace ToyStore.Data
         private GenericRepository<Age> ageRepository;
         private GenericRepository<ProductCategoryParent> productCategoryParentRepository;
         private GenericRepository<Gender> genderParentRepository;
-        private GenericRepository<MemberType> memberTypeRepository;
-        private GenericRepository<Member> memberRepository;
         private GenericRepository<Customer> customerRepository;
         private GenericRepository<Order> orderRepository;
         private GenericRepository<OrderDetail> orderDetailRepository;
         private GenericRepository<QA> qARepository;
-        private GenericRepository<Emloyee> emloyeeRepository;
-        private GenericRepository<EmloyeeType> emloyeeTypeRepository;
+        private GenericRepository<User> userRepository;
+        private GenericRepository<UserType> userTypeRepository;
         private GenericRepository<AccessTimesCount> accessTimesCountRepository;
         private GenericRepository<ItemCart> itemCartRepository;
         private GenericRepository<ImportCoupon> importCouponRepository;
@@ -35,7 +33,8 @@ namespace ToyStore.Data
         private GenericRepository<Decentralization> decentralizationRepository;
         private GenericRepository<DiscountCode> discountCodeRepository;
         private GenericRepository<DiscountCodeDetail> discountCodeDetailRepository;
-        private GenericRepository<MemberDiscountCode> memberDiscountCodeRepository;
+        private GenericRepository<UserDiscountCode> userDiscountCodeRepository;
+        private GenericRepository<Message> messageRepository;
         public GenericRepository<Product> ProductRepository
         {
             get
@@ -113,26 +112,26 @@ namespace ToyStore.Data
                 return genderParentRepository;
             }
         }
-        public GenericRepository<MemberType> MemberTypeRepository
+        public GenericRepository<UserType> UserTypeRepository
         {
             get
             {
-                if (this.memberTypeRepository == null)
+                if (this.userTypeRepository == null)
                 {
-                    this.memberTypeRepository = new GenericRepository<MemberType>(DbContext);
+                    this.userTypeRepository = new GenericRepository<UserType>(DbContext);
                 }
-                return memberTypeRepository;
+                return userTypeRepository;
             }
         }
-        public GenericRepository<Member> MemberRepository
+        public GenericRepository<User> UserRepository
         {
             get
             {
-                if (this.memberRepository == null)
+                if (this.userRepository == null)
                 {
-                    this.memberRepository = new GenericRepository<Member>(DbContext);
+                    this.userRepository = new GenericRepository<User>(DbContext);
                 }
-                return memberRepository;
+                return userRepository;
             }
         }
         public GenericRepository<Customer> CustomerRepository
@@ -177,28 +176,6 @@ namespace ToyStore.Data
                     this.qARepository = new GenericRepository<QA>(DbContext);
                 }
                 return qARepository;
-            }
-        }
-        public GenericRepository<Emloyee> EmloyeeRepository
-        {
-            get
-            {
-                if (this.emloyeeRepository == null)
-                {
-                    this.emloyeeRepository = new GenericRepository<Emloyee>(DbContext);
-                }
-                return emloyeeRepository;
-            }
-        }
-        public GenericRepository<EmloyeeType> EmloyeeTypeRepository
-        {
-            get
-            {
-                if (this.emloyeeTypeRepository == null)
-                {
-                    this.emloyeeTypeRepository = new GenericRepository<EmloyeeType>(DbContext);
-                }
-                return emloyeeTypeRepository;
             }
         }
         public GenericRepository<AccessTimesCount> AccessTimesCountRepository
@@ -311,15 +288,26 @@ namespace ToyStore.Data
                 return discountCodeDetailRepository;
             }
         }
-        public GenericRepository<MemberDiscountCode> MemberDiscountCodeRepository
+        public GenericRepository<UserDiscountCode> UserDiscountCodeRepository
         {
             get
             {
-                if (this.memberDiscountCodeRepository == null)
+                if (this.userDiscountCodeRepository == null)
                 {
-                    this.memberDiscountCodeRepository = new GenericRepository<MemberDiscountCode>(DbContext);
+                    this.userDiscountCodeRepository = new GenericRepository<UserDiscountCode>(DbContext);
                 }
-                return memberDiscountCodeRepository;
+                return userDiscountCodeRepository;
+            }
+        }
+        public GenericRepository<Message> MessageRepository
+        {
+            get
+            {
+                if (this.messageRepository == null)
+                {
+                    this.messageRepository = new GenericRepository<Message>(DbContext);
+                }
+                return messageRepository;
             }
         }
         public void Save()

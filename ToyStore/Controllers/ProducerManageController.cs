@@ -25,7 +25,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Index(int page = 1, string keyword = "")
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -109,7 +109,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Create(Producer producer, int page)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -123,7 +123,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -150,7 +150,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Edit(Producer producer, int page)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }

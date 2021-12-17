@@ -235,11 +235,11 @@
     <Compile Include="Config\PaypalConfiguration.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\DecentralizationManageController.cs" />
     <Compile Include="Controllers\DiscountCodeManageController.cs" />
-    <Compile Include="Controllers\EmloyeeManageController.cs" />
     <Compile Include="Controllers\ImportProductManageController.cs" />
-    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\OrderManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -256,6 +256,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHubs.cs" />
     <Compile Include="Hubs\OrderHubs.cs" />
     <Compile Include="ListenerModels\ListenerOrder.cs" />
     <Compile Include="Models\AccessTimesCount.cs">
@@ -276,12 +277,6 @@
     <Compile Include="Models\DiscountCodeDetail.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Emloyee.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmloyeeType.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Gender.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
@@ -294,13 +289,7 @@
     <Compile Include="Models\ItemCart.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Member.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MemberDiscountCode.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MemberType.cs">
+    <Compile Include="Models\Message.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order.cs">
@@ -351,6 +340,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ToyStoreModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDiscountCode.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserType.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\IGenericRepository.cs" />
     <Compile Include="Service\AccessTimesCountService.cs" />
@@ -360,14 +358,13 @@
     <Compile Include="Service\DecentralizationService.cs" />
     <Compile Include="Service\DiscountCodeDetailService.cs" />
     <Compile Include="Service\DiscountCodeService.cs" />
-    <Compile Include="Service\EmloyeeService.cs" />
-    <Compile Include="Service\EmloyeeTypeService.cs" />
+    <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\UserTypeService.cs" />
     <Compile Include="Service\GenderService.cs" />
     <Compile Include="Service\ImportCouponDetailService.cs" />
     <Compile Include="Service\ImportCouponService.cs" />
-    <Compile Include="Service\MemberDiscountCodeService.cs" />
-    <Compile Include="Service\MemberTypeService.cs" />
-    <Compile Include="Service\MemberService.cs" />
+    <Compile Include="Service\UserDiscountCodeService.cs" />
+    <Compile Include="Service\MessageService.cs" />
     <Compile Include="Service\OrderDetailService.cs" />
     <Compile Include="Service\OrderService.cs" />
     <Compile Include="Service\ProducerService.cs" />
@@ -483,6 +480,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chatbox.css" />
+    <Content Include="Content\chatbox.js" />
     <Content Include="Content\css\basictable.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.css" />
@@ -550,76 +549,10 @@
     <Content Include="Content\home\js\uisearch.js" />
     <Content Include="Content\home\js\wow.min.js" />
     <Content Include="Content\images\1.jpg" />
-    <Content Include="Content\images\122378999-creative-colorful-smartphone-logo-design-concept.jpg" />
-    <Content Include="Content\images\128786-13.jpeg" />
-    <Content Include="Content\images\147855_3.jpeg" />
-    <Content Include="Content\images\27f48d81f63cf8a5ba7e553f26a50055.jpg" />
-    <Content Include="Content\images\304002-1_3_.jpg" />
-    <Content Include="Content\images\304002-2_5_.jpg" />
-    <Content Include="Content\images\46f9962c0d69fd37a478.jpg" />
-    <Content Include="Content\images\47600-8_1_1.jpg" />
-    <Content Include="Content\images\47600_.jpg" />
-    <Content Include="Content\images\5056754_1.jpg" />
-    <Content Include="Content\images\5056768_4.jpg" />
-    <Content Include="Content\images\5c6f972c4d617-Xe_c-u_-_ch-i_Mammoet_57112.jpg" />
-    <Content Include="Content\images\94301151-computer-icon-with-the-cursor-on-the-screen-logo-of-the-laptop-vector-illustration-.jpg" />
-    <Content Include="Content\images\94f5264414d2e6c42c752b78eb777d4a_do-choi-dam-hai-tac.jpg" />
-    <Content Include="Content\images\active-kids-playing-with-toy-doll-and-car-vector-34040592.jpg" />
     <Content Include="Content\images\ankhuong.png" />
     <Content Include="Content\images\b1.png" />
     <Content Include="Content\images\b2.png" />
     <Content Include="Content\images\b3.png" />
-    <Content Include="Content\images\banner.jpg" />
-    <Content Include="Content\images\blue-sedan-toy-cute-car-icon-vector-10359550.jpg" />
-    <Content Include="Content\images\brain-logo-design-vector-19151821.jpg" />
-    <Content Include="Content\images\cube-logo-template-icon-vector-27514213.jpg" />
-    <Content Include="Content\images\dddsnb7-e9945da8-9f15-41de-be33-8b5476860bf5.png" />
-    <Content Include="Content\images\do-choi-bac-sy-hinh-vali-1.jpg" />
-    <Content Include="Content\images\f23ebc2e5b99e1f171c6590dcb5539e0.jpg" />
-    <Content Include="Content\images\g1.jpg" />
-    <Content Include="Content\images\g10.jpg" />
-    <Content Include="Content\images\g11.jpg" />
-    <Content Include="Content\images\g12.jpg" />
-    <Content Include="Content\images\g2.jpg" />
-    <Content Include="Content\images\g3.jpg" />
-    <Content Include="Content\images\g4.jpg" />
-    <Content Include="Content\images\g5.jpg" />
-    <Content Include="Content\images\g6.jpg" />
-    <Content Include="Content\images\g7.jpg" />
-    <Content Include="Content\images\g8.jpg" />
-    <Content Include="Content\images\g9.jpg" />
-    <Content Include="Content\images\Human-Intelligence-Can-Fix-AI-Shortcomings-1.jpg" />
-    <Content Include="Content\images\img1.jpg" />
-    <Content Include="Content\images\img2.jpg" />
-    <Content Include="Content\images\img3.jpg" />
-    <Content Include="Content\images\into.png" />
-    <Content Include="Content\images\j8022robot-resize.jpg" />
-    <Content Include="Content\images\loading.gif" />
-    <Content Include="Content\images\move-up.png" />
-    <Content Include="Content\images\MT39051AL_39196_1.jpg" />
-    <Content Include="Content\images\ogran.jpg" />
-    <Content Include="Content\images\R72100_R72100-2_2.jpg" />
-    <Content Include="Content\images\R74800_R74800-4_1.jpg" />
-    <Content Include="Content\images\robot-logo-design-robot-logo-design-vector-23235378.jpg" />
-    <Content Include="Content\images\s1.jpg" />
-    <Content Include="Content\images\s2.jpg" />
-    <Content Include="Content\images\s3.jpg" />
-    <Content Include="Content\images\social-icons.png" />
-    <Content Include="Content\images\star.png" />
-    <Content Include="Content\images\star1.png" />
-    <Content Include="Content\images\t1.png" />
-    <Content Include="Content\images\t2.png" />
-    <Content Include="Content\images\t3.png" />
-    <Content Include="Content\images\t4.png" />
-    <Content Include="Content\images\tick.png" />
-    <Content Include="Content\images\unnamed.jpg" />
-    <Content Include="Content\images\unnavcmed.jpg" />
-    <Content Include="Content\images\VE3000_VE1000Z_1.jpg" />
-    <Content Include="Content\images\VE3000_VE1002Z_2.jpg" />
-    <Content Include="Content\images\VE3001_VE1005Z_1.jpg" />
-    <Content Include="Content\images\xeplegomau-dangyeu-hs1.jpg" />
-    <Content Include="Content\images\_sls-amg1_14_47600_03.jpg" />
-    <Content Include="Content\images\_sls-amg1_14_47600_05.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\Chart.js" />
     <Content Include="Content\js\jquery-2.1.4.min.js" />
@@ -734,17 +667,15 @@
     <Content Include="Views\Product\Search.cshtml" />
     <Content Include="Views\Product\ProductContainerPartial.cshtml" />
     <Content Include="Views\Home\LoginPartial.cshtml" />
-    <Content Include="Views\Member\ConfirmEmail.cshtml" />
+    <Content Include="Views\User\ConfirmEmail.cshtml" />
     <Content Include="Views\Home\SignUp.cshtml" />
     <Content Include="Views\Home\SignIn.cshtml" />
-    <Content Include="Views\Member\ConfirmEmailLink.cshtml" />
+    <Content Include="Views\User\ConfirmEmailLink.cshtml" />
     <Content Include="Views\Cart\CartPartial.cshtml" />
     <Content Include="Views\Cart\Checkout.cshtml" />
     <Content Include="Views\Cart\Message.cshtml" />
     <Content Include="Views\Layout\ProductLayout.cshtml" />
     <Content Include="Views\Layout\CheckoutLayout.cshtml" />
-    <Content Include="Views\Layout\CommentPartial.cshtml" />
-    <Content Include="Views\Product\_CommentPartial.cshtml" />
     <Content Include="Views\Product\_QAPartial.cshtml" />
     <Content Include="Views\QAManage\List.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
@@ -756,15 +687,13 @@
     <Content Include="Views\OrderManage\Detail.cshtml" />
     <Content Include="Views\OrderManage\ApprovedAndNotDelivery.cshtml" />
     <Content Include="Views\OrderManage\DeliveredList.cshtml" />
-    <Content Include="Views\Member\CheckoutOrder.cshtml" />
-    <Content Include="Views\Member\OrderDetail.cshtml" />
+    <Content Include="Views\User\CheckoutOrder.cshtml" />
+    <Content Include="Views\User\OrderDetail.cshtml" />
     <Content Include="Views\Cart\CheckoutPartial.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProduct.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProductBySupplierID.cshtml" />
     <Content Include="Views\ImportProductManage\ImportCoupon.cshtml" />
     <Content Include="Views\Product\ProductViewed.cshtml" />
-    <Content Include="Views\RoleManage\List.cshtml" />
-    <Content Include="Views\RoleManage\RoleActivePartial.cshtml" />
     <Content Include="Views\DecentralizationManage\Index.cshtml" />
     <Content Include="Views\DecentralizationManage\Decentralization.cshtml" />
     <Content Include="Views\StatisticManage\Index.cshtml" />
@@ -772,7 +701,7 @@
     <Content Include="Views\DiscountCodeManage\DiscountCodePartial.cshtml" />
     <Content Include="Views\StatisticManage\Statistic.cshtml" />
     <Content Include="Views\StatisticManage\StatisticStocking.cshtml" />
-    <Content Include="Views\StatisticManage\StatisticMember.cshtml" />
+    <Content Include="Views\StatisticManage\StatisticUser.cshtml" />
     <Content Include="Views\StatisticManage\StatisticSupplier.cshtml" />
     <Content Include="Views\StatisticManage\StatisticProductSold.cshtml" />
     <Content Include="Views\StatisticManage\StatisticOrder.cshtml" />
@@ -781,23 +710,22 @@
     <Content Include="Views\ProductCategoryManage\Index.cshtml" />
     <Content Include="Views\ProducerManage\Index.cshtml" />
     <Content Include="Views\SupplierManage\Index.cshtml" />
-    <Content Include="Views\Member\Index.cshtml" />
-    <Content Include="Views\Member\DeleteAccount.cshtml" />
-    <Content Include="Views\Member\ResetPassword.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\DeleteAccount.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\ProductCategoryManage\Search.cshtml" />
-    <Content Include="Views\EmloyeeManage\Index.cshtml" />
     <Content Include="Views\ImportProductManage\ImportProductDetail.cshtml" />
     <Content Include="Views\Admin\Incompetent.cshtml" />
     <Content Include="Views\Admin\ResetPassword.cshtml" />
-    <Content Include="Views\Admin\InfoEmloyee.cshtml" />
+    <Content Include="Views\Admin\InfoUser.cshtml" />
     <Content Include="Views\Payment\PaymentWithPaypal.cshtml" />
     <Content Include="Views\Payment\FailureView.cshtml" />
     <Content Include="Views\Payment\SuccessView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Notification\" />
+    <Folder Include="Views\RoleManage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />

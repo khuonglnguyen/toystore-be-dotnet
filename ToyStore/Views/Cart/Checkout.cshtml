@@ -5,8 +5,8 @@
 }
 @{
     List<ToyStore.Models.ItemCart> Cart = Session["Cart"] as List<ToyStore.Models.ItemCart>;
-    ToyStore.Models.Member Member = Session["Member"] as ToyStore.Models.Member;
-    List<ToyStore.Models.MemberDiscountCode> memberDiscountCodes = ViewBag.DiscountCodeDetailListByMemer as List<ToyStore.Models.MemberDiscountCode>;
+    ToyStore.Models.User User = Session["User"] as ToyStore.Models.User;
+    List<ToyStore.Models.UserDiscountCode> userDiscountCodes = ViewBag.DiscountCodeDetailListByUser as List<ToyStore.Models.UserDiscountCode>;
 }
 <script src="~/Scripts/bootbox.js"></script>
 <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
@@ -154,7 +154,7 @@
 <!--cart-items-->
 <div class="cart-items">
     <div class="container" id="DivCheckout">
-        @if (Cart.Count > 0)
+        @if (Cart != null)
         {
             <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Giỏ Hàng Của Bạn Có: @ViewBag.TotalQuantity Sản Phẩm</h3>
             foreach (var item in Cart)
@@ -184,7 +184,7 @@
                     </div>
                 </div>
             }
-            if (Session["Member"] == null)
+            if (Session["User"] == null)
             {
                 <div class="login-page">
                     <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
@@ -252,13 +252,13 @@
                             @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Post))
                             {
                                 <label>Họ tên</label>
-                                <input type="text" class="user" name="FullName" value="@Member.FullName" readonly>
+                                <input type="text" class="user" name="FullName" value="@User.FullName" readonly>
                                 <label>Số điện thoại</label>
-                                <input type="text" name="PhoneNumber" class="user" value="@Member.PhoneNumber" readonly>
+                                <input type="text" name="PhoneNumber" class="user" value="@User.PhoneNumber" readonly>
                                 <label>Email</label>
-                                <input type="text" name="Email" class="user" value="@Member.Email" readonly>
+                                <input type="text" name="Email" class="user" value="@User.Email" readonly>
                                 <label>Địa chỉ nhận hàng</label>
-                                <input type="text" name="Address" class="user" value="@Member.Address" readonly>
+                                <input type="text" name="Address" class="user" value="@User.Address" readonly>
                                 if (Session["num"] != null)
                                 {
                                     <label>Mã giảm giá</label><br />
@@ -353,14 +353,14 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Choose", "Cart", FormMethod.Post))
                 {
-                    if (memberDiscountCodes != null)
+                    if (userDiscountCodes != null)
                     {
                         <div class="form-group">
                             <label>Mã giảm giá của bạn:</label>
                             @*@Html.DropDownList("Code", null, new { @class = "form-control" })*@
                             <select class="form-control" name="Code">
                                 <option value="0">Chọn mã giảm giá</option>
-                                @foreach (var item in memberDiscountCodes)
+                                @foreach (var item in userDiscountCodes)
                                 {
                                     <option value="@item.DiscountCodeDetail.Code">Mã: @item.DiscountCodeDetail.Code (Giảm @item.DiscountCodeDetail.DiscountCode.NumberDiscount% - Ngày hết hạn: @item.DiscountCodeDetail.DiscountCode.ExpirationDate.Value.ToShortDateString())</option>
                                 }

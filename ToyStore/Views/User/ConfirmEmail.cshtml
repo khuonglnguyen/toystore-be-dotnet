@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Xác Minh Tài Khoản";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+<!--breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+            <li><a href="@Url.Action("Index","Home")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Trang Chủ</a></li>
+            <li class="active">Xác Minh Tài Khoản</li>
+        </ol>
+    </div>
+</div>
+<br />
+<!--//breadcrumbs-->
+@if (ViewBag.Message != "EmailConfirmed")
+{
+    <div class="login-page">
+        <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
+            <h3 class="title">Xác Minh Tài Khoản</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit curabitur </p>
+        </div>
+        <div class="widget-shadow">
+            <div class="login-top wow fadeInUp animated" data-wow-delay=".7s">
+                <h4>@ViewBag.Email</h4>
+                <b class="text-danger">@ViewBag.Message</b>
+            </div>
+            <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
+                @using (Html.BeginForm("ConfirmEmail", "User", FormMethod.Post))
+                {
+                    <input type="text" name="ID" value="@ViewBag.ID" hidden="hidden" />
+                    <input type="text" class="user" name="capcha" placeholder="Nhập vào mã xác minh" required="">
+                    <input type="submit" name="Sign In" value="Xác minh">
+                }
+                @Html.ActionLink("Gửi lại mã xác minh", "ConfirmEmail", new { id = ViewBag.ID })
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
+        <h2 class="title">Tài khoản của bạn đã được xác minh thành công!</h2>
+    </div>
+}

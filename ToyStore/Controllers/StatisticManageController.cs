@@ -18,14 +18,14 @@ namespace ToyStore.Controllers
     {
         private IOrderService _orderService;
         private IProductService _productService;
-        private IMemberService _memberService;
+        private IUserService _userService;
         private ISupplierService _supplierService;
         private IAccessTimesCountService _accessTimesCountService;
-        public StatisticManageController(IOrderService orderService, IProductService productService, IMemberService memberService, ISupplierService supplierService, IAccessTimesCountService accessTimesCountService)
+        public StatisticManageController(IOrderService orderService, IProductService productService, IUserService userService, ISupplierService supplierService, IAccessTimesCountService accessTimesCountService)
         {
             _orderService = orderService;
             _productService = productService;
-            _memberService = memberService;
+            _userService = userService;
             _supplierService = supplierService;
             _accessTimesCountService = accessTimesCountService;
         }
@@ -46,14 +46,14 @@ namespace ToyStore.Controllers
         [HttpGet]
         public void DownloadExcelStatisticStocking()
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
 
             IEnumerable<Product> products = _productService.GetProductListStocking();
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
             ws.Cells["A2"].Value = "Người lập";
-            ws.Cells["B2"].Value = emloyee.FullName;
+            ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
             ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
@@ -78,24 +78,24 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
-        [Authorize(Roles = "StatisticMember")]
+        [Authorize(Roles = "StatisticUser")]
         [HttpGet]
-        public ActionResult StatisticMember()
+        public ActionResult StatisticUser()
         {
-            IEnumerable<Member> members = _memberService.GetMemberListForStatistic();
-            return View(members);
+            IEnumerable<User> users = _userService.GetUserListForStatistic();
+            return View(users);
         }
         [HttpGet]
         public void DownloadExcelStatisticMember()
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
 
-            IEnumerable<Member> members = _memberService.GetMemberListForStatistic();
+            IEnumerable<User> users = _userService.GetUserListForStatistic();
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
             ws.Cells["A2"].Value = "Người lập";
-            ws.Cells["B2"].Value = emloyee.FullName;
+            ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
             ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
@@ -109,19 +109,14 @@ namespace ToyStore.Controllers
             ws.Cells["G6"].Value = "Doanh Số";
 
             int rowStart = 7;
-            foreach (var item in members)
+            foreach (var item in users)
             {
                 ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
                 ws.Cells[string.Format("B{0}", rowStart)].Value = item.FullName;
                 ws.Cells[string.Format("C{0}", rowStart)].Value = item.Address;
                 ws.Cells[string.Format("D{0}", rowStart)].Value = item.Email;
                 ws.Cells[string.Format("E{0}", rowStart)].Value = item.PhoneNumber;
-                if (item.MemberTypeID == 1)
-                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Thường";
-                else
-                {
-                    ws.Cells[string.Format("F{0}", rowStart)].Value = "VIP";
-                }
+                ws.Cells[string.Format("F{0}", rowStart)].Value = item.UserType.Name;
                 ws.Cells[string.Format("G{0}", rowStart)].Value = item.AmountPurchased;
                 rowStart++;
             }
@@ -129,7 +124,7 @@ namespace ToyStore.Controllers
             ws.Cells["A:AZ"].AutoFitColumns();
             Response.Clear();
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment: filename=" + "Danh sách thành viên.xlsx");
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Danh sách khách hàng.xlsx");
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
@@ -143,14 +138,14 @@ namespace ToyStore.Controllers
         [HttpGet]
         public void DownloadExcelStatisticSupplier()
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
 
             IEnumerable<Supplier> suppliers = _supplierService.GetSupplierList();
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
             ws.Cells["A2"].Value = "Người lập";
-            ws.Cells["B2"].Value = emloyee.FullName;
+            ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
             ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
@@ -200,14 +195,14 @@ namespace ToyStore.Controllers
         [HttpGet]
         public void DownloadExcelStatisticProductSold(DateTime from, DateTime to)
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
 
             IEnumerable<Product> products = _productService.GetProductListSold(from, to);
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
             ws.Cells["A2"].Value = "Người lập";
-            ws.Cells["B2"].Value = emloyee.FullName;
+            ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
             ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
@@ -244,14 +239,14 @@ namespace ToyStore.Controllers
         [HttpGet]
         public void DownloadExcelStatisticOrder(DateTime from, DateTime to)
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
 
             IEnumerable<Order> orders = _orderService.GetListOrderStatistic(from, to);
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
             ws.Cells["A2"].Value = "Người lập";
-            ws.Cells["B2"].Value = emloyee.FullName;
+            ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
             ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
@@ -301,14 +296,14 @@ namespace ToyStore.Controllers
         [HttpGet]
         public void DownloadExcelStatisticStatisticAccessTime(DateTime from, DateTime to)
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
 
             IEnumerable<AccessTimesCount> accessTimesCounts = _accessTimesCountService.GetListAccessTimeCountStatistic(from, to);
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
             ws.Cells["A2"].Value = "Người lập";
-            ws.Cells["B2"].Value = emloyee.FullName;
+            ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
             ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();

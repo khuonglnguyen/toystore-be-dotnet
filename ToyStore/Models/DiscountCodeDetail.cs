@@ -22,7 +22,7 @@ public partial class DiscountCodeDetail
     public DiscountCodeDetail()
     {
 
-        this.MemberDiscountCodes = new HashSet<MemberDiscountCode>();
+        this.UserDiscountCodes = new HashSet<UserDiscountCode>();
 
     }
 
@@ -41,7 +41,7 @@ public partial class DiscountCodeDetail
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
-    public virtual ICollection<MemberDiscountCode> MemberDiscountCodes { get; set; }
+    public virtual ICollection<UserDiscountCode> UserDiscountCodes { get; set; }
 
 }
 

@@ -23,7 +23,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListByAge(int AgeID);
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
         IEnumerable<Product> GetProductListIsNew();
-        IEnumerable<Product> GetProductListViewedByMemberID(int MemberID);
+        IEnumerable<Product> GetProductListViewedByUserID(int UserID);
         IEnumerable<Product> GetProductList(string keyWord);
         IEnumerable<Product> GetProductListForManage();
         IEnumerable<Product> GetProductListForManage(string keyWord);
@@ -243,9 +243,9 @@ namespace ToyStore.Service
             context.ProductRepository.Update(product);
         }
 
-        public IEnumerable<Product> GetProductListViewedByMemberID(int MemberID)
+        public IEnumerable<Product> GetProductListViewedByUserID(int UserID)
         {
-            var productIDList = context.ProductViewedRepository.GetAllData(x => x.MemberID == MemberID).OrderByDescending(x => x.Date).Select(x => x.ProductID);
+            var productIDList = context.ProductViewedRepository.GetAllData(x => x.UserID == UserID).OrderByDescending(x => x.Date).Select(x => x.ProductID);
             List<Product> productsList = new List<Product>();
             foreach (var item in productIDList)
             {

@@ -17,20 +17,18 @@ namespace ToyStore.Controllers
     {
         private IQAService _qAService;
         private IProductService _productService;
-        private IMemberService _memberService;
-        private IEmloyeeService _emloyeeService;
+        private IUserService _userService;
         ToyStore2021Entities context = new ToyStore2021Entities();
-        public QAManageController(IQAService qAService, IProductService productService, IMemberService memberService, IEmloyeeService emloyeeService)
+        public QAManageController(IQAService qAService, IProductService productService, IUserService userService)
         {
             _qAService = qAService;
             _productService = productService;
-            _memberService = memberService;
-            _emloyeeService = emloyeeService;
+            _userService = userService;
         }
         // GET: QAManage
         public ActionResult List(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -67,7 +65,7 @@ namespace ToyStore.Controllers
             return Json(new
             {
                 ID = qAs.ID,
-                MemberID = qAs.MemberID,
+                UserAskID = qAs.UserAskID,
                 ProductID = qAs.ProductID,
                 Question = qAs.Question,
                 Answer = qAs.Answer,
@@ -77,9 +75,9 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Edit(QA qA, int page)
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
             QA qa = _qAService.GetQAByID(qA.ID);
-            qa.EmloyeeID = emloyee.ID;
+            qa.UserAskID = user.ID;
             qa.Answer = qA.Answer;
             qa.DateAnswer = DateTime.Now;
             _qAService.UpdateQA(qa);
@@ -90,7 +88,7 @@ namespace ToyStore.Controllers
         public ActionResult Delete(int ID, int ProductID)
         {
             _qAService.Delete(ID);
-            IEnumerable<QA> listQA = context.QAs.Include(x => x.Emloyee).Include(x => x.Member).Where(x => x.ProductID == ID).OrderByDescending(x => x.DateQuestion).ToList();
+            IEnumerable<QA> listQA = context.QAs.Include(x => x.User).Where(x => x.ProductID == ID).OrderByDescending(x => x.DateQuestion).ToList();
             ViewBag.QAList = listQA;
             return RedirectToAction("QAPartial","Product",new { ID=ProductID});
         }

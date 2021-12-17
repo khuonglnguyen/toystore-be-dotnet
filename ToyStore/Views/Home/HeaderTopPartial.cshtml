@@ -5,7 +5,7 @@
         <!--header-one-->
         <div class="container">
             <div class="nav navbar-nav wow fadeInLeft animated" data-wow-delay=".5s">
-                @if (Session["Member"] != null && Session["Member"] != "")
+                @if (Session["User"] != null && Session["User"] != "")
                 {
                     <p>
                         <a href="@Url.Action("SignOut","Home")">Đăng xuất </a>
@@ -34,11 +34,14 @@
         <div class="container">
             <div class="nav navbar-nav header-two-left">
                 <ul>
-                    @if (Session["Member"] != null && Session["Member"] != "")
+                    @if (Session["User"] != null && Session["User"] != "")
                     {
-                        Member member = (Member)Session["Member"];
-                    <li><i class="glyphicon glyphicon-user" aria-hidden="true"></i><a href="@Url.Action("Index","Member")">@member.FullName</a></li><br />
-                        <li><i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i><a href="@Url.Action("CheckoutOrder","Member",new { ID=member.ID})">Đơn Hàng</a></li><br />
+                        User user = (User)Session["User"];
+                        <input type="text" id="UserID" value="@user.ID" hidden/>
+                        <li><i class="glyphicon glyphicon-user" aria-hidden="true"></i><a href="@Url.Action("Index","User")">@user.FullName</a></li>
+                        <br />
+                        <li><i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i><a href="@Url.Action("CheckoutOrder","User",new { ID=user.ID})">Đơn Hàng</a></li>
+                        <br />
                         <li><i class="glyphicon glyphicon-dashboard" aria-hidden="true"></i><a href="@Url.Action("ProductViewed","Product")">Lịch Sử Xem</a></li>
                     }
                 </ul>

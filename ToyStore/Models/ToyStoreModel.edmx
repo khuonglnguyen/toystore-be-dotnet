@@ -38,7 +38,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="Note" Type="nvarchar(max)" />
-          <Property Name="EmloyeeTypeID" Type="int" Nullable="false" />
+          <Property Name="UserTypeID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DiscountCode">
           <Key>
@@ -47,7 +47,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ExpirationDate" Type="datetime" />
           <Property Name="NumberDiscount" Type="int" />
-          <Property Name="EmloyeeID" Type="int" />
+          <Property Name="UserID" Type="int" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="DiscountCodeDetail">
@@ -58,27 +58,6 @@
           <Property Name="DiscountCodeID" Type="int" />
           <Property Name="Code" Type="nvarchar" MaxLength="20" />
           <Property Name="IsUsed" Type="bit" />
-        </EntityType>
-        <EntityType Name="Emloyee">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Password" Type="nvarchar(max)" />
-          <Property Name="FullName" Type="nvarchar(max)" />
-          <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="Image" Type="nvarchar(max)" />
-          <Property Name="EmloyeeTypeID" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" />
-        </EntityType>
-        <EntityType Name="EmloyeeType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -94,7 +73,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
-          <Property Name="EmloyeeID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="SupplierID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ImportCouponDetail">
@@ -112,43 +91,20 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
-        <EntityType Name="Member">
+        <EntityType Name="Message">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberTypeID" Type="int" Nullable="false" />
-          <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Password" Type="nvarchar(max)" />
-          <Property Name="FullName" Type="nvarchar(max)" />
-          <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="Capcha" Type="nvarchar(max)" />
-          <Property Name="AmountPurchased" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="Avatar" Type="nvarchar(max)" />
-          <Property Name="IsDeleted" Type="bit" />
-        </EntityType>
-        <EntityType Name="MemberDiscountCode">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberID" Type="int" />
-          <Property Name="DiscountCodeDetailID" Type="int" />
-        </EntityType>
-        <EntityType Name="MemberType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="FromUserID" Type="int" />
+          <Property Name="ToUserID" Type="int" />
+          <Property Name="Content" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -233,7 +189,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -243,13 +199,13 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="UserAskID" Type="int" Nullable="false" />
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="Question" Type="nvarchar" MaxLength="1000" />
           <Property Name="Answer" Type="nvarchar" MaxLength="1000" />
           <Property Name="DateQuestion" Type="datetime" />
           <Property Name="DateAnswer" Type="datetime" />
-          <Property Name="EmloyeeID" Type="int" Nullable="false" />
+          <Property Name="UserAnswerID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -257,7 +213,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Star" Type="int" Nullable="false" />
           <Property Name="Content" Type="nvarchar(max)" />
         </EntityType>
@@ -282,20 +238,38 @@
           <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
-        <Association Name="FK_dbo_Cart_dbo_Member_MemberID">
-          <End Role="Member" Type="Self.Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ItemCart" Type="Self.ItemCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ItemCart">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserTypeID" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="Capcha" Type="nvarchar(max)" />
+          <Property Name="AmountPurchased" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Avatar" Type="nvarchar(max)" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserDiscountCode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DiscountCodeDetailID" Type="int" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+        </EntityType>
         <Association Name="FK_dbo_Cart_dbo_Products_ProductID">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -307,6 +281,20 @@
             </Principal>
             <Dependent Role="ItemCart">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cart_dbo_User_UserID">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ItemCart" Type="Self.ItemCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ItemCart">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -324,34 +312,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
-          <End Role="EmloyeeType" Type="Self.EmloyeeType" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmloyeeType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Emloyee">
-              <PropertyRef Name="EmloyeeTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
-          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Emloyee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportCoupon">
-              <PropertyRef Name="EmloyeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_ImportCoupon_dbo_Supplier_SupplierID">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -363,6 +323,20 @@
             </Principal>
             <Dependent Role="ImportCoupon">
               <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ImportCoupon_dbo_User_UserID">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -387,20 +361,6 @@
             </Principal>
             <Dependent Role="ImportCouponDetail">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-          <End Role="MemberType" Type="Self.MemberType" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Member" Type="Self.Member" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MemberType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Member">
-              <PropertyRef Name="MemberTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -516,20 +476,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_ProductViewed_dbo_Member_MemberID">
-          <End Role="Member" Type="Self.Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductViewed">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_ProductViewed_dbo_Products_ProductID">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -544,31 +490,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID">
-          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="1">
+        <Association Name="FK_dbo_ProductViewed_dbo_User_UserID">
+          <End Role="User" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Emloyee">
+            <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="QA">
-              <PropertyRef Name="EmloyeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_QA_dbo_Member_MemberID">
-          <End Role="Member" Type="Self.Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="QA" Type="Self.QA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QA">
-              <PropertyRef Name="MemberID" />
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -586,17 +518,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Rating_dbo_Member_MemberID">
-          <End Role="Member" Type="Self.Member" Multiplicity="1">
+        <Association Name="FK_dbo_QA_dbo_User_UserID_Ask">
+          <End Role="User" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Member">
+            <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Rating">
-              <PropertyRef Name="MemberID" />
+            <Dependent Role="QA">
+              <PropertyRef Name="UserAskID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -614,27 +546,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Decentralization_EmloyeeType">
-          <End Role="EmloyeeType" Type="Self.EmloyeeType" Multiplicity="1" />
-          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+        <Association Name="FK_dbo_Rating_dbo_User_UserID">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EmloyeeType">
+            <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Decentralization">
-              <PropertyRef Name="EmloyeeTypeID" />
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DiscountCode_Emloyee">
-          <End Role="Emloyee" Type="Self.Emloyee" Multiplicity="0..1" />
+        <Association Name="FK_dbo_User_dbo_UserType_UserTypeID">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Decentralization_UserType">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="1" />
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscountCode_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="DiscountCode" Type="Self.DiscountCode" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Emloyee">
+            <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DiscountCode">
-              <PropertyRef Name="EmloyeeID" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -650,27 +610,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MemberDiscountCode_DiscountCodeDetail">
+        <Association Name="FK_UserDiscountCode_DiscountCodeDetail">
           <End Role="DiscountCodeDetail" Type="Self.DiscountCodeDetail" Multiplicity="0..1" />
-          <End Role="MemberDiscountCode" Type="Self.MemberDiscountCode" Multiplicity="*" />
+          <End Role="UserDiscountCode" Type="Self.UserDiscountCode" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DiscountCodeDetail">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="MemberDiscountCode">
+            <Dependent Role="UserDiscountCode">
               <PropertyRef Name="DiscountCodeDetailID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MemberDiscountCode_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="MemberDiscountCode" Type="Self.MemberDiscountCode" Multiplicity="*" />
+        <Association Name="FK_UserDiscountCode_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserDiscountCode" Type="Self.UserDiscountCode" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Member">
+            <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="MemberDiscountCode">
-              <PropertyRef Name="MemberID" />
+            <Dependent Role="UserDiscountCode">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -681,15 +641,11 @@
           <EntitySet Name="Decentralization" EntityType="Self.Decentralization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiscountCode" EntityType="Self.DiscountCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiscountCodeDetail" EntityType="Self.DiscountCodeDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Emloyee" EntityType="Self.Emloyee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EmloyeeType" EntityType="Self.EmloyeeType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImportCoupon" EntityType="Self.ImportCoupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImportCouponDetail" EntityType="Self.ImportCouponDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemCart" EntityType="Self.ItemCart" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MemberDiscountCode" EntityType="Self.MemberDiscountCode" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MemberType" EntityType="Self.MemberType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producer" EntityType="Self.Producer" Schema="dbo" store:Type="Tables" />
@@ -701,28 +657,27 @@
           <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_dbo_Cart_dbo_Member_MemberID" Association="Self.FK_dbo_Cart_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="ItemCart" EntitySet="ItemCart" />
-          </AssociationSet>
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDiscountCode" EntityType="Self.UserDiscountCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_Cart_dbo_Products_ProductID" Association="Self.FK_dbo_Cart_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
+            <End Role="ItemCart" EntitySet="ItemCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cart_dbo_User_UserID" Association="Self.FK_dbo_Cart_dbo_User_UserID">
+            <End Role="User" EntitySet="User" />
             <End Role="ItemCart" EntitySet="ItemCart" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Decentralization_dbo_Role_RoleID" Association="Self.FK_dbo_Decentralization_dbo_Role_RoleID">
             <End Role="Role" EntitySet="Role" />
             <End Role="Decentralization" EntitySet="Decentralization" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" Association="Self.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
-            <End Role="EmloyeeType" EntitySet="EmloyeeType" />
-            <End Role="Emloyee" EntitySet="Emloyee" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
-            <End Role="Emloyee" EntitySet="Emloyee" />
-            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" Association="Self.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID">
             <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_User_UserID" Association="Self.FK_dbo_ImportCoupon_dbo_User_UserID">
+            <End Role="User" EntitySet="User" />
             <End Role="ImportCoupon" EntitySet="ImportCoupon" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" Association="Self.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID">
@@ -732,10 +687,6 @@
           <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_Products_ProductID" Association="Self.FK_dbo_ImportCouponDetail_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="ImportCouponDetail" EntitySet="ImportCouponDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" Association="Self.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-            <End Role="MemberType" EntitySet="MemberType" />
-            <End Role="Member" EntitySet="Member" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Order_dbo_Customer_CustomerID" Association="Self.FK_dbo_Order_dbo_Customer_CustomerID">
             <End Role="Customer" EntitySet="Customer" />
@@ -769,53 +720,53 @@
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_ProductViewed_dbo_Member_MemberID" Association="Self.FK_dbo_ProductViewed_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="ProductViewed" EntitySet="ProductViewed" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_ProductViewed_dbo_Products_ProductID" Association="Self.FK_dbo_ProductViewed_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductViewed" EntitySet="ProductViewed" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID" Association="Self.FK_dbo_QA_dbo_Emloyee_EmloyeeID">
-            <End Role="Emloyee" EntitySet="Emloyee" />
-            <End Role="QA" EntitySet="QA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_QA_dbo_Member_MemberID" Association="Self.FK_dbo_QA_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="QA" EntitySet="QA" />
+          <AssociationSet Name="FK_dbo_ProductViewed_dbo_User_UserID" Association="Self.FK_dbo_ProductViewed_dbo_User_UserID">
+            <End Role="User" EntitySet="User" />
+            <End Role="ProductViewed" EntitySet="ProductViewed" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_QA_dbo_Products_ProductID" Association="Self.FK_dbo_QA_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="QA" EntitySet="QA" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Rating_dbo_Member_MemberID" Association="Self.FK_dbo_Rating_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Rating" EntitySet="Rating" />
+          <AssociationSet Name="FK_dbo_QA_dbo_User_UserID_Ask" Association="Self.FK_dbo_QA_dbo_User_UserID_Ask">
+            <End Role="User" EntitySet="User" />
+            <End Role="QA" EntitySet="QA" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Rating_dbo_Products_ProductID" Association="Self.FK_dbo_Rating_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
-          <AssociationSet Name="FK_Decentralization_EmloyeeType" Association="Self.FK_Decentralization_EmloyeeType">
-            <End Role="EmloyeeType" EntitySet="EmloyeeType" />
+          <AssociationSet Name="FK_dbo_Rating_dbo_User_UserID" Association="Self.FK_dbo_Rating_dbo_User_UserID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_User_dbo_UserType_UserTypeID" Association="Self.FK_dbo_User_dbo_UserType_UserTypeID">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Decentralization_UserType" Association="Self.FK_Decentralization_UserType">
+            <End Role="UserType" EntitySet="UserType" />
             <End Role="Decentralization" EntitySet="Decentralization" />
           </AssociationSet>
-          <AssociationSet Name="FK_DiscountCode_Emloyee" Association="Self.FK_DiscountCode_Emloyee">
-            <End Role="Emloyee" EntitySet="Emloyee" />
+          <AssociationSet Name="FK_DiscountCode_User" Association="Self.FK_DiscountCode_User">
+            <End Role="User" EntitySet="User" />
             <End Role="DiscountCode" EntitySet="DiscountCode" />
           </AssociationSet>
           <AssociationSet Name="FK_DiscountCodeDetail_DiscountCode" Association="Self.FK_DiscountCodeDetail_DiscountCode">
             <End Role="DiscountCode" EntitySet="DiscountCode" />
             <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_MemberDiscountCode_DiscountCodeDetail" Association="Self.FK_MemberDiscountCode_DiscountCodeDetail">
+          <AssociationSet Name="FK_UserDiscountCode_DiscountCodeDetail" Association="Self.FK_UserDiscountCode_DiscountCodeDetail">
             <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetail" />
-            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCode" />
+            <End Role="UserDiscountCode" EntitySet="UserDiscountCode" />
           </AssociationSet>
-          <AssociationSet Name="FK_MemberDiscountCode_Member" Association="Self.FK_MemberDiscountCode_Member">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCode" />
+          <AssociationSet Name="FK_UserDiscountCode_User" Association="Self.FK_UserDiscountCode_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserDiscountCode" EntitySet="UserDiscountCode" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -829,15 +780,11 @@
           <EntitySet Name="Decentralizations" EntityType="ToyStore2021Model.Decentralization" />
           <EntitySet Name="DiscountCodes" EntityType="ToyStore2021Model.DiscountCode" />
           <EntitySet Name="DiscountCodeDetails" EntityType="ToyStore2021Model.DiscountCodeDetail" />
-          <EntitySet Name="Emloyees" EntityType="ToyStore2021Model.Emloyee" />
-          <EntitySet Name="EmloyeeTypes" EntityType="ToyStore2021Model.EmloyeeType" />
           <EntitySet Name="Genders" EntityType="ToyStore2021Model.Gender" />
           <EntitySet Name="ImportCoupons" EntityType="ToyStore2021Model.ImportCoupon" />
           <EntitySet Name="ImportCouponDetails" EntityType="ToyStore2021Model.ImportCouponDetail" />
           <EntitySet Name="ItemCarts" EntityType="ToyStore2021Model.ItemCart" />
-          <EntitySet Name="Members" EntityType="ToyStore2021Model.Member" />
-          <EntitySet Name="MemberDiscountCodes" EntityType="ToyStore2021Model.MemberDiscountCode" />
-          <EntitySet Name="MemberTypes" EntityType="ToyStore2021Model.MemberType" />
+          <EntitySet Name="Messages" EntityType="ToyStore2021Model.Message" />
           <EntitySet Name="Orders" EntityType="ToyStore2021Model.Order" />
           <EntitySet Name="OrderDetails" EntityType="ToyStore2021Model.OrderDetail" />
           <EntitySet Name="Producers" EntityType="ToyStore2021Model.Producer" />
@@ -849,6 +796,9 @@
           <EntitySet Name="Ratings" EntityType="ToyStore2021Model.Rating" />
           <EntitySet Name="Roles" EntityType="ToyStore2021Model.Role" />
           <EntitySet Name="Suppliers" EntityType="ToyStore2021Model.Supplier" />
+          <EntitySet Name="Users" EntityType="ToyStore2021Model.User" />
+          <EntitySet Name="UserDiscountCodes" EntityType="ToyStore2021Model.UserDiscountCode" />
+          <EntitySet Name="UserTypes" EntityType="ToyStore2021Model.UserType" />
           <AssociationSet Name="FK_dbo_Products_dbo_Ages_AgeID" Association="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID">
             <End Role="Age" EntitySet="Ages" />
             <End Role="Product" EntitySet="Products" />
@@ -861,33 +811,21 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="Decentralization" EntitySet="Decentralizations" />
           </AssociationSet>
-          <AssociationSet Name="FK_Decentralization_EmloyeeType" Association="ToyStore2021Model.FK_Decentralization_EmloyeeType">
-            <End Role="EmloyeeType" EntitySet="EmloyeeTypes" />
+          <AssociationSet Name="FK_Decentralization_UserType" Association="ToyStore2021Model.FK_Decentralization_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
             <End Role="Decentralization" EntitySet="Decentralizations" />
           </AssociationSet>
-          <AssociationSet Name="FK_DiscountCode_Emloyee" Association="ToyStore2021Model.FK_DiscountCode_Emloyee">
-            <End Role="Emloyee" EntitySet="Emloyees" />
+          <AssociationSet Name="FK_DiscountCode_User" Association="ToyStore2021Model.FK_DiscountCode_User">
+            <End Role="User" EntitySet="Users" />
             <End Role="DiscountCode" EntitySet="DiscountCodes" />
           </AssociationSet>
           <AssociationSet Name="FK_DiscountCodeDetail_DiscountCode" Association="ToyStore2021Model.FK_DiscountCodeDetail_DiscountCode">
             <End Role="DiscountCode" EntitySet="DiscountCodes" />
             <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_MemberDiscountCode_DiscountCodeDetail" Association="ToyStore2021Model.FK_MemberDiscountCode_DiscountCodeDetail">
+          <AssociationSet Name="FK_UserDiscountCode_DiscountCodeDetail" Association="ToyStore2021Model.FK_UserDiscountCode_DiscountCodeDetail">
             <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetails" />
-            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCodes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" Association="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
-            <End Role="EmloyeeType" EntitySet="EmloyeeTypes" />
-            <End Role="Emloyee" EntitySet="Emloyees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" Association="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
-            <End Role="Emloyee" EntitySet="Emloyees" />
-            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID" Association="ToyStore2021Model.FK_dbo_QA_dbo_Emloyee_EmloyeeID">
-            <End Role="Emloyee" EntitySet="Emloyees" />
-            <End Role="QA" EntitySet="QAs" />
+            <End Role="UserDiscountCode" EntitySet="UserDiscountCodes" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Products_dbo_Gender_GenderID" Association="ToyStore2021Model.FK_dbo_Products_dbo_Gender_GenderID">
             <End Role="Gender" EntitySet="Genders" />
@@ -895,6 +833,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" Association="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID">
             <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ImportCoupon_dbo_User_UserID" Association="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_User_UserID">
+            <End Role="User" EntitySet="Users" />
             <End Role="ImportCoupon" EntitySet="ImportCoupons" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" Association="ToyStore2021Model.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID">
@@ -905,33 +847,13 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="ImportCouponDetail" EntitySet="ImportCouponDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Cart_dbo_Member_MemberID" Association="ToyStore2021Model.FK_dbo_Cart_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="ItemCart" EntitySet="ItemCarts" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_Cart_dbo_Products_ProductID" Association="ToyStore2021Model.FK_dbo_Cart_dbo_Products_ProductID">
             <End Role="Product" EntitySet="Products" />
             <End Role="ItemCart" EntitySet="ItemCarts" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" Association="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-            <End Role="MemberType" EntitySet="MemberTypes" />
-            <End Role="Member" EntitySet="Members" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_ProductViewed_dbo_Member_MemberID" Association="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="ProductViewed" EntitySet="ProductVieweds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_QA_dbo_Member_MemberID" Association="ToyStore2021Model.FK_dbo_QA_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="QA" EntitySet="QAs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Rating_dbo_Member_MemberID" Association="ToyStore2021Model.FK_dbo_Rating_dbo_Member_MemberID">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Rating" EntitySet="Ratings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MemberDiscountCode_Member" Association="ToyStore2021Model.FK_MemberDiscountCode_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCodes" />
+          <AssociationSet Name="FK_dbo_Cart_dbo_User_UserID" Association="ToyStore2021Model.FK_dbo_Cart_dbo_User_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ItemCart" EntitySet="ItemCarts" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_OrderDetail_dbo_Order_OrderID" Association="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Order_OrderID">
             <End Role="Order" EntitySet="Orders" />
@@ -964,6 +886,26 @@
           <AssociationSet Name="FK_dbo_Rating_dbo_Products_ProductID" Association="ToyStore2021Model.FK_dbo_Rating_dbo_Products_ProductID">
             <End Role="Product" EntitySet="Products" />
             <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductViewed_dbo_User_UserID" Association="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProductViewed" EntitySet="ProductVieweds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_QA_dbo_User_UserID_Ask" Association="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask">
+            <End Role="User" EntitySet="Users" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Rating_dbo_User_UserID" Association="ToyStore2021Model.FK_dbo_Rating_dbo_User_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_User_dbo_UserType_UserTypeID" Association="ToyStore2021Model.FK_dbo_User_dbo_UserType_UserTypeID">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDiscountCode_User" Association="ToyStore2021Model.FK_UserDiscountCode_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserDiscountCode" EntitySet="UserDiscountCodes" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccessTimesCount">
@@ -1001,9 +943,9 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EmloyeeTypeID" Type="Int32" Nullable="false" />
+          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID" FromRole="Decentralization" ToRole="Role" />
-          <NavigationProperty Name="EmloyeeType" Relationship="ToyStore2021Model.FK_Decentralization_EmloyeeType" FromRole="Decentralization" ToRole="EmloyeeType" />
+          <NavigationProperty Name="UserType" Relationship="ToyStore2021Model.FK_Decentralization_UserType" FromRole="Decentralization" ToRole="UserType" />
         </EntityType>
         <EntityType Name="DiscountCode">
           <Key>
@@ -1012,9 +954,9 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
           <Property Name="NumberDiscount" Type="Int32" />
-          <Property Name="EmloyeeID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Emloyee" Relationship="ToyStore2021Model.FK_DiscountCode_Emloyee" FromRole="DiscountCode" ToRole="Emloyee" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_DiscountCode_User" FromRole="DiscountCode" ToRole="User" />
           <NavigationProperty Name="DiscountCodeDetails" Relationship="ToyStore2021Model.FK_DiscountCodeDetail_DiscountCode" FromRole="DiscountCode" ToRole="DiscountCodeDetail" />
         </EntityType>
         <EntityType Name="DiscountCodeDetail">
@@ -1026,34 +968,7 @@
           <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsUsed" Type="Boolean" />
           <NavigationProperty Name="DiscountCode" Relationship="ToyStore2021Model.FK_DiscountCodeDetail_DiscountCode" FromRole="DiscountCodeDetail" ToRole="DiscountCode" />
-          <NavigationProperty Name="MemberDiscountCodes" Relationship="ToyStore2021Model.FK_MemberDiscountCode_DiscountCodeDetail" FromRole="DiscountCodeDetail" ToRole="MemberDiscountCode" />
-        </EntityType>
-        <EntityType Name="Emloyee">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EmloyeeTypeID" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_Emloyee" FromRole="Emloyee" ToRole="DiscountCode" />
-          <NavigationProperty Name="EmloyeeType" Relationship="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="Emloyee" ToRole="EmloyeeType" />
-          <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="ImportCoupon" />
-          <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Emloyee_EmloyeeID" FromRole="Emloyee" ToRole="QA" />
-        </EntityType>
-        <EntityType Name="EmloyeeType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Decentralizations" Relationship="ToyStore2021Model.FK_Decentralization_EmloyeeType" FromRole="EmloyeeType" ToRole="Decentralization" />
-          <NavigationProperty Name="Emloyees" Relationship="ToyStore2021Model.FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID" FromRole="EmloyeeType" ToRole="Emloyee" />
+          <NavigationProperty Name="UserDiscountCodes" Relationship="ToyStore2021Model.FK_UserDiscountCode_DiscountCodeDetail" FromRole="DiscountCodeDetail" ToRole="UserDiscountCode" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -1070,10 +985,10 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
-          <Property Name="EmloyeeID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="SupplierID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Emloyee" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID" FromRole="ImportCoupon" ToRole="Emloyee" />
           <NavigationProperty Name="Supplier" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" FromRole="ImportCoupon" ToRole="Supplier" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_User_UserID" FromRole="ImportCoupon" ToRole="User" />
           <NavigationProperty Name="ImportCouponDetails" Relationship="ToyStore2021Model.FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID" FromRole="ImportCoupon" ToRole="ImportCouponDetail" />
         </EntityType>
         <EntityType Name="ImportCouponDetail">
@@ -1093,54 +1008,22 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="Member" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_Member_MemberID" FromRole="ItemCart" ToRole="Member" />
           <NavigationProperty Name="Product" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_Products_ProductID" FromRole="ItemCart" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_User_UserID" FromRole="ItemCart" ToRole="User" />
         </EntityType>
-        <EntityType Name="Member">
+        <EntityType Name="Message">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberTypeID" Type="Int32" Nullable="false" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="Capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AmountPurchased" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="ItemCarts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_Member_MemberID" FromRole="Member" ToRole="ItemCart" />
-          <NavigationProperty Name="MemberType" Relationship="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="Member" ToRole="MemberType" />
-          <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Member_MemberID" FromRole="Member" ToRole="ProductViewed" />
-          <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Member_MemberID" FromRole="Member" ToRole="QA" />
-          <NavigationProperty Name="Ratings" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_Member_MemberID" FromRole="Member" ToRole="Rating" />
-          <NavigationProperty Name="MemberDiscountCodes" Relationship="ToyStore2021Model.FK_MemberDiscountCode_Member" FromRole="Member" ToRole="MemberDiscountCode" />
-        </EntityType>
-        <EntityType Name="MemberDiscountCode">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberID" Type="Int32" />
-          <Property Name="DiscountCodeDetailID" Type="Int32" />
-          <NavigationProperty Name="DiscountCodeDetail" Relationship="ToyStore2021Model.FK_MemberDiscountCode_DiscountCodeDetail" FromRole="MemberDiscountCode" ToRole="DiscountCodeDetail" />
-          <NavigationProperty Name="Member" Relationship="ToyStore2021Model.FK_MemberDiscountCode_Member" FromRole="MemberDiscountCode" ToRole="Member" />
-        </EntityType>
-        <EntityType Name="MemberType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Members" Relationship="ToyStore2021Model.FK_dbo_Member_dbo_MemberCategory_MemberCategoryID" FromRole="MemberType" ToRole="Member" />
+          <Property Name="FromUserID" Type="Int32" />
+          <Property Name="ToUserID" Type="Int32" />
+          <Property Name="Content" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1243,11 +1126,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Member" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Member_MemberID" FromRole="ProductViewed" ToRole="Member" />
           <NavigationProperty Name="Product" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_Products_ProductID" FromRole="ProductViewed" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID" FromRole="ProductViewed" ToRole="User" />
         </EntityType>
         <EntityType Name="QA">
           <Key>
@@ -1255,16 +1138,15 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="UserAskID" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Question" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Answer" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DateQuestion" Type="DateTime" Precision="3" />
           <Property Name="DateAnswer" Type="DateTime" Precision="3" />
-          <Property Name="EmloyeeID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Emloyee" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Emloyee_EmloyeeID" FromRole="QA" ToRole="Emloyee" />
-          <NavigationProperty Name="Member" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Member_MemberID" FromRole="QA" ToRole="Member" />
+          <Property Name="UserAnswerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Products_ProductID" FromRole="QA" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask" FromRole="QA" ToRole="User" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -1272,11 +1154,11 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Star" Type="Int32" Nullable="false" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Member" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_Member_MemberID" FromRole="Rating" ToRole="Member" />
           <NavigationProperty Name="Product" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_Products_ProductID" FromRole="Rating" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_User_UserID" FromRole="Rating" ToRole="User" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1300,6 +1182,50 @@
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" FromRole="Supplier" ToRole="ImportCoupon" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="Capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AmountPurchased" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_User" FromRole="User" ToRole="DiscountCode" />
+          <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_User_UserID" FromRole="User" ToRole="ImportCoupon" />
+          <NavigationProperty Name="ItemCarts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_User_UserID" FromRole="User" ToRole="ItemCart" />
+          <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID" FromRole="User" ToRole="ProductViewed" />
+          <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask" FromRole="User" ToRole="QA" />
+          <NavigationProperty Name="Ratings" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_User_UserID" FromRole="User" ToRole="Rating" />
+          <NavigationProperty Name="UserType" Relationship="ToyStore2021Model.FK_dbo_User_dbo_UserType_UserTypeID" FromRole="User" ToRole="UserType" />
+          <NavigationProperty Name="UserDiscountCodes" Relationship="ToyStore2021Model.FK_UserDiscountCode_User" FromRole="User" ToRole="UserDiscountCode" />
+        </EntityType>
+        <EntityType Name="UserDiscountCode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DiscountCodeDetailID" Type="Int32" />
+          <NavigationProperty Name="DiscountCodeDetail" Relationship="ToyStore2021Model.FK_UserDiscountCode_DiscountCodeDetail" FromRole="UserDiscountCode" ToRole="DiscountCodeDetail" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_UserDiscountCode_User" FromRole="UserDiscountCode" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Decentralizations" Relationship="ToyStore2021Model.FK_Decentralization_UserType" FromRole="UserType" ToRole="Decentralization" />
+          <NavigationProperty Name="Users" Relationship="ToyStore2021Model.FK_dbo_User_dbo_UserType_UserTypeID" FromRole="UserType" ToRole="User" />
         </EntityType>
         <Association Name="FK_dbo_Products_dbo_Ages_AgeID">
           <End Type="ToyStore2021Model.Age" Role="Age" Multiplicity="1">
@@ -1343,27 +1269,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Decentralization_EmloyeeType">
-          <End Type="ToyStore2021Model.EmloyeeType" Role="EmloyeeType" Multiplicity="1" />
+        <Association Name="FK_Decentralization_UserType">
+          <End Type="ToyStore2021Model.UserType" Role="UserType" Multiplicity="1" />
           <End Type="ToyStore2021Model.Decentralization" Role="Decentralization" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EmloyeeType">
+            <Principal Role="UserType">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Decentralization">
-              <PropertyRef Name="EmloyeeTypeID" />
+              <PropertyRef Name="UserTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DiscountCode_Emloyee">
-          <End Type="ToyStore2021Model.Emloyee" Role="Emloyee" Multiplicity="0..1" />
+        <Association Name="FK_DiscountCode_User">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
           <End Type="ToyStore2021Model.DiscountCode" Role="DiscountCode" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Emloyee">
+            <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DiscountCode">
-              <PropertyRef Name="EmloyeeID" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1379,57 +1305,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MemberDiscountCode_DiscountCodeDetail">
+        <Association Name="FK_UserDiscountCode_DiscountCodeDetail">
           <End Type="ToyStore2021Model.DiscountCodeDetail" Role="DiscountCodeDetail" Multiplicity="0..1" />
-          <End Type="ToyStore2021Model.MemberDiscountCode" Role="MemberDiscountCode" Multiplicity="*" />
+          <End Type="ToyStore2021Model.UserDiscountCode" Role="UserDiscountCode" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DiscountCodeDetail">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="MemberDiscountCode">
+            <Dependent Role="UserDiscountCode">
               <PropertyRef Name="DiscountCodeDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Emloyee_dbo_EmloyeeType_EmloyeeTypeID">
-          <End Type="ToyStore2021Model.EmloyeeType" Role="EmloyeeType" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.Emloyee" Role="Emloyee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmloyeeType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Emloyee">
-              <PropertyRef Name="EmloyeeTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_ImportCoupon_dbo_Emloyee_EmloyeeID">
-          <End Type="ToyStore2021Model.Emloyee" Role="Emloyee" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.ImportCoupon" Role="ImportCoupon" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Emloyee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportCoupon">
-              <PropertyRef Name="EmloyeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_QA_dbo_Emloyee_EmloyeeID">
-          <End Type="ToyStore2021Model.Emloyee" Role="Emloyee" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.QA" Role="QA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Emloyee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QA">
-              <PropertyRef Name="EmloyeeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1461,6 +1345,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_ImportCoupon_dbo_User_UserID">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ToyStore2021Model.ImportCoupon" Role="ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_ImportCouponDetail_dbo_ImportCoupon_ImportCouponID">
           <End Type="ToyStore2021Model.ImportCoupon" Role="ImportCoupon" Multiplicity="1" />
           <End Type="ToyStore2021Model.ImportCouponDetail" Role="ImportCouponDetail" Multiplicity="*" />
@@ -1485,20 +1383,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Cart_dbo_Member_MemberID">
-          <End Type="ToyStore2021Model.Member" Role="Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.ItemCart" Role="ItemCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ItemCart">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Cart_dbo_Products_ProductID">
           <End Type="ToyStore2021Model.Product" Role="Product" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1513,71 +1397,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Member_dbo_MemberCategory_MemberCategoryID">
-          <End Type="ToyStore2021Model.MemberType" Role="MemberType" Multiplicity="1">
+        <Association Name="FK_dbo_Cart_dbo_User_UserID">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="ToyStore2021Model.Member" Role="Member" Multiplicity="*" />
+          <End Type="ToyStore2021Model.ItemCart" Role="ItemCart" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MemberType">
+            <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Member">
-              <PropertyRef Name="MemberTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_ProductViewed_dbo_Member_MemberID">
-          <End Type="ToyStore2021Model.Member" Role="Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.ProductViewed" Role="ProductViewed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductViewed">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_QA_dbo_Member_MemberID">
-          <End Type="ToyStore2021Model.Member" Role="Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.QA" Role="QA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QA">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Rating_dbo_Member_MemberID">
-          <End Type="ToyStore2021Model.Member" Role="Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.Rating" Role="Rating" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Rating">
-              <PropertyRef Name="MemberID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MemberDiscountCode_Member">
-          <End Type="ToyStore2021Model.Member" Role="Member" Multiplicity="0..1" />
-          <End Type="ToyStore2021Model.MemberDiscountCode" Role="MemberDiscountCode" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MemberDiscountCode">
-              <PropertyRef Name="MemberID" />
+            <Dependent Role="ItemCart">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1693,6 +1523,74 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_ProductViewed_dbo_User_UserID">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ToyStore2021Model.ProductViewed" Role="ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_QA_dbo_User_UserID_Ask">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ToyStore2021Model.QA" Role="QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="UserAskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Rating_dbo_User_UserID">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ToyStore2021Model.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_User_dbo_UserType_UserTypeID">
+          <End Type="ToyStore2021Model.UserType" Role="UserType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDiscountCode_User">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
+          <End Type="ToyStore2021Model.UserDiscountCode" Role="UserDiscountCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserDiscountCode">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1731,7 +1629,7 @@
           <EntitySetMapping Name="Decentralizations">
             <EntityTypeMapping TypeName="ToyStore2021Model.Decentralization">
               <MappingFragment StoreEntitySet="Decentralization">
-                <ScalarProperty Name="EmloyeeTypeID" ColumnName="EmloyeeTypeID" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1742,7 +1640,7 @@
             <EntityTypeMapping TypeName="ToyStore2021Model.DiscountCode">
               <MappingFragment StoreEntitySet="DiscountCode">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="NumberDiscount" ColumnName="NumberDiscount" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1759,29 +1657,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Emloyees">
-            <EntityTypeMapping TypeName="ToyStore2021Model.Emloyee">
-              <MappingFragment StoreEntitySet="Emloyee">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="EmloyeeTypeID" ColumnName="EmloyeeTypeID" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmloyeeTypes">
-            <EntityTypeMapping TypeName="ToyStore2021Model.EmloyeeType">
-              <MappingFragment StoreEntitySet="EmloyeeType">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Genders">
             <EntityTypeMapping TypeName="ToyStore2021Model.Gender">
               <MappingFragment StoreEntitySet="Gender">
@@ -1794,7 +1669,7 @@
             <EntityTypeMapping TypeName="ToyStore2021Model.ImportCoupon">
               <MappingFragment StoreEntitySet="ImportCoupon">
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1818,43 +1693,18 @@
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Members">
-            <EntityTypeMapping TypeName="ToyStore2021Model.Member">
-              <MappingFragment StoreEntitySet="Member">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-                <ScalarProperty Name="AmountPurchased" ColumnName="AmountPurchased" />
-                <ScalarProperty Name="Capcha" ColumnName="Capcha" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="MemberTypeID" ColumnName="MemberTypeID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MemberDiscountCodes">
-            <EntityTypeMapping TypeName="ToyStore2021Model.MemberDiscountCode">
-              <MappingFragment StoreEntitySet="MemberDiscountCode">
-                <ScalarProperty Name="DiscountCodeDetailID" ColumnName="DiscountCodeDetailID" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MemberTypes">
-            <EntityTypeMapping TypeName="ToyStore2021Model.MemberType">
-              <MappingFragment StoreEntitySet="MemberType">
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="ToyStore2021Model.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ToUserID" ColumnName="ToUserID" />
+                <ScalarProperty Name="FromUserID" ColumnName="FromUserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1948,7 +1798,7 @@
               <MappingFragment StoreEntitySet="ProductViewed">
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1956,13 +1806,13 @@
           <EntitySetMapping Name="QAs">
             <EntityTypeMapping TypeName="ToyStore2021Model.QA">
               <MappingFragment StoreEntitySet="QA">
-                <ScalarProperty Name="EmloyeeID" ColumnName="EmloyeeID" />
+                <ScalarProperty Name="UserAnswerID" ColumnName="UserAnswerID" />
                 <ScalarProperty Name="DateAnswer" ColumnName="DateAnswer" />
                 <ScalarProperty Name="DateQuestion" ColumnName="DateQuestion" />
                 <ScalarProperty Name="Answer" ColumnName="Answer" />
                 <ScalarProperty Name="Question" ColumnName="Question" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="UserAskID" ColumnName="UserAskID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1973,7 +1823,7 @@
               <MappingFragment StoreEntitySet="Rating">
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Star" ColumnName="Star" />
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1997,6 +1847,41 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ToyStore2021Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="AmountPurchased" ColumnName="AmountPurchased" />
+                <ScalarProperty Name="Capcha" ColumnName="Capcha" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDiscountCodes">
+            <EntityTypeMapping TypeName="ToyStore2021Model.UserDiscountCode">
+              <MappingFragment StoreEntitySet="UserDiscountCode">
+                <ScalarProperty Name="DiscountCodeDetailID" ColumnName="DiscountCodeDetailID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTypes">
+            <EntityTypeMapping TypeName="ToyStore2021Model.UserType">
+              <MappingFragment StoreEntitySet="UserType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

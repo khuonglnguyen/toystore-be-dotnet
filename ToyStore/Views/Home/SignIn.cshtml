@@ -26,8 +26,8 @@
         <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
             @using (Html.BeginForm("SignIn", "Home", FormMethod.Post))
             {
-                <input type="text" class="user" name="Email" placeholder="Email hoặc tên đăng nhập" required>
-                <input type="password" name="Password" class="lock" placeholder="Mật Khẩu" required>
+                <input type="text" class="user" name="Email" placeholder="Email..." required>
+                <input type="password" name="Password" class="lock" placeholder="Mật Khẩu..." required>
                 <span class="label label-danger">@ViewBag.Message</span>
                 <input type="submit" name="Sign In" value="Đăng Nhập">
                 <div class="forgot-grid">

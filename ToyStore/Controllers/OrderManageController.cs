@@ -33,7 +33,7 @@ namespace ToyStore.Controllers
         }
         public ActionResult NotApproval(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -46,7 +46,7 @@ namespace ToyStore.Controllers
         }
         public ActionResult NotDelivery(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -60,7 +60,7 @@ namespace ToyStore.Controllers
 
         public ActionResult DeliveredAndPaid(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -73,7 +73,7 @@ namespace ToyStore.Controllers
         }
         public ActionResult ApprovedAndNotDelivery(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -86,7 +86,7 @@ namespace ToyStore.Controllers
         }
         public ActionResult DeliveredList(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -123,13 +123,14 @@ namespace ToyStore.Controllers
             {
                 return null;
             }
-            //Get product catetgory
             IEnumerable<OrderDetail> orderDetails = _orderDetailService.GetByOrderID(ID);
             if (orderDetails == null)
             {
                 return null;
             }
             ViewBag.OrderID = ID;
+            Order order = _orderService.GetByID(ID);
+            ViewBag.IsApproved = order.IsApproved;
             return View(orderDetails);
         }
         public void SentMail(string Title, string ToEmail, string FromEmail, string Password, string Content)

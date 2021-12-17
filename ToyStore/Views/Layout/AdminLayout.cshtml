@@ -89,7 +89,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <!--header start here-->
                 <div class="header-main">
                     <div class="logo-w3-agile">
-                        <h1><a href="index.html">ToyStore</a></h1>
+                        <h1><a href="/">ToyStore</a></h1>
                     </div>
                     <div class="w3layouts-left">
                         <!--search-box-->
@@ -241,18 +241,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!--notification menu end -->
                         <div class="clearfix"> </div>
                     </div>
-                    @{ ToyStore.Models.Emloyee emloyee = Session["Emloyee"] as ToyStore.Models.Emloyee; }
-                    @if (emloyee != null)
+                    @{ ToyStore.Models.User user = Session["User"] as ToyStore.Models.User; }
+                    @if (user != null)
                     {
                         <div class="profile_details w3l">
                             <ul>
                                 <li class="dropdown profile_details_drop">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         <div class="profile_img">
-                                            <span class="prfil-img"><img src="@Url.Content("~/Content/images/" + emloyee.Image)" alt=""> </span>
+                                            <span class="prfil-img"><img src="@Url.Content("~/Content/images/" + user.Avatar)" alt=""> </span>
                                             <div class="user-name">
-                                                <p>@emloyee.FullName</p>
-                                                <span>@emloyee.EmloyeeType.Name</span>
+                                                <p>@user.FullName</p>
+                                                <span>@user.UserType.Name</span>
                                             </div>
                                             <i class="fa fa-angle-down"></i>
                                             <i class="fa fa-angle-up"></i>
@@ -260,9 +260,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </div>
                                     </a>
                                     <ul class="dropdown-menu drp-mnu">
-                                        <li> <a href="/Admin/InfoEmloyee"><i class="fa fa-user"></i> Thông tin</a> </li>
-                                        <li> <a href="/Admin/ResetPassword"><i class="fa fa-lock"></i> Đổi mật khẩu</a> </li>
-                                        <li> <a href="/Admin/Logout"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
+                                        <li> <a href="@Url.Action("SignOut","Home")"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -283,9 +281,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </div>
                                     </a>
                                     <ul class="dropdown-menu drp-mnu">
-                                        <li> <a href="#"><i class="fa fa-cog"></i> Thiết lập</a> </li>
-                                        <li> <a href="#"><i class="fa fa-user"></i> Thông tin</a> </li>
-                                        <li> <a href="/Admin/Logout"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
+                                        <li> <a href="@Url.Action("SignOut","Home")"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -634,7 +630,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li id="menu-academico-avaliacoes"><a href="/ProductCategoryManage/Index">Danh Mục</a></li>
                             <li id="menu-academico-avaliacoes"><a href="/ProducerManage/Index">Nhà Sản Xuất</a></li>
                             <li id="menu-academico-avaliacoes"><a href="/SupplierManage/Index">Nhà Cung Cấp</a></li>
-                            <li id="menu-academico-avaliacoes"><a href="/EmloyeeManage/Index">Nhân Viên</a></li>
                         </ul>
                     </li>
                     <li id="menu-academico">

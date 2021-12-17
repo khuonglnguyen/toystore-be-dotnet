@@ -12,7 +12,7 @@ namespace ToyStore.Service
         int GetDiscountByCode(string Code);
         DiscountCodeDetail GetByID(int ID);
         IEnumerable<DiscountCodeDetail> GetDiscountCodeDetailList();
-        IEnumerable<MemberDiscountCode> GetDiscountCodeDetailListByMember(int MemberID);
+        IEnumerable<UserDiscountCode> GetDiscountCodeDetailListByUser(int UserID);
         void Used(string code);
     }
     public class DiscountCodeDetailService : IDiscountCodeDetailService
@@ -45,9 +45,9 @@ namespace ToyStore.Service
             return context.DiscountCodeDetailRepository.GetAllData(x=>x.IsUsed==false);
         }
 
-        public IEnumerable<MemberDiscountCode> GetDiscountCodeDetailListByMember(int MemberID)
+        public IEnumerable<UserDiscountCode> GetDiscountCodeDetailListByUser(int UserID)
         {
-            return context.MemberDiscountCodeRepository.GetAllData(x => x.MemberID == MemberID && x.DiscountCodeDetail.IsUsed==false);
+            return context.UserDiscountCodeRepository.GetAllData(x => x.UserID == UserID && x.DiscountCodeDetail.IsUsed==false);
         }
 
         public void Used(string code)

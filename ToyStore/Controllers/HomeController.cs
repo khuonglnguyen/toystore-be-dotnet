@@ -22,10 +22,11 @@ namespace ToyStore.Controllers
         private IAgeService _ageService;
         private IProductCategoryParentService _productCategoryParentService;
         private IGenderService _genderService;
-        private IMemberService _memberService;
+        private IUserService _userService;
         private ICartService _cartService;
+        private IDecentralizationService _decentralizationService;
 
-        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, IMemberService memberService, ICartService cartService)
+        public HomeController(IProductCategoryService productCategoryService, IProductService productService, IProducerService producerService, IAgeService ageService, IProductCategoryParentService productCategoryParentService, IGenderService genderService, IUserService userService, ICartService cartService, IDecentralizationService decentralizationService)
         {
             _productCategoryService = productCategoryService;
             _productService = productService;
@@ -33,8 +34,9 @@ namespace ToyStore.Controllers
             _ageService = ageService;
             _productCategoryParentService = productCategoryParentService;
             _genderService = genderService;
-            _memberService = memberService;
+            _userService = userService;
             _cartService = cartService;
+            _decentralizationService = decentralizationService;
         }
         #endregion
         public ActionResult Index()
@@ -72,35 +74,29 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SignUp(Member member)
+        public ActionResult SignUp(User user)
         {
             bool fail = false;
             //Check email
-            if (_memberService.CheckEmail(member.Email) == false)
+            if (_userService.CheckEmail(user.Email) == false)
             {
                 ViewBag.MessageEmail = "Email đã tồn tại";
                 fail = true;
             }
-            //Check username
-            if (_memberService.CheckUsername(member.Username) == false)
-            {
-                ViewBag.MessageUsername = "Username đã tồn tại";
-                fail = true;
-            }
             //Check phonenumber
-            if (_memberService.CheckPhoneNumber(member.PhoneNumber) == false)
+            if (_userService.CheckPhoneNumber(user.PhoneNumber) == false)
             {
                 ViewBag.MessagePhoneNumber = "Số điện thoại đã tồn tại";
                 fail = true;
             }
             if (fail)
             {
-                return View(member);
+                return View(user);
             }
             else
             {
-                Member member1 = _memberService.AddMember(member);
-                return RedirectToAction("ConfirmEmail", "Member", new { ID = member1.ID });
+                User user1 = _userService.Add(user);
+                return RedirectToAction("ConfirmEmail", "User", new { ID = user1.ID });
             }
         }
         [HttpGet]
@@ -109,27 +105,27 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SignIn(Member member)
+        public ActionResult SignIn(User user)
         {
-            if (member == null)
+            if (user == null)
             {
                 return null;
             }
             else
             {
-                Member memberCheck = _memberService.CheckLogin(member.Email, member.Password);
-                if (memberCheck != null)
+                User userCheck = _userService.CheckLogin(user.Email, user.Password);
+                if (userCheck != null)
                 {
-                    Session["Member"] = memberCheck;
-                    if (memberCheck.EmailConfirmed == false)
+                    Session["User"] = userCheck;
+                    if (userCheck.EmailConfirmed == false)
                     {
-                        return RedirectToAction("ConfirmEmail", "Member", new { ID = memberCheck.ID });
+                        return RedirectToAction("ConfirmEmail", "User", new { ID = userCheck.ID });
                     }
                     else
                     {
-                        if (_cartService.CheckCartMember(memberCheck.ID))
+                        if (_cartService.CheckCartUser(userCheck.ID))
                         {
-                            List<ItemCart> carts = _cartService.GetCart(memberCheck.ID);
+                            List<ItemCart> carts = _cartService.GetCart(userCheck.ID);
                             Session["Cart"] = carts;
                             return RedirectToAction("Index");
                         }
@@ -138,23 +134,52 @@ namespace ToyStore.Controllers
                             List<ItemCart> listCart = Session["Cart"] as List<ItemCart>;
                             foreach (var item in listCart)
                             {
-                                item.MemberID = memberCheck.ID;
-                                _cartService.AddCartIntoMember(item);
+                                item.UserID = userCheck.ID;
+                                _cartService.AddCartIntoUser(item);
                             }
                         }
                     }
+
+                    IEnumerable<Decentralization> decentralizations = _decentralizationService.GetDecentralizationByUserTypeID(userCheck.UserTypeID);
+                    string role = "";
+                    foreach (var item in decentralizations)
+                    {
+                        role += item.Role.Name + ",";
+                    }
+
+                    role = role.Substring(0, role.Length - 1);
+                    Decentralization(userCheck.ID, role);
                 }
                 else
                 {
-                    ViewBag.Message = "Tên đăng nhập/Email hoặc mật khẩu không đúng.";
+                    ViewBag.Message = "Email hoặc mật khẩu không đúng.";
                     return View();
                 }
             }
             return RedirectToAction("Index");
         }
+
+        private void Decentralization(int ID, string Role)
+        {
+            FormsAuthentication.Initialize();
+            var ticket = new FormsAuthenticationTicket(1,
+                ID.ToString(),
+                DateTime.Now,
+                DateTime.Now.AddHours(3),
+                false,
+                Role,
+                FormsAuthentication.FormsCookiePath);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket));
+            if (ticket.IsPersistent)
+            {
+                cookie.Expires = ticket.Expiration;
+            }
+            Response.Cookies.Add(cookie);
+        }
+
         public ActionResult SignOut()
         {
-            Session["Member"] = null;
+            Session["User"] = null;
             Session["Cart"] = null;
             return RedirectToAction("Index");
         }

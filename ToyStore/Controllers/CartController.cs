@@ -32,12 +32,12 @@ namespace ToyStore.Controllers
         // GET: Cart
         public List<ItemCart> GetCart()
         {
-            Member member = Session["Member"] as Member;
-            if (member != null)
+            User user = Session["User"] as User;
+            if (user != null)
             {
-                if (_cartService.CheckCartMember(member.ID))
+                if (_cartService.CheckCartUser(user.ID))
                 {
-                    List<ItemCart> listCart = _cartService.GetCart(member.ID);
+                    List<ItemCart> listCart = _cartService.GetCart(user.ID);
                     foreach (ItemCart item in listCart)
                     {
                         if (item.Image == null || item.Image == "")
@@ -81,24 +81,24 @@ namespace ToyStore.Controllers
             }
             //Get cart
             List<ItemCart> listCart = GetCart();
-            //If member
-            Member member = Session["Member"] as Member;
-            if (member != null)
+            //If User
+            User user = Session["User"] as User;
+            if (user != null)
             {
                 //Case 1: If product already exists in Member Cart
-                if (_cartService.CheckProductInCart(ID, member.ID))
+                if (_cartService.CheckProductInCart(ID, user.ID))
                 {
-                    _cartService.AddQuantityProductCartMember(ID, member.ID);
+                    _cartService.AddQuantityProductCartUser(ID, user.ID);
                 }
                 else
                 {
-                    //Case 2: If product does not exist in Member Cart
+                    //Case 2: If product does not exist in User Cart
                     //Get product
                     ItemCart itemCart = new ItemCart(ID);
-                    itemCart.MemberID = member.ID;
-                    _cartService.AddCartIntoMember(itemCart);
+                    itemCart.UserID = user.ID;
+                    _cartService.AddCartIntoUser(itemCart);
                 }
-                List<ItemCart> carts = _cartService.GetCart(member.ID);
+                List<ItemCart> carts = _cartService.GetCart(user.ID);
                 foreach (ItemCart item in carts)
                 {
                     if (item.Image == null || item.Image == "")
@@ -249,11 +249,11 @@ namespace ToyStore.Controllers
         public ActionResult Checkout()
         {
             ViewBag.TotalQuantity = GetTotalQuanity();
-            Member member = Session["Member"] as Member;
+            User user = Session["User"] as User;
             try
             {
                 Session["Cart"] = GetCart();
-                ViewBag.DiscountCodeDetailListByMemer = _discountCodeDetailService.GetDiscountCodeDetailListByMember(member.ID);
+                ViewBag.DiscountCodeDetailListByUser = _discountCodeDetailService.GetDiscountCodeDetailListByUser(user.ID);
                 return View();
             }
             catch (Exception)
@@ -307,11 +307,11 @@ namespace ToyStore.Controllers
             itemCartUpdate.Quantity = Quantity;
             itemCartUpdate.Total = itemCartUpdate.Quantity * itemCartUpdate.Price;
 
-            Member member = Session["Member"] as Member;
-            if (member != null)
+            User user = Session["User"] as User;
+            if (user != null)
             {
                 //Update Cart Quantity Member
-                _cartService.UpdateQuantityCartMember(Quantity, ID, member.ID);
+                _cartService.UpdateQuantityCartUser(Quantity, ID, user.ID);
                 Session["Cart"] = listCart;
             }
 
@@ -342,11 +342,11 @@ namespace ToyStore.Controllers
             }
             //Remove item cart
             listCart.Remove(item);
-            Member member = Session["Member"] as Member;
-            if (member != null)
+            User user = Session["User"] as User;
+            if (user != null)
             {
-                _cartService.RemoveCart(ID, member.ID);
-                List<ItemCart> carts = _cartService.GetCart(member.ID);
+                _cartService.RemoveCart(ID, user.ID);
+                List<ItemCart> carts = _cartService.GetCart(user.ID);
                 Session["Cart"] = carts;
             }
             ViewBag.TotalQuantity = GetTotalQuanity();
@@ -364,7 +364,7 @@ namespace ToyStore.Controllers
             bool status = false;
             //Is Customer
             Customer customerNew = new Customer();
-            if (Session["Member"] == null)
+            if (Session["User"] == null)
             {
                 //Insert customer into DB
                 customerNew = customer;
@@ -373,19 +373,19 @@ namespace ToyStore.Controllers
             }
             else
             {
-                //Is member
-                Member member = Session["Member"] as Member;
-                customercheck = _customerService.GetAll().FirstOrDefault(x => x.FullName.Contains(member.FullName));
+                //Is User
+                User user = Session["User"] as User;
+                customercheck = _customerService.GetAll().FirstOrDefault(x => x.FullName.Contains(user.FullName));
                 if (customercheck != null)
                 {
                     status = true;
                 }
                 else
                 {
-                    customerNew.FullName = member.FullName;
-                    customerNew.Address = member.Address;
-                    customerNew.Email = member.Email;
-                    customerNew.PhoneNumber = member.PhoneNumber;
+                    customerNew.FullName = user.FullName;
+                    customerNew.Address = user.Address;
+                    customerNew.Email = user.Email;
+                    customerNew.PhoneNumber = user.PhoneNumber;
                     customerNew.IsMember = true;
                     _customerService.AddCustomer(customerNew);
                 }
@@ -423,10 +423,10 @@ namespace ToyStore.Controllers
                 orderDetail.Price = item.Price;
                 _orderDetailService.AddOrderDetail(orderDetail);
                 sumtotal += orderDetail.Quantity * orderDetail.Price;
-                if (Session["member"] != null)
+                if (Session["User"] != null)
                 {
                     //Remove Cart
-                    _cartService.RemoveCart(item.ProductID, item.MemberID);
+                    _cartService.RemoveCart(item.ProductID, item.UserID);
                 }
             }
             if (NumberDiscountPass != 0)

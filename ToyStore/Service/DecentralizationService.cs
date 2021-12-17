@@ -9,7 +9,7 @@ namespace ToyStore.Service
 {
     public interface IDecentralizationService
     {
-        IEnumerable<Decentralization> GetDecentralizationByEmloyeeTypeID(int ID);
+        IEnumerable<Decentralization> GetDecentralizationByUserTypeID(int ID);
         void RemoveRange(IEnumerable<Decentralization> decentralizations);
         void Add(Decentralization decentralization);
     }
@@ -26,9 +26,9 @@ namespace ToyStore.Service
             context.DecentralizationRepository.Insert(decentralization);
         }
 
-        public IEnumerable<Decentralization> GetDecentralizationByEmloyeeTypeID(int ID)
+        public IEnumerable<Decentralization> GetDecentralizationByUserTypeID(int ID)
         {
-            return context.DecentralizationRepository.GetAllData(x => x.EmloyeeTypeID == ID);
+            return context.DecentralizationRepository.GetAllData(x => x.UserTypeID == ID);
         }
 
         public void RemoveRange(IEnumerable<Decentralization> decentralizations)

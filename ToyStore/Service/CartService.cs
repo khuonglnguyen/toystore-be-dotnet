@@ -9,16 +9,16 @@ namespace ToyStore.Service
 {
     public interface ICartService
     {
-        void AddCartIntoMember(ItemCart cart);
-        bool CheckCartMember(int MemberID);
-        void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID);
-        void AddQuantityProductCartMember(int ProductID, int MemberID);
-        void RemoveCart(int ProductID, int MemberID);
+        void AddCartIntoUser(ItemCart cart);
+        bool CheckCartUser(int UserID);
+        void UpdateQuantityCartUser(int Quantity, int ProductID, int UserID);
+        void AddQuantityProductCartUser(int ProductID, int UserID);
+        void RemoveCart(int ProductID, int UserID);
         void AddCart(ItemCart cart);
-        List<ItemCart> GetCart(int MemberID);
+        List<ItemCart> GetCart(int UserID);
         ItemCart GetCartByID(int ID);
-        bool CheckProductInCart(int ProductID, int MemberID);
-        void RemoveCartDeleteAccount(int MemberID);
+        bool CheckProductInCart(int ProductID, int UserID);
+        void RemoveCartDeleteAccount(int UserID);
     }
     public class CartService : ICartService
     {
@@ -33,35 +33,35 @@ namespace ToyStore.Service
             context.CartRepository.Insert(cart);
         }
 
-        public void AddCartIntoMember(ItemCart cart)
+        public void AddCartIntoUser(ItemCart cart)
         {
             context.CartRepository.Insert(cart);
         }
 
-        public void AddQuantityProductCartMember(int ProductID, int MemberID)
+        public void AddQuantityProductCartUser(int ProductID, int UserID)
         {
-            ItemCart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
+            ItemCart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.UserID == UserID);
             cartUpdate.Quantity += 1;
             context.CartRepository.Update(cartUpdate);
         }
 
-        public bool CheckCartMember(int MemberID)
+        public bool CheckCartUser(int UserID)
         {
-            if (context.CartRepository.GetAllData().Where(x => x.MemberID == MemberID).Count() > 0)
+            if (context.CartRepository.GetAllData().Where(x => x.UserID == UserID).Count() > 0)
                 return true;
             return false;
         }
 
-        public bool CheckProductInCart(int ProductID, int MemberID)
+        public bool CheckProductInCart(int ProductID, int UserID)
         {
-            if (context.CartRepository.GetAllData().Where(x => x.MemberID == MemberID && x.ProductID == ProductID).Count() > 0)
+            if (context.CartRepository.GetAllData().Where(x => x.UserID == UserID && x.ProductID == ProductID).Count() > 0)
                 return true;
             return false;
         }
 
-        public List<ItemCart> GetCart(int MemberID)
+        public List<ItemCart> GetCart(int UserID)
         {
-            return context.CartRepository.GetAllData().Where(x => x.MemberID == MemberID).ToList();
+            return context.CartRepository.GetAllData().Where(x => x.UserID == UserID).ToList();
         }
 
         public ItemCart GetCartByID(int ID)
@@ -71,7 +71,7 @@ namespace ToyStore.Service
 
         public void RemoveCart(int ProductID, int MemberID)
         {
-            ItemCart cart = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
+            ItemCart cart = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.UserID == MemberID);
             context.CartRepository.Remove(cart);
         }
 
@@ -87,9 +87,9 @@ namespace ToyStore.Service
             }    
         }
 
-        public void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID)
+        public void UpdateQuantityCartUser(int Quantity, int ProductID, int UserID)
         {
-            ItemCart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.MemberID == MemberID);
+            ItemCart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.UserID == UserID);
             cartUpdate.Quantity = Quantity;
             cartUpdate.Total = cartUpdate.Quantity * cartUpdate.Product.PromotionPrice;
             context.CartRepository.Update(cartUpdate);

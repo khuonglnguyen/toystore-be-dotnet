@@ -26,7 +26,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult ImportProduct()
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -36,7 +36,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult ImportProductBySupplierID(int ID)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -51,8 +51,8 @@ namespace ToyStore.Controllers
         {
             ViewBag.listSupplier = _supplierService.GetSupplierList();
             ViewBag.ListProduct = _productService.GetProductList();
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            Model.EmloyeeID = emloyee.ID;
+            User user = Session["User"] as User;
+            Model.UserID = user.ID;
             Model.Date = DateTime.Now;
             Model.IsDelete = false;
             //Add import coupon
@@ -77,7 +77,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult ProductListIsAlmostOver(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }
@@ -89,7 +89,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult ImportCoupon(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "Admin");
             }

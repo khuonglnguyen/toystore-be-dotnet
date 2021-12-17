@@ -15,38 +15,37 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "AdminHome")]
     public class AdminController : Controller
     {
-        private IEmloyeeService _emloyeeService;
-        private IEmloyeeTypeService _emloyeeTypeService;
+        private IUserService _userService;
+        private IUserTypeService _userTypeService;
         private IDecentralizationService _decentralizationService;
-        private IMemberService _memberService;
         private IProductService _productService;
         private IOrderService _orderService;
-        public AdminController(IEmloyeeService emloyeeService, IEmloyeeTypeService emloyeeTypeService, IDecentralizationService decentralizationService, IMemberService memberService, IProductService productService, IOrderService orderService)
+        public AdminController(IUserService userService, IUserTypeService userTypeService, IDecentralizationService decentralizationService, IProductService productService, IOrderService orderService)
         {
-            _emloyeeService = emloyeeService;
-            _emloyeeTypeService = emloyeeTypeService;
+            _userService = userService;
+            _userTypeService = userTypeService;
             _decentralizationService = decentralizationService;
-            _memberService = memberService;
             _productService = productService;
             _orderService = orderService;
         }
         [HttpGet]
         public ActionResult Index()
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","Home");
             }
             else
             {
                 ViewBag.SumAccessTimes = HttpContext.Application["SumAccessTimes"].ToString();
                 ViewBag.RealAccessTimes = HttpContext.Application["RealAccessTimes"].ToString();
-                Emloyee emloyee = Session["Emloyee"] as Emloyee;
-                ViewBag.EmloyeeTypeName = (_emloyeeTypeService.GetEmloyeeTypeByID(emloyee.EmloyeeTypeID)).Name;
-                ViewBag.TotalMember = _memberService.GetTotalMember();
-                ViewBag.TotalEmloyee = _emloyeeService.GetTotalEmloyee();
+                User user = Session["User"] as User;
+                ViewBag.EmloyeeTypeName = (_userTypeService.GetUserTypeByID(user.UserTypeID)).Name;
+                ViewBag.TotalUser = _userService.GetTotalUser();
+                ViewBag.TotalEmployee = _userService.GetTotalEmployee();
                 ViewBag.TotalProduct = _productService.GetTotalProduct();
                 ViewBag.TotalProductPurchased = _productService.GetTotalProductPurchased();
                 decimal TotalRevenue = _orderService.GetTotalRevenue();
@@ -73,14 +72,14 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(Emloyee emloyee)
+        public ActionResult Login(User user)
         {
             //Check login
-            Emloyee emloyeeCheck = _emloyeeService.CheckLogin(emloyee.ID, emloyee.Password);
-            if (emloyeeCheck != null)
+            User userCheck = _userService.CheckLogin(user.Email, user.Password);
+            if (userCheck != null)
             {
 
-                IEnumerable<Decentralization> decentralizations = _decentralizationService.GetDecentralizationByEmloyeeTypeID(emloyeeCheck.EmloyeeTypeID);
+                IEnumerable<Decentralization> decentralizations = _decentralizationService.GetDecentralizationByUserTypeID(userCheck.UserTypeID);
                 string role = "";
                 foreach (var item in decentralizations)
                 {
@@ -88,9 +87,9 @@ namespace ToyStore.Controllers
                 }
 
                 role = role.Substring(0, role.Length - 1);
-                Decentralization(emloyeeCheck.ID, role);
+                Decentralization(userCheck.ID, role);
 
-                Session["Emloyee"] = emloyeeCheck;
+                Session["User"] = userCheck;
                 return RedirectToAction("Index");
             }
             else
@@ -127,32 +126,31 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult InfoEmloyee()
+        public ActionResult InfoUser()
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            return View(emloyee);
+            User user = Session["User"] as User;
+            return View(user);
         }
         [HttpGet]
         public ActionResult Edit()
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
-            //Get emloyee
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
+            User user = Session["User"] as User;
             //Check null
-            if (emloyee != null)
+            if (user != null)
             {
                 //Return view
                 return Json(new
                 {
-                    ID = emloyee.ID,
-                    FullName = emloyee.FullName,
-                    Address = emloyee.Address,
-                    Email = emloyee.Email,
-                    PhoneNumber = emloyee.PhoneNumber,
-                    Image = emloyee.Image,
+                    ID = user.ID,
+                    FullName = user.FullName,
+                    Address = user.Address,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Image = user.Avatar,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -163,14 +161,14 @@ namespace ToyStore.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(Emloyee emloyee, HttpPostedFileBase ImageUpload)
+        public ActionResult Edit(User user, HttpPostedFileBase ImageUpload)
         {
             if (Session["Emloyee"] == null)
             {
                 return RedirectToAction("Login");
             }
             //Get data for DropdownList
-            ViewBag.EmloyeeTypeIDEdit = new SelectList(_emloyeeTypeService.GetListEmloyeeType().OrderBy(x => x.Name), "ID", "Name");
+            ViewBag.EmloyeeTypeIDEdit = new SelectList(_userTypeService.GetListUserType().OrderBy(x => x.Name), "ID", "Name");
 
             if (ImageUpload != null)
             {
@@ -201,20 +199,20 @@ namespace ToyStore.Controllers
                     }
                 }
                 //Set new value image for emloyee
-                emloyee.Image = ImageUpload.FileName;
+                user.Avatar = ImageUpload.FileName;
             }
             //Set TempData for checking in view to show swal
             TempData["edit"] = "Success";
             //Update emloyeetype
-            Emloyee e = _emloyeeService.GetByID(emloyee.ID);
-            e.FullName = emloyee.FullName;
-            e.Address = emloyee.Address;
-            e.Email = emloyee.Email;
-            e.Image = emloyee.Image;
-            _emloyeeService.Update(e);
-            Session["Emloyee"] = e;
+            User u = _userService.GetByID(user.ID);
+            u.FullName = user.FullName;
+            u.Address = user.Address;
+            u.Email = user.Email;
+            u.Avatar = user.Avatar;
+            _userService.Update(u);
+            Session["User"] = u;
             string Url = Request.Url.ToString();
-            return RedirectToAction("InfoEmloyee");
+            return RedirectToAction("InfoUser");
         }
         [HttpGet]
         public ActionResult ResetPassword()
@@ -224,13 +222,13 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult ResetPassword(string CurrentPassword, string NewPassword)
         {
-            Emloyee emloyee = Session["Emloyee"] as Emloyee;
-            Emloyee emloyeeCheck = _emloyeeService.CheckLogin(emloyee.ID, CurrentPassword);
-            if (emloyeeCheck != null)
+            User user = Session["User"] as User;
+            User userCheck = _userService.CheckLogin(user.Email, CurrentPassword);
+            if (userCheck != null)
             {
-                _emloyeeService.ResetPassword(emloyeeCheck.ID, NewPassword);
+                _userService.ResetPassword(user.ID, NewPassword);
                 TempData["ResetPassword"] = "Success";
-                return RedirectToAction("InfoEmloyee");
+                return RedirectToAction("InfoUser");
             }
             else
             {

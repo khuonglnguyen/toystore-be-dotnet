@@ -9,8 +9,8 @@ namespace ToyStore.Service
 {
     public interface IProductViewedService
     {
-        void AddProductViewByMember(int productID, int memberID);
-        void Delete(int memberID);
+        void AddProductViewByUser(int productID, int userID);
+        void Delete(int userID);
     }
     public class ProductViewedService : IProductViewedService
     {
@@ -19,11 +19,11 @@ namespace ToyStore.Service
         {
             this.context = repositoryContext;
         }
-        public void AddProductViewByMember(int productID, int memberID)
+        public void AddProductViewByUser(int productID, int userID)
         {
             try
             {
-                ProductViewed productVieweds = context.ProductViewedRepository.GetAllData().Single(x => x.ProductID == productID && x.MemberID == memberID);
+                ProductViewed productVieweds = context.ProductViewedRepository.GetAllData().Single(x => x.ProductID == productID && x.UserID == userID);
                 if (productVieweds != null)
                 {
                     productVieweds.Date = DateTime.Now;
@@ -34,15 +34,15 @@ namespace ToyStore.Service
             {
                 ProductViewed productViewed = new ProductViewed();
                 productViewed.ProductID = productID;
-                productViewed.MemberID = memberID;
+                productViewed.UserID = userID;
                 productViewed.Date = DateTime.Now;
                 context.ProductViewedRepository.Insert(productViewed);
             }
         }
 
-        public void Delete(int memberID)
+        public void Delete(int userID)
         {
-            IEnumerable<ProductViewed> productViewed = context.ProductViewedRepository.GetAllData(x => x.MemberID == memberID);
+            IEnumerable<ProductViewed> productViewed = context.ProductViewedRepository.GetAllData(x => x.UserID == userID);
             foreach (var item in productViewed)
             {
                 context.ProductViewedRepository.Remove(item);

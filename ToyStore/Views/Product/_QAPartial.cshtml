@@ -1,22 +1,22 @@
 ﻿@using ToyStore.Models
 @model Product
 @{ IEnumerable<QA> qAs = ViewBag.QAList as IEnumerable<QA>;
-    Member member = Session["Member"] as Member; }
+    User user = Session["User"] as User; }
 
 <hr />
 @if (qAs.Count() > 0)
 {
     foreach (var item in qAs)
     {
-<label style="color:black">@item.Member.FullName:</label> @item.DateQuestion
+<label style="color:black">@item.User.FullName:</label> @item.DateQuestion
                     <p style="color:black">@item.Question</p> if (item.Answer != null)
                     {
 <div style="background-color:lightgray">
-    <p><label style="color:brown">@item.Emloyee.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
+    <p><label style="color:brown">@item.User.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
     <p style="color:black">@item.Answer</p>
 </div> }
 <p>
-    @if (item.MemberID == member.ID)
+    @if (item.UserAskID == user.ID)
     {
         using (Ajax.BeginForm("DeleteQA", "Product", new AjaxOptions
         {
@@ -33,9 +33,9 @@
 
 </p>
                     <p>
-                        @if (item.Answer == null && member != null)
+                        @if (item.Answer == null && user != null)
                         {
-                            if (item.MemberID == member.ID)
+                            if (item.UserAskID == user.ID)
                             {
     <button class="btnEdit" value="@item.ID" data-productid="@item.ProductID">Sửa</button>}
 }

@@ -27,7 +27,7 @@ namespace ToyStore.Controllers
 
         public ActionResult Index()
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -36,7 +36,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Index(int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -69,7 +69,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Search(string keyword, int page = 1)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -98,7 +98,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -110,7 +110,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Create(ProductCategory productCategory, int page)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -124,7 +124,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -156,7 +156,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Edit(ProductCategory productCategory, int page, int ParentIDEdit)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -189,7 +189,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult DeleteMulti(FormCollection formCollection)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }

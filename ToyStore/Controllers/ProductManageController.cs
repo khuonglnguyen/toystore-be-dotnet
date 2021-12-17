@@ -41,7 +41,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Index(int page = 1, string keyword = "")
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -113,7 +113,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult List(string keyword)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -142,7 +142,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -158,7 +158,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Create(Product product, HttpPostedFileBase[] ImageUpload, int page)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -217,7 +217,7 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -265,7 +265,7 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult Edit(Product product, HttpPostedFileBase[] ImageUpload, int page, int CategoryIDEdit, int ProducerIDEdit, int AgeIDEdit, int GenderIDEdit)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }
@@ -348,7 +348,7 @@ namespace ToyStore.Controllers
         }
         public ActionResult ProductActivePartial(int ID)
         {
-            if (Session["Emloyee"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login");
             }

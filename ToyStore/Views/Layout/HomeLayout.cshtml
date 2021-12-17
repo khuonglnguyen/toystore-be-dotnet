@@ -31,7 +31,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="~/Content/home/js/simpleCart.min.js"></script>
     <script src="~/Content/home/js/jquery.countdown.min.js"></script>
     <script src="~/Content/home/js/jquery.flexslider.js"></script>
-
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
     <!--cart-->
@@ -60,38 +59,74 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
     <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")"></script>
+    <link href="~/Content/chatbox.css" rel="stylesheet" />
+    <script src="~/Content/chatbox.js"></script>
+
+    <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
     <!--//end-smooth-scrolling-->
 </head>
 <body>
     @Html.Partial("~/Views/Home/HeaderTopPartial.cshtml")
     @RenderBody()
-    <!--footer-->
-    <div class="footer">
-        <div class="container">
-            <div class="footer-info">
-                <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".5s">
-                    <h4 class="footer-logo"><a href="index.html">Toy<b>Store</b> <span class="tag">Tất cả mọi thứ bé cần </span> </a></h4>
-                    <p>© 2021 . All rights reserved | Design by <a href="http://w3layouts.com" target="_blank">W3layouts</a> Develop by TEAM</p>
+    <div class="row">
+        <div class="chatbox chatbox22 chatbox--tray">
+            <div class="chatbox__title">
+                <h5><a href="javascript:void()">Chat with Us</a></h5>
+                <!--<button class="chatbox__title__tray">
+                    <span></span>
+                </button>-->
+                <button class="chatbox__title__close">
+                    <span>
+                        <svg viewBox="0 0 12 12" width="12px" height="12px">
+                            <line stroke="#FFFFFF" x1="11.75" y1="0.25" x2="0.25" y2="11.75"></line>
+                            <line stroke="#FFFFFF" x1="11.75" y1="11.75" x2="0.25" y2="0.25"></line>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+            <div class="chatbox__body">
+
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="btn-input" type="text" required class="form-control input-sm chat_set_height" placeholder="Soạn tin nhắn..." tabindex="0" dir="ltr" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" contenteditable="true" />
+                    <span class="input-group-btn">
+                        <button class="btn bt_bg btn-sm" id="btn-chat">
+                            Gửi
+                        </button>
+                    </span>
                 </div>
-                <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".7s">
-                    <h3>Thông Tin</h3>
-                    <ul>
-                        <li><a href="about.html">Giới Thiệu</a></li>
-                        <li><a href="products.html">Tin Tức</a></li>
-                        <li><a href="contact.html">Liên Hệ</a></li>
-                        <li><a href="faq.html">Hỏi Đáp</a></li>
-                        <li><a href="checkout.html">Vị Trí</a></li>
-                    </ul>
+            </div>
+        </div>
+        <!--footer-->
+        <div class="footer">
+            <div class="container">
+                <div class="footer-info">
+                    <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".5s">
+                        <h4 class="footer-logo"><a href="index.html">Toy<b>Store</b> <span class="tag">Tất cả mọi thứ bé cần </span> </a></h4>
+                        <p>© 2021 . All rights reserved | Design by <a href="http://w3layouts.com" target="_blank">W3layouts</a> Develop by TEAM</p>
+                    </div>
+                    <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".7s">
+                        <h3>Thông Tin</h3>
+                        <ul>
+                            <li><a href="about.html">Giới Thiệu</a></li>
+                            <li><a href="products.html">Tin Tức</a></li>
+                            <li><a href="contact.html">Liên Hệ</a></li>
+                            <li><a href="faq.html">Hỏi Đáp</a></li>
+                            <li><a href="checkout.html">Vị Trí</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".9s">
+                        <h3>Đăng Ký</h3>
+                        <p>Đăng ký ngay để nhận được nhiều ưu đãi</p>
+                        <form>
+                            <input type="text" placeholder="Nhập vào Email" required="">
+                            <input type="submit" value="Bắt đầu">
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".9s">
-                    <h3>Đăng Ký</h3>
-                    <p>Đăng ký ngay để nhận được nhiều ưu đãi</p>
-                    <form>
-                        <input type="text" placeholder="Nhập vào Email" required="">
-                        <input type="submit" value="Bắt đầu">
-                    </form>
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -112,6 +147,82 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
             $().UItoTop({ easingType: 'easeOutQuart' });
 
+            $(function () {
+                var chat = $.connection.chatHubs
+
+                chat.client.displayMessage = function () {
+                    getData();
+                }
+
+                $.connection.hub.start();
+                getData();
+            })
+
+            function getData() {
+                var chatbox = $('.chatbox__body');
+                var userID = $('#UserID').val();
+                $.ajax({
+                    url: location.origin + "/Chat/GetMessageClient?FromID=" + userID,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        chatbox.empty()
+                        if (data.length > 0) {
+                            $.each(data, function (i, model) {
+                                var date = new Date(parseInt(model.CreatedDate.substr(6)));
+                                chatbox.append(
+                                    '<div class="chatbox__body__message chatbox__body__message--right">' +
+                                    ' <div class="chatbox_timing">' +
+                                    '<ul>' +
+                                    '<li>' + date.getHours() + ':' + date.getMinutes() + '</li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '<img src="./Content/images/' + model.AvatarClient + '" alt="Picture">' +
+                                    '<div class="clearfix"></div>' +
+                                    ' <div class="ul_section_full">' +
+                                    ' <ul class="ul_msg">' +
+                                    '<li><strong>' + model.FromName + '</strong></li>' +
+                                    '<li>' + model.Content + '</li>' +
+                                    '</ul>' +
+                                    '<div class="clearfix"></div>' +
+                                    '<ul class="ul_msg2">' +
+                                    '<li><a href="#"><i class="fa fa-pencil"></i> </a></li>' +
+                                    '<li><a href="#"><i class="fa fa-trash chat-trash"></i></a></li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            })
+                        } else {
+                            chatbox.append(
+                                '<li>' +
+                                '<p><span>Chưa có đơn hàng</span></p>' +
+                                '</li>'
+                            );
+                        }
+                    }
+                })
+            }
+
+            $('#btn-chat').click(function send() {
+                var fromId = $('#UserID').val();
+                var content = $('#btn-input').val();
+                $.ajax({
+                    url: location.origin + "/Chat/Send",
+                    data: { FromID: fromId, ToID: 2, Content: content },
+                    type: 'POST',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status) {
+                            getData();
+                            $('#btn-input').val("");
+                            $(".chatbox__body").animate({ scrollTop: 20000000 });
+                        } else {
+                            alert("Có lỗi xảy ra");
+                        }
+                    }
+                })
+            })
         });
     </script>
     <!--//smooth-scrolling-of-move-up-->

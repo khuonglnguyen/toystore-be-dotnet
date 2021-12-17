@@ -33,13 +33,13 @@ public partial class DiscountCode
 
     public Nullable<int> NumberDiscount { get; set; }
 
-    public Nullable<int> EmloyeeID { get; set; }
+    public Nullable<int> UserID { get; set; }
 
     public Nullable<bool> IsActive { get; set; }
 
 
 
-    public virtual Emloyee Emloyee { get; set; }
+    public virtual User User { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

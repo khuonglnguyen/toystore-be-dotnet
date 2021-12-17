@@ -24,13 +24,13 @@ public partial class Decentralization
 
     public string Note { get; set; }
 
-    public int EmloyeeTypeID { get; set; }
+    public int UserTypeID { get; set; }
 
 
 
     public virtual Role Role { get; set; }
 
-    public virtual EmloyeeType EmloyeeType { get; set; }
+    public virtual UserType UserType { get; set; }
 
 }
 
