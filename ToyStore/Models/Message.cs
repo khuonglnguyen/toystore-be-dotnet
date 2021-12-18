@@ -28,6 +28,14 @@ public partial class Message
 
     public Nullable<System.DateTime> CreatedDate { get; set; }
 
+    public Nullable<bool> Sent { get; set; }
+
+
+
+    public virtual User User { get; set; }
+
+    public virtual User User1 { get; set; }
+
 }
 
 }

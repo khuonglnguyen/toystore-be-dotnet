@@ -106,8 +106,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <!--notifications of menu start -->
                             <ul class="nofitications-dropdown">
                                 <li class="dropdown head-dpdn">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">3</span></a>
-                                    <ul class="dropdown-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge" id="messTotalNoti">3</span></a>
+                                    <ul class="dropdown-menu" id="messageNoti">
                                         <li>
                                             <div class="notification_header">
                                                 <h3>You have 3 new messages</h3>
@@ -251,6 +251,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <div class="profile_img">
                                             <span class="prfil-img"><img src="@Url.Content("~/Content/images/" + user.Avatar)" alt=""> </span>
                                             <div class="user-name">
+                                                <input type="text" value="@user.ID" hidden id="user-id" />
                                                 <p>@user.FullName</p>
                                                 <span>@user.UserType.Name</span>
                                             </div>
@@ -648,6 +649,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li id="menu-academico-avaliacoes"><a href="/ImportProductManage/ImportCoupon">Phiếu Nhập</a></li>
                         </ul>
                     </li>
+                    <li id="menu-academico"><a href="/Chat/Index"><i class="fa fa-comment"></i><span>Chat Với KH</span><div class="clearfix"></div></a></li>
                     <li id="menu-academico"><a href="/DiscountCodeManage/Index"><i class="fa fa-percent"></i><span>Mã Giảm Giá</span><div class="clearfix"></div></a></li>
                     <li id="menu-academico"><a href="/QAManage/List"><i class="fa fa-question-circle"></i><span>Hỏi Đáp</span><div class="clearfix"></div></a></li>
                     <li id="menu-academico"><a href="/StatisticManage/Index"><i class="fa fa-bar-chart"></i><span>Thống Kê</span><div class="clearfix"></div></a></li>
@@ -691,18 +693,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             var order = $.connection.orderHubs
 
             order.client.displayOrderStatus = function () {
-                getData();
+                getOrderNotiData();
             }
 
             $.connection.hub.start();
-            getData();
+            getOrderNotiData();
         })
 
-        function getData() {
+        function getOrderNotiData() {
             var $noti = $('#orderNoti')
             var $totalNofi = $('#orderTotalNoti')
             $.ajax({
-                url: location.origin + "/OrderManage/GetOrderJson",
+                url: location.origin + "/User/GetOrderJson",
                 type: 'GET',
                 dataType: 'JSON',
                 success: function (data) {
@@ -733,13 +735,111 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         )
                         $noti.append(
                             '<li>' +
-                            '<p><span>Chưa có đơn hàng</span></p>' +
+                            '<p><span>Chưa có đơn hàng mới</span></p>' +
+                            '</li>' +
+                            '<li>' +
+                            ' <div class="notification_bottom">' +
+                            ' <a href="/OrderManage/DeliveredAndPaid">Xem tất cả đơn hàng</a>' +
+                            ' </div>' +
                             '</li>'
                         );
                     }
                 }
             })
         }
+
+        $(function () {
+            var chat = $.connection.chatHubs
+
+            chat.client.displayMessage = function () {
+                getMessageNotiData();
+            }
+
+            $.connection.hub.start();
+            getMessageNotiData();
+        })
+
+        function getMessageNotiData() {
+            var $noti = $('#messageNoti')
+            var $totalNofi = $('#messTotalNoti')
+            $.ajax({
+                url: location.origin + "/Chat/GetNotiMessage",
+                type: 'GET',
+                dataType: 'JSON',
+                success: function (data) {
+                    $noti.empty()
+                    $totalNofi.empty()
+                    if (data.length > 0) {
+                        $totalNofi.append(
+                            data.length
+                        )
+                        $.each(data, function (i, model) {
+                            $noti.append(
+                                '<li id="' + model.FromUserID + '">' +
+                                '<a href="/Chat/Chating?WithUserID=' + model.FromUserID + '&MessageID=' + model.ID + '">' +
+                                '<div class="user_img"><img src="/Content/images/' + model.FromUserAvatar + '" alt=""></div>' +
+                                '<div class="notification_desc">' +
+                                '<p>' + model.FromUserName + '</p>' +
+                                '<p><span>' + model.CreatedDate + ' phút trước</span></p>' +
+                                '</div>' +
+                                '<div class="clearfix"></div>' +
+                                '</a>' +
+                                '</li>'
+                            );
+                        })
+                    } else {
+                        $totalNofi.append(
+                            0
+                        )
+                        $noti.append(
+                            '<li>' +
+                            '<p><span>Chưa có tin nhắn mới</span></p>' +
+                            '</li>' +
+                            '<li>' +
+                            ' <div class="notification_bottom">' +
+                            ' <a href="/Chat/">Xem tất cả tin nhắn</a>' +
+                            ' </div>' +
+                            '</li>'
+                            );
+                    }
+                }
+            })
+        }
+
+        $('#btn-chat').click(function send() {
+            var fromId = $('#user-id').val();
+            var content = $('#btn-input').val();
+            $.ajax({
+                url: location.origin + "/Chat/Send",
+                data: { FromUserID: fromId, ToUserID: 2, Content: content },
+                type: 'POST',
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status) {
+                        getLastData();
+                        $('#btn-input').val("");
+                        $(".chatbox__body").animate({ scrollTop: 2000000 });
+
+                        //$.ajax({
+                        //    url: location.origin + "/Chat/UpdateSent",
+                        //    data: { MessageID: lastMessID },
+                        //    type: 'POST',
+                        //    dataType: 'JSON',
+                        //    success: function (data) {
+                        //        if (data.status) {
+
+                        //        } else {
+                        //            alert("Có lỗi xảy ra");
+                        //        }
+                        //    }
+                        //})
+                    } else {
+                        alert("Có lỗi xảy ra");
+                        return;
+                    }
+                }
+            })
+        })
     </script>
     <script>
         $(document).ready(function () {

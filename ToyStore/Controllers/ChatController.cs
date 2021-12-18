@@ -5,44 +5,100 @@ using System.Web;
 using System.Web.Mvc;
 using ToyStore.Service;
 using ToyStore.Models;
+using System.Net;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "Chat")]
     public class ChatController : Controller
     {
         private IMessageService _messageService;
-        public ChatController(IMessageService messageService)
+        private IUserService _userService;
+        public ChatController(IMessageService messageService, IUserService userService)
         {
             _messageService = messageService;
+            _userService = userService;
         }
+        public ActionResult Index()
+        {
+            List<Message> listMessage = _messageService.GetIndexAdmin();
+            return View(listMessage);
+        }
+        
+        public ActionResult Chating(int WithUserID, int MessageID = 0)
+        {
+            IEnumerable<Message> listMessage;
+            if (MessageID != 0)
+            {
+                //Update Sent
+                if (_messageService.UpdateSent(MessageID))
+                {
+                    listMessage = _messageService.GetAllByUserID(WithUserID);
+                    ViewBag.UserFullName = _userService.GetByID(WithUserID).FullName;
+                    return View(listMessage);
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            User user = _userService.GetByID(WithUserID);
+            ViewBag.UserFullName = user.FullName;
+            return View();
+        }
+
         // GET: Message
-        //[HttpGet]
-        //public JsonResult GetMessageClient(int FromID)
-        //{
-        //    var listMessage = _messageService.GetByFromID(FromID).Select(x => new { Content = x.Content, CreatedDate = x.CreatedDate.Value, FromName = x.Us.FullName, ToName = x.Emloyee.FullName , AvatarMember = x.Member.Avatar});
-        //    return Json(listMessage, JsonRequestBehavior.AllowGet);
-        //}
+        [AllowAnonymous]
+        [HttpGet]
+        public JsonResult GetAllMessageChating(int UserID)
+        {
+            var listMessage = _messageService.GetAllByUserID(UserID).Select(x => 
+            new { ID = x.ID,
+                FromUserID = x.FromUserID,
+                Content = x.Content,
+                CreatedDate = x.CreatedDate.Value,
+                FromUserName = x.User.FullName + " (" + x.User.UserType.Name + ")",
+                FromAvatarUser = x.User.Avatar });
+            return Json(listMessage, JsonRequestBehavior.AllowGet);
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public JsonResult GetLastMessageClient(int UserID)
+        {
+            var message = _messageService.GetLastByUserID(UserID);
+            return Json(new
+            {
+                FromUserID = message.FromUserID,
+                Content = message.Content,
+                CreatedDate = message.CreatedDate.Value,
+                FromUserName = message.User.FullName + " (" + message.User.UserType.Name + ")",
+                FromAvatarUser = message.User.Avatar
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public JsonResult Send(int FromUserID, int ToUserID, string Content)
+        {
+            Message message = new Message();
+            message.FromUserID = FromUserID;
+            message.ToUserID = ToUserID;
+            message.Content = Content;
+            message.CreatedDate = DateTime.Now;
 
-        //[HttpPost]
-        //public JsonResult Send(int FromID, int ToID, string Content)
-        //{
-        //    Message message = new Message();
-        //    message.FromID = FromID;
-        //    message.ToID = ToID;
-        //    message.Content = Content;
-        //    message.CreatedDate = DateTime.Now;
-
-        //    if (_messageService.Add(message))
-        //    {
-        //        return Json(new
-        //        {
-        //            status = true
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    return Json(new
-        //    {
-        //        status = false
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            if (_messageService.Add(message))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [AllowAnonymous]
+        public JsonResult GetNotiMessage()
+        {
+            var list = _messageService.GetAllNotiAdmin().Select(x => new { ID = x.ID, FromUserID = x.FromUserID, FromUserAvatar = x.User.Avatar, FromUserName = x.User.FullName, CreatedDate = (DateTime.Now - x.CreatedDate.Value).Minutes });
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
     }
 }

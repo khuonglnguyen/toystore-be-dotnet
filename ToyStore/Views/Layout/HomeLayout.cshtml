@@ -151,18 +151,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 var chat = $.connection.chatHubs
 
                 chat.client.displayMessage = function () {
-                    getData();
+                    getAllData();
                 }
 
                 $.connection.hub.start();
-                getData();
+                getAllData();
             })
 
-            function getData() {
+            var lastMessID = 0;
+
+            function getAllData() {
                 var chatbox = $('.chatbox__body');
                 var userID = $('#UserID').val();
                 $.ajax({
-                    url: location.origin + "/Chat/GetMessageClient?FromID=" + userID,
+                    url: location.origin + "/Chat/GetAllMessageChating?UserID=" + userID,
                     type: 'GET',
                     dataType: 'JSON',
                     success: function (data) {
@@ -170,55 +172,132 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         if (data.length > 0) {
                             $.each(data, function (i, model) {
                                 var date = new Date(parseInt(model.CreatedDate.substr(6)));
-                                chatbox.append(
-                                    '<div class="chatbox__body__message chatbox__body__message--right">' +
-                                    ' <div class="chatbox_timing">' +
-                                    '<ul>' +
-                                    '<li>' + date.getHours() + ':' + date.getMinutes() + '</li>' +
-                                    '</ul>' +
-                                    '</div>' +
-                                    '<img src="./Content/images/' + model.AvatarClient + '" alt="Picture">' +
-                                    '<div class="clearfix"></div>' +
-                                    ' <div class="ul_section_full">' +
-                                    ' <ul class="ul_msg">' +
-                                    '<li><strong>' + model.FromName + '</strong></li>' +
-                                    '<li>' + model.Content + '</li>' +
-                                    '</ul>' +
-                                    '<div class="clearfix"></div>' +
-                                    '<ul class="ul_msg2">' +
-                                    '<li><a href="#"><i class="fa fa-pencil"></i> </a></li>' +
-                                    '<li><a href="#"><i class="fa fa-trash chat-trash"></i></a></li>' +
-                                    '</ul>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
+                                if (model.FromUserID == userID) {
+                                    lastMessID = model.ID;
+                                    chatbox.append(
+                                        '<div class="chatbox__body__message chatbox__body__message--right" id="' + model.ID + '"' + '>' +
+                                        ' <div class="chatbox_timing">' +
+                                        '<ul>' +
+                                        '<li>' + date.getHours() + ':' + date.getMinutes() + '</li>' +
+                                        '</ul>' +
+                                        '</div>' +
+                                        '<img src="./Content/images/' + model.FromAvatarUser + '" alt="Picture">' +
+                                        '<div class="clearfix"></div>' +
+                                        ' <div class="ul_section_full">' +
+                                        ' <ul class="ul_msg">' +
+                                        '<li><strong>' + model.FromUserName + '</strong></li>' +
+                                        '<li>' + model.Content + '</li>' +
+                                        '</ul>' +
+                                        '<div class="clearfix"></div>' +
+                                        '<ul class="ul_msg2">' +
+                                        '<li><a href="#"><i class="fa fa-pencil"></i> </a></li>' +
+                                        '<li><a href="#"><i class="fa fa-trash chat-trash"></i></a></li>' +
+                                        '</ul>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                } else {
+                                    chatbox.append(
+                                        '<div class="chatbox__body__message chatbox__body__message--left" id="' + model.ID + '"' + '>' +
+                                        ' <div class="chatbox_timing">' +
+                                        '<ul>' +
+                                        '<li>' + date.getHours() + ':' + date.getMinutes() + '</li>' +
+                                        '</ul>' +
+                                        '</div>' +
+                                        '<img src="./Content/images/' + model.FromAvatarUser + '" alt="Picture">' +
+                                        '<div class="clearfix"></div>' +
+                                        ' <div class="ul_section_full">' +
+                                        ' <ul class="ul_msg">' +
+                                        '<li><strong>' + model.FromUserName + '</strong></li>' +
+                                        '<li>' + model.Content + '</li>' +
+                                        '</ul>' +
+                                        '<div class="clearfix"></div>' +
+                                        '<ul class="ul_msg2">' +
+                                        '<li><a href="#"><i class="fa fa-pencil"></i> </a></li>' +
+                                        '<li><a href="#"><i class="fa fa-trash chat-trash"></i></a></li>' +
+                                        '</ul>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                }
                             })
                         } else {
                             chatbox.append(
-                                '<li>' +
-                                '<p><span>Chưa có đơn hàng</span></p>' +
-                                '</li>'
+                                '<p>Chưa có tin nhắn...</p>'
                             );
                         }
                     }
                 })
+
+                $(".chatbox__body").animate({ scrollTop: 2000000 });
             }
+
+            function getLastData() {
+                var chatbox = $('.chatbox__body');
+                var userID = $('#UserID').val();
+                $.ajax({
+                    url: location.origin + "/Chat/GetLastMessageClient?UserID=" + userID,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        var date = new Date(parseInt(data.CreatedDate.substr(6)));
+                        chatbox.append(
+                            '<div class="chatbox__body__message chatbox__body__message--right">' +
+                            ' <div class="chatbox_timing">' +
+                            '<ul>' +
+                            '<li>' + date.getHours() + ':' + date.getMinutes() + '</li>' +
+                            '</ul>' +
+                            '</div>' +
+                            '<img src="./Content/images/' + data.FromAvatarUser + '" alt="Picture">' +
+                            '<div class="clearfix"></div>' +
+                            ' <div class="ul_section_full">' +
+                            ' <ul class="ul_msg">' +
+                            '<li><strong>' + data.FromUserName + '</strong></li>' +
+                            '<li>' + data.Content + '</li>' +
+                            '</ul>' +
+                            '<div class="clearfix"></div>' +
+                            '<ul class="ul_msg2">' +
+                            '<li><a href="#"><i class="fa fa-pencil"></i> </a></li>' +
+                            '<li><a href="#"><i class="fa fa-trash chat-trash"></i></a></li>' +
+                            '</ul>' +
+                            '</div>' +
+                            '</div>')
+
+                    }
+                })
+            }
+
 
             $('#btn-chat').click(function send() {
                 var fromId = $('#UserID').val();
                 var content = $('#btn-input').val();
                 $.ajax({
                     url: location.origin + "/Chat/Send",
-                    data: { FromID: fromId, ToID: 2, Content: content },
+                    data: { FromUserID: fromId, ToUserID: 2, Content: content },
                     type: 'POST',
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status) {
-                            getData();
+                            getLastData();
                             $('#btn-input').val("");
-                            $(".chatbox__body").animate({ scrollTop: 20000000 });
+                            $(".chatbox__body").animate({ scrollTop: 2000000 });
+
+                            //$.ajax({
+                            //    url: location.origin + "/Chat/UpdateSent",
+                            //    data: { MessageID: lastMessID },
+                            //    type: 'POST',
+                            //    dataType: 'JSON',
+                            //    success: function (data) {
+                            //        if (data.status) {
+
+                            //        } else {
+                            //            alert("Có lỗi xảy ra");
+                            //        }
+                            //    }
+                            //})
                         } else {
                             alert("Có lỗi xảy ra");
+                            return;
                         }
                     }
                 })

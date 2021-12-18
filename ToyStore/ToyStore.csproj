@@ -549,10 +549,9 @@
     <Content Include="Content\home\js\uisearch.js" />
     <Content Include="Content\home\js\wow.min.js" />
     <Content Include="Content\images\1.jpg" />
+    <Content Include="Content\images\225981558_527356271930067_3582002851820138652_n.jpg" />
     <Content Include="Content\images\ankhuong.png" />
-    <Content Include="Content\images\b1.png" />
-    <Content Include="Content\images\b2.png" />
-    <Content Include="Content\images\b3.png" />
+    <Content Include="Content\images\johnny-dang.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\Chart.js" />
     <Content Include="Content\js\jquery-2.1.4.min.js" />
@@ -722,6 +721,8 @@
     <Content Include="Views\Payment\PaymentWithPaypal.cshtml" />
     <Content Include="Views\Payment\FailureView.cshtml" />
     <Content Include="Views\Payment\SuccessView.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\Chating.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

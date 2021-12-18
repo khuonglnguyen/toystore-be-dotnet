@@ -105,6 +105,7 @@
           <Property Name="ToUserID" Type="int" />
           <Property Name="Content" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Sent" Type="bit" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -270,6 +271,30 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" />
         </EntityType>
+        <Association Name="FK__Message__FromUse__41C3AD93">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="FromUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message__ToUserI__42B7D1CC">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ToUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Cart_dbo_Products_ProductID">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -660,6 +685,14 @@
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDiscountCode" EntityType="Self.UserDiscountCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Message__FromUse__41C3AD93" Association="Self.FK__Message__FromUse__41C3AD93">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message__ToUserI__42B7D1CC" Association="Self.FK__Message__ToUserI__42B7D1CC">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Cart_dbo_Products_ProductID" Association="Self.FK_dbo_Cart_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="ItemCart" EntitySet="ItemCart" />
@@ -855,6 +888,14 @@
             <End Role="User" EntitySet="Users" />
             <End Role="ItemCart" EntitySet="ItemCarts" />
           </AssociationSet>
+          <AssociationSet Name="FK__Message__FromUse__41C3AD93" Association="ToyStore2021Model.FK__Message__FromUse__41C3AD93">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message__ToUserI__42B7D1CC" Association="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_OrderDetail_dbo_Order_OrderID" Association="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Order_OrderID">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
@@ -1024,6 +1065,9 @@
           <Property Name="ToUserID" Type="Int32" />
           <Property Name="Content" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Sent" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__Message__FromUse__41C3AD93" FromRole="Message" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC" FromRole="Message" ToRole="User" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1202,6 +1246,8 @@
           <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_User" FromRole="User" ToRole="DiscountCode" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_User_UserID" FromRole="User" ToRole="ImportCoupon" />
           <NavigationProperty Name="ItemCarts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_User_UserID" FromRole="User" ToRole="ItemCart" />
+          <NavigationProperty Name="Messages" Relationship="ToyStore2021Model.FK__Message__FromUse__41C3AD93" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Messages1" Relationship="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID" FromRole="User" ToRole="ProductViewed" />
           <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask" FromRole="User" ToRole="QA" />
           <NavigationProperty Name="Ratings" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_User_UserID" FromRole="User" ToRole="Rating" />
@@ -1408,6 +1454,30 @@
             </Principal>
             <Dependent Role="ItemCart">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message__FromUse__41C3AD93">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
+          <End Type="ToyStore2021Model.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="FromUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message__ToUserI__42B7D1CC">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
+          <End Type="ToyStore2021Model.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ToUserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1701,6 +1771,7 @@
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="ToyStore2021Model.Message">
               <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="ToUserID" ColumnName="ToUserID" />

@@ -28,6 +28,10 @@ public partial class User
 
         this.ItemCarts = new HashSet<ItemCart>();
 
+        this.Messages = new HashSet<Message>();
+
+        this.Messages1 = new HashSet<Message>();
+
         this.ProductVieweds = new HashSet<ProductViewed>();
 
         this.QAs = new HashSet<QA>();
@@ -76,6 +80,14 @@ public partial class User
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<ItemCart> ItemCarts { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Message> Messages { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Message> Messages1 { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

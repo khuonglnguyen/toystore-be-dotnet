@@ -346,5 +346,11 @@ namespace ToyStore.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public JsonResult GetOrderJson()
+        {
+            var list = _orderService.GetAll().Where(x => x.IsApproved == false).OrderByDescending(x => x.DateOrder).Take(5).Select(x => new { ID = x.ID, CustomerName = x.Customer.FullName, DateOrder = (DateTime.Now - x.DateOrder).Minutes });
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
     }
 }
