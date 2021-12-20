@@ -10,8 +10,8 @@ namespace ToyStore.Service
     public interface IMessageService
     {
         IEnumerable<Message> GetAllByUserID(int UserID);
-        IEnumerable<Message> GetAllNotiAdmin();
-        List<Message> GetIndexAdmin();
+        IEnumerable<Message> GetAllNotiAdmin(int AdminSideID);
+        List<Message> GetIndexAdmin(int AdminSideID);
         Message GetLastByUserID(int UserID);
         bool Add(Message message);
         bool UpdateSent(int MessageID);
@@ -38,9 +38,9 @@ namespace ToyStore.Service
             }
         }
 
-        public IEnumerable<Message> GetAllNotiAdmin()
+        public IEnumerable<Message> GetAllNotiAdmin(int AdminSideID)
         {
-            IEnumerable<Message> listMessage = this.context.MessageRepository.GetAllData(x => x.Sent == false && x.FromUserID != 2);
+            IEnumerable<Message> listMessage = this.context.MessageRepository.GetAllData(x => x.Sent == false && x.FromUserID != AdminSideID);
             return listMessage;
         }
 
@@ -94,13 +94,13 @@ namespace ToyStore.Service
             }
         }
 
-        public List<Message> GetIndexAdmin()
+        public List<Message> GetIndexAdmin(int AdminSideID)
         {
             IEnumerable<User> listUser = this.context.UserRepository.GetAllData(x => x.IsDeleted == false);
             List<Message> messages = new List<Message>();
             foreach (User item in listUser)
             {
-                Message message = this.context.MessageRepository.GetAllData(x => x.FromUserID == item.ID && x.FromUserID != 2).LastOrDefault();
+                Message message = this.context.MessageRepository.GetAllData(x => x.FromUserID == item.ID && x.FromUserID != AdminSideID).LastOrDefault();
                 if (message != null)
                 {
                     messages.Add(message);

@@ -21,7 +21,8 @@ namespace ToyStore.Controllers
         }
         public ActionResult Index()
         {
-            List<Message> listMessage = _messageService.GetIndexAdmin();
+            User user = Session["User"] as User;
+            List<Message> listMessage = _messageService.GetIndexAdmin(user.ID);
             return View(listMessage);
         }
 
@@ -125,7 +126,8 @@ namespace ToyStore.Controllers
         [AllowAnonymous]
         public JsonResult GetNotiMessage()
         {
-            var list = _messageService.GetAllNotiAdmin().Select(x => new { ID = x.ID, FromUserID = x.FromUserID, FromUserAvatar = x.User.Avatar, FromUserName = x.User.FullName, CreatedDate = (DateTime.Now - x.CreatedDate.Value).Minutes });
+            User user = Session["User"] as User;
+            var list = _messageService.GetAllNotiAdmin(user.ID).Select(x => new { ID = x.ID, FromUserID = x.FromUserID, FromUserAvatar = x.User.Avatar, FromUserName = x.User.FullName, CreatedDate = (DateTime.Now - x.CreatedDate.Value).Minutes });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
     }
