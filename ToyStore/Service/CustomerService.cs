@@ -12,8 +12,10 @@ namespace ToyStore.Service
         Customer AddCustomer(Customer customer);
         IEnumerable<Customer> GetAll();
         string GetEmailByID(int ID);
+        Customer GetByEmail(string Email);
         void Update(Customer customer);
         void Save();
+        bool CheckEmail(string Email);
     }
     public class CustomerService : ICustomerService
     {
@@ -46,6 +48,21 @@ namespace ToyStore.Service
         public void Update(Customer customer)
         {
             context.CustomerRepository.Update(customer);
+        }
+
+        public bool CheckEmail(string Email)
+        {
+            var check = context.CustomerRepository.GetAllData(x => x.Email == Email);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public Customer GetByEmail(string Email)
+        {
+            return context.CustomerRepository.GetAllData(x=>x.Email == Email).FirstOrDefault();
         }
     }
 }

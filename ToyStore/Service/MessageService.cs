@@ -15,6 +15,7 @@ namespace ToyStore.Service
         Message GetLastByUserID(int UserID);
         bool Add(Message message);
         bool UpdateSent(int MessageID);
+        bool UpdateSentClient();
     }
     public class MessageService : IMessageService
     {
@@ -28,13 +29,11 @@ namespace ToyStore.Service
         {
             try
             {
-                message.Sent = false;
                 this.context.MessageRepository.Insert(message);
                 return true;
             }
             catch (Exception)
             {
-                throw;
                 return false;
             }
         }
@@ -62,6 +61,25 @@ namespace ToyStore.Service
             try
             {
                 Message message = this.context.MessageRepository.GetDataByID(MessageID);
+                if (!message.Sent.Value)
+                {
+                    message.Sent = true;
+                    this.context.MessageRepository.Update(message);
+                    return true;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateSentClient()
+        {
+            try
+            {
+                Message message = this.context.MessageRepository.GetAllData().Last();
                 if (!message.Sent.Value)
                 {
                     message.Sent = true;

@@ -1,7 +1,9 @@
 ﻿@using HelperExtensionNameSpace
 @{
-    ViewBag.Title = "Giỏ Hàng";
-    Layout = "~/Views/Layout/HomeLayout.cshtml";
+                /**/
+
+                ViewBag.Title = "Giỏ Hàng";
+                Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 @{
     List<ToyStore.Models.ItemCart> Cart = Session["Cart"] as List<ToyStore.Models.ItemCart>;
@@ -154,7 +156,7 @@
 <!--cart-items-->
 <div class="cart-items">
     <div class="container" id="DivCheckout">
-        @if (Cart != null)
+        @if (Cart.Count > 0)
         {
             <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Giỏ Hàng Của Bạn Có: @ViewBag.TotalQuantity Sản Phẩm</h3>
             foreach (var item in Cart)

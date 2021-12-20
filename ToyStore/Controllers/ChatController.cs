@@ -24,7 +24,7 @@ namespace ToyStore.Controllers
             List<Message> listMessage = _messageService.GetIndexAdmin();
             return View(listMessage);
         }
-        
+
         public ActionResult Chating(int WithUserID, int MessageID = 0)
         {
             IEnumerable<Message> listMessage;
@@ -49,13 +49,16 @@ namespace ToyStore.Controllers
         [HttpGet]
         public JsonResult GetAllMessageChating(int UserID)
         {
-            var listMessage = _messageService.GetAllByUserID(UserID).Select(x => 
-            new { ID = x.ID,
+            var listMessage = _messageService.GetAllByUserID(UserID).Select(x =>
+            new
+            {
+                ID = x.ID,
                 FromUserID = x.FromUserID,
                 Content = x.Content,
                 CreatedDate = x.CreatedDate.Value,
                 FromUserName = x.User.FullName + " (" + x.User.UserType.Name + ")",
-                FromAvatarUser = x.User.Avatar });
+                FromAvatarUser = x.User.Avatar
+            });
             return Json(listMessage, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
@@ -74,21 +77,46 @@ namespace ToyStore.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public JsonResult Send(int FromUserID, int ToUserID, string Content)
+        public JsonResult Send(int FromUserID, int ToUserID, string Content, string Side)
         {
-            Message message = new Message();
-            message.FromUserID = FromUserID;
-            message.ToUserID = ToUserID;
-            message.Content = Content;
-            message.CreatedDate = DateTime.Now;
-
-            if (_messageService.Add(message))
+            if (Side == "Client")
             {
-                return Json(new
+                Message message = new Message();
+                _messageService.UpdateSentClient();
+                message.Sent = false;
+                message.FromUserID = FromUserID;
+                message.ToUserID = ToUserID;
+                message.Content = Content;
+                message.CreatedDate = DateTime.Now;
+
+                if (_messageService.Add(message))
                 {
-                    status = true
-                }, JsonRequestBehavior.AllowGet);
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
             }
+            else
+            {
+                Message message = new Message();
+
+                message.FromUserID = FromUserID;
+                message.ToUserID = ToUserID;
+                message.Content = Content;
+                message.CreatedDate = DateTime.Now;
+                message.Sent = true;
+
+                if (_messageService.Add(message))
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            
             return Json(new
             {
                 status = false

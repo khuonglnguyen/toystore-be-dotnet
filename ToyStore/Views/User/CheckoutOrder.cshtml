@@ -138,10 +138,10 @@
                             @Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateOrder)
+                            @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateShip)
+                            @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Offer)
@@ -203,10 +203,10 @@
                             @Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateOrder)
+                            @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateShip)
+                            @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Offer)
@@ -265,10 +265,10 @@
                             @Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateOrder)
+                            @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateShip)
+                            @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Offer)
@@ -318,10 +318,10 @@
                             @Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateOrder)
+                            @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateShip)
+                            @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Offer)
@@ -385,10 +385,8 @@
                                             <td>
                                                 <img src="@Url.Content("~/Content/images/"+orderDetail.Product.Image1)" style="height:100px;width:100px" class="img-responsive" alt="item" />
                                             </td>
-                                            <td>
-                                            </td>
-                                            <td>
-                                            </td>
+                                            <td></td>
+                                            <td></td>
                                             <td>
                                                 <span class="label label-warning">Chưa đánh giá</span>
                                             </td>
@@ -442,10 +440,8 @@
                                     <td>
                                         <img src="@Url.Content("~/Content/images/"+orderDetail.Product.Image1)" style="height:100px;width:100px" class="img-responsive" alt="item" />
                                     </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <span class="label label-warning">Chưa đánh giá</span>
                                     </td>
@@ -499,10 +495,10 @@
                             @Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateOrder)
+                            @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateShip)
+                            @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Offer)

@@ -144,12 +144,14 @@ namespace ToyStore.Controllers
             smtp.EnableSsl = true;
             smtp.Send(mail);
         }
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Received(int ID)
         {
             Order order = _orderService.GetByID(ID);
             order.IsReceived = true;
             order.IsPaid = true;
+            order.DateShip = DateTime.Now;
             _orderService.Update(order);
             IEnumerable<OrderDetail> orderDetail = _orderDetailService.GetByOrderID(order.ID);
             foreach (var item in orderDetail)

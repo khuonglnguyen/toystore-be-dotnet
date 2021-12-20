@@ -64,9 +64,9 @@
                     }
                 </tbody>
             </table>
-            @if (ViewBag.IsApproved)
+            @if (ViewBag.IsApproved == false)
             {
-                Html.ActionLink("Duyệt", "OrderApproval", new { ID = ViewBag.OrderID }, new { @class = "btn btn-primary" });
+                @Html.ActionLink("Duyệt", "OrderApproval", new { ID = ViewBag.OrderID }, new { @class = "btn btn-primary" });
             }
             <br />
         </div>

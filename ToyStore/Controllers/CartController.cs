@@ -363,31 +363,45 @@ namespace ToyStore.Controllers
             Customer customercheck = new Customer();
             bool status = false;
             //Is Customer
-            Customer customerNew = new Customer();
+            Customer customerOrder = new Customer();
             if (Session["User"] == null)
             {
-                //Insert customer into DB
-                customerNew = customer;
-                customerNew.IsMember = false;
-                _customerService.AddCustomer(customerNew);
+                //Check Email
+                if (_customerService.CheckEmail(customer.Email))
+                {
+                    //Insert customer into DB
+                    customerOrder = customer;
+                    customerOrder.IsMember = false;
+                    _customerService.AddCustomer(customerOrder);
+                }
+                else
+                {
+                    //Update customer in DB
+                    customerOrder = _customerService.GetByEmail(customer.Email);
+                    customerOrder.Address = customer.Address;
+                    customerOrder.FullName = customer.FullName;
+                    customerOrder.PhoneNumber = customer.PhoneNumber;
+                    customerOrder.IsMember = false;
+                    _customerService.Update(customerOrder);
+                }
             }
             else
             {
                 //Is User
                 User user = Session["User"] as User;
-                customercheck = _customerService.GetAll().FirstOrDefault(x => x.FullName.Contains(user.FullName));
+                customercheck = _customerService.GetAll().FirstOrDefault(x => x.Email == user.Email);
                 if (customercheck != null)
                 {
                     status = true;
                 }
                 else
                 {
-                    customerNew.FullName = user.FullName;
-                    customerNew.Address = user.Address;
-                    customerNew.Email = user.Email;
-                    customerNew.PhoneNumber = user.PhoneNumber;
-                    customerNew.IsMember = true;
-                    _customerService.AddCustomer(customerNew);
+                    customerOrder.FullName = user.FullName;
+                    customerOrder.Address = user.Address;
+                    customerOrder.Email = user.Email;
+                    customerOrder.PhoneNumber = user.PhoneNumber;
+                    customerOrder.IsMember = true;
+                    _customerService.AddCustomer(customerOrder);
                 }
             }
             //Add order
@@ -398,7 +412,7 @@ namespace ToyStore.Controllers
             }
             else
             {
-                order.CustomerID = customerNew.ID;
+                order.CustomerID = customerOrder.ID;
             }
             order.DateOrder = DateTime.Now;
             order.DateShip = DateTime.Now.AddDays(3);
@@ -448,6 +462,16 @@ namespace ToyStore.Controllers
             {
                 return RedirectToAction("PaymentWithPaypal","Payment");
             }
+
+            if (status)
+            {
+                SentMail("Đặt hàng thành công", customercheck.Email, "khuongip564gb@gmail.com", "googlekhuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
+            }
+            else
+            {
+                SentMail("Đặt hàng thành công", customerOrder.Email, "khuongip564gb@gmail.com", "googlekhuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
+            }
+
 
             Session["Code"] = null;
             Session["num"] = null;

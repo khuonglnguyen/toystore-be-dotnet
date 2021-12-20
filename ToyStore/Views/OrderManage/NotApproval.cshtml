@@ -11,7 +11,6 @@
     <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
     <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
 </ol>
-
 <div class="agile-grids">
     <div class="agile-tables">
         <div class="w3l-table-info">
@@ -48,21 +47,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Join(customers, c => c.CustomerID, m => m.ID, (c, m) => new { c, m })
-                        .Select(n => new { CustomerName = n.m.FullName, ID = n.c.ID, DateOrder = n.c.DateOrder, DateShip = n.c.DateShip, Offer = n.c.Offer, IsPaid = n.c.IsPaid }))
+                    @foreach (var item in Model)
                     {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ID)
                             </td>
                             <td style="color:brown">
-                                <b>@Html.DisplayFor(modelItem => item.CustomerName)</b>
+                                <b>@Html.DisplayFor(modelItem => item.Customer.FullName)</b>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DateOrder)
+                                @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DateShip)
+                                @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Offer)
