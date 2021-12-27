@@ -40,7 +40,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Message> GetAllNotiAdmin(int AdminSideID)
         {
-            IEnumerable<Message> listMessage = this.context.MessageRepository.GetAllData(x => x.Sent == false && x.FromUserID != AdminSideID);
+            IEnumerable<Message> listMessage = this.context.MessageRepository.GetAllData(x => x.Sent == false && x.FromUserID != AdminSideID && x.User.IsDeleted == false);
             return listMessage;
         }
 
@@ -100,7 +100,7 @@ namespace ToyStore.Service
             List<Message> messages = new List<Message>();
             foreach (User item in listUser)
             {
-                Message message = this.context.MessageRepository.GetAllData(x => x.FromUserID == item.ID && x.FromUserID != AdminSideID).LastOrDefault();
+                Message message = this.context.MessageRepository.GetAllData(x => x.FromUserID == item.ID && x.FromUserID != AdminSideID && x.User.IsDeleted == false).LastOrDefault();
                 if (message != null)
                 {
                     messages.Add(message);

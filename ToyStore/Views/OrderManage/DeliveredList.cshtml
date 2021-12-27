@@ -38,13 +38,16 @@
                             Ngày đặt
                         </th>
                         <th>
-                            Ngày giao
+                            Ngày nhận dự kiến
                         </th>
                         <th>
                             Ưu đãi
                         </th>
                         <th>
-                            Tình trạng
+                            Tình trạng giao hàng
+                        </th>
+                        <th>
+                            Trạng thái
                         </th>
                     </tr>
                 </thead>
@@ -69,6 +72,16 @@
                             </td>
                             <td>
                                 <span class="label label-success">Đang giao hàng</span>
+                            </td>
+                            <td>
+                                @if (item.IsPaid)
+                                {
+                                    <span class="label label-success">Đã thanh toán</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-danger">Chưa thanh toán</span>
+                                }
                             </td>
                         </tr>
                     }

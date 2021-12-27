@@ -22,8 +22,8 @@
         <div class="w3l-table-info">
             <h2>Danh sách đơn đặt hàng</h2>
             <form action="/StatisticManage/StatisticOrder" method="get">
-                Từ: <input type="date" name="from" value="@ViewBag.from.ToString("yyyy-MM-dd")" />
-                Đến: <input type="date" name="to" value="@ViewBag.to.ToString("yyyy-MM-dd")" />
+                Từ: <input type="date" name="from" value="@ViewBag.from.ToString("yyyy-MM-dd")" required/>
+                Đến: <input type="date" name="to" value="@ViewBag.to.ToString("yyyy-MM-dd")" required/>
                 <input type="submit" value="Xem" class="btn btn-info" />
             </form>
             <ul class="bt-list">
@@ -72,10 +72,10 @@
                                         <b>@Html.DisplayFor(modelItem => item.Customer.FullName)</b>
                                     </td>
                                     <td>
-                                        <b>@Html.DisplayFor(modelItem => item.DateOrder)</b>
+                                        <b>@Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")</b>
                                     </td>
                                     <td>
-                                        <b>@Html.DisplayFor(modelItem => item.DateShip)</b>
+                                        <b>@Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")</b>
                                     </td>
                                     <td>
                                         <b>@Html.DisplayFor(modelItem => item.Offer)</b>

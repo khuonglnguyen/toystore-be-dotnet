@@ -80,6 +80,8 @@ public partial class ToyStore2021Entities : DbContext
 
     public virtual DbSet<UserDiscountCode> UserDiscountCodes { get; set; }
 
+    public virtual DbSet<UsersSpin> UsersSpins { get; set; }
+
     public virtual DbSet<UserType> UserTypes { get; set; }
 
 }

@@ -35,6 +35,8 @@ public partial class DiscountCodeDetail
 
     public Nullable<bool> IsUsed { get; set; }
 
+    public Nullable<bool> IsOwned { get; set; }
+
 
 
     public virtual DiscountCode DiscountCode { get; set; }

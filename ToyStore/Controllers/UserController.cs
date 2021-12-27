@@ -22,7 +22,8 @@ namespace ToyStore.Controllers
         IRatingService _ratingService;
         IUserDiscountCodeService _userDiscountCodeService;
         ICartService _cartService;
-        public UserController(IUserService userService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService, IUserDiscountCodeService userDiscountCodeService,ICartService cartService)
+        IUsersSpinService _usersSpinService;
+        public UserController(IUserService userService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService, IUserDiscountCodeService userDiscountCodeService, ICartService cartService, IUsersSpinService usersSpinService)
         {
             _userService = userService;
             _orderService = orderService;
@@ -32,6 +33,7 @@ namespace ToyStore.Controllers
             _ratingService = ratingService;
             _userDiscountCodeService = userDiscountCodeService;
             _cartService = cartService;
+            _usersSpinService = usersSpinService;
         }
         [HttpGet]
         public ActionResult Index()
@@ -213,18 +215,21 @@ namespace ToyStore.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult CheckoutOrder(int ID, int page = 1)
+        public ActionResult CheckoutOrder()
         {
-            string Phone = _userService.GetByID(ID).PhoneNumber;
-            Customer customer = _customerService.GetAll().FirstOrDefault(x => x.PhoneNumber == Phone);
-            if (customer != null)
+            User user = Session["User"] as User;
+            if (user != null)
             {
-                var orders = _orderService.GetAll().Where(x=>x.Customer.PhoneNumber==customer.PhoneNumber&&x.Customer.IsMember==true);
-                User user = Session["User"] as User;
-                ViewBag.ProductRating = _ratingService.GetListAllRating().Where(x => x.UserID == user.ID);
-                return View(orders);
+                string Phone = _userService.GetByID(user.ID).PhoneNumber;
+                Customer customer = _customerService.GetAll().FirstOrDefault(x => x.PhoneNumber == Phone);
+                if (customer != null)
+                {
+                    var orders = _orderService.GetAll().Where(x => x.Customer.PhoneNumber == customer.PhoneNumber && x.Customer.IsMember == true);
+                    ViewBag.ProductRating = _ratingService.GetListAllRating().Where(x => x.UserID == user.ID);
+                    return View(orders);
+                }
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
         [HttpGet]
         public ActionResult OrderDetail(int ID)
@@ -272,13 +277,18 @@ namespace ToyStore.Controllers
         }
         public ActionResult Received(int OrderID)
         {
-            _orderService.Received(OrderID);
-
             User user = Session["User"] as User;
             //Update AmountPurchased for member
             if (user != null)
             {
+                _orderService.Received(OrderID);
                 _userService.UpdateAmountPurchased(user.ID, _orderService.GetByID(OrderID).Total.Value);
+                //Add once spin
+                _usersSpinService.AddOnceSpin(user.ID);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("OrderDetail", new { ID = OrderID });
         }
@@ -336,7 +346,7 @@ namespace ToyStore.Controllers
             User userCheck = _userService.CheckLogin(user.Email, CurrentPassword);
             if (userCheck != null)
             {
-                _userService.ResetPassword(userCheck.ID,NewPassword);
+                _userService.ResetPassword(userCheck.ID, NewPassword);
                 TempData["ResetPassword"] = "Success";
                 return RedirectToAction("Index");
             }

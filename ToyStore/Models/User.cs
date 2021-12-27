@@ -38,6 +38,8 @@ public partial class User
 
         this.Ratings = new HashSet<Rating>();
 
+        this.UsersSpins = new HashSet<UsersSpin>();
+
         this.UserDiscountCodes = new HashSet<UserDiscountCode>();
 
     }
@@ -100,6 +102,10 @@ public partial class User
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Rating> Ratings { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<UsersSpin> UsersSpins { get; set; }
 
     public virtual UserType UserType { get; set; }
 

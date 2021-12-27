@@ -237,7 +237,6 @@
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
                                 <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
-                                <a href="@Url.Action("PaymentWithPaypal","Payment")">Thanh toán Paypal</a>
                             }
                         </div>
                     </div>
@@ -295,7 +294,6 @@
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
                                 <input type="submit" name="Sign In" value="Tiến Hành Đặt Hàng">
-                                <a href="@Url.Action("PaymentWithPaypal","Payment")">Thanh toán Paypal</a>
                             }
                         </div>
                     </div>
@@ -361,7 +359,6 @@
                             <label>Mã giảm giá của bạn:</label>
                             @*@Html.DropDownList("Code", null, new { @class = "form-control" })*@
                             <select class="form-control" name="Code">
-                                <option value="0">Chọn mã giảm giá</option>
                                 @foreach (var item in userDiscountCodes)
                                 {
                                     <option value="@item.DiscountCodeDetail.Code">Mã: @item.DiscountCodeDetail.Code (Giảm @item.DiscountCodeDetail.DiscountCode.NumberDiscount% - Ngày hết hạn: @item.DiscountCodeDetail.DiscountCode.ExpirationDate.Value.ToShortDateString())</option>

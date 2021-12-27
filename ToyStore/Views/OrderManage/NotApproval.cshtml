@@ -43,6 +43,9 @@
                         <th>
                             Ưu đãi
                         </th>
+                        <th>
+                            Trạng thái
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -64,6 +67,16 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Offer)
+                            </td>
+                            <td>
+                                @if (item.IsPaid)
+                                {
+                                    <span class="label label-success">Đã thanh toán</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-danger">Chưa thanh toán</span>
+                                }
                             </td>
                             <td>
                                 @Html.ActionLink("Chi Tiết", "Detail", new { ID = item.ID })

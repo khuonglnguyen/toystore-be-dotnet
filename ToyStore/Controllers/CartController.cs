@@ -516,7 +516,7 @@ namespace ToyStore.Controllers
                 }
                 else
                 {
-                    int num = _discountCodeDetailService.GetDiscountByCode(Code);
+                    int num = _discountCodeDetailService.GetDiscountByCodeInput(Code);
                     if (num == -1)
                     {
                         TempData["Message"] = "Mã giảm giá không đúng";

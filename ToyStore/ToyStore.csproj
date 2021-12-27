@@ -239,6 +239,7 @@
     <Compile Include="Controllers\DecentralizationManageController.cs" />
     <Compile Include="Controllers\DiscountCodeManageController.cs" />
     <Compile Include="Controllers\ImportProductManageController.cs" />
+    <Compile Include="Controllers\SpinController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\OrderManageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="Controllers\QAManageController.cs" />
     <Compile Include="Controllers\StatisticManageController.cs" />
     <Compile Include="Controllers\SupplierManageController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
@@ -346,6 +348,9 @@
     <Compile Include="Models\UserDiscountCode.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsersSpin.cs">
+      <DependentUpon>ToyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserType.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
@@ -359,6 +364,7 @@
     <Compile Include="Service\DiscountCodeDetailService.cs" />
     <Compile Include="Service\DiscountCodeService.cs" />
     <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\UsersSpinService.cs" />
     <Compile Include="Service\UserTypeService.cs" />
     <Compile Include="Service\GenderService.cs" />
     <Compile Include="Service\ImportCouponDetailService.cs" />
@@ -552,6 +558,10 @@
     <Content Include="Content\images\225981558_527356271930067_3582002851820138652_n.jpg" />
     <Content Include="Content\images\ankhuong.png" />
     <Content Include="Content\images\johnny-dang.jpg" />
+    <Content Include="Content\images\spin_off.png" />
+    <Content Include="Content\images\spin_on.png" />
+    <Content Include="Content\images\wheel_back.png" />
+    <Content Include="Content\sound\tick.mp3" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\Chart.js" />
     <Content Include="Content\js\jquery-2.1.4.min.js" />
@@ -565,10 +575,13 @@
     <Content Include="Content\js\raphael-min.js" />
     <Content Include="Content\js\scripts.js" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Spin.css" />
     <Content Include="Content\sweetalert\bootstrap-sweetalert.png" />
     <Content Include="Content\sweetalert\docs.css" />
     <Content Include="Content\sweetalert\sweet-alert.css" />
     <Content Include="Content\sweetalert\thumbs-up.jpg" />
+    <Content Include="Content\TweenMax.min.js" />
+    <Content Include="Content\Winwheel.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -723,10 +736,11 @@
     <Content Include="Views\Payment\SuccessView.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\Chating.cshtml" />
+    <Content Include="Views\Spin\Index.cshtml" />
+    <Content Include="Views\Voucher\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\RoleManage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />

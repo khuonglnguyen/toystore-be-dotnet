@@ -37,12 +37,14 @@
                     @if (Session["User"] != null && Session["User"] != "")
                     {
                         User user = (User)Session["User"];
-                        <input type="text" id="UserID" value="@user.ID" hidden/>
+                        <input type="text" id="UserID" value="@user.ID" hidden />
                         <li><i class="glyphicon glyphicon-user" aria-hidden="true"></i><a href="@Url.Action("Index","User")">@user.FullName</a></li>
                         <br />
-                        <li><i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i><a href="@Url.Action("CheckoutOrder","User",new { ID=user.ID})">Đơn Hàng</a></li>
+                        <li><i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i><a href="@Url.Action("CheckoutOrder","User",new { ID=user.ID})">Đơn hàng</a></li>
                         <br />
-                        <li><i class="glyphicon glyphicon-dashboard" aria-hidden="true"></i><a href="@Url.Action("ProductViewed","Product")">Lịch Sử Xem</a></li>
+                        <li><i class="glyphicon glyphicon-gift" aria-hidden="true"></i><a href="@Url.Action("Index","Voucher")">Voucher của tôi</a></li>
+                        <br />
+                        <li><i class="glyphicon glyphicon-dashboard" aria-hidden="true"></i><a href="@Url.Action("ProductViewed","Product")">Lịch sử xem</a></li>
                     }
                 </ul>
             </div>
@@ -51,7 +53,7 @@
             </div>
             <div class="nav navbar-nav navbar-right header-two-right">
                 <div class="header-right my-account">
-                    <a href="contact.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Liên hệ với chúng tôi</a>
+                    <a href="/Spin"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> Săn Voucher</a>
                 </div>
                 <div class="header-right cart" id="DivCart">
                     @Html.Action("CartPartial", "Cart")

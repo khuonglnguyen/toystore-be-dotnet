@@ -9,7 +9,8 @@ namespace ToyStore.Service
 {
     public interface IUserDiscountCodeService
     {
-        void GiftForNewUser(int MemberID);
+        void GiftForNewUser(int UserID);
+        bool GiftSpin(int UserID, string Code);
     }
     public class UserDiscountCodeService : IUserDiscountCodeService
     {
@@ -26,6 +27,31 @@ namespace ToyStore.Service
             user.DiscountCodeDetailID = context.DiscountCodeDetailRepository.GetAllData(x => x.Code == code).First().ID;
             user.UserID = UserID;
             context.UserDiscountCodeRepository.Insert(user);
+
+            //Update IsOwned
+            DiscountCodeDetail discount = context.DiscountCodeDetailRepository.GetAllData(x => x.Code == code).First();
+            discount.IsOwned = true;
+            context.DiscountCodeDetailRepository.Update(discount);
+        }
+
+        public bool GiftSpin(int UserID, string Code)
+        {
+            try
+            {
+                UserDiscountCode user = new UserDiscountCode();
+                user.UserID = UserID;
+                user.DiscountCodeDetailID = context.DiscountCodeDetailRepository.GetAllData(x => x.Code == Code).FirstOrDefault().ID;
+                context.UserDiscountCodeRepository.Insert(user);
+
+                DiscountCodeDetail discountCodeDetail = context.DiscountCodeDetailRepository.GetAllData(x => x.Code == Code).FirstOrDefault();
+                discountCodeDetail.IsOwned = true;
+                context.DiscountCodeDetailRepository.Update(discountCodeDetail);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

@@ -46,34 +46,48 @@
                         <th>
                             Trình trạng
                         </th>
+                        <th>
+                            Trạng thái
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ID)
-                            </td>
-                            <td style="color:brown">
-                                <b>@Html.DisplayFor(modelItem => item.Customer.FullName)</b>
-                            </td>
-                            <td>
-                                @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
-                            </td>
-                            <td>
-                                @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Offer)
-                            </td>
-                            <td>
-                                <span class="label label-success">Đã duyệt</span>
-                            <td>
-                                @Html.ActionLink("Giao Hàng", "Delivered", new { ID = item.ID })
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td style="color:brown">
+                            <b>@Html.DisplayFor(modelItem => item.Customer.FullName)</b>
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.DateShip).ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Offer)
+                        </td>
+                        <td>
+                            <span class="label label-success">Đã duyệt</span>
+                        </td>
+                        <td>
+                            @if (item.IsPaid)
+                            {
+                                <span class="label label-success">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger">Chưa thanh toán</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Giao Hàng", "Delivered", new { ID = item.ID })
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

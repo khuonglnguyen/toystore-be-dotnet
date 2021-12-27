@@ -58,6 +58,7 @@
           <Property Name="DiscountCodeID" Type="int" />
           <Property Name="Code" Type="nvarchar" MaxLength="20" />
           <Property Name="IsUsed" Type="bit" />
+          <Property Name="IsOwned" Type="bit" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -264,6 +265,14 @@
           <Property Name="UserID" Type="int" />
           <Property Name="DiscountCodeDetailID" Type="int" />
         </EntityType>
+        <EntityType Name="UsersSpin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="NumberOfSpins" Type="int" />
+        </EntityType>
         <EntityType Name="UserType">
           <Key>
             <PropertyRef Name="ID" />
@@ -292,6 +301,18 @@
             </Principal>
             <Dependent Role="Message">
               <PropertyRef Name="ToUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsersSpin__UserI__02215726">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UsersSpin" Type="Self.UsersSpin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersSpin">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -684,6 +705,7 @@
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDiscountCode" EntityType="Self.UserDiscountCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersSpin" EntityType="Self.UsersSpin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Message__FromUse__41C3AD93" Association="Self.FK__Message__FromUse__41C3AD93">
             <End Role="User" EntitySet="User" />
@@ -692,6 +714,10 @@
           <AssociationSet Name="FK__Message__ToUserI__42B7D1CC" Association="Self.FK__Message__ToUserI__42B7D1CC">
             <End Role="User" EntitySet="User" />
             <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsersSpin__UserI__02215726" Association="Self.FK__UsersSpin__UserI__02215726">
+            <End Role="User" EntitySet="User" />
+            <End Role="UsersSpin" EntitySet="UsersSpin" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Cart_dbo_Products_ProductID" Association="Self.FK_dbo_Cart_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
@@ -831,6 +857,7 @@
           <EntitySet Name="Suppliers" EntityType="ToyStore2021Model.Supplier" />
           <EntitySet Name="Users" EntityType="ToyStore2021Model.User" />
           <EntitySet Name="UserDiscountCodes" EntityType="ToyStore2021Model.UserDiscountCode" />
+          <EntitySet Name="UsersSpins" EntityType="ToyStore2021Model.UsersSpin" />
           <EntitySet Name="UserTypes" EntityType="ToyStore2021Model.UserType" />
           <AssociationSet Name="FK_dbo_Products_dbo_Ages_AgeID" Association="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID">
             <End Role="Age" EntitySet="Ages" />
@@ -940,6 +967,10 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Rating" EntitySet="Ratings" />
           </AssociationSet>
+          <AssociationSet Name="FK__UsersSpin__UserI__02215726" Association="ToyStore2021Model.FK__UsersSpin__UserI__02215726">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UsersSpin" EntitySet="UsersSpins" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_User_dbo_UserType_UserTypeID" Association="ToyStore2021Model.FK_dbo_User_dbo_UserType_UserTypeID">
             <End Role="UserType" EntitySet="UserTypes" />
             <End Role="User" EntitySet="Users" />
@@ -1008,6 +1039,7 @@
           <Property Name="DiscountCodeID" Type="Int32" />
           <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsUsed" Type="Boolean" />
+          <Property Name="IsOwned" Type="Boolean" />
           <NavigationProperty Name="DiscountCode" Relationship="ToyStore2021Model.FK_DiscountCodeDetail_DiscountCode" FromRole="DiscountCodeDetail" ToRole="DiscountCode" />
           <NavigationProperty Name="UserDiscountCodes" Relationship="ToyStore2021Model.FK_UserDiscountCode_DiscountCodeDetail" FromRole="DiscountCodeDetail" ToRole="UserDiscountCode" />
         </EntityType>
@@ -1251,6 +1283,7 @@
           <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID" FromRole="User" ToRole="ProductViewed" />
           <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask" FromRole="User" ToRole="QA" />
           <NavigationProperty Name="Ratings" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_User_UserID" FromRole="User" ToRole="Rating" />
+          <NavigationProperty Name="UsersSpins" Relationship="ToyStore2021Model.FK__UsersSpin__UserI__02215726" FromRole="User" ToRole="UsersSpin" />
           <NavigationProperty Name="UserType" Relationship="ToyStore2021Model.FK_dbo_User_dbo_UserType_UserTypeID" FromRole="User" ToRole="UserType" />
           <NavigationProperty Name="UserDiscountCodes" Relationship="ToyStore2021Model.FK_UserDiscountCode_User" FromRole="User" ToRole="UserDiscountCode" />
         </EntityType>
@@ -1263,6 +1296,15 @@
           <Property Name="DiscountCodeDetailID" Type="Int32" />
           <NavigationProperty Name="DiscountCodeDetail" Relationship="ToyStore2021Model.FK_UserDiscountCode_DiscountCodeDetail" FromRole="UserDiscountCode" ToRole="DiscountCodeDetail" />
           <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_UserDiscountCode_User" FromRole="UserDiscountCode" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UsersSpin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="NumberOfSpins" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__UsersSpin__UserI__02215726" FromRole="UsersSpin" ToRole="User" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -1635,6 +1677,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__UsersSpin__UserI__02215726">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
+          <End Type="ToyStore2021Model.UsersSpin" Role="UsersSpin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersSpin">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_User_dbo_UserType_UserTypeID">
           <End Type="ToyStore2021Model.UserType" Role="UserType" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1720,6 +1774,7 @@
           <EntitySetMapping Name="DiscountCodeDetails">
             <EntityTypeMapping TypeName="ToyStore2021Model.DiscountCodeDetail">
               <MappingFragment StoreEntitySet="DiscountCodeDetail">
+                <ScalarProperty Name="IsOwned" ColumnName="IsOwned" />
                 <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="DiscountCodeID" ColumnName="DiscountCodeID" />
@@ -1945,6 +2000,15 @@
             <EntityTypeMapping TypeName="ToyStore2021Model.UserDiscountCode">
               <MappingFragment StoreEntitySet="UserDiscountCode">
                 <ScalarProperty Name="DiscountCodeDetailID" ColumnName="DiscountCodeDetailID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersSpins">
+            <EntityTypeMapping TypeName="ToyStore2021Model.UsersSpin">
+              <MappingFragment StoreEntitySet="UsersSpin">
+                <ScalarProperty Name="NumberOfSpins" ColumnName="NumberOfSpins" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

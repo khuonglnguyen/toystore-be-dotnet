@@ -117,12 +117,23 @@ namespace ToyStore.Controllers
                 if (userCheck != null)
                 {
                     Session["User"] = userCheck;
+
                     if (userCheck.EmailConfirmed == false)
                     {
                         return RedirectToAction("ConfirmEmail", "User", new { ID = userCheck.ID });
                     }
                     else
                     {
+                        IEnumerable<Decentralization> decentralizations = _decentralizationService.GetDecentralizationByUserTypeID(userCheck.UserTypeID);
+                        string role = "";
+                        foreach (var item in decentralizations)
+                        {
+                            role += item.Role.Name + ",";
+                        }
+
+                        role = role.Substring(0, role.Length - 1);
+                        Decentralization(userCheck.ID, role);
+
                         if (_cartService.CheckCartUser(userCheck.ID))
                         {
                             List<ItemCart> carts = _cartService.GetCart(userCheck.ID);
@@ -139,16 +150,6 @@ namespace ToyStore.Controllers
                             }
                         }
                     }
-
-                    IEnumerable<Decentralization> decentralizations = _decentralizationService.GetDecentralizationByUserTypeID(userCheck.UserTypeID);
-                    string role = "";
-                    foreach (var item in decentralizations)
-                    {
-                        role += item.Role.Name + ",";
-                    }
-
-                    role = role.Substring(0, role.Length - 1);
-                    Decentralization(userCheck.ID, role);
                 }
                 else
                 {
@@ -181,6 +182,7 @@ namespace ToyStore.Controllers
         {
             Session["User"] = null;
             Session["Cart"] = null;
+            Response.Cookies.Clear();
             return RedirectToAction("Index");
         }
     }

@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Voucher của tôi";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}
+@model List<ToyStore.Models.UserDiscountCode>
+<div class="cart-items">
+    <div class="container">
+        <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Voucher của tôi</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Tên
+                    </th>
+                    <th>
+                        Ngày hết hạn
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            Giảm @Html.DisplayFor(modelItem => item.DiscountCodeDetail.DiscountCode.NumberDiscount)% tổng đơn hàng
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.DiscountCodeDetail.DiscountCode.ExpirationDate).ToString("dd/MM/yyyy")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>        
+</div>

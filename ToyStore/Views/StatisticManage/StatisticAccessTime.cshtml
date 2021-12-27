@@ -47,7 +47,7 @@
                         {
                             <tr>
                                 <td>
-                                    <b>@Html.DisplayFor(modelItem => item.Date)</b>
+                                    <b>@Convert.ToDateTime(item.Date).ToString("dd/MM/yyyy")</b>
                                 </td>
                                 <td style="color:brown">
                                     <b>@Html.DisplayFor(modelItem => item.AccessTimes)</b>

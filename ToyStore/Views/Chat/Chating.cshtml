@@ -243,6 +243,10 @@
 
     $('#btn-send').click(function send() {
         event.preventDefault();
+        var input = $('.msger-input').val();
+        if (input == "") {
+            return false;
+        }
         var fromId = $('#UserID').val();
         var content = $('.msger-input').val();
         $.ajax({
