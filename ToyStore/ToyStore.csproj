@@ -652,7 +652,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -740,6 +742,7 @@
     <Content Include="Views\Chat\Chating.cshtml" />
     <Content Include="Views\Spin\Index.cshtml" />
     <Content Include="Views\Voucher\Index.cshtml" />
+    <Content Include="Views\Payment\ReturnUrl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

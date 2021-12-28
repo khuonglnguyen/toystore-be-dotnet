@@ -87,6 +87,7 @@ namespace ToyStore.Controllers
             //update paid
             if (_orderService.Paid(Convert.ToInt32(Session["OrderId"])))
             {
+                Session["OrderId"] = null;
                 //on successful payment, show success page to user.  
                 return RedirectToAction("Message", "Cart", new { mess = "Đặt hàng và thanh toán thành công" });
             }
@@ -268,7 +269,16 @@ namespace ToyStore.Controllers
             }
             else
             {
-                ViewBag.message = "Thanh toán thành công";
+                Session["Code"] = null;
+                Session["num"] = null;
+                Session["Cart"] = null;
+                //update paid
+                if (_orderService.Paid(Convert.ToInt32(Session["OrderId"])))
+                {
+                    Session["OrderId"] = null;
+                    //on successful payment, show success page to user.  
+                    ViewBag.message = "Thanh toán thành công";
+                }
             }
             return View();
         }
