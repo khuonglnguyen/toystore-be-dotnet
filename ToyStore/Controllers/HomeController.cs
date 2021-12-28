@@ -42,7 +42,7 @@ namespace ToyStore.Controllers
         public ActionResult Index()
         {
             //Get list product New
-            var listProdudctNew = _productService.GetProductListIsNew();
+            var listProdudctNew = _productService.GetProductListLast();
             ViewBag.ListProductNew = listProdudctNew;
             var listProdudct = _productService.GetProductListIndex();
             ViewBag.listProduct = listProdudct;

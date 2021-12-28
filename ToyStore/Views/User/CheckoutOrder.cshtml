@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<ToyStore.Models.Order>
 @{
-    ViewBag.Title = "Đơn Đặt Hàng";
-    Layout = "~/Views/Layout/HomeLayout.cshtml";
+                /**/
+
+                ViewBag.Title = "Đơn Đặt Hàng";
+                Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 @{
     IEnumerable<ToyStore.Models.User> users = ViewBag.CustomerList as IEnumerable<ToyStore.Models.User>;
@@ -108,7 +110,7 @@
 </div>
 <!-- Tab content -->
 <div id="ChoDuyet" class="tabcontent">
-    @if (Model.Where(x => x.IsApproved == false && x.IsCancel == false).Count() > 0)
+    @if (Model != null && Model.Where(x => x.IsApproved == false && x.IsCancel == false).Count() > 0)
     {
         <table class="table">
             <thead>
@@ -185,7 +187,7 @@
     }
 </div>
 <div id="DaDuyet" class="tabcontent">
-    @if (Model.Where(x => x.IsApproved == true && x.IsDelivere == false).Count() > 0)
+    @if (Model != null && Model.Where(x => x.IsApproved == true && x.IsDelivere == false).Count() > 0)
     {
         <table class="table">
             <thead>
@@ -260,7 +262,7 @@
     }
 </div>
 <div id="DangGiaoHang" class="tabcontent">
-    @if (Model.Where(x => x.IsDelivere == true && x.IsReceived == false).Count() > 0)
+    @if (Model != null && Model.Where(x => x.IsDelivere == true && x.IsReceived == false).Count() > 0)
     {
         <table class="table">
             <thead>
@@ -328,7 +330,7 @@
     }
 </div>
 <div id="DaNhan" class="tabcontent">
-    @if (Model.Where(x => x.IsReceived == true).Count() > 0)
+    @if (Model != null && Model.Where(x => x.IsReceived == true).Count() > 0)
     {
         <table class="table">
             <thead>
@@ -378,7 +380,7 @@
     }
 </div>
 <div id="DanhGia" class="tabcontent">
-    @if (Model.Where(x => x.IsReceived == true).Count() > 0)
+    @if (Model != null && Model.Where(x => x.IsReceived == true).Count() > 0)
     {
         <table class="table">
             <thead>
@@ -503,7 +505,7 @@
     }
 </div>
 <div id="DaHuy" class="tabcontent">
-    @if (Model.Where(x => x.IsCancel == true).Count() > 0)
+    @if (Model != null && Model.Where(x => x.IsCancel == true).Count() > 0)
     {
         <table class="table">
             <thead>

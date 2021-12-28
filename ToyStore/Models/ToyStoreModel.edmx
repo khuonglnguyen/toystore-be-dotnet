@@ -179,7 +179,6 @@
           <Property Name="ViewCount" Type="int" />
           <Property Name="PurchasedCount" Type="int" />
           <Property Name="ProducerID" Type="int" Nullable="false" />
-          <Property Name="IsNew" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="AgeID" Type="int" Nullable="false" />
@@ -1180,7 +1179,6 @@
           <Property Name="ViewCount" Type="Int32" />
           <Property Name="PurchasedCount" Type="Int32" />
           <Property Name="ProducerID" Type="Int32" Nullable="false" />
-          <Property Name="IsNew" Type="Boolean" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="AgeID" Type="Int32" Nullable="false" />
@@ -1901,7 +1899,6 @@
                 <ScalarProperty Name="AgeID" ColumnName="AgeID" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
                 <ScalarProperty Name="ProducerID" ColumnName="ProducerID" />
                 <ScalarProperty Name="PurchasedCount" ColumnName="PurchasedCount" />
                 <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />

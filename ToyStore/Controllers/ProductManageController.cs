@@ -248,7 +248,6 @@ namespace ToyStore.Controllers
                     Price = product.Price,
                     Discount = product.Discount,
                     Description = product.Description,
-                    IsNew = product.IsNew,
                     IsActive = product.IsActive,
                     ViewCount = product.ViewCount,
                     PurchasedCount = product.PurchasedCount,

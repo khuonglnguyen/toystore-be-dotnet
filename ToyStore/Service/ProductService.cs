@@ -22,7 +22,7 @@ namespace ToyStore.Service
         IEnumerable<Product> GetProductListByGender(int GenderID);
         IEnumerable<Product> GetProductListByAge(int AgeID);
         IEnumerable<Product> GetProductListByProducer(int ProducerID);
-        IEnumerable<Product> GetProductListIsNew();
+        IEnumerable<Product> GetProductListLast();
         IEnumerable<Product> GetProductListViewedByUserID(int UserID);
         IEnumerable<Product> GetProductList(string keyWord);
         IEnumerable<Product> GetProductListForManage();
@@ -179,9 +179,9 @@ namespace ToyStore.Service
             return listProduct;
         }
 
-        public IEnumerable<Product> GetProductListIsNew()
+        public IEnumerable<Product> GetProductListLast()
         {
-            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x => x.IsNew == true && x.IsActive == true);
+            IEnumerable<Product> listProduct = this.context.ProductRepository.GetAllData(x=>x.IsActive == true).OrderByDescending(x=>x.LastUpdatedDate);
             return listProduct;
         }
 

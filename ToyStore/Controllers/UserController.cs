@@ -236,6 +236,7 @@ namespace ToyStore.Controllers
                     ViewBag.ProductRating = _ratingService.GetListAllRating().Where(x => x.UserID == user.ID);
                     return View(orders);
                 }
+                return View();
             }
             return RedirectToAction("Index", "Home");
         }

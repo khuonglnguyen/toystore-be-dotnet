@@ -195,7 +195,7 @@ namespace ToyStore.Controllers
             ViewBag.ListProduct = listProduct;
 
             PagedList<Product> listProductPaging;
-            IEnumerable<Product> products = _productService.GetProductListIsNew();
+            IEnumerable<Product> products = _productService.GetProductListLast();
             listProductPaging = new PagedList<Product>(products, page, 12);
             return View(listProductPaging);
         }

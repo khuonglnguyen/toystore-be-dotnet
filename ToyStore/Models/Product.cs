@@ -65,8 +65,6 @@ public partial class Product
 
     public int ProducerID { get; set; }
 
-    public bool IsNew { get; set; }
-
     public bool IsActive { get; set; }
 
     public System.DateTime LastUpdatedDate { get; set; }

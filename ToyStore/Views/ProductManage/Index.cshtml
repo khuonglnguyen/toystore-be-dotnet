@@ -90,7 +90,6 @@
                         $('#Discount').val(response.Discount);
                         $('#Description').val(response.Description);
                         $('#HomeFlag').prop("checked", response.HomeFlag);
-                        $('#IsNew').prop("checked", response.IsNew);
                         $('#IsActive').prop("checked", response.IsActive);
                         $('#ViewCount').val(response.ViewCount);
                         $('#PurchasedCount').val(response.PurchasedCount);
@@ -128,7 +127,6 @@
                         $('#DiscountDetail').val(response.Discount);
                         $('#DescriptionDetail').val(response.Description);
                         $('#HomeFlagDetail').prop("checked", response.HomeFlag);
-                        $('#IsNewDetail').prop("checked", response.IsNew);
                         $('#IsActiveDetail').prop("checked", response.IsActive);
                         $('#ViewCountDetail').val(response.ViewCount);
                         $('#PurchasedCountDetail').val(response.PurchasedCount);
@@ -377,10 +375,6 @@
                         <textarea class="form-control" name="Description" id="DescriptionAdd" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Sản phẩn mới:</label>
-                        <input class="form-control" data-val="true" id="IsNewAdd" name="IsNew" type="checkbox" value="true" checked>
-                    </div>
-                    <div class="form-group">
                         <label>Kích hoạt:</label>
                         <input class="form-control" data-val="true" id="IsActiveAdd" name="IsActive" type="checkbox" value="true" checked>
                     </div>
@@ -455,10 +449,6 @@
                     <div class="form-group">
                         <label>Mô tả:</label>
                         <textarea class="form-control" name="Description" id="Description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Sản phẩn mới:</label>
-                        <input class="form-control" data-val="true" id="IsNew" name="IsNew" type="checkbox" value="true">
                     </div>
                     <div class="form-group">
                         <label>Kích hoạt:</label>
@@ -537,10 +527,6 @@
                 <div class="form-group">
                     <label>Mô tả:</label>
                     <textarea class="form-control" name="Description" id="DescriptionDetail" required readonly></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Sản phẩn mới:</label>
-                    <input class="form-control" data-val="true" id="IsNewDetail" name="IsNew" type="checkbox" value="true" readonly>
                 </div>
                 <div class="form-group">
                     <label>Kích hoạt:</label>
