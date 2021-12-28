@@ -1,9 +1,9 @@
 ﻿@using HelperExtensionNameSpace
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Giỏ Hàng";
-                Layout = "~/Views/Layout/HomeLayout.cshtml";
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 @{
     List<ToyStore.Models.ItemCart> Cart = Session["Cart"] as List<ToyStore.Models.ItemCart>;
@@ -215,6 +215,7 @@
                                     <select name="payment">
                                         <option value="cod">Thanh toán khi nhận hàng(COD)</option>
                                         <option value="paypal">Thanh toán qua Paypal</option>
+                                        <option value="momo">Thanh toán qua Momo</option>
                                     </select><br />
                                     <label>Thành tiền</label><br />
                                     <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
@@ -229,10 +230,11 @@
                                         <p class="text text-danger">@TempData["Message"].ToString()</p>
                                         TempData["Message"] = null;
                                     }
-                                    <select name="payment">
-                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
-                                        <option value="paypal">Thanh toán qua Paypal</option>
-                                    </select> <br />
+                                        <select name="payment">
+                                            <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                            <option value="paypal">Thanh toán qua Paypal</option>
+                                            <option value="momo">Thanh toán qua Momo</option>
+                                        </select> <br />
                                     <label>Thành tiền</label>
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
@@ -269,10 +271,11 @@
                                     <input type="button" value="Chọn mã Code khác" id="btnChoose" />
                                     @Html.ActionLink("Bỏ chọn mã giảm giá", "CancelDiscount")<br />
                                     decimal total = @Cart.Sum(x => x.Total) - (@Cart.Sum(x => x.Total) / 100 * (int)@Session["num"]);
-                                    <select name="payment">
-                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
-                                        <option value="paypal">Thanh toán qua Paypal</option>
-                                    </select> <br />
+                                                                                             <select name="payment">
+                                                                                                 <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                                                                                 <option value="paypal">Thanh toán qua Paypal</option>
+                                                                                                 <option value="momo">Thanh toán qua Momo</option>
+                                                                                             </select> <br />
                                     <label>Thành tiền</label><br />
                                     <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
                                     <h4 style="color:brown">@total.ToString("#,##")₫</h4>
@@ -286,10 +289,11 @@
                                         <p class="text text-danger">@TempData["Message"].ToString()</p>
                                         TempData["Message"] = null;
                                     }
-                                    <select name="payment">
-                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
-                                        <option value="paypal">Thanh toán qua Paypal</option>
-                                    </select> <br />
+                                        <select name="payment">
+                                            <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                            <option value="paypal">Thanh toán qua Paypal</option>
+                                            <option value="momo">Thanh toán qua Momo</option>
+                                        </select> <br />
                                     <label>Thành tiền</label>
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }

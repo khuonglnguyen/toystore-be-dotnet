@@ -172,6 +172,10 @@ namespace ToyStore.Controllers
                 ViewBag.Message = "EmailConfirmed";
                 //Gift
                 _userDiscountCodeService.GiftForNewUser(user.ID);
+                UsersSpin usersSpin = new UsersSpin();
+                usersSpin.NumberOfSpins = 0;
+                usersSpin.UserID = user.ID;
+                _usersSpinService.Add(usersSpin);
                 return View();
             }
             ViewBag.Message = "Mã xác minh tài khoản không đúng";
@@ -187,6 +191,10 @@ namespace ToyStore.Controllers
                 ViewBag.Message = "EmailConfirmed";
                 //Gift
                 _userDiscountCodeService.GiftForNewUser(user.ID);
+                UsersSpin usersSpin = new UsersSpin();
+                usersSpin.NumberOfSpins = 0;
+                usersSpin.UserID = user.ID;
+                _usersSpinService.Add(usersSpin);
                 return View();
             }
             ViewBag.Message = "Mã xác minh tài khoản không đúng";

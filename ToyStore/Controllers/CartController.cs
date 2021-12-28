@@ -460,7 +460,11 @@ namespace ToyStore.Controllers
             // Payment
             if (payment == "paypal")
             {
-                return RedirectToAction("PaymentWithPaypal","Payment");
+                return RedirectToAction("PaymentWithPaypal", "Payment");
+            }
+            else if (payment == "momo")
+            {
+                return RedirectToAction("PaymentWithMomo", "Payment");
             }
 
             if (status)
