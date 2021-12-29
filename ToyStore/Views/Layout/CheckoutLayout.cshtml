@@ -405,6 +405,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <button class="btn bt_bg btn-sm" id="btn-chat">
                             Gửi
                         </button>
+                        <img src="~/Content/images/loading-send.gif" class="loading-send btn bt_bg btn-sm" style="display:none;" />
                     </span>
                 </div>
             </div>
@@ -626,15 +627,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status) {
+                            $.notify("Đã gửi!", "success");
+                            $("#btn-chat").show();
+                            $(".loading-send").hide();
                             getLastData();
                             $('#btn-input').val("");
                             $(".chatbox__body").animate({ scrollTop: 2000000 });
                         } else {
-                            alert("Có lỗi xảy ra");
+                            $.notify("Có lỗi xảy ra!", "error");
                             return;
                         }
                     }
                 })
+                $("#btn-chat").hide();
+                $(".loading-send").show();
             })
         });
     </script>

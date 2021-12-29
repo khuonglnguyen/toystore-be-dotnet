@@ -3393,3 +3393,7 @@ ul.qty li {
 }
 }
 /*--//responsive-design---*/
+.loading-send{
+    width:40px;
+    height:40px;
+}
