@@ -11,54 +11,15 @@
 </div>
 <div class="new-bottom">
     <h5><a class="name" href="@Url.Action("Details","Product",new { ID=Model.ID})" style="width: 250px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@Model.Name </a></h5>
-    <div class="rating">
-        @{
-            if (ViewBag.Rating == 5)
+    <div class="rating" style="float:right">
+        @for (int i = 1; i <= ViewBag.Rating; i++)
+        {
+            if (i <= ViewBag.Rating)
             {
                 <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-            }
-            else if (ViewBag.Rating == 4)
-            {
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span>☆</span>
-            }
-            else if (ViewBag.Rating == 3)
-            {
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span>☆</span>
-                <span>☆</span>
-            }
-            else if (ViewBag.Rating == 2)
-            {
-                <span class="on">☆</span>
-                <span class="on">☆</span>
-                <span>☆</span>
-                <span>☆</span>
-                <span>☆</span>
-            }
-            else if (ViewBag.Rating == 1)
-            {
-                <span class="on">☆</span>
-                <span>☆</span>
-                <span>☆</span>
-                <span>☆</span>
-                <span>☆</span>
             }
             else
             {
-                <span>☆</span>
-                <span>☆</span>
-                <span>☆</span>
-                <span>☆</span>
                 <span>☆</span>
             }
         }

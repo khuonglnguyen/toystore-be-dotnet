@@ -8,42 +8,42 @@
 {
     foreach (var item in qAs)
     {
-<label style="color:black">@item.User.FullName:</label> @item.DateQuestion
-                    <p style="color:black">@item.Question</p> if (item.Answer != null)
-                    {
-<div style="background-color:lightgray">
-    <p><label style="color:brown">@item.User.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
-    <p style="color:black">@item.Answer</p>
-</div> }
-<p>
-    @if (item.UserAskID == user.ID)
-    {
-        using (Ajax.BeginForm("DeleteQA", "Product", new AjaxOptions
+        <label style="color:black">@item.User1.FullName:</label> @item.DateQuestion
+        <p style="color:black">@item.Question</p> if (item.Answer != null)
         {
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "GET",
-            LoadingElementId = "ajax-loader",
-            UpdateTargetId = "qaContainer",
-        }))
-        {
-<input type="text" name="ID" value="@item.ID" hidden="hidden" />
-                            <input type="text" name="ProductID" value="@item.ProductID" hidden="hidden" />
-                                                        <button>Xóa</button> }
-                            <div class="ajax-loader"></div>}
+            <div style="background-color:lightgray">
+                <p><label style="color:brown">@item.User.FullName  <span class="label label-warning">@item.User.UserType.Name</span> </label>  @item.DateAnswer</p>
+                <p style="color:black">@item.Answer</p>
+            </div> }
+        <p>
+            @if (item.UserAskID == user.ID)
+            {
+                using (Ajax.BeginForm("DeleteQA", "Product", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "GET",
+                    LoadingElementId = "ajax-loader",
+                    UpdateTargetId = "qaContainer",
+                }))
+                {
+                    <input type="text" name="ID" value="@item.ID" hidden="hidden" />
+                    <input type="text" name="ProductID" value="@item.ProductID" hidden="hidden" />
+                    <button>Xóa</button> }
+                <div class="ajax-loader"></div>}
 
-</p>
-                    <p>
-                        @if (item.Answer == null && user != null)
-                        {
-                            if (item.UserAskID == user.ID)
-                            {
-    <button class="btnEdit" value="@item.ID" data-productid="@item.ProductID">Sửa</button>}
+        </p>
+        <p>
+            @if (item.Answer == null && user != null)
+            {
+                if (item.UserAskID == user.ID)
+                {
+                    <button class="btnEdit" value="@item.ID" data-productid="@item.ProductID">Sửa</button>}
+            }
+        </p>
+
+        <hr />
+    }
 }
-                    </p>
-
-                                        <hr />
- }
-                                }
-                                else
-                                {
-                    <p>Chưa có câu hỏi nào</p>}
+else
+{
+    <p>Chưa có câu hỏi nào</p>}

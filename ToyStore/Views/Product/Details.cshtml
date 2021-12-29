@@ -21,12 +21,7 @@
             $("#Textarea2").val("");
         });
         $('.item_add').on('click', function () {
-            swal({
-                title: "Thông báo",
-                text: "Thêm vào giỏ hàng thành công!",
-                icon: "success",
-                timer: 1500
-            });
+            $.notify("Đã thêm sản phẩm vào giỏ hàng!", "success");
         });
         $('.AddItemCart').click(function (e) {
             var id = $(this).attr("data-id");
@@ -47,23 +42,13 @@
                             },
                             dataType: 'html',
                             success: function (response) {
-                                swal({
-                                    title: "Thông báo",
-                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
-                                    icon: "success",
-                                    timer: 1500
-                                });
+                                $.notify("Đã thêm sản phẩm vào giỏ hàng!", "success");
                                 $("#DivCart").html(response);
                             }
                         });
                     }
                     else {
-                        swal({
-                            title: "Thông báo",
-                            text: "Số lượng sản phẩm đã hết!",
-                            icon: "warning",
-                            timer: 1500
-                        });
+                        $.notify("Số lượng sản phẩm đã hết!", "warn");
                     }
                 }
             });
@@ -200,89 +185,29 @@
             <div class="col-md-6 single-top-left simpleCart_shelfItem wow fadeInRight animated" data-wow-delay=".5s">
                 <h3>@Model.Name</h3>
                 <div class="single-rating">
-                    <span class="starRating">
-                        @{ if (ViewBag.Rating == 5)
+                    <div class="rating">
+                        @for (int i = 1; i <= ViewBag.Rating; i++)
+                        {
+                            if (i <= ViewBag.Rating)
                             {
-                                <input id="rating5" type="radio" name="rating" value="5" checked>
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label> }
-                            else if (ViewBag.Rating == 4)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4" checked>
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label> }
-                            else if (ViewBag.Rating == 3)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3" checked>
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label> }
-                            else if (ViewBag.Rating == 2)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2" checked>
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label> }
-                            else if (ViewBag.Rating == 1)
-                            {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1" checked>
-                                <label for="rating1">1</label> }
+                                <span class="on">☆</span>
+                            }
                             else
                             {
-                                <input id="rating5" type="radio" name="rating" value="5">
-                                <label for="rating5">5</label>
-                                <input id="rating4" type="radio" name="rating" value="4">
-                                <label for="rating4">4</label>
-                                <input id="rating3" type="radio" name="rating" value="3">
-                                <label for="rating3">3</label>
-                                <input id="rating2" type="radio" name="rating" value="2">
-                                <label for="rating2">2</label>
-                                <input id="rating1" type="radio" name="rating" value="1">
-                                <label for="rating1">1</label> } }
-                    </span>
-                    @if (@ViewBag.Rating > 0)
+                                <span>☆</span>
+                            }
+                        }
+                    </div>
+                    @if (@ViewBag.Rating <= 0)
                     {
-                        <p>@ViewBag.Rating / 5</p> }
-                    else
-                    {
-                        <p>Chưa có đánh giá</p>}
+                        <p>Chưa có đánh giá</p>
+                    }
                     <a href="#">Đánh giá sau khi mua hàng</a>
                 </div>
-                <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p>
+                @if (Model.PromotionPrice < Model.Price)
+                {
+                    <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p>
+                }
                 <h6 class="item_price">@Model.PromotionPrice.ToString("#,##")₫</h6>
                 <div class="clearfix"> </div>
                 <div class="quantity">
@@ -302,7 +227,6 @@
                 </div>
                 <div class="btn_form">
                     <a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a>
-                    @*@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = Model.ID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class = "add-cart item_add" })*@
                 </div>
             </div>
             <div class="clearfix"> </div>
@@ -343,11 +267,25 @@
                             {
                                 foreach (var item in ratings)
                                 {
-                                    <p><label style="color:black">@item.User.FullName</label>: (@ViewBag.Rating/5)</p>
-                                    <div style="background-color:lightgray">
-                                        <p style="color:black">@item.Content</p>
-                                    </div>
-                                    <hr /> }
+                                    <label style="color:black">@item.User.FullName</label>
+                                    <div class="rating" style="float:right">
+                                        @for (int i = 1; i <= item.Star; i++)
+                                        {
+                                            if (i <= item.Star)
+                                            {
+                                                <span class="on">☆</span>
+                                            }
+                                            else
+                                            {
+                                                <span>☆</span>
+                                            }
+                                        }
+                                    </div> <br />
+                                    <p style="background-color:lightgrey;color:black;">
+                                        @item.Content
+                                    </p>
+                                    <hr />
+                                }
                             }
                             else
                             {
@@ -404,15 +342,15 @@
                                 {
                                     foreach (var item in qAs)
                                     {
-                                        <label style="color:black">@item.User.FullName:</label> @item.DateQuestion
+                                        <label style="color:black">@item.User1.FullName:</label> @item.DateQuestion
                                         <p style="color:black">@item.Question</p> if (item.Answer != null)
                                         {
                                             <div style="background-color:lightgray">
-                                                <p><label style="color:brown">@item.User.FullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.DateAnswer</p>
+                                                <p><label style="color:brown">@item.User.FullName  <span class="label label-warning">@item.User.UserType.Name</span> </label>  @item.DateAnswer</p>
                                                 <p style="color:black">@item.Answer</p>
                                             </div> }
                                         <p>
-                                            @if (item.UserAskID == user.ID)
+                                            @if (user != null && item.UserAskID == user.ID)
                                             {
                                                 using (Ajax.BeginForm("DeleteQA", "Product", new AjaxOptions
                                                 {
@@ -452,7 +390,6 @@
         <div class="related-products">
             <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
                 <h3 class="title">Sản Phẩm<span> Cùng Loại</span></h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit curabitur </p>
             </div>
             <div class="related-products-info">
                 @foreach (var item in products)
@@ -471,15 +408,11 @@
                             </div>
                             <div class="new-bottom">
                                 <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
                                 <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+                                    @if (item.Discount > 0)
+                                    {
+                                        <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+                                    }
                                     <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
@@ -498,17 +431,13 @@
                                 </div>
                             </div>
                             <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
+                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.PromotionPrice </a></h5>
                                 <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
+                                    @if (item.Discount > 0)
+                                    {
+                                        <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+                                    }
+                                    <p><span class="item_price">@item.PromotionPrice₫</span></p>
                                 </div>
                             </div>
                         </div> counter++;
@@ -525,17 +454,13 @@
                                 </div>
                             </div>
                             <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
+                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.PromotionPrice </a></h5>
                                 <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
+                                    @if (item.Discount > 0)
+                                    {
+                                        <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+                                    }
+                                    <p><span class="item_price">@item.PromotionPrice₫</span></p>
                                 </div>
                             </div>
                         </div> counter++;
@@ -553,17 +478,13 @@
                                 </div>
                             </div>
                             <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
-                                <div class="rating">
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span class="on">☆</span>
-                                    <span>☆</span>
-                                </div>
+                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.PromotionPrice </a></h5>
                                 <div class="ofr">
-                                    <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
-                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
+                                    @if (item.Discount > 0)
+                                    {
+                                        <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
+                                    }
+                                    <p><span class="item_price">@item.PromotionPrice₫</span></p>
                                 </div>
                             </div>
                         </div>break;
@@ -585,13 +506,7 @@
                 <h4 class="modal-title">Chỉnh sửa</h4>
             </div>
             <div class="modal-body">
-                @using (Ajax.BeginForm("EditQuestion", "Product", new AjaxOptions
-                {
-                    InsertionMode = InsertionMode.Replace,
-                    HttpMethod = "GET",
-                    LoadingElementId = "ajax-loader",
-                    UpdateTargetId = "qaContainer",
-                }))
+                @using (Html.BeginForm("EditQuestion", "Product", FormMethod.Post))
                 {
                     <input type="text" name="ID" id="ID" hidden="hidden" />
                     <input type="text" name="ProductID" id="ProductID" hidden="hidden" />
@@ -603,7 +518,8 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary btnSave" id="btnSave">Lưu</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>}
+                    </div>
+                }
             </div>
         </div>
     </div>

@@ -42,6 +42,8 @@ public partial class QA
 
     public virtual User User { get; set; }
 
+    public virtual User User1 { get; set; }
+
 }
 
 }

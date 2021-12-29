@@ -947,7 +947,7 @@ h3.title span {
 /*--ratings--*/
 .rating {
 	text-align: center;
-	float: right;
+	float: left;
 }
 .rating span {
     display: inline-block;

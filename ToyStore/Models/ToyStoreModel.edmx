@@ -303,6 +303,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__QA__UserAnswerID__76C649C1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="UserAnswerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QA__UserAskID__75D22588">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="UserAskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__UsersSpin__UserI__02215726">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="UsersSpin" Type="Self.UsersSpin" Multiplicity="*" />
@@ -563,20 +587,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_QA_dbo_User_UserID_Ask">
-          <End Role="User" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="QA" Type="Self.QA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QA">
-              <PropertyRef Name="UserAskID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Rating_dbo_Products_ProductID">
           <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -714,6 +724,14 @@
             <End Role="User" EntitySet="User" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
+          <AssociationSet Name="FK__QA__UserAnswerID__76C649C1" Association="Self.FK__QA__UserAnswerID__76C649C1">
+            <End Role="User" EntitySet="User" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QA__UserAskID__75D22588" Association="Self.FK__QA__UserAskID__75D22588">
+            <End Role="User" EntitySet="User" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
           <AssociationSet Name="FK__UsersSpin__UserI__02215726" Association="Self.FK__UsersSpin__UserI__02215726">
             <End Role="User" EntitySet="User" />
             <End Role="UsersSpin" EntitySet="UsersSpin" />
@@ -788,10 +806,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_dbo_QA_dbo_Products_ProductID" Association="Self.FK_dbo_QA_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
-            <End Role="QA" EntitySet="QA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_QA_dbo_User_UserID_Ask" Association="Self.FK_dbo_QA_dbo_User_UserID_Ask">
-            <End Role="User" EntitySet="User" />
             <End Role="QA" EntitySet="QA" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Rating_dbo_Products_ProductID" Association="Self.FK_dbo_Rating_dbo_Products_ProductID">
@@ -958,7 +972,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="ProductViewed" EntitySet="ProductVieweds" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_QA_dbo_User_UserID_Ask" Association="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask">
+          <AssociationSet Name="FK__QA__UserAnswerID__76C649C1" Association="ToyStore2021Model.FK__QA__UserAnswerID__76C649C1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QA__UserAskID__75D22588" Association="ToyStore2021Model.FK__QA__UserAskID__75D22588">
             <End Role="User" EntitySet="Users" />
             <End Role="QA" EntitySet="QAs" />
           </AssociationSet>
@@ -1220,7 +1238,8 @@
           <Property Name="DateAnswer" Type="DateTime" Precision="3" />
           <Property Name="UserAnswerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Products_ProductID" FromRole="QA" ToRole="Product" />
-          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask" FromRole="QA" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__QA__UserAnswerID__76C649C1" FromRole="QA" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="ToyStore2021Model.FK__QA__UserAskID__75D22588" FromRole="QA" ToRole="User" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -1279,7 +1298,8 @@
           <NavigationProperty Name="Messages" Relationship="ToyStore2021Model.FK__Message__FromUse__41C3AD93" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="Messages1" Relationship="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID" FromRole="User" ToRole="ProductViewed" />
-          <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_User_UserID_Ask" FromRole="User" ToRole="QA" />
+          <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK__QA__UserAnswerID__76C649C1" FromRole="User" ToRole="QA" />
+          <NavigationProperty Name="QAs1" Relationship="ToyStore2021Model.FK__QA__UserAskID__75D22588" FromRole="User" ToRole="QA" />
           <NavigationProperty Name="Ratings" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_User_UserID" FromRole="User" ToRole="Rating" />
           <NavigationProperty Name="UsersSpins" Relationship="ToyStore2021Model.FK__UsersSpin__UserI__02215726" FromRole="User" ToRole="UsersSpin" />
           <NavigationProperty Name="UserType" Relationship="ToyStore2021Model.FK_dbo_User_dbo_UserType_UserTypeID" FromRole="User" ToRole="UserType" />
@@ -1647,10 +1667,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_QA_dbo_User_UserID_Ask">
-          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__QA__UserAnswerID__76C649C1">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1" />
+          <End Type="ToyStore2021Model.QA" Role="QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="UserAnswerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QA__UserAskID__75D22588">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1" />
           <End Type="ToyStore2021Model.QA" Role="QA" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">

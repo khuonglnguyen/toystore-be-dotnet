@@ -6488,3 +6488,8 @@ ul.dropdown-menu {
 }
 }
 /***responsive***/
+
+.loading-send{
+    width:45px;
+    height:40px;
+}

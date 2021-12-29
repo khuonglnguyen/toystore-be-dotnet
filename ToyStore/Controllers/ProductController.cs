@@ -62,7 +62,7 @@ namespace ToyStore.Controllers
         public ActionResult Details(int ID)
         {
             var product = _productService.GetByID(ID);
-            var listProduct = _productService.GetProductListByCategory(product.CategoryID);
+            var listProduct = _productService.GetProductListByCategory(product.CategoryID).Where(x => x.ID != ID);
             ViewBag.ListProduct = listProduct;
             IEnumerable<QA> listQA = _qAService.GetQAByProductID(ID).OrderByDescending(x => x.DateQuestion);
             ViewBag.CommentQA = listQA;
@@ -81,7 +81,7 @@ namespace ToyStore.Controllers
                 {
                     HttpCookie cookie = (HttpCookie)Request.Cookies["ViewedPage"];
                     cookie[string.Format("ID_{0}", ID)] = "1";
-                    cookie.Expires = DateTime.Now.AddDays(1);
+                    cookie.Expires = DateTime.Now.AddMinutes(1);
                     Response.Cookies.Add(cookie);
 
                     _productService.AddViewCount(ID);
@@ -260,7 +260,7 @@ namespace ToyStore.Controllers
             qa.DateAnswer = DateTime.Now;
             qa.UserAnswerID = 2;
             _qAService.AddQA(qa);
-            return RedirectToAction("QAPartial",new { ID= productID });
+            return RedirectToAction("QAPartial", new { ID = productID });
         }
         public ActionResult CommentPartial(int ID)
         {
@@ -270,7 +270,7 @@ namespace ToyStore.Controllers
         }
         public ActionResult QAPartial(int ID)
         {
-            IEnumerable<QA> listQA = context.QAs.Include(x => x.User).Where(x=>x.ProductID==ID).OrderByDescending(x => x.DateQuestion).ToList();
+            IEnumerable<QA> listQA = context.QAs.Include(x => x.User).Where(x => x.ProductID == ID).OrderByDescending(x => x.DateQuestion).ToList();
             ViewBag.QAList = listQA;
             return PartialView("_QAPartial");
         }
@@ -281,7 +281,7 @@ namespace ToyStore.Controllers
             rating.UserID = user.ID;
             _ratingService.AddRating(rating);
             _orderDetailService.SetIsRating(OrderDetailID);
-            return RedirectToAction("Details", "Product",new { ID=rating.ProductID});
+            return RedirectToAction("Details", "Product", new { ID = rating.ProductID });
         }
         [HttpGet]
         public ActionResult GetDataQuesion(int id)
@@ -314,13 +314,13 @@ namespace ToyStore.Controllers
             ViewBag.QAList = listQA;
             return RedirectToAction("QAPartial", new { ID = ProductID });
         }
-        [HttpGet]
-        public ActionResult EditQuestion(QA qA, int ProductID)
+        [HttpPost]
+        public ActionResult EditQuestion(QA qA)
         {
             QA qa = _qAService.GetQAByID(qA.ID);
             qa.Question = qA.Question;
             _qAService.UpdateQA(qa);
-            return RedirectToAction("QAPartial", new { ID = ProductID });
+            return RedirectToAction("Details", "Product", new { ID = qA.ProductID });
         }
     }
 }

@@ -484,10 +484,6 @@
     <Content Include="bin\Unity.Container.pdb" />
     <Content Include="bin\Unity.Mvc5.dll" />
     <Content Include="bin\WebGrease.dll" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chatbox.css" />
     <Content Include="Content\chatbox.js" />
     <Content Include="Content\css\basictable.css" />
@@ -560,9 +556,11 @@
     <Content Include="Content\images\225981558_527356271930067_3582002851820138652_n.jpg" />
     <Content Include="Content\images\ankhuong.png" />
     <Content Include="Content\images\johnny-dang.jpg" />
+    <Content Include="Content\images\loading-send.gif" />
     <Content Include="Content\images\spin_off.png" />
     <Content Include="Content\images\spin_on.png" />
     <Content Include="Content\images\wheel_back.png" />
+    <Content Include="Content\notify.min.js" />
     <Content Include="Content\sound\tick.mp3" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\Chart.js" />
@@ -748,10 +746,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />

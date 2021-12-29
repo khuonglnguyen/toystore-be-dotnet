@@ -160,7 +160,7 @@
         <section class="msger">
             <header class="msger-header">
                 <div class="msger-header-title">
-                     @ViewBag.UserFullName
+                    @ViewBag.UserFullName
                 </div>
             </header>
 
@@ -170,6 +170,7 @@
 
             <form class="msger-inputarea">
                 <input type="text" class="msger-input" placeholder="Nhập tin nhắn...">
+                <img src="~/Content/images/loading-send.gif" class="loading-send msger-send-btn" style="display:none"/>
                 <button type="submit" class="msger-send-btn" id="btn-send">Gửi</button>
             </form>
         </section>
@@ -245,6 +246,7 @@
         event.preventDefault();
         var input = $('.msger-input').val();
         if (input == "") {
+            $.notify("Vui lòng nhập vào tin nhắn!", "warn");
             return false;
         }
         var fromId = $('#UserID').val();
@@ -256,6 +258,10 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status) {
+                    $(".loading-send").hide();
+                    $("#btn-send").show();
+                    $(".msger-input").prop("disabled", false);
+                    $.notify("Đã gửi", "success");
                     $('.msger-input').val("");
                     $(".chatbox__body").animate({ scrollTop: 2000000 });
 
@@ -263,10 +269,13 @@
                         scrollTop: $("#end").offset().top
                     }, 2000);
                 } else {
-                    alert("Có lỗi xảy ra");
+                    $.notify("Có lỗi xảy ra!", "error");
                     return;
                 }
             }
         })
+        $("#btn-send").hide();
+        $(".msger-input").prop("disabled", true);
+        $(".loading-send").show();
     })
 </script>
