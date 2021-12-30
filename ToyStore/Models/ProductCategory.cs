@@ -37,6 +37,8 @@ public partial class ProductCategory
 
     public int ParentID { get; set; }
 
+    public string SEOKeyword { get; set; }
+
 
 
     public virtual ProductCategoryParent ProductCategoryParent { get; set; }

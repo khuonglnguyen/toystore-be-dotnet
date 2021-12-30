@@ -13,7 +13,7 @@
                 }
                 else
                 {
-                    <p>Chào mừng đến với ToyStore <a href="@Url.Action("SignUp","Home")">Đăng ký </a> hoặc <a href="@Url.Action("SignIn","Home")">Đăng nhập </a></p>
+                    <p>Chào mừng đến với ToyStore <a href="/dang-ky">Đăng ký </a> hoặc <a href="/dang-nhap">Đăng nhập </a></p>
                 }
             </div>
             <div class="nav navbar-nav navbar-right social-icons wow fadeInRight animated" data-wow-delay=".5s">
@@ -49,11 +49,11 @@
                 </ul>
             </div>
             <div class="nav navbar-nav logo wow zoomIn animated" data-wow-delay=".7s">
-                <h1><a href="index.html">Toy<b>Store</b><span class="tag">Tất cả mọi thứ bé cần </span> </a></h1>
+                <h1><a href="/trang-chu">Toy<b>Store</b><span class="tag">Tất cả mọi thứ bé cần </span> </a></h1>
             </div>
             <div class="nav navbar-nav navbar-right header-two-right">
                 <div class="header-right my-account">
-                    <a href="/Spin"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> Săn Voucher</a>
+                    <a href="/quay-trung-thuong"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> Săn Voucher</a>
                 </div>
                 <div class="header-right cart" id="DivCart">
                     @Html.Action("CartPartial", "Cart")

@@ -31,6 +31,8 @@ public partial class ProductCategoryParent
 
     public string Name { get; set; }
 
+    public string SeoKeyword { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

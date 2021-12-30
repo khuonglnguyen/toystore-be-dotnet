@@ -180,7 +180,7 @@
     function startSpin() {
         var num = $('#num-of-spin').text();
         if (num == 0) {
-            alert("Bạn đã hết số lượt quay");
+            $.notify("Bạn đã hết số lượt quay!", "error");
             return;
         }
 

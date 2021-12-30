@@ -75,6 +75,8 @@ public partial class Product
 
     public int Discount { get; set; }
 
+    public string SEOKeyword { get; set; }
+
 
 
     public virtual Age Age { get; set; }

@@ -31,6 +31,8 @@ public partial class Age
 
     public string Name { get; set; }
 
+    public string SEOKeyword { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -19,6 +19,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="SEOKeyword" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -143,6 +144,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="SEOKeyword" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -153,6 +155,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="SEOKeyword" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="ProductCategoryParent">
           <Key>
@@ -160,6 +163,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="SeoKeyword" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -184,6 +188,7 @@
           <Property Name="AgeID" Type="int" Nullable="false" />
           <Property Name="GenderID" Type="int" Nullable="false" />
           <Property Name="Discount" Type="int" Nullable="false" />
+          <Property Name="SEOKeyword" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="ProductViewed">
           <Key>
@@ -1011,6 +1016,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SEOKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID" FromRole="Age" ToRole="Product" />
         </EntityType>
         <EntityType Name="Customer">
@@ -1157,6 +1163,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="SEOKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Producer_ProducerID" FromRole="Producer" ToRole="Product" />
         </EntityType>
         <EntityType Name="ProductCategory">
@@ -1168,6 +1175,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="SEOKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProductCategoryParent" Relationship="ToyStore2021Model.FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID" FromRole="ProductCategory" ToRole="ProductCategoryParent" />
           <NavigationProperty Name="Products" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_ProductCategory_CategoryID" FromRole="ProductCategory" ToRole="Product" />
         </EntityType>
@@ -1177,6 +1185,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SeoKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProductCategories" Relationship="ToyStore2021Model.FK_dbo_ProductCategory_dbo_ProductCategoryParent_ParentID" FromRole="ProductCategoryParent" ToRole="ProductCategory" />
         </EntityType>
         <EntityType Name="Product">
@@ -1202,6 +1211,7 @@
           <Property Name="AgeID" Type="Int32" Nullable="false" />
           <Property Name="GenderID" Type="Int32" Nullable="false" />
           <Property Name="Discount" Type="Int32" Nullable="false" />
+          <Property Name="SEOKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Age" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID" FromRole="Product" ToRole="Age" />
           <NavigationProperty Name="Gender" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Gender_GenderID" FromRole="Product" ToRole="Gender" />
           <NavigationProperty Name="ImportCouponDetails" Relationship="ToyStore2021Model.FK_dbo_ImportCouponDetail_dbo_Products_ProductID" FromRole="Product" ToRole="ImportCouponDetail" />
@@ -1761,6 +1771,7 @@
           <EntitySetMapping Name="Ages">
             <EntityTypeMapping TypeName="ToyStore2021Model.Age">
               <MappingFragment StoreEntitySet="Age">
+                <ScalarProperty Name="SEOKeyword" ColumnName="SEOKeyword" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1896,6 +1907,7 @@
           <EntitySetMapping Name="Producers">
             <EntityTypeMapping TypeName="ToyStore2021Model.Producer">
               <MappingFragment StoreEntitySet="Producer">
+                <ScalarProperty Name="SEOKeyword" ColumnName="SEOKeyword" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1905,6 +1917,7 @@
           <EntitySetMapping Name="ProductCategories">
             <EntityTypeMapping TypeName="ToyStore2021Model.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="SEOKeyword" ColumnName="SEOKeyword" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -1916,6 +1929,7 @@
           <EntitySetMapping Name="ProductCategoryParents">
             <EntityTypeMapping TypeName="ToyStore2021Model.ProductCategoryParent">
               <MappingFragment StoreEntitySet="ProductCategoryParent">
+                <ScalarProperty Name="SeoKeyword" ColumnName="SeoKeyword" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1924,6 +1938,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ToyStore2021Model.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="SEOKeyword" ColumnName="SEOKeyword" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="GenderID" ColumnName="GenderID" />
                 <ScalarProperty Name="AgeID" ColumnName="AgeID" />

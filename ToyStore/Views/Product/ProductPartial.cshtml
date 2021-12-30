@@ -3,14 +3,14 @@
     <a href="@Url.Action("Details","Product",new { ID=Model.ID})"><img src="@Url.Content("~/Content/images/"+Model.Image1)" style="height:250px;width:300px" class="img-responsive" alt="item" /></a>
     <div class="new-text">
         <ul>
-            <li><a href="@Url.Action("Details","Product",new { ID=Model.ID})">Xem Chi Tiết </a></li>
-            <li><a class="AddItemCart"data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a></li>
+            <li><a href="/san-pham/@Model.SEOKeyword-@Model.ID">Xem Chi Tiết </a></li>
+            <li><a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a></li>
             @*<li class="Add">@Ajax.ActionLink("Thêm Vào Giỏ", "AddItemCart", "Cart", new { ID = Model.ID, @class = "item_add" }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "DivCart", InsertionMode = InsertionMode.Replace }, new { @class="AddItemCart"})</li>*@
         </ul>
     </div>
 </div>
 <div class="new-bottom">
-    <h5><a class="name" href="@Url.Action("Details","Product",new { ID=Model.ID})" style="width: 250px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@Model.Name </a></h5>
+    <h5><a class="name" href="/san-pham/@Model.SEOKeyword-@Model.ID" style="width: 250px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@Model.Name </a></h5>
     <div class="rating" style="float:right">
         @for (int i = 1; i <= ViewBag.Rating; i++)
         {

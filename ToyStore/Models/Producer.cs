@@ -33,6 +33,8 @@ public partial class Producer
 
     public bool IsActive { get; set; }
 
+    public string SEOKeyword { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

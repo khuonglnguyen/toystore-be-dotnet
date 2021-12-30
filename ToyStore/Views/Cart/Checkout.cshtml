@@ -107,7 +107,7 @@
                             });
                         }
                         else {
-                            $.notify("Số lượng sản phẩm đã hết!", "error");
+                            $.notify("Số lượng sản phẩm không đủ!", "error");
                         }
                     }
                 });
@@ -165,11 +165,11 @@
             {
                 <div class="login-page">
                     <div class="title-info wow fadeInUp animated" data-wow-delay=".5s">
-                        <h3 class="title">Thêm Mới Thông Tin Đặt Hàng</h3>
+                        <h3 class="title">Đặt Hàng Không Đăng Nhập</h3>
                     </div>
                     <div class="widget-shadow">
                         <div class="login-top wow fadeInUp animated" data-wow-delay=".7s">
-                            <h4>Đăng nhập để mua hàng nhanh chóng <br> Bạn chưa có tài khoản? <a href="@Url.Action("SignUp","Home")">  Đăng Ký Ngay »</a> </h4>
+                            <h4>Thông tin đơn đặt hàng</h4>
                         </div>
                         <div class="login-body wow fadeInUp animated" data-wow-delay=".7s">
                             @using (Html.BeginForm("AddOrder", "Cart", FormMethod.Post))
@@ -205,11 +205,11 @@
                                         <p class="text text-danger">@TempData["Message"].ToString()</p>
                                         TempData["Message"] = null;
                                     }
-                                        <select name="payment">
-                                            <option value="cod">Thanh toán khi nhận hàng(COD)</option>
-                                            <option value="paypal">Thanh toán qua Paypal</option>
-                                            <option value="momo">Thanh toán qua Momo</option>
-                                        </select> <br />
+                                    <select name="payment">
+                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                        <option value="paypal">Thanh toán qua Paypal</option>
+                                        <option value="momo">Thanh toán qua Momo</option>
+                                    </select> <br />
                                     <label>Thành tiền</label>
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
@@ -246,11 +246,11 @@
                                     <input type="button" value="Chọn mã Code khác" id="btnChoose" />
                                     @Html.ActionLink("Bỏ chọn mã giảm giá", "CancelDiscount")<br />
                                     decimal total = @Cart.Sum(x => x.Total) - (@Cart.Sum(x => x.Total) / 100 * (int)@Session["num"]);
-                                                                                             <select name="payment">
-                                                                                                 <option value="cod">Thanh toán khi nhận hàng(COD)</option>
-                                                                                                 <option value="paypal">Thanh toán qua Paypal</option>
-                                                                                                 <option value="momo">Thanh toán qua Momo</option>
-                                                                                             </select> <br />
+                                    <select name="payment">
+                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                        <option value="paypal">Thanh toán qua Paypal</option>
+                                        <option value="momo">Thanh toán qua Momo</option>
+                                    </select> <br />
                                     <label>Thành tiền</label><br />
                                     <del>@Cart.Sum(x => x.Total).ToString("#,##")₫</del>
                                     <h4 style="color:brown">@total.ToString("#,##")₫</h4>
@@ -264,11 +264,11 @@
                                         <p class="text text-danger">@TempData["Message"].ToString()</p>
                                         TempData["Message"] = null;
                                     }
-                                        <select name="payment">
-                                            <option value="cod">Thanh toán khi nhận hàng(COD)</option>
-                                            <option value="paypal">Thanh toán qua Paypal</option>
-                                            <option value="momo">Thanh toán qua Momo</option>
-                                        </select> <br />
+                                    <select name="payment">
+                                        <option value="cod">Thanh toán khi nhận hàng(COD)</option>
+                                        <option value="paypal">Thanh toán qua Paypal</option>
+                                        <option value="momo">Thanh toán qua Momo</option>
+                                    </select> <br />
                                     <label>Thành tiền</label>
                                     <h4 style="color:brown">@Cart.Sum(x => x.Total).ToString("#,##")₫</h4>
                                 }
