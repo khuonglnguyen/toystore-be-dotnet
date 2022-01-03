@@ -469,11 +469,11 @@ namespace ToyStore.Controllers
 
             if (status)
             {
-                SentMail("Đặt hàng thành công", customercheck.Email, "khuongip564gb@gmail.com", "googlekhuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
+                SentMail("Đặt hàng thành công", customercheck.Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
             }
             else
             {
-                SentMail("Đặt hàng thành công", customerOrder.Email, "khuongip564gb@gmail.com", "googlekhuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
+                SentMail("Đặt hàng thành công", customerOrder.Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
             }
 
 

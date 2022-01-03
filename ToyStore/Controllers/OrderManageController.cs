@@ -98,7 +98,7 @@ namespace ToyStore.Controllers
             Order order = _orderService.Approved(ID);
             //Get email customer
             string Email = _customerService.GetEmailByID(order.CustomerID);
-            SentMail("Đơn hàng của bạn đã được duyệt", Email, "khuongip564gb@gmail.com", "googlekhuongip564gb", "Vào đơn hàng của bạn để xem thông tin chi tiết");
+            SentMail("Đơn hàng của bạn đã được duyệt", Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "Vào đơn hàng của bạn để xem thông tin chi tiết");
             return RedirectToAction("ApprovedAndNotDelivery");
         }
         [HttpGet]
@@ -108,7 +108,7 @@ namespace ToyStore.Controllers
             //Get email customer
             string Email = _customerService.GetEmailByID(order.CustomerID);
             string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
-            SentMail("Đơn hàng của bạn đã được giao cho đối tác vận chuyển", Email, "khuongip564gb@gmail.com", "googlekhuongip564gb", "Vào đơn hàng của bạn để xem thông tin chi tiết. Sau khi nhận được đơn hàng, bạn vui lòng click vào link sau để xác nhận đã nhận được đơn hàng từ đơn vị vận chuyển: " + urlBase + "/OrderManage/Received/" + ID+"");
+            SentMail("Đơn hàng của bạn đã được giao cho đối tác vận chuyển", Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "Vào đơn hàng của bạn để xem thông tin chi tiết. Sau khi nhận được đơn hàng, bạn vui lòng click vào link sau để xác nhận đã nhận được đơn hàng từ đơn vị vận chuyển: " + urlBase + "/OrderManage/Received/" + ID+"");
             return RedirectToAction("DeliveredList");
         }
         [HttpGet]
