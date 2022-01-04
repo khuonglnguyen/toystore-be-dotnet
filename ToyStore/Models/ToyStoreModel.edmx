@@ -21,17 +21,6 @@
           <Property Name="Name" Type="nvarchar" MaxLength="256" />
           <Property Name="SEOKeyword" Type="nvarchar" MaxLength="256" />
         </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar(max)" />
-          <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="IsMember" Type="bit" />
-        </EntityType>
         <EntityType Name="Decentralization">
           <Key>
             <PropertyRef Name="ID" />
@@ -114,7 +103,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="DateOrder" Type="datetime" Nullable="false" />
           <Property Name="DateShip" Type="datetime" Nullable="false" />
           <Property Name="Offer" Type="int" Nullable="false" />
@@ -260,6 +249,7 @@
           <Property Name="AmountPurchased" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Avatar" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsOrdered" Type="bit" />
         </EntityType>
         <EntityType Name="UserDiscountCode">
           <Key>
@@ -305,6 +295,18 @@
             </Principal>
             <Dependent Role="Message">
               <PropertyRef Name="ToUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__UserID__7E3E19AE">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -435,20 +437,6 @@
             </Principal>
             <Dependent Role="ImportCouponDetail">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Order_dbo_Customer_CustomerID">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -697,7 +685,6 @@
         <EntityContainer Name="ToyStore2021ModelStoreContainer">
           <EntitySet Name="AccessTimesCount" EntityType="Self.AccessTimesCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Age" EntityType="Self.Age" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Decentralization" EntityType="Self.Decentralization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiscountCode" EntityType="Self.DiscountCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiscountCodeDetail" EntityType="Self.DiscountCodeDetail" Schema="dbo" store:Type="Tables" />
@@ -728,6 +715,10 @@
           <AssociationSet Name="FK__Message__ToUserI__42B7D1CC" Association="Self.FK__Message__ToUserI__42B7D1CC">
             <End Role="User" EntitySet="User" />
             <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__UserID__7E3E19AE" Association="Self.FK__Order__UserID__7E3E19AE">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK__QA__UserAnswerID__76C649C1" Association="Self.FK__QA__UserAnswerID__76C649C1">
             <End Role="User" EntitySet="User" />
@@ -768,10 +759,6 @@
           <AssociationSet Name="FK_dbo_ImportCouponDetail_dbo_Products_ProductID" Association="Self.FK_dbo_ImportCouponDetail_dbo_Products_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="ImportCouponDetail" EntitySet="ImportCouponDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Order_dbo_Customer_CustomerID" Association="Self.FK_dbo_Order_dbo_Customer_CustomerID">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_OrderDetail_dbo_Order_OrderID" Association="Self.FK_dbo_OrderDetail_dbo_Order_OrderID">
             <End Role="Order" EntitySet="Order" />
@@ -853,7 +840,6 @@
         <EntityContainer Name="ToyStore2021Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccessTimesCounts" EntityType="ToyStore2021Model.AccessTimesCount" />
           <EntitySet Name="Ages" EntityType="ToyStore2021Model.Age" />
-          <EntitySet Name="Customers" EntityType="ToyStore2021Model.Customer" />
           <EntitySet Name="Decentralizations" EntityType="ToyStore2021Model.Decentralization" />
           <EntitySet Name="DiscountCodes" EntityType="ToyStore2021Model.DiscountCode" />
           <EntitySet Name="DiscountCodeDetails" EntityType="ToyStore2021Model.DiscountCodeDetail" />
@@ -880,10 +866,6 @@
           <AssociationSet Name="FK_dbo_Products_dbo_Ages_AgeID" Association="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID">
             <End Role="Age" EntitySet="Ages" />
             <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Order_dbo_Customer_CustomerID" Association="ToyStore2021Model.FK_dbo_Order_dbo_Customer_CustomerID">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Decentralization_dbo_Role_RoleID" Association="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID">
             <End Role="Role" EntitySet="Roles" />
@@ -940,6 +922,10 @@
           <AssociationSet Name="FK__Message__ToUserI__42B7D1CC" Association="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC">
             <End Role="User" EntitySet="Users" />
             <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__UserID__7E3E19AE" Association="ToyStore2021Model.FK__Order__UserID__7E3E19AE">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_OrderDetail_dbo_Order_OrderID" Association="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Order_OrderID">
             <End Role="Order" EntitySet="Orders" />
@@ -1018,18 +1004,6 @@
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="SEOKeyword" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID" FromRole="Age" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsMember" Type="Boolean" />
-          <NavigationProperty Name="Orders" Relationship="ToyStore2021Model.FK_dbo_Order_dbo_Customer_CustomerID" FromRole="Customer" ToRole="Order" />
         </EntityType>
         <EntityType Name="Decentralization">
           <Key>
@@ -1129,7 +1103,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="DateOrder" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateShip" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Offer" Type="Int32" Nullable="false" />
@@ -1140,7 +1114,7 @@
           <Property Name="IsApproved" Type="Boolean" Nullable="false" />
           <Property Name="IsReceived" Type="Boolean" Nullable="false" />
           <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="Customer" Relationship="ToyStore2021Model.FK_dbo_Order_dbo_Customer_CustomerID" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__Order__UserID__7E3E19AE" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetails" Relationship="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Order_OrderID" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="OrderDetail">
@@ -1302,11 +1276,13 @@
           <Property Name="AmountPurchased" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsOrdered" Type="Boolean" />
           <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_User" FromRole="User" ToRole="DiscountCode" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_User_UserID" FromRole="User" ToRole="ImportCoupon" />
           <NavigationProperty Name="ItemCarts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_User_UserID" FromRole="User" ToRole="ItemCart" />
           <NavigationProperty Name="Messages" Relationship="ToyStore2021Model.FK__Message__FromUse__41C3AD93" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="Messages1" Relationship="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Orders" Relationship="ToyStore2021Model.FK__Order__UserID__7E3E19AE" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID" FromRole="User" ToRole="ProductViewed" />
           <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK__QA__UserAnswerID__76C649C1" FromRole="User" ToRole="QA" />
           <NavigationProperty Name="QAs1" Relationship="ToyStore2021Model.FK__QA__UserAskID__75D22588" FromRole="User" ToRole="QA" />
@@ -1354,20 +1330,6 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="AgeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Order_dbo_Customer_CustomerID">
-          <End Type="ToyStore2021Model.Customer" Role="Customer" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ToyStore2021Model.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1548,6 +1510,18 @@
             </Principal>
             <Dependent Role="Message">
               <PropertyRef Name="ToUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__UserID__7E3E19AE">
+          <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1" />
+          <End Type="ToyStore2021Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1777,18 +1751,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="ToyStore2021Model.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="IsMember" ColumnName="IsMember" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Decentralizations">
             <EntityTypeMapping TypeName="ToyStore2021Model.Decentralization">
               <MappingFragment StoreEntitySet="Decentralization">
@@ -1887,7 +1849,7 @@
                 <ScalarProperty Name="Offer" ColumnName="Offer" />
                 <ScalarProperty Name="DateShip" ColumnName="DateShip" />
                 <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2023,6 +1985,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ToyStore2021Model.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsOrdered" ColumnName="IsOrdered" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
                 <ScalarProperty Name="AmountPurchased" ColumnName="AmountPurchased" />

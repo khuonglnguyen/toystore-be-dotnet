@@ -27,6 +27,7 @@ namespace ToyStore.Service
         User GetByPhoneNumber(string PhoneNumber);
         User GetByName(string Name);
         User GetByEmail(string Email);
+        string GetEmailByID(int ID);
         User CheckCapcha(int ID, string capcha);
         void UpdateCapcha(int ID, string capcha);
         void UpdateAmountPurchased(int ID, decimal AmountPurchased);
@@ -191,6 +192,12 @@ namespace ToyStore.Service
         public IEnumerable<User> GetList()
         {
             return context.UserRepository.GetAllData();
+        }
+
+        public string GetEmailByID(int ID)
+        {
+            string email = context.UserRepository.GetAllData().FirstOrDefault(x => x.ID == ID).Email;
+            return email;
         }
     }
 }

@@ -34,6 +34,7 @@ namespace ToyStore.Service
             }
             catch (Exception)
             {
+                throw;
                 return false;
             }
         }

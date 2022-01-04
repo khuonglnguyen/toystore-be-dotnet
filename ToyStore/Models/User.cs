@@ -32,6 +32,8 @@ public partial class User
 
         this.Messages1 = new HashSet<Message>();
 
+        this.Orders = new HashSet<Order>();
+
         this.ProductVieweds = new HashSet<ProductViewed>();
 
         this.QAs = new HashSet<QA>();
@@ -71,6 +73,8 @@ public partial class User
 
     public Nullable<bool> IsDeleted { get; set; }
 
+    public Nullable<bool> IsOrdered { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -92,6 +96,10 @@ public partial class User
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Message> Messages1 { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Order> Orders { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

@@ -36,8 +36,6 @@ public partial class ToyStore2021Entities : DbContext
 
     public virtual DbSet<Age> Ages { get; set; }
 
-    public virtual DbSet<Customer> Customers { get; set; }
-
     public virtual DbSet<Decentralization> Decentralizations { get; set; }
 
     public virtual DbSet<DiscountCode> DiscountCodes { get; set; }

@@ -802,7 +802,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             ' <a href="/Chat/">Xem tất cả tin nhắn</a>' +
                             ' </div>' +
                             '</li>'
-                            );
+                        );
                     }
                 }
             })
@@ -813,12 +813,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             var content = $('#btn-input').val();
             $.ajax({
                 url: location.origin + "/Chat/Send",
-                data: { FromUserID: fromId, ToUserID: 2, Content: content, Side: "Admin"},
+                data: { FromUserID: fromId, ToUserID: 3, Content: content, Side: "Admin"},
                 type: 'POST',
                 dataType: 'JSON',
                 success: function (data) {
                     if (data.status) {
-                        getLastData();
                         $('#btn-input').val("");
                         $(".chatbox__body").animate({ scrollTop: 2000000 });
                     } else {

@@ -13,16 +13,16 @@ namespace ToyStore.Controllers
     public class CartController : Controller
     {
         private IProductService _productService;
-        private ICustomerService _customerService;
+        private IUserService _userService;
         private IOrderService _orderService;
         private IOrderDetailService _orderDetailService;
         private ICartService _cartService;
         private IDiscountCodeService _discountCodeService;
         private IDiscountCodeDetailService _discountCodeDetailService;
-        public CartController(IProductService productService, ICustomerService customerService, IOrderService orderService, IOrderDetailService orderDetailService, ICartService cartService, IDiscountCodeService discountCodeService, IDiscountCodeDetailService discountCodeDetailService)
+        public CartController(IProductService productService, IUserService userService, IOrderService orderService, IOrderDetailService orderDetailService, ICartService cartService, IDiscountCodeService discountCodeService, IDiscountCodeDetailService discountCodeDetailService)
         {
             _productService = productService;
-            _customerService = customerService;
+            _userService = userService;
             _orderService = orderService;
             _orderDetailService = orderDetailService;
             _cartService = cartService;
@@ -353,66 +353,48 @@ namespace ToyStore.Controllers
             return PartialView("CheckoutPartial");
         }
         [HttpPost]
-        public ActionResult AddOrder(Customer customer, int NumberDiscountPass = 0, string CodePass = "", string payment = "")
+        public ActionResult AddOrder(User user, int NumberDiscountPass = 0, string CodePass = "", string payment = "")
         {
             //Check null session cart
             if (Session["Cart"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            Customer customercheck = new Customer();
-            bool status = false;
-            //Is Customer
-            Customer customerOrder = new Customer();
+            User usercheck = new User();
+            bool status = true;
+            //Is User
+            User userOrder = new User();
             if (Session["User"] == null)
             {
+                status = false;
                 //Check Email
-                if (_customerService.CheckEmail(customer.Email))
+                if (_userService.CheckEmail(user.Email))
                 {
-                    //Insert customer into DB
-                    customerOrder = customer;
-                    customerOrder.IsMember = false;
-                    _customerService.AddCustomer(customerOrder);
+                    //Insert user into DB
+                    userOrder = user;
+                    userOrder.IsOrdered = true;
+                    _userService.Add(userOrder);
                 }
                 else
                 {
-                    //Update customer in DB
-                    customerOrder = _customerService.GetByEmail(customer.Email);
-                    customerOrder.Address = customer.Address;
-                    customerOrder.FullName = customer.FullName;
-                    customerOrder.PhoneNumber = customer.PhoneNumber;
-                    customerOrder.IsMember = false;
-                    _customerService.Update(customerOrder);
-                }
-            }
-            else
-            {
-                //Is User
-                User user = Session["User"] as User;
-                customercheck = _customerService.GetAll().FirstOrDefault(x => x.Email == user.Email);
-                if (customercheck != null)
-                {
-                    status = true;
-                }
-                else
-                {
-                    customerOrder.FullName = user.FullName;
-                    customerOrder.Address = user.Address;
-                    customerOrder.Email = user.Email;
-                    customerOrder.PhoneNumber = user.PhoneNumber;
-                    customerOrder.IsMember = true;
-                    _customerService.AddCustomer(customerOrder);
+                    //Update user in DB
+                    userOrder = _userService.GetByEmail(user.Email);
+                    userOrder.Address = user.Address;
+                    userOrder.FullName = user.FullName;
+                    userOrder.PhoneNumber = user.PhoneNumber;
+                    userOrder.IsOrdered = true;
+                    _userService.Update(userOrder);
                 }
             }
             //Add order
             Models.Order order = new Models.Order();
             if (status)
             {
-                order.CustomerID = customercheck.ID;
+                order.UserID = (Session["User"] as User).ID;
             }
             else
             {
-                order.CustomerID = customerOrder.ID;
+                order.UserID = userOrder.ID;
             }
             order.DateOrder = DateTime.Now;
             order.DateShip = DateTime.Now.AddDays(3);
@@ -467,20 +449,15 @@ namespace ToyStore.Controllers
                 return RedirectToAction("PaymentWithMomo", "Payment");
             }
 
-            if (status)
-            {
-                SentMail("Đặt hàng thành công", customercheck.Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
-            }
-            else
-            {
-                SentMail("Đặt hàng thành công", customerOrder.Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
-            }
+
+            SentMail("Đặt hàng thành công", user.Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "<p style=\"font-size:20px\">Cảm ơn bạn đã đặt hàng<br/>Mã đơn hàng của bạn là: " + order.ID);
 
 
-            Session["Code"] = null;
-            Session["num"] = null;
-            Session["Cart"] = null;
-            Session["OrderId"] = null;
+
+            Session.Remove("Code");
+            Session.Remove("num");
+            Session.Remove("Cart");
+            Session.Remove("OrderId");
 
             return RedirectToAction("Message", new { mess = "Đặt hàng thành công" });
         }

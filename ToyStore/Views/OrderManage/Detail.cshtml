@@ -1,12 +1,9 @@
 ﻿@model IEnumerable<ToyStore.Models.OrderDetail>
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Chi Tiết Đơn Đặt Hàng";
-                Layout = "~/Views/Layout/AdminLayout.cshtml";
-}
-@{
-    IEnumerable<ToyStore.Models.Customer> customers = ViewBag.CustomerList as IEnumerable<ToyStore.Models.Customer>;
+    ViewBag.Title = "Chi Tiết Đơn Đặt Hàng";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>

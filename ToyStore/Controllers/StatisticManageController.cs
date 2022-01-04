@@ -263,7 +263,7 @@ namespace ToyStore.Controllers
             foreach (var item in orders)
             {
                 ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
-                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Customer.FullName;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.User.FullName;
                 ws.Cells[string.Format("C{0}", rowStart)].Value = item.DateOrder;
                 ws.Cells[string.Format("D{0}", rowStart)].Value = item.DateShip;
                 ws.Cells[string.Format("E{0}", rowStart)].Value = item.Offer+"%";

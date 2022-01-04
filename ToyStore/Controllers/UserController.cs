@@ -15,7 +15,6 @@ namespace ToyStore.Controllers
     public class UserController : Controller
     {
         IUserService _userService;
-        ICustomerService _customerService;
         IOrderService _orderService;
         IOrderDetailService _orderDetailService;
         IProductService _productService;
@@ -23,12 +22,11 @@ namespace ToyStore.Controllers
         IUserDiscountCodeService _userDiscountCodeService;
         ICartService _cartService;
         IUsersSpinService _usersSpinService;
-        public UserController(IUserService userService, IOrderService orderService, IOrderDetailService orderDetailService, ICustomerService customerService, IProductService productService, IRatingService ratingService, IUserDiscountCodeService userDiscountCodeService, ICartService cartService, IUsersSpinService usersSpinService)
+        public UserController(IUserService userService, IOrderService orderService, IOrderDetailService orderDetailService, IProductService productService, IRatingService ratingService, IUserDiscountCodeService userDiscountCodeService, ICartService cartService, IUsersSpinService usersSpinService)
         {
             _userService = userService;
             _orderService = orderService;
             _orderDetailService = orderDetailService;
-            _customerService = customerService;
             _productService = productService;
             _ratingService = ratingService;
             _userDiscountCodeService = userDiscountCodeService;
@@ -68,13 +66,13 @@ namespace ToyStore.Controllers
             User user = _userService.GetByID(ID);
             user.FullName = FullName;
             _userService.Update(user);
-            IEnumerable<Customer> customers = _customerService.GetAll();
-            foreach (Customer item in customers)
+            IEnumerable<User> users = _userService.GetList();
+            foreach (User item in users)
             {
                 if (item.PhoneNumber == user.PhoneNumber)
                 {
                     item.FullName = user.FullName;
-                    _customerService.Update(item);
+                    _userService.Update(item);
                 }
             }
             Session["User"] = user;
@@ -225,14 +223,14 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult CheckoutOrder()
         {
-            User user = Session["User"] as User;
-            if (user != null)
+            User userSession = Session["User"] as User;
+            if (userSession != null)
             {
-                string Phone = _userService.GetByID(user.ID).PhoneNumber;
-                Customer customer = _customerService.GetAll().FirstOrDefault(x => x.PhoneNumber == Phone);
-                if (customer != null)
+                string Phone = _userService.GetByID(userSession.ID).PhoneNumber;
+                User user = _userService.GetList().FirstOrDefault(x => x.PhoneNumber == Phone);
+                if (user != null)
                 {
-                    var orders = _orderService.GetAll().Where(x => x.Customer.PhoneNumber == customer.PhoneNumber && x.Customer.IsMember == true);
+                    var orders = _orderService.GetAll().Where(x => x.User.PhoneNumber == user.PhoneNumber);
                     ViewBag.ProductRating = _ratingService.GetListAllRating().Where(x => x.UserID == user.ID);
                     return View(orders);
                 }
@@ -368,7 +366,7 @@ namespace ToyStore.Controllers
 
         public JsonResult GetOrderJson()
         {
-            var list = _orderService.GetAll().Where(x => x.IsApproved == false).OrderByDescending(x => x.DateOrder).Take(5).Select(x => new { ID = x.ID, CustomerName = x.Customer.FullName, DateOrder = (DateTime.Now - x.DateOrder).Minutes });
+            var list = _orderService.GetAll().Where(x => x.IsApproved == false).OrderByDescending(x => x.DateOrder).Take(5).Select(x => new { ID = x.ID, CustomerName = x.User.FullName, DateOrder = (DateTime.Now - x.DateOrder).Minutes });
             return Json(list, JsonRequestBehavior.AllowGet);
         }
     }

@@ -17,7 +17,6 @@ namespace ToyStore.Data
         private GenericRepository<Age> ageRepository;
         private GenericRepository<ProductCategoryParent> productCategoryParentRepository;
         private GenericRepository<Gender> genderParentRepository;
-        private GenericRepository<Customer> customerRepository;
         private GenericRepository<Order> orderRepository;
         private GenericRepository<OrderDetail> orderDetailRepository;
         private GenericRepository<QA> qARepository;
@@ -133,17 +132,6 @@ namespace ToyStore.Data
                     this.userRepository = new GenericRepository<User>(DbContext);
                 }
                 return userRepository;
-            }
-        }
-        public GenericRepository<Customer> CustomerRepository
-        {
-            get
-            {
-                if (this.customerRepository == null)
-                {
-                    this.customerRepository = new GenericRepository<Customer>(DbContext);
-                }
-                return customerRepository;
             }
         }
         public GenericRepository<Order> OrderRepository

@@ -4,9 +4,6 @@
     ViewBag.Title = "Đơn Hàng Đã Duyệt & Chưa Giao";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
-@{
-    IEnumerable<ToyStore.Models.Customer> customers = ViewBag.CustomerList as IEnumerable<ToyStore.Models.Customer>;
-}
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
     <li class="breadcrumb-item"><a href="@Url.Action("List")">Sản phẩm</a> <i class="fa fa-angle-right"></i></li>
@@ -60,7 +57,7 @@
                             @Html.DisplayFor(modelItem => item.ID)
                         </td>
                         <td style="color:brown">
-                            <b>@Html.DisplayFor(modelItem => item.Customer.FullName)</b>
+                            <b>@Html.DisplayFor(modelItem => item.User.FullName)</b>
                         </td>
                         <td>
                             @Convert.ToDateTime(item.DateOrder).ToString("dd/MM/yyyy")

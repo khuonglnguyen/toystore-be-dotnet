@@ -95,7 +95,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Order> GetByCustomerID(int ID)
         {
-            return context.OrderRepository.GetAllData(x => x.CustomerID == ID);
+            return context.OrderRepository.GetAllData(x => x.UserID == ID);
         }
 
         public Order Received(int ID)

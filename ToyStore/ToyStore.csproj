@@ -269,9 +269,6 @@
     <Compile Include="Models\Age.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>ToyStoreModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Decentralization.cs">
       <DependentUpon>ToyStoreModel.tt</DependentUpon>
     </Compile>
@@ -361,7 +358,6 @@
     <Compile Include="Service\AccessTimesCountService.cs" />
     <Compile Include="Service\AgeService.cs" />
     <Compile Include="Service\CartService.cs" />
-    <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\DecentralizationService.cs" />
     <Compile Include="Service\DiscountCodeDetailService.cs" />
     <Compile Include="Service\DiscountCodeService.cs" />

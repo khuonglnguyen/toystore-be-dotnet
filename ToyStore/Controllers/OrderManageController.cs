@@ -15,15 +15,15 @@ namespace ToyStore.Controllers
     public class OrderManageController : Controller
     {
         private IOrderService _orderService;
-        private ICustomerService _customerService;
         private IOrderDetailService _orderDetailService;
         private IProductService _productService;
-        public OrderManageController(IOrderService orderService, ICustomerService customerService, IOrderDetailService orderDetailService,IProductService productService)
+        private IUserService _userService;
+        public OrderManageController(IOrderService orderService, IOrderDetailService orderDetailService,IProductService productService, IUserService userService)
         {
             _orderService = orderService;
-            _customerService = customerService;
             _orderDetailService = orderDetailService;
             _productService = productService;
+            _userService = userService;
         }
         // GET: OrderManage
         public ActionResult NotApproval(int page = 1)
@@ -34,9 +34,7 @@ namespace ToyStore.Controllers
             }
             IEnumerable<Order> orderList = _orderService.GetOrderNotApproval();
             PagedList<Order> orderListPaging = new PagedList<Order>(orderList, page, 10);
-
-            IEnumerable<Customer> customerList = _customerService.GetAll();
-            ViewBag.CustomerList = customerList;
+            
             return View(orderListPaging);
         }
         public ActionResult NotDelivery(int page = 1)
@@ -47,9 +45,7 @@ namespace ToyStore.Controllers
             }
             IEnumerable<Order> orderList = _orderService.GetOrderNotDelivery();
             PagedList<Order> orderListPaging = new PagedList<Order>(orderList, page, 10);
-
-            IEnumerable<Customer> customerList = _customerService.GetAll();
-            ViewBag.CustomerList = customerList;
+            
             return View(orderListPaging);
         }
 
@@ -61,9 +57,7 @@ namespace ToyStore.Controllers
             }
             IEnumerable<Order> orderList = _orderService.GetOrderDeliveredAndPaid();
             PagedList<Order> orderListPaging = new PagedList<Order>(orderList, page, 10);
-
-            IEnumerable<Customer> customerList = _customerService.GetAll();
-            ViewBag.CustomerList = customerList;
+            
             return View(orderListPaging);
         }
         public ActionResult ApprovedAndNotDelivery(int page = 1)
@@ -74,9 +68,7 @@ namespace ToyStore.Controllers
             }
             IEnumerable<Order> orderList = _orderService.ApprovedAndNotDelivery();
             PagedList<Order> orderListPaging = new PagedList<Order>(orderList, page, 10);
-
-            IEnumerable<Customer> customerList = _customerService.GetAll();
-            ViewBag.CustomerList = customerList;
+            
             return View(orderListPaging);
         }
         public ActionResult DeliveredList(int page = 1)
@@ -87,9 +79,7 @@ namespace ToyStore.Controllers
             }
             IEnumerable<Order> orderList = _orderService.GetDelivered();
             PagedList<Order> orderListPaging = new PagedList<Order>(orderList, page, 10);
-
-            IEnumerable<Customer> customerList = _customerService.GetAll();
-            ViewBag.CustomerList = customerList;
+            
             return View(orderListPaging);
         }
         [HttpGet]
@@ -97,7 +87,7 @@ namespace ToyStore.Controllers
         {
             Order order = _orderService.Approved(ID);
             //Get email customer
-            string Email = _customerService.GetEmailByID(order.CustomerID);
+            string Email = _userService.GetEmailByID(order.UserID);
             SentMail("Đơn hàng của bạn đã được duyệt", Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "Vào đơn hàng của bạn để xem thông tin chi tiết");
             return RedirectToAction("ApprovedAndNotDelivery");
         }
@@ -106,7 +96,7 @@ namespace ToyStore.Controllers
         {
             Order order = _orderService.Delivered(ID);
             //Get email customer
-            string Email = _customerService.GetEmailByID(order.CustomerID);
+            string Email = _userService.GetEmailByID(order.UserID);
             string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
             SentMail("Đơn hàng của bạn đã được giao cho đối tác vận chuyển", Email, "khuongip564gb@gmail.com", "google..khuongip564gb", "Vào đơn hàng của bạn để xem thông tin chi tiết. Sau khi nhận được đơn hàng, bạn vui lòng click vào link sau để xác nhận đã nhận được đơn hàng từ đơn vị vận chuyển: " + urlBase + "/OrderManage/Received/" + ID+"");
             return RedirectToAction("DeliveredList");
