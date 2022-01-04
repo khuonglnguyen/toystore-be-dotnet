@@ -76,6 +76,30 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult SignUp(User user)
         {
+            Models.User check = _userService.GetByEmail(user.Email);
+            if (check == null)
+            {
+                Models.User check2 = _userService.GetByPhoneNumber(user.PhoneNumber);
+                if (check2 != null)
+                {
+                    check2.FullName = user.FullName;
+                    check2.Address = user.Address;
+                    check2.Password = user.Password;
+                    check2.PhoneNumber = user.PhoneNumber;
+                    _userService.Update(check2);
+                    return RedirectToAction("ConfirmEmail", "User", new { ID = check2.ID });
+                }
+            }
+            else if (check != null && check.EmailConfirmed == false)
+            {
+                check.FullName = user.FullName;
+                check.Address = user.Address;
+                check.Password = user.Password;
+                check.PhoneNumber = user.PhoneNumber;
+                _userService.Update(check);
+                return RedirectToAction("ConfirmEmail", "User", new { ID = check.ID });
+            }
+
             bool fail = false;
             //Check email
             if (_userService.CheckEmail(user.Email) == false)

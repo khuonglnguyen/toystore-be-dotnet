@@ -249,7 +249,6 @@
           <Property Name="AmountPurchased" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Avatar" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="bit" />
-          <Property Name="IsOrdered" Type="bit" />
         </EntityType>
         <EntityType Name="UserDiscountCode">
           <Key>
@@ -1276,7 +1275,6 @@
           <Property Name="AmountPurchased" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="IsOrdered" Type="Boolean" />
           <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_User" FromRole="User" ToRole="DiscountCode" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_User_UserID" FromRole="User" ToRole="ImportCoupon" />
           <NavigationProperty Name="ItemCarts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_User_UserID" FromRole="User" ToRole="ItemCart" />
@@ -1985,7 +1983,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ToyStore2021Model.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="IsOrdered" ColumnName="IsOrdered" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
                 <ScalarProperty Name="AmountPurchased" ColumnName="AmountPurchased" />

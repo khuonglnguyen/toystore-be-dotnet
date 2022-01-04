@@ -372,7 +372,6 @@ namespace ToyStore.Controllers
                 {
                     //Insert user into DB
                     userOrder = user;
-                    userOrder.IsOrdered = true;
                     _userService.Add(userOrder);
                 }
                 else
@@ -382,7 +381,7 @@ namespace ToyStore.Controllers
                     userOrder.Address = user.Address;
                     userOrder.FullName = user.FullName;
                     userOrder.PhoneNumber = user.PhoneNumber;
-                    userOrder.IsOrdered = true;
+                    userOrder.EmailConfirmed = false;
                     _userService.Update(userOrder);
                 }
             }

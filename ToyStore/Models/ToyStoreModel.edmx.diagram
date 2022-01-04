@@ -5,31 +5,31 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="ee0e3b09b00f4949ae6f52917d08eef6" Name="Diagram1" ZoomLevel="83" ShowGrid="true" DisplayType="false">
-        <EntityTypeShape EntityType="ToyStore2021Model.AccessTimesCount" Width="1.5" PointX="3.75" PointY="1.375" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Age" Width="1.5" PointX="0.75" PointY="12.375" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Decentralization" Width="1.5" PointX="3" PointY="16.125" />
-        <EntityTypeShape EntityType="ToyStore2021Model.DiscountCode" Width="1.5" PointX="5.25" PointY="42.625" />
-        <EntityTypeShape EntityType="ToyStore2021Model.DiscountCodeDetail" Width="1.5" PointX="7.5" PointY="42.625" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Gender" Width="1.5" PointX="0.75" PointY="4" />
-        <EntityTypeShape EntityType="ToyStore2021Model.ImportCoupon" Width="1.5" PointX="8.25" PointY="16.875" />
-        <EntityTypeShape EntityType="ToyStore2021Model.ImportCouponDetail" Width="1.5" PointX="10.5" PointY="16.875" />
-        <EntityTypeShape EntityType="ToyStore2021Model.ItemCart" Width="1.5" PointX="8.25" PointY="24.875" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Message" Width="1.5" PointX="5.25" PointY="33.25" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Order" Width="1.5" PointX="5.25" PointY="28.75" />
-        <EntityTypeShape EntityType="ToyStore2021Model.OrderDetail" Width="1.5" PointX="7.5" PointY="29.375" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Producer" Width="1.5" PointX="0.75" PointY="9.625" />
-        <EntityTypeShape EntityType="ToyStore2021Model.ProductCategory" Width="1.5" PointX="0.75" PointY="6.375" />
-        <EntityTypeShape EntityType="ToyStore2021Model.ProductCategoryParent" Width="1.5" PointX="1.5" PointY="0.75" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Product" Width="1.5" PointX="3" PointY="5.75" />
-        <EntityTypeShape EntityType="ToyStore2021Model.ProductViewed" Width="1.5" PointX="5.25" PointY="15" />
-        <EntityTypeShape EntityType="ToyStore2021Model.QA" Width="1.5" PointX="5.25" PointY="18.5" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Rating" Width="1.5" PointX="8.25" PointY="20.875" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Role" Width="1.5" PointX="0.75" PointY="15.25" />
-        <EntityTypeShape EntityType="ToyStore2021Model.Supplier" Width="1.5" PointX="6" PointY="10.75" />
-        <EntityTypeShape EntityType="ToyStore2021Model.User" Width="1.5" PointX="3" PointY="19.125" />
-        <EntityTypeShape EntityType="ToyStore2021Model.UserDiscountCode" Width="1.5" PointX="9.75" PointY="31" />
-        <EntityTypeShape EntityType="ToyStore2021Model.UsersSpin" Width="1.5" PointX="5.25" PointY="23" />
-        <EntityTypeShape EntityType="ToyStore2021Model.UserType" Width="1.5" PointX="0.75" PointY="18.25" />
+        <EntityTypeShape EntityType="ToyStore2021Model.AccessTimesCount" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Age" Width="1.5" PointX="3.75" PointY="11.75" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Decentralization" Width="1.5" PointX="3" PointY="15.375" />
+        <EntityTypeShape EntityType="ToyStore2021Model.DiscountCode" Width="1.5" PointX="5.25" PointY="31.25" />
+        <EntityTypeShape EntityType="ToyStore2021Model.DiscountCodeDetail" Width="1.5" PointX="7.5" PointY="31.25" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Gender" Width="1.5" PointX="3.75" PointY="9.375" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ImportCoupon" Width="1.5" PointX="5.25" PointY="20.125" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ImportCouponDetail" Width="1.5" PointX="10.5" PointY="17.25" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ItemCart" Width="1.5" PointX="8.25" PointY="16.25" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Message" Width="1.5" PointX="5.25" PointY="37.25" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Order" Width="1.5" PointX="5.25" PointY="40.625" />
+        <EntityTypeShape EntityType="ToyStore2021Model.OrderDetail" Width="1.5" PointX="7.5" PointY="41.125" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Producer" Width="1.5" PointX="3.75" PointY="6.625" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ProductCategory" Width="1.5" PointX="3.75" PointY="3.375" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ProductCategoryParent" Width="1.5" PointX="1.5" PointY="3.75" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Product" Width="1.5" PointX="6" PointY="5" />
+        <EntityTypeShape EntityType="ToyStore2021Model.ProductViewed" Width="1.5" PointX="11.25" PointY="20.375" />
+        <EntityTypeShape EntityType="ToyStore2021Model.QA" Width="1.5" PointX="5.25" PointY="23.75" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Rating" Width="1.5" PointX="8.25" PointY="20.25" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Role" Width="1.5" PointX="0.75" PointY="14.625" />
+        <EntityTypeShape EntityType="ToyStore2021Model.Supplier" Width="1.5" PointX="3" PointY="26" />
+        <EntityTypeShape EntityType="ToyStore2021Model.User" Width="1.5" PointX="3" PointY="18.5" />
+        <EntityTypeShape EntityType="ToyStore2021Model.UserDiscountCode" Width="1.5" PointX="9.75" PointY="25.125" />
+        <EntityTypeShape EntityType="ToyStore2021Model.UsersSpin" Width="1.5" PointX="5.25" PointY="15.125" />
+        <EntityTypeShape EntityType="ToyStore2021Model.UserType" Width="1.5" PointX="0.75" PointY="17.625" />
         <AssociationConnector Association="ToyStore2021Model.FK_dbo_Products_dbo_Ages_AgeID" />
         <AssociationConnector Association="ToyStore2021Model.FK_dbo_Decentralization_dbo_Role_RoleID" />
         <AssociationConnector Association="ToyStore2021Model.FK_Decentralization_UserType" />
