@@ -131,7 +131,7 @@
 <!--cart-items-->
 <div class="cart-items">
     <div class="container" id="DivCheckout">
-        @if (Cart.Count > 0)
+        @if (Cart != null && Cart.Count > 0)
         {
             <h3 class="wow fadeInUp animated" data-wow-delay=".5s">Giỏ Hàng Của Bạn Có: @ViewBag.TotalQuantity Sản Phẩm</h3>
             foreach (var item in Cart)

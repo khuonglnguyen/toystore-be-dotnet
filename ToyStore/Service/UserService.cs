@@ -32,6 +32,7 @@ namespace ToyStore.Service
         void UpdateCapcha(int ID, string capcha);
         void UpdateAmountPurchased(int ID, decimal AmountPurchased);
         IEnumerable<User> GetUserListForStatistic();
+        bool CheckEmailPhone(string email, string phone);
     }
     public class UserService : IUserService
     {
@@ -98,6 +99,16 @@ namespace ToyStore.Service
         {
             User user = this.context.UserRepository.GetAllData().SingleOrDefault(x => x.Email == email && x.Password == password && x.IsDeleted == false);
             return user;
+        }
+
+        public bool CheckEmailPhone(string email, string phone)
+        {
+            User user = this.context.UserRepository.GetAllData().SingleOrDefault(x => x.Email == email && x.PhoneNumber == phone && x.IsDeleted == false);
+            if (user != null)
+            {
+                return false;
+            }
+            return true;
         }
 
         public User GetByID(int ID)

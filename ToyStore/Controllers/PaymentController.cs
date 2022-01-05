@@ -277,7 +277,7 @@ namespace ToyStore.Controllers
                 {
                     Session["OrderId"] = null;
                     //on successful payment, show success page to user.  
-                    ViewBag.message = "Thanh toán thành công";
+                    ViewBag.message = "Đặt hàng và thanh toán thành công";
                 }
             }
             return View();

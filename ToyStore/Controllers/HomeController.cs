@@ -140,14 +140,13 @@ namespace ToyStore.Controllers
                 User userCheck = _userService.CheckLogin(user.Email, user.Password);
                 if (userCheck != null)
                 {
-                    Session["User"] = userCheck;
-
                     if (userCheck.EmailConfirmed == false)
                     {
                         return RedirectToAction("ConfirmEmail", "User", new { ID = userCheck.ID });
                     }
                     else
                     {
+                        Session["User"] = userCheck;
                         IEnumerable<Decentralization> decentralizations = _decentralizationService.GetDecentralizationByUserTypeID(userCheck.UserTypeID);
                         string role = "";
                         foreach (var item in decentralizations)

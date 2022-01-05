@@ -25,12 +25,7 @@
                             },
                             dataType: 'html',
                             success: function (response) {
-                                swal({
-                                    title: "Thông báo",
-                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
-                                    icon: "success",
-                                    timer: 1500
-                                });
+                                $.notify("Đã thêm sản phẩm vào giỏ hàng!", "success");
                                 $("#DivCart").html(response);
                             }
                         });

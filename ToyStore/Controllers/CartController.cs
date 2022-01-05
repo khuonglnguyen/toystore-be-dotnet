@@ -367,21 +367,21 @@ namespace ToyStore.Controllers
             if (Session["User"] == null)
             {
                 status = false;
-                //Check Email
-                if (_userService.CheckEmail(user.Email))
+                //Check Email & Phone
+                if (_userService.CheckEmailPhone(user.Email, user.PhoneNumber))
                 {
                     //Insert user into DB
                     userOrder = user;
+                    userOrder.Avatar = "user.png";
+                    userOrder.EmailConfirmed = false;
                     _userService.Add(userOrder);
                 }
                 else
                 {
                     //Update user in DB
-                    userOrder = _userService.GetByEmail(user.Email);
+                    userOrder = _userService.GetByPhoneNumber(user.PhoneNumber);
                     userOrder.Address = user.Address;
                     userOrder.FullName = user.FullName;
-                    userOrder.PhoneNumber = user.PhoneNumber;
-                    userOrder.EmailConfirmed = false;
                     _userService.Update(userOrder);
                 }
             }
