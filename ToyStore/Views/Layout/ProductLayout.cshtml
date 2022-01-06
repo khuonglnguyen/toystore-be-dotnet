@@ -13,6 +13,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Modern Shoppe Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <link rel="icon" href="@Url.Content("~/Content/images/icon.jpg")" />
     <script type="application/x-javascript">
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
                function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -51,11 +52,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </script>
     <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")"></script>
     <!--//end-smooth-scrolling-->
-    <script src="~/Content/notify.min.js"></script>
-    <link href="~/Content/chatbox.css" rel="stylesheet" />
-    <script src="~/Content/chatbox.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
-    <script src="~/signalr/hubs" type="text/javascript"></script>
 </head>
 <body>
     @Html.Partial("~/Views/Home/HeaderTopPartial.cshtml")
@@ -63,10 +59,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="row">
         <div class="chatbox chatbox22 chatbox--tray">
             <div class="chatbox__title">
-                <h5><a href="javascript:void()">Chat with Us</a></h5>
+                <h5><a href="javascript:void()">Chat với chúng tôi</a></h5>
                 <!--<button class="chatbox__title__tray">
-            <span></span>
-        </button>-->
+                <span></span>
+            </button>-->
                 <button class="chatbox__title__close">
                     <span>
                         <svg viewBox="0 0 12 12" width="12px" height="12px">
@@ -94,6 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <button class="btn bt_bg btn-sm" id="btn-chat">
                                 Gửi
                             </button>
+                            <img src="~/Content/images/loading-send.gif" class="loading-send btn bt_bg btn-sm" style="display:none;" />
                         </span>
                     </div>
                 </div>
@@ -106,7 +103,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="footer-info">
                 <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".5s">
                     <h4 class="footer-logo"><a href="index.html">Toy<b>Store</b> <span class="tag">Tất cả mọi thứ bé cần </span> </a></h4>
-                    <p>© 2021 . All rights reserved | Design by <a href="http://w3layouts.com" target="_blank">W3layouts</a> Develop by TEAM</p>
                 </div>
                 <div class="col-md-4 footer-grids wow fadeInUp animated" data-wow-delay=".7s">
                     <h3>Thông Tin</h3>
@@ -145,36 +141,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="~/Content/home/js/main.js"></script>
     <!--//search jQuery-->
     <!--smooth-scrolling-of-move-up-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-            };
-
-            $().UItoTop({ easingType: 'easeOutQuart' });
-
-        });
-    </script>
     <!--//smooth-scrolling-of-move-up-->
     <!--Bootstrap core JavaScript
     ================================================== -->
     <!--Placed at the end of the document so the pages load faster -->
     <script src="~/Content/home/js/bootstrap.js"></script>
+
+    <script src="~/Content/notify.min.js"></script>
+    <link href="~/Content/chatbox.css" rel="stylesheet" />
+    <script src="~/Content/chatbox.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-            };
-
-            $().UItoTop({ easingType: 'easeOutQuart' });
 
             $(function () {
                 var chat = $.connection.chatHubs
@@ -252,7 +231,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                 $(".chatbox__body").animate({ scrollTop: 2000000 });
             }
-        
+
+
             $('#btn-chat').click(function send() {
                 var fromId = $('#UserID').val();
                 var content = $('#btn-input').val();
@@ -263,14 +243,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     dataType: 'JSON',
                     success: function (data) {
                         if (data.status) {
+                            $.notify("Đã gửi!", "success");
+                            $("#btn-chat").show();
+                            $(".loading-send").hide();
                             $('#btn-input').val("");
                             $(".chatbox__body").animate({ scrollTop: 2000000 });
                         } else {
-                            alert("Có lỗi xảy ra");
+                            $.notify("Có lỗi xảy ra!", "error");
                             return;
                         }
                     }
                 })
+                $("#btn-chat").hide();
+                $(".loading-send").show();
             })
         });
     </script>

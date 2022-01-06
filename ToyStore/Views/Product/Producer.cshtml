@@ -37,12 +37,7 @@
                         });
                     }
                     else {
-                        swal({
-                            title: "Thông báo",
-                            text: "Số lượng sản phẩm đã hết!",
-                            icon: "warning",
-                            timer: 1500
-                        });
+                        $.notify("Số lượng sản phẩm đã hết!", "error");
                     }
                 }
             });
@@ -132,30 +127,6 @@
         </div>
         <div class="col-md-3 rsidebar">
             <div class="rsidebar-top">
-                <div class="slider-left">
-                    <h4>Lọc khoảng giá</h4>
-                    <div id="slider-range"></div>
-                    <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
-                    <!---->
-                    <script type='text/javascript'>
-                        //<![CDATA[
-                        $(window).load(function () {
-                            $("#slider-range").slider({
-                                range: true,
-                                min: 0,
-                                max: 9000,
-                                values: [1000, 7000],
-                                slide: function (event, ui) {
-                                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                                }
-                            });
-                            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
-
-                        });//]]>
-                    </script>
-                    <script type="text/javascript" src="~/Conent/js/jquery-ui.js"></script>
-                    <!---->
-                </div>
                 <div class="sidebar-row">
                     
                     <!-- script for tabs -->
@@ -195,20 +166,6 @@
                         <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>10% - 20%</label>
                         <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Other(5)</label>
                     </div>
-                </div>
-            </div>
-            <div class="gallery-grid ">
-                <h6>YOU MAY ALSO LIKE</h6>
-                <a href="single.html"><img src="images/b1.png" class="img-responsive" alt="" /></a>
-                <div class="gallery-text simpleCart_shelfItem">
-                    <h5><a class="name" href="single.html">Full Sleeves Romper</a></h5>
-                    <p><span class="item_price">60$</span></p>
-                    <h4 class="sizes">Sizes: <a href="#"> s</a> - <a href="#">m</a> - <a href="#">l</a> - <a href="#">xl</a> </h4>
-                    <ul>
-                        <li><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a></li>
-                        <li><a class="item_add" href="#"><span class="glyphicon glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span></a></li>
-                    </ul>
                 </div>
             </div>
         </div>

@@ -20,9 +20,6 @@
             $("#Textarea1").val("");
             $("#Textarea2").val("");
         });
-        $('.item_add').on('click', function () {
-            $.notify("Đã thêm sản phẩm vào giỏ hàng!", "success");
-        });
         $('.AddItemCart').click(function (e) {
             var id = $(this).attr("data-id");
             $.ajax({

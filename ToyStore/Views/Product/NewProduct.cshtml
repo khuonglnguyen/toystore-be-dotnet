@@ -35,12 +35,7 @@
                         });
                     }
                     else {
-                        swal({
-                            title: "Thông báo",
-                            text: "Số lượng sản phẩm đã hết!",
-                            icon: "warning",
-                            timer: 1500
-                        });
+                        $.notify("Số lượng sản phẩm đã hết!", "error");
                     }
                 }
             });
@@ -130,57 +125,6 @@
         </div>
         <div class="col-md-3 rsidebar">
             <div class="rsidebar-top">
-                <div class="slider-left">
-                    <h4>Lọc khoảng giá</h4>
-                    <div id="slider-range"></div>
-                    <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
-                    <!---->
-                    <script type='text/javascript'>
-                        //<![CDATA[
-                        $(window).load(function () {
-                            $("#slider-range").slider({
-                                range: true,
-                                min: 0,
-                                max: 9000,
-                                values: [1000, 7000],
-                                slide: function (event, ui) {
-                                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                                }
-                            });
-                            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
-
-                        });//]]>
-                    </script>
-                    <script type="text/javascript" src="~/Conent/js/jquery-ui.js"></script>
-                    <!---->
-                </div>
-                <div class="sidebar-row">
-
-                    <!-- script for tabs -->
-                    <script type="text/javascript">
-                        $(function () {
-
-                            var menu_ul = $('.faq > li > ul'),
-                                menu_a = $('.faq > li > a');
-
-                            menu_ul.hide();
-
-                            menu_a.click(function (e) {
-                                e.preventDefault();
-                                if (!$(this).hasClass('active')) {
-                                    menu_a.removeClass('active');
-                                    menu_ul.filter(':visible').slideUp('normal');
-                                    $(this).addClass('active').next().stop(true, true).slideDown('normal');
-                                } else {
-                                    $(this).removeClass('active');
-                                    $(this).next().stop(true, true).slideUp('normal');
-                                }
-                            });
-
-                        });
-                    </script>
-                    <!-- script for tabs -->
-                </div>
                 <div class="sidebar-row">
                     <h4>Khuyến mãi</h4>
                     <div class="row row1 scroll-pane">

@@ -10,6 +10,40 @@
 }
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.AddItemCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                $.notify("Đã thêm sản phẩm vào giỏ hàng!", "success");
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        $.notify("Số lượng sản phẩm đã hết!", "error");
+                    }
+                }
+            });
+        });
+    });
+</script>
 <!--breadcrumbs-->
 <div class="breadcrumbs">
     <div class="container">
@@ -93,30 +127,6 @@
         </div>
         <div class="col-md-3 rsidebar">
             <div class="rsidebar-top">
-                <div class="slider-left">
-                    <h4>Lọc khoảng giá</h4>
-                    <div id="slider-range"></div>
-                    <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
-                    <!---->
-                    <script type='text/javascript'>
-                        //<![CDATA[
-                        $(window).load(function () {
-                            $("#slider-range").slider({
-                                range: true,
-                                min: 0,
-                                max: 9000,
-                                values: [1000, 7000],
-                                slide: function (event, ui) {
-                                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                                }
-                            });
-                            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
-
-                        });//]]>
-                    </script>
-                    <script type="text/javascript" src="~/Conent/js/jquery-ui.js"></script>
-                    <!---->
-                </div>
                 <div class="sidebar-row">
                     
                     <!-- script for tabs -->

@@ -85,6 +85,7 @@ namespace ToyStore.Service
             user.UserTypeID = 1;
             user.AmountPurchased = 0;
             user.IsDeleted = false;
+            user.Avatar = "user.png";
             this.context.UserRepository.Insert(user);
             return user;
         }
