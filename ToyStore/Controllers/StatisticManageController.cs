@@ -14,6 +14,7 @@ using ToyStore.Service;
 
 namespace ToyStore.Controllers
 {
+    [Authorize(Roles = "StatisticManage")]
     public class StatisticManageController : Controller
     {
         private IOrderService _orderService;
@@ -30,13 +31,11 @@ namespace ToyStore.Controllers
             _accessTimesCountService = accessTimesCountService;
         }
         // GET: Statistic
-        [Authorize(Roles = "StatisticManage")]
         [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
-        [Authorize(Roles = "StatisticStocking")]
         [HttpGet]
         public ActionResult StatisticStocking()
         {
@@ -78,57 +77,12 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
-        [Authorize(Roles = "StatisticUser")]
         [HttpGet]
         public ActionResult StatisticUser()
         {
             IEnumerable<User> users = _userService.GetUserListForStatistic();
             return View(users);
         }
-        [HttpGet]
-        public void DownloadExcelStatisticMember()
-        {
-            User user = Session["User"] as User;
-
-            IEnumerable<User> users = _userService.GetUserListForStatistic();
-            ExcelPackage pck = new ExcelPackage();
-            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
-
-            ws.Cells["A2"].Value = "Người lập";
-            ws.Cells["B2"].Value = user.FullName;
-
-            ws.Cells["A3"].Value = "Ngày lập";
-            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
-
-            ws.Cells["A6"].Value = "Mã Thành Viên";
-            ws.Cells["B6"].Value = "Tên Thành Viên";
-            ws.Cells["C6"].Value = "Địa Chỉ";
-            ws.Cells["D6"].Value = "Email";
-            ws.Cells["E6"].Value = "Số Điện Thoại";
-            ws.Cells["F6"].Value = "Loại Thành Viên";
-            ws.Cells["G6"].Value = "Doanh Số";
-
-            int rowStart = 7;
-            foreach (var item in users)
-            {
-                ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
-                ws.Cells[string.Format("B{0}", rowStart)].Value = item.FullName;
-                ws.Cells[string.Format("C{0}", rowStart)].Value = item.Address;
-                ws.Cells[string.Format("D{0}", rowStart)].Value = item.Email;
-                ws.Cells[string.Format("E{0}", rowStart)].Value = item.PhoneNumber;
-                ws.Cells[string.Format("F{0}", rowStart)].Value = item.UserType.Name;
-                ws.Cells[string.Format("G{0}", rowStart)].Value = item.AmountPurchased;
-                rowStart++;
-            }
-
-            ws.Cells["A:AZ"].AutoFitColumns();
-            Response.Clear();
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment: filename=" + "Danh sách khách hàng.xlsx");
-            Response.BinaryWrite(pck.GetAsByteArray());
-            Response.End();
-        }
-        [Authorize(Roles = "StatisticSupplier")]
         [HttpGet]
         public ActionResult StatisticSupplier()
         {
@@ -227,7 +181,6 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
-        [Authorize(Roles = "StatisticOrder")]
         [HttpGet]
         public ActionResult StatisticOrder(DateTime from, DateTime to)
         {
@@ -252,7 +205,7 @@ namespace ToyStore.Controllers
             ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
 
             ws.Cells["A6"].Value = "Mã Hóa Đơn";
-            ws.Cells["B6"].Value = "Tên Khách Hàng Thành Viên";
+            ws.Cells["B6"].Value = "Tên KH";
             ws.Cells["C6"].Value = "Ngày Đặt";
             ws.Cells["D6"].Value = "Ngày Giao";
             ws.Cells["E6"].Value = "Ưu Đãi";
@@ -284,7 +237,6 @@ namespace ToyStore.Controllers
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
         }
-        [Authorize(Roles = "StatisticAccessTime")]
         [HttpGet]
         public ActionResult StatisticAccessTime(DateTime from, DateTime to)
         {

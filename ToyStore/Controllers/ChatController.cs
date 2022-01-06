@@ -57,7 +57,7 @@ namespace ToyStore.Controllers
                 FromUserID = x.FromUserID,
                 Content = x.Content,
                 CreatedDate = x.CreatedDate.Value,
-                FromUserName = x.User.FullName + " (" + x.User.UserType.Name + ")",
+                FromUserName = x.User.FullName,
                 FromAvatarUser = x.User.Avatar
             });
             return Json(listMessage, JsonRequestBehavior.AllowGet);
@@ -72,7 +72,7 @@ namespace ToyStore.Controllers
                 FromUserID = message.FromUserID,
                 Content = message.Content,
                 CreatedDate = message.CreatedDate.Value,
-                FromUserName = message.User.FullName + " (" + message.User.UserType.Name + ")",
+                FromUserName = message.User.FullName,
                 FromAvatarUser = message.User.Avatar
             }, JsonRequestBehavior.AllowGet);
         }

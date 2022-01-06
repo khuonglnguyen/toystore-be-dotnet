@@ -148,14 +148,18 @@ namespace ToyStore.Controllers
                     {
                         Session["User"] = userCheck;
                         IEnumerable<Decentralization> decentralizations = _decentralizationService.GetDecentralizationByUserTypeID(userCheck.UserTypeID);
-                        string role = "";
-                        foreach (var item in decentralizations)
+                        if (decentralizations.Count() > 0)
                         {
-                            role += item.Role.Name + ",";
-                        }
+                            string role = "";
+                            foreach (var item in decentralizations)
+                            {
+                                role += item.Role.Name + ",";
+                            }
 
-                        role = role.Substring(0, role.Length - 1);
-                        Decentralization(userCheck.ID, role);
+                            role = role.Substring(0, role.Length - 1);
+                            Decentralization(userCheck.ID, role);
+                        }
+                        
 
                         if (_cartService.CheckCartUser(userCheck.ID))
                         {
@@ -203,9 +207,13 @@ namespace ToyStore.Controllers
 
         public ActionResult SignOut()
         {
-            Session["User"] = null;
-            Session["Cart"] = null;
-            Response.Cookies.Clear();
+            Session.Remove("User");
+            Session.Remove("Cart");
+            string[] myCookies = Request.Cookies.AllKeys;
+            foreach (string cookie in myCookies)
+            {
+                Response.Cookies[cookie].Expires = DateTime.Now.AddDays(-1);
+            }
             return RedirectToAction("Index");
         }
     }

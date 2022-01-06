@@ -105,7 +105,7 @@
                                 -@Html.DisplayFor(modelItem => item.NumberDiscount)%
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ExpirationDate)
+                                @item.ExpirationDate.Value.ToString("dd/MM/yyyy")
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DiscountCodeDetails.ToList().Count)

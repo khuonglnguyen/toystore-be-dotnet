@@ -43,10 +43,6 @@ namespace ToyStore.Controllers
                 ViewBag.SumAccessTimes = HttpContext.Application["SumAccessTimes"].ToString();
                 ViewBag.RealAccessTimes = HttpContext.Application["RealAccessTimes"].ToString();
                 User user = Session["User"] as User;
-                ViewBag.EmloyeeTypeName = (_userTypeService.GetUserTypeByID(user.UserTypeID)).Name;
-                ViewBag.TotalUser = _userService.GetTotalUser();
-                ViewBag.TotalEmployee = _userService.GetTotalEmployee();
-                ViewBag.TotalProduct = _productService.GetTotalProduct();
                 ViewBag.TotalProductPurchased = _productService.GetTotalProductPurchased();
                 decimal TotalRevenue = _orderService.GetTotalRevenue();
                 if (TotalRevenue < 1000000)

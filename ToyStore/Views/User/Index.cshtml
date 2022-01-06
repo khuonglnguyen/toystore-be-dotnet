@@ -4,47 +4,47 @@
     Layout = "~/Views/Layout/ProductDetailsLayout.cshtml"; }
 @if (TempData["ResetPassword"] != null)
 {
-<script>
-    swal({
-        title: "Thông báo",
-        text: "Đổi mật khẩu thành công!",
-        icon: "success",
-        timer: 3000
-    });
-</script>
-@(TempData["ResetPassword"] = null)}
+    <script>
+        swal({
+            title: "Thông báo",
+            text: "Đổi mật khẩu thành công!",
+            icon: "success",
+            timer: 3000
+        });
+    </script>
+    @(TempData["ResetPassword"] = null)}
 @if (TempData["EditName"] != null)
 {
-<script>
-    swal({
-        title: "Thông báo",
-        text: "Cập nhật tên tài khoản thành công!",
-        icon: "success",
-        timer: 1500
-    });
-</script>
-@(TempData["DeleteHistoryView"] = null)}
+    <script>
+        swal({
+            title: "Thông báo",
+            text: "Cập nhật tên tài khoản thành công!",
+            icon: "success",
+            timer: 1500
+        });
+    </script>
+    @(TempData["DeleteHistoryView"] = null)}
 @if (TempData["EditAddress"] != null)
 {
-<script>
-    swal({
-        title: "Thông báo",
-        text: "Cập nhật địa chỉ thành công!",
-        icon: "success",
-        timer: 1500
-    });
-</script>
-@(TempData["DeleteHistoryView"] = null)}
+    <script>
+        swal({
+            title: "Thông báo",
+            text: "Cập nhật địa chỉ thành công!",
+            icon: "success",
+            timer: 1500
+        });
+    </script>
+    @(TempData["DeleteHistoryView"] = null)}
 @if (TempData["EditAvatar"] != null)
 {
-<script>
-    swal({
-        title: "Thông báo",
-        text: "Cập nhật ảnh đại diện thành công!",
-        icon: "success",
-        timer: 1500
-    });
-</script> @(TempData["DeleteHistoryView"] = null)}
+    <script>
+        swal({
+            title: "Thông báo",
+            text: "Cập nhật ảnh đại diện thành công!",
+            icon: "success",
+            timer: 1500
+        });
+    </script> @(TempData["DeleteHistoryView"] = null)}
 <script>
     $(document).ready(function () {
         $('.btnEditName').off('click').on('click', function () {
@@ -139,10 +139,10 @@
                 </div>
                 <div class="quantity">
                     @{ string pass = "";
-                                    for (int i = 0; i < @Model.Password.Length; i++)
-                                    {
-                                        pass += "☺";
-                                    } }
+                        for (int i = 0; i < @Model.Password.Length; i++)
+                        {
+                            pass += "☺";
+                        } }
                     <p class="qty"> Mật khẩu :</p> @pass <a class="btn btn-link" href="/User/ResetPassword">✎</a>
                 </div>
 
@@ -167,15 +167,16 @@
             <div class="modal-body">
                 @using (Html.BeginForm("EditName", "User", FormMethod.Post))
                 {
-    <input type="text" name="ID" id="IDEditName" hidden />
+                    <input type="text" name="ID" id="IDEditName" hidden />
                     <div class="form-group">
                         <label for="Name">Họ tên:</label>
-                        <input type="text" class="form-control" name="FullName" id="FullNameEditName" pattern=".{,30}" required title="Tên thành viên tối đa 30 ký tự!">
+                        <input type="text" class="form-control" name="FullName" id="FullNameEditName" pattern=".{,30}" required title="Tên tối đa 30 ký tự!">
                     </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                                    </div>}
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -192,15 +193,15 @@
             <div class="modal-body">
                 @using (Html.BeginForm("EditAddress", "User", FormMethod.Post))
                 {
-    <input type="text" name="ID" id="IDEditAddress" hidden />
+                    <input type="text" name="ID" id="IDEditAddress" hidden />
                     <div class="form-group">
                         <label for="Name">Địa chỉ:</label>
                         <input type="text" class="form-control" name="Address" id="AdressEditAdress" pattern=".{,200}" required title="Địa chỉ tối đa 100 ký tự!">
                     </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                                    </div>}
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>}
             </div>
         </div>
     </div>
@@ -217,15 +218,15 @@
             <div class="modal-body">
                 @using (Html.BeginForm("EditAvatar", "User", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
-    <input type="text" name="ID" id="IDEditAvatar" hidden />
+                    <input type="text" name="ID" id="IDEditAvatar" hidden />
                     <div class="form-group">
                         <label>Avatar:</label>
                         <input type="file" name="Avatar" id="Avatar" required accept="image/png, image/gif, image/jpeg" />
                     </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                                    </div>}
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>}
             </div>
         </div>
     </div>
