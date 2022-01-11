@@ -29,7 +29,7 @@ namespace ToyStore.Hubs
 
         private void TableDependency_OnError(object sender, ErrorEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         public static void Show()

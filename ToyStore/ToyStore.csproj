@@ -253,9 +253,11 @@
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Data\Repository\GenericRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
+    <Compile Include="Extensions\ConstHelper.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
     <Compile Include="Extensions\MomoSecurity.cs" />
     <Compile Include="Extensions\PaymentRequest.cs" />
+    <Compile Include="Extensions\StringHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using ToyStore.Data;
+using ToyStore.Extensions;
 using ToyStore.Models;
 
 namespace ToyStore.Service
@@ -33,6 +35,7 @@ namespace ToyStore.Service
         }
         public ProductCategory AddProductCategory(ProductCategory productCategory)
         {
+            productCategory.SEOKeyword = StringHelper.UrlFriendly(productCategory.Name);
             productCategory.LastUpdatedDate = DateTime.Now;
             this.context.ProductCategoryRepository.Insert(productCategory);
             return productCategory;

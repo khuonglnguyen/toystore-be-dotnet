@@ -27,7 +27,7 @@
     <div class="ofr">
         @if (Model.Discount > 0)
         {
-            <p><span class="item_price">@Model.PromotionPrice.ToString("#,##")₫</span></p><br />
+            <p><span class="item_price">@Model.PromotionPrice.ToString("#,##")₫ (-@Model.Discount%)</span></p><br />
             <p class="pric1"><del>@Model.Price.ToString("#,##")₫</del></p><br />
         }
         else

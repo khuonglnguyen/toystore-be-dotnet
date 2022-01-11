@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ToyStore.Data;
+using ToyStore.Extensions;
 using ToyStore.Models;
 
 namespace ToyStore.Service
@@ -31,6 +32,7 @@ namespace ToyStore.Service
         }
         public Producer AddProducer(Producer producer)
         {
+            producer.SEOKeyword = StringHelper.UrlFriendly(producer.Name);
             this.context.ProducerRepository.Insert(producer);
             return producer;
         }

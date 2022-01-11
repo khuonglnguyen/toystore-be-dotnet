@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using ToyStore.Data;
+using ToyStore.Extensions;
 using ToyStore.Models;
 
 namespace ToyStore.Service
@@ -35,6 +37,8 @@ namespace ToyStore.Service
         }
         public Supplier AddSupplier(Supplier supplier)
         {
+            supplier.TotalAmount = 0;
+            supplier.SEOKeyword = StringHelper.UrlFriendly(supplier.Name);
             supplier.LastUpdatedDate = DateTime.Now;
             this.context.SupplierRepository.Insert(supplier);
             return supplier;

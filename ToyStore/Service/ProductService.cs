@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Web;
 using ToyStore.Data;
+using ToyStore.Extensions;
 using ToyStore.Models;
 
 namespace ToyStore.Service
@@ -61,10 +62,7 @@ namespace ToyStore.Service
             product.Quantity = 0;
             product.ViewCount = 0;
             product.PurchasedCount = 0;
-            string seo = product.Name.Trim().ToLower();
-            seo = Regex.Replace(seo, @"\s+", "-");
-            seo = Regex.Replace(seo, @"[^A-Za-z0-9_-]", "");
-            product.SEOKeyword = seo;
+            product.SEOKeyword = StringHelper.UrlFriendly(product.Name);
             this.context.ProductRepository.Insert(product);
             return product;
         }

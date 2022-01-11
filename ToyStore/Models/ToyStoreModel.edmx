@@ -232,6 +232,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="SEOKeyword" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1257,6 +1258,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SEOKeyword" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" FromRole="Supplier" ToRole="ImportCoupon" />
         </EntityType>
         <EntityType Name="User">
@@ -1969,6 +1971,7 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="ToyStore2021Model.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="SEOKeyword" ColumnName="SEOKeyword" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
