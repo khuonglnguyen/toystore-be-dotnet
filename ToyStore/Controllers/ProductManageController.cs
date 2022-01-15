@@ -252,6 +252,7 @@ namespace ToyStore.Controllers
                     ViewCount = product.ViewCount,
                     PurchasedCount = product.PurchasedCount,
                     Quantity = product.Quantity,
+                    SEOKeyword = product.SEOKeyword,
                     status = true
                 }, JsonRequestBehavior.AllowGet);
             }

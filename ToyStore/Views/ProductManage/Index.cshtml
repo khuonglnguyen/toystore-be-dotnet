@@ -93,6 +93,7 @@
                         $('#IsActive').prop("checked", response.IsActive);
                         $('#ViewCount').val(response.ViewCount);
                         $('#PurchasedCount').val(response.PurchasedCount);
+                        $('#SEOKeyword').val(response.SEOKeyword);
                     }
                     else {
                         bootbox.alert(response.message);
@@ -400,6 +401,7 @@
                     <input type="text" name="ViewCount" id="ViewCount" hidden />
                     <input type="text" name="PurchasedCount" id="PurchasedCount" hidden />
                     <input type="text" name="CommentCount" id="CommentCount" hidden />
+                    <input type="text" name="SEOKeyword" id="SEOKeyword" hidden />
                     <input type="text" name="page" value="@ViewBag.Page" hidden="hidden" />
                     <div class="form-group">
                         <label for="Name">Tên sản phẩm:</label>

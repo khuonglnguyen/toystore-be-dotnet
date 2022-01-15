@@ -135,9 +135,12 @@ namespace ToyStore.Controllers
                     {
                         p = Math.Round(item.Price * d, 0);
                     }
+
+                    Product pro = _productService.GetByID(item.ProductID);
+
                     itemList.items.Add(new Item()
                     {
-                        name = item.Name,
+                        name = pro.Name,
                         currency = "USD",
                         price = p.ToString(),
                         quantity = item.Quantity.ToString(),
