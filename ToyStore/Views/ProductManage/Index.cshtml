@@ -169,7 +169,7 @@
             if (checkNameAdd() == false) {
                 swal({
                     title: "Thông báo",
-                    text: "Tên nhà cung cấp đã tồn tại!",
+                    text: "Tên sản phẩm đã tồn tại!",
                     icon: "error"
                 });
                 return false;
@@ -222,7 +222,6 @@
                         response($.map(data, function (item) {
                             return { label: item, value: item };
                         }))
-
                     }
                 })
             },
@@ -297,7 +296,7 @@
                                     <label class="switch active">
                                         <input type="checkbox" class="ckb" value="@item.ID">
                                         <span class="slider round"></span>
-                                    </label>        }
+                                    </label>}
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.LastUpdatedDate)
@@ -381,7 +380,7 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>            }
+                    </div>}
             </div>
         </div>
     </div>
@@ -457,7 +456,7 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                    </div>            }
+                    </div>}
             </div>
         </div>
     </div>

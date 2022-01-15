@@ -70,7 +70,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Order> GetDelivered()
         {
-            return context.OrderRepository.GetAllData(x => x.IsDelivere == true && x.IsCancel == false && x.IsReceived==false);
+            return context.OrderRepository.GetAllData(x => x.IsDelivere == true && x.IsCancel == false && x.IsReceived == false);
         }
 
         public IEnumerable<Order> GetOrderDeliveredAndPaid()
@@ -85,7 +85,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Order> GetOrderNotApproval()
         {
-            return context.OrderRepository.GetAllData(x => x.IsApproved == false && x.IsCancel==false);
+            return context.OrderRepository.GetAllData(x => x.IsApproved == false && x.IsCancel == false);
         }
 
         public void Update(Order order)
@@ -120,8 +120,11 @@ namespace ToyStore.Service
         public bool Paid(int ID)
         {
             Order order = context.OrderRepository.GetDataByID(ID);
-            order.IsPaid = true;
-            context.OrderRepository.Update(order);
+            if (order != null)
+            {
+                order.IsPaid = true;
+                context.OrderRepository.Update(order);
+            }
             return true;
         }
 

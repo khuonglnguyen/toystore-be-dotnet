@@ -55,7 +55,7 @@ namespace ToyStore.Controllers
             ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
-            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+            ws.Cells["B3"].Value = DateTime.Now.ToString("dd/MM/yyyy");
 
             ws.Cells["A6"].Value = "Mã SP";
             ws.Cells["B6"].Value = "Tên SP";
@@ -102,7 +102,7 @@ namespace ToyStore.Controllers
             ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
-            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+            ws.Cells["B3"].Value = DateTime.Now.ToString("dd/MM/yyyy");
 
             ws.Cells["A6"].Value = "Mã Nhà Cung Cấp";
             ws.Cells["B6"].Value = "Tên Nhà Cung Cấp";
@@ -159,7 +159,7 @@ namespace ToyStore.Controllers
             ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
-            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+            ws.Cells["B3"].Value = DateTime.Now.ToString("dd/MM/yyyy");
 
             ws.Cells["A6"].Value = "Mã SP";
             ws.Cells["B6"].Value = "Tên SP";
@@ -202,7 +202,7 @@ namespace ToyStore.Controllers
             ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
-            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+            ws.Cells["B3"].Value = DateTime.Now.ToString("dd/MM/yyyy");
 
             ws.Cells["A6"].Value = "Mã Hóa Đơn";
             ws.Cells["B6"].Value = "Tên KH";
@@ -217,9 +217,9 @@ namespace ToyStore.Controllers
             {
                 ws.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
                 ws.Cells[string.Format("B{0}", rowStart)].Value = item.User.FullName;
-                ws.Cells[string.Format("C{0}", rowStart)].Value = item.DateOrder;
-                ws.Cells[string.Format("D{0}", rowStart)].Value = item.DateShip;
-                ws.Cells[string.Format("E{0}", rowStart)].Value = item.Offer+"%";
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.DateOrder.ToString("dd/MM/yyyy");
+                ws.Cells[string.Format("D{0}", rowStart)].Value = item.DateShip.ToString("dd/MM/yyyy");
+                ws.Cells[string.Format("E{0}", rowStart)].Value = "-" + item.Offer + "%";
                 if (item.IsReceived)
                     ws.Cells[string.Format("F{0}", rowStart)].Value = "Hoàn thành";
                 else
@@ -258,7 +258,7 @@ namespace ToyStore.Controllers
             ws.Cells["B2"].Value = user.FullName;
 
             ws.Cells["A3"].Value = "Ngày lập";
-            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+            ws.Cells["B3"].Value = DateTime.Now.ToString("dd/MM/yyyy");
 
             ws.Cells["A6"].Value = "Ngày";
             ws.Cells["B6"].Value = "Số Lượng Truy Cập";
@@ -266,7 +266,7 @@ namespace ToyStore.Controllers
             int rowStart = 7;
             foreach (var item in accessTimesCounts)
             {
-                ws.Cells[string.Format("A{0}", rowStart)].Value = item.Date.ToShortDateString();
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.Date.ToString("dd/MM/yyyy");
                 ws.Cells[string.Format("B{0}", rowStart)].Value = item.AccessTimes;
                 rowStart++;
             }

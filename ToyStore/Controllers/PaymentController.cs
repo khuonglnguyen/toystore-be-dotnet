@@ -229,7 +229,16 @@ namespace ToyStore.Controllers
             string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
             string notifyUrl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
 
-            string amount = Convert.ToInt32(cart.Sum(x => x.Price * x.Quantity)).ToString();
+            int offer = _orderService.GetByID((int)Session["OrderId"]).Offer;
+            string amount = "";
+            if (offer > 0)
+            {
+                amount = Convert.ToInt32(cart.Sum(x => x.Price * x.Quantity) - (cart.Sum(x => x.Price * x.Quantity) / 100 * offer)).ToString();
+            }
+            else
+            {
+                amount = Convert.ToInt32(cart.Sum(x => x.Price * x.Quantity)).ToString();
+            }
             string orderid = Guid.NewGuid().ToString();
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
