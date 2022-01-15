@@ -25,10 +25,7 @@ namespace ToyStore.Models
             Product product = db.Products.Single(n => n.ID == iID);
             this.Name = product.Name;
             this.Image = product.Image1;
-            if (product.Discount > 0)
-                this.Price = (decimal)product.PromotionPrice;
-            else
-                this.Price = (decimal)product.Price;
+            this.Price = (decimal)product.PromotionPrice;
             this.Quantity = 1;
             this.Total = Price * Quantity;
         }

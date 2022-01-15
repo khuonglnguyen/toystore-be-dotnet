@@ -125,7 +125,7 @@ namespace ToyStore.Controllers
                             return View("ThongBao");
                         }
                         itemCart.Quantity++;
-                        itemCart.Total = itemCart.Quantity * product.PromotionPrice;
+                        itemCart.Total = itemCart.Quantity * product.Price;
                         ViewBag.TotalQuanity = GetTotalQuanity();
                         ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
                         return PartialView("CartPartial");
@@ -244,7 +244,8 @@ namespace ToyStore.Controllers
             {
                 return 0;
             }
-            return listCart.Sum(n => n.Total);
+            var f = listCart.Sum(n => n.Total);
+            return f;
         }
         public ActionResult Checkout()
         {
@@ -424,14 +425,8 @@ namespace ToyStore.Controllers
                     _cartService.RemoveCart(item.ProductID, item.UserID);
                 }
             }
-            if (NumberDiscountPass != 0)
-            {
-                _orderService.UpdateTotal(order.ID, sumtotal - (sumtotal / 100 * NumberDiscountPass));
-            }
-            else
-            {
-                _orderService.UpdateTotal(order.ID, sumtotal);
-            }
+            _orderService.UpdateTotal(order.ID, sumtotal);
+
             if (CodePass != "")
             {
                 //Set discountcode used
@@ -488,7 +483,7 @@ namespace ToyStore.Controllers
         {
             if (CodeInput != "")
             {
-                int numcheck = _discountCodeDetailService.GetDiscountByCode(CodeInput);
+                int numcheck = _discountCodeDetailService.GetDiscountByCodeInput(CodeInput);
                 if (numcheck != -1)
                 {
                     Session["Code"] = CodeInput;
@@ -508,7 +503,7 @@ namespace ToyStore.Controllers
             }
             else
             {
-                int num = _discountCodeDetailService.GetDiscountByCode(Code);
+                int num = _discountCodeDetailService.GetDiscountByCodeInput(Code);
                 if (num == -1)
                 {
                     TempData["Message"] = "Mã giảm giá không đúng";

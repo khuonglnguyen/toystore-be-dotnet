@@ -395,16 +395,18 @@
                     {
                         <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay=".5s">
                             <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+                                <a href="/san-pham/@item.SEOKeyword-@item.ID"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
                                 <div class="new-text">
                                     <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
+                                        <li>
+                                            <a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a>
+                                        </li>
+                                        <li><a href="/san-pham/@item.SEOKeyword-@item.ID">Xem Chi Tiết </a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
+                                <h5><a class="name" href="/san-pham/@item.SEOKeyword-@item.ID" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
                                 <div class="ofr">
                                     @if (item.Discount > 0)
                                     {
@@ -419,22 +421,24 @@
                     {
                         <div class="col-md-3 new-grid new-mdl simpleCart_shelfItem wow flipInY animated" data-wow-delay=".7s">
                             <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+                                <a href="/san-pham/@item.SEOKeyword-@item.ID"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
                                 <div class="new-text">
                                     <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
+                                        <li>
+                                            <a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a>
+                                        </li>
+                                        <li><a href="/san-pham/@item.SEOKeyword-@item.ID">Xem Chi Tiết </a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.PromotionPrice </a></h5>
+                                <h5><a class="name" href="/san-pham/@item.SEOKeyword-@item.ID" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
                                 <div class="ofr">
                                     @if (item.Discount > 0)
                                     {
                                         <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
                                     }
-                                    <p><span class="item_price">@item.PromotionPrice₫</span></p>
+                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
                         </div> counter++;
@@ -442,22 +446,24 @@
                     else if (counter == 3)
                     {<div class="col-md-3 new-grid new-mdl1 simpleCart_shelfItem wow flipInY animated" data-wow-delay=".9s">
                             <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+                                <a href="/san-pham/@item.SEOKeyword-@item.ID"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
                                 <div class="new-text">
                                     <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
+                                        <li>
+                                            <a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a>
+                                        </li>
+                                        <li><a href="/san-pham/@item.SEOKeyword-@item.ID">Xem Chi Tiết </a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.PromotionPrice </a></h5>
+                                <h5><a class="name" href="/san-pham/@item.SEOKeyword-@item.ID" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
                                 <div class="ofr">
                                     @if (item.Discount > 0)
                                     {
                                         <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
                                     }
-                                    <p><span class="item_price">@item.PromotionPrice₫</span></p>
+                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
                         </div> counter++;
@@ -466,22 +472,24 @@
                     {
                         <div class="col-md-3 new-grid simpleCart_shelfItem wow flipInY animated" data-wow-delay="1.1s">
                             <div class="new-top">
-                                <a href="single.html"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
+                                <a href="/san-pham/@item.SEOKeyword-@item.ID"><img src="@Url.Content("~/Content/images/"+item.Image1)" style="height:250px;width:300px" class="img-responsive" alt="" /></a>
                                 <div class="new-text">
                                     <ul>
-                                        <li><a class="item_add" href="@Url.Action("AddItemCart","Cart",new {ID=item.ID,@strURL=Request.Url.ToString()})"> Thêm Vào Giỏ</a></li>
-                                        <li><a href="single.html">Xem Chi Tiết </a></li>
+                                        <li>
+                                            <a class="AddItemCart" data-id="@Model.ID" style="cursor:pointer">Thêm vào giỏ</a>
+                                        </li>
+                                        <li><a href="/san-pham/@item.SEOKeyword-@item.ID">Xem Chi Tiết </a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="new-bottom">
-                                <h5><a class="name" href="single.html" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.PromotionPrice </a></h5>
+                                <h5><a class="name" href="/san-pham/@item.SEOKeyword-@item.ID" style="width: 200px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@item.Name </a></h5>
                                 <div class="ofr">
                                     @if (item.Discount > 0)
                                     {
                                         <p class="pric1"><del>@item.Price.ToString("#,##")₫</del></p><br />
                                     }
-                                    <p><span class="item_price">@item.PromotionPrice₫</span></p>
+                                    <p><span class="item_price">@item.PromotionPrice.ToString("#,##")₫</span></p>
                                 </div>
                             </div>
                         </div>break;

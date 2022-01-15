@@ -304,7 +304,7 @@ namespace ToyStore.Service
 
         public IEnumerable<Product> GetProductListDiscount()
         {
-            return context.ProductRepository.GetAllData(x => x.Discount > 0 && x.IsActive == true).Skip(3);
+            return context.ProductRepository.GetAllData(x => x.Discount > 0 && x.IsActive == true).Take(3);
         }
     }
 }

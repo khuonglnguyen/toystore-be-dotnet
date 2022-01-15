@@ -19,9 +19,11 @@ namespace ToyStore.Controllers
     public class PaymentController : Controller
     {
         private IOrderService _orderService;
-        public PaymentController(IOrderService orderService)
+        private IProductService _productService;
+        public PaymentController(IOrderService orderService, IProductService productService)
         {
             _orderService = orderService;
+            _productService = productService;
         }
         // GET: Payment
         public ActionResult PaymentWithPaypal(string Cancel = null)
@@ -123,7 +125,16 @@ namespace ToyStore.Controllers
                 List<ItemCart> cart = (List<ItemCart>)Session["Cart"];
                 foreach (var item in cart)
                 {
-                    decimal p = Math.Round(item.Price * d, 0);
+                    decimal p = 0;
+                    int offer = _orderService.GetByID((int)Session["OrderId"]).Offer;
+                    if (offer > 0)
+                    {
+                        p = Math.Round((item.Price - (item.Price / 100 * offer)) * d, 0);
+                    }
+                    else
+                    {
+                        p = Math.Round(item.Price * d, 0);
+                    }
                     itemList.items.Add(new Item()
                     {
                         name = item.Name,

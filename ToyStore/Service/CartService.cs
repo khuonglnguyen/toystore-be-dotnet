@@ -42,6 +42,7 @@ namespace ToyStore.Service
         {
             ItemCart cartUpdate = context.CartRepository.GetAllData().Single(x => x.ProductID == ProductID && x.UserID == UserID);
             cartUpdate.Quantity += 1;
+            cartUpdate.Total = cartUpdate.Quantity * cartUpdate.Product.Price;
             context.CartRepository.Update(cartUpdate);
         }
 
