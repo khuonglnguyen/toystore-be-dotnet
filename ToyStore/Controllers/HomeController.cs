@@ -119,6 +119,7 @@ namespace ToyStore.Controllers
             }
             else
             {
+                user.EmailConfirmed = true;
                 User user1 = _userService.Add(user);
                 return RedirectToAction("ConfirmEmail", "User", new { ID = user1.ID });
             }

@@ -7,17 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
 namespace ToyStore.Models
 {
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     public partial class ItemCart
     {
-
         public ItemCart(int iID)
         {
             ToyStore2021Entities db = new ToyStore2021Entities();
@@ -47,7 +44,5 @@ namespace ToyStore.Models
         public virtual User User { get; set; }
 
         public virtual Product Product { get; set; }
-
     }
-
 }

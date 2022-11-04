@@ -137,28 +137,37 @@ namespace ToyStore.Controllers
         [HttpGet]
         public ActionResult ConfirmEmail(int ID)
         {
-            if (_userService.GetByID(ID).EmailConfirmed)
-            {
-                ViewBag.Message = "EmailConfirmed";
-                return View();
-            }
-            string strString = "abcdefghijklmnopqrstuvwxyz0123456789";
-            Random random = new Random();
-            int randomCharIndex = 0;
-            char randomChar;
-            string captcha = "";
-            for (int i = 0; i < 10; i++)
-            {
-                randomCharIndex = random.Next(0, strString.Length);
-                randomChar = strString[randomCharIndex];
-                captcha += Convert.ToString(randomChar);
-            }
-            string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
-            ViewBag.ID = ID;
-            string email = _userService.GetByID(ID).Email;
-            ViewBag.Email = "Mã xác minh đã được gửi đến: " + email;
-            _userService.UpdateCapcha(ID, captcha);
-            SentMail("Mã xác minh tài khoản ToyStore", email, "khuongip564gb@gmail.com", "google..khuongip564gb", "<p>Mã xác minh của bạn: " + captcha + "<br/>Hoặc xác minh nhanh bằng cách click vào link: " + urlBase + "/User/ConfirmEmailLink/" + ID + "?Capcha=" + captcha + "</p>");
+            //if (_userService.GetByID(ID).EmailConfirmed)
+            //{
+            //    ViewBag.Message = "EmailConfirmed";
+            //    return View();
+            //}
+            //string strString = "abcdefghijklmnopqrstuvwxyz0123456789";
+            //Random random = new Random();
+            //int randomCharIndex = 0;
+            //char randomChar;
+            //string captcha = "";
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    randomCharIndex = random.Next(0, strString.Length);
+            //    randomChar = strString[randomCharIndex];
+            //    captcha += Convert.ToString(randomChar);
+            //}
+            //string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
+            //ViewBag.ID = ID;
+            //string email = _userService.GetByID(ID).Email;
+            //ViewBag.Email = "Mã xác minh đã được gửi đến: " + email;
+            //_userService.UpdateCapcha(ID, captcha);
+            //SentMail("Mã xác minh tài khoản ToyStore", email, "khuongip564gb@gmail.com", "google..khuongip564gb", "<p>Mã xác minh của bạn: " + captcha + "<br/>Hoặc xác minh nhanh bằng cách click vào link: " + urlBase + "/User/ConfirmEmailLink/" + ID + "?Capcha=" + captcha + "</p>");
+            //return View();
+            User user = _userService.GetByID(ID);
+            ViewBag.Message = "EmailConfirmed";
+            //Gift
+            _userDiscountCodeService.GiftForNewUser(user.ID);
+            UsersSpin usersSpin = new UsersSpin();
+            usersSpin.NumberOfSpins = 0;
+            usersSpin.UserID = user.ID;
+            _usersSpinService.Add(usersSpin);
             return View();
         }
         [HttpGet]
@@ -183,21 +192,15 @@ namespace ToyStore.Controllers
         [HttpPost]
         public ActionResult ConfirmEmail(int ID, string capcha)
         {
-            User user = _userService.CheckCapcha(ID, capcha);
-            if (user != null)
-            {
-                ViewBag.Message = "EmailConfirmed";
-                //Gift
-                _userDiscountCodeService.GiftForNewUser(user.ID);
-                UsersSpin usersSpin = new UsersSpin();
-                usersSpin.NumberOfSpins = 0;
-                usersSpin.UserID = user.ID;
-                _usersSpinService.Add(usersSpin);
-                return View();
-            }
-            ViewBag.Message = "Mã xác minh tài khoản không đúng";
-            ViewBag.ID = ID;
-            return View(new { ID = ID });
+            User user = _userService.GetByID(ID);
+            ViewBag.Message = "EmailConfirmed";
+            //Gift
+            _userDiscountCodeService.GiftForNewUser(user.ID);
+            UsersSpin usersSpin = new UsersSpin();
+            usersSpin.NumberOfSpins = 1;
+            usersSpin.UserID = user.ID;
+            _usersSpinService.Add(usersSpin);
+            return View();
         }
         public void SentMail(string Title, string ToEmail, string FromEmail, string Password, string Content)
         {

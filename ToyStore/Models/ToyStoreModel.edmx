@@ -232,7 +232,6 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SEOKeyword" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -274,7 +273,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" />
         </EntityType>
-        <Association Name="FK__Message__FromUse__41C3AD93">
+        <Association Name="FK__Message__FromUse__6D0D32F4">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -286,7 +285,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Message__ToUserI__42B7D1CC">
+        <Association Name="FK__Message__ToUserI__6E01572D">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -298,7 +297,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__UserID__7E3E19AE">
+        <Association Name="FK__Order__UserID__6EF57B66">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -310,7 +309,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__QA__UserAnswerID__76C649C1">
+        <Association Name="FK__QA__UserAnswerID__787EE5A0">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="QA" Type="Self.QA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -322,7 +321,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__QA__UserAskID__75D22588">
+        <Association Name="FK__QA__UserAskID__797309D9">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="QA" Type="Self.QA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -334,7 +333,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsersSpin__UserI__02215726">
+        <Association Name="FK__UsersSpin__UserI__00200768">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="UsersSpin" Type="Self.UsersSpin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -708,27 +707,27 @@
           <EntitySet Name="UserDiscountCode" EntityType="Self.UserDiscountCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersSpin" EntityType="Self.UsersSpin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Message__FromUse__41C3AD93" Association="Self.FK__Message__FromUse__41C3AD93">
+          <AssociationSet Name="FK__Message__FromUse__6D0D32F4" Association="Self.FK__Message__FromUse__6D0D32F4">
             <End Role="User" EntitySet="User" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
-          <AssociationSet Name="FK__Message__ToUserI__42B7D1CC" Association="Self.FK__Message__ToUserI__42B7D1CC">
+          <AssociationSet Name="FK__Message__ToUserI__6E01572D" Association="Self.FK__Message__ToUserI__6E01572D">
             <End Role="User" EntitySet="User" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__UserID__7E3E19AE" Association="Self.FK__Order__UserID__7E3E19AE">
+          <AssociationSet Name="FK__Order__UserID__6EF57B66" Association="Self.FK__Order__UserID__6EF57B66">
             <End Role="User" EntitySet="User" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK__QA__UserAnswerID__76C649C1" Association="Self.FK__QA__UserAnswerID__76C649C1">
+          <AssociationSet Name="FK__QA__UserAnswerID__787EE5A0" Association="Self.FK__QA__UserAnswerID__787EE5A0">
             <End Role="User" EntitySet="User" />
             <End Role="QA" EntitySet="QA" />
           </AssociationSet>
-          <AssociationSet Name="FK__QA__UserAskID__75D22588" Association="Self.FK__QA__UserAskID__75D22588">
+          <AssociationSet Name="FK__QA__UserAskID__797309D9" Association="Self.FK__QA__UserAskID__797309D9">
             <End Role="User" EntitySet="User" />
             <End Role="QA" EntitySet="QA" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsersSpin__UserI__02215726" Association="Self.FK__UsersSpin__UserI__02215726">
+          <AssociationSet Name="FK__UsersSpin__UserI__00200768" Association="Self.FK__UsersSpin__UserI__00200768">
             <End Role="User" EntitySet="User" />
             <End Role="UsersSpin" EntitySet="UsersSpin" />
           </AssociationSet>
@@ -915,15 +914,15 @@
             <End Role="User" EntitySet="Users" />
             <End Role="ItemCart" EntitySet="ItemCarts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Message__FromUse__41C3AD93" Association="ToyStore2021Model.FK__Message__FromUse__41C3AD93">
+          <AssociationSet Name="FK__Message__FromUse__6D0D32F4" Association="ToyStore2021Model.FK__Message__FromUse__6D0D32F4">
             <End Role="User" EntitySet="Users" />
             <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Message__ToUserI__42B7D1CC" Association="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC">
+          <AssociationSet Name="FK__Message__ToUserI__6E01572D" Association="ToyStore2021Model.FK__Message__ToUserI__6E01572D">
             <End Role="User" EntitySet="Users" />
             <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__UserID__7E3E19AE" Association="ToyStore2021Model.FK__Order__UserID__7E3E19AE">
+          <AssociationSet Name="FK__Order__UserID__6EF57B66" Association="ToyStore2021Model.FK__Order__UserID__6EF57B66">
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
@@ -963,11 +962,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="ProductViewed" EntitySet="ProductVieweds" />
           </AssociationSet>
-          <AssociationSet Name="FK__QA__UserAnswerID__76C649C1" Association="ToyStore2021Model.FK__QA__UserAnswerID__76C649C1">
+          <AssociationSet Name="FK__QA__UserAnswerID__787EE5A0" Association="ToyStore2021Model.FK__QA__UserAnswerID__787EE5A0">
             <End Role="User" EntitySet="Users" />
             <End Role="QA" EntitySet="QAs" />
           </AssociationSet>
-          <AssociationSet Name="FK__QA__UserAskID__75D22588" Association="ToyStore2021Model.FK__QA__UserAskID__75D22588">
+          <AssociationSet Name="FK__QA__UserAskID__797309D9" Association="ToyStore2021Model.FK__QA__UserAskID__797309D9">
             <End Role="User" EntitySet="Users" />
             <End Role="QA" EntitySet="QAs" />
           </AssociationSet>
@@ -975,7 +974,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Rating" EntitySet="Ratings" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsersSpin__UserI__02215726" Association="ToyStore2021Model.FK__UsersSpin__UserI__02215726">
+          <AssociationSet Name="FK__UsersSpin__UserI__00200768" Association="ToyStore2021Model.FK__UsersSpin__UserI__00200768">
             <End Role="User" EntitySet="Users" />
             <End Role="UsersSpin" EntitySet="UsersSpins" />
           </AssociationSet>
@@ -1095,8 +1094,8 @@
           <Property Name="Content" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="Sent" Type="Boolean" />
-          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__Message__FromUse__41C3AD93" FromRole="Message" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC" FromRole="Message" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__Message__FromUse__6D0D32F4" FromRole="Message" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="ToyStore2021Model.FK__Message__ToUserI__6E01572D" FromRole="Message" ToRole="User" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1114,7 +1113,7 @@
           <Property Name="IsApproved" Type="Boolean" Nullable="false" />
           <Property Name="IsReceived" Type="Boolean" Nullable="false" />
           <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__Order__UserID__7E3E19AE" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__Order__UserID__6EF57B66" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetails" Relationship="ToyStore2021Model.FK_dbo_OrderDetail_dbo_Order_OrderID" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="OrderDetail">
@@ -1222,8 +1221,8 @@
           <Property Name="DateAnswer" Type="DateTime" Precision="3" />
           <Property Name="UserAnswerID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ToyStore2021Model.FK_dbo_QA_dbo_Products_ProductID" FromRole="QA" ToRole="Product" />
-          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__QA__UserAnswerID__76C649C1" FromRole="QA" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="ToyStore2021Model.FK__QA__UserAskID__75D22588" FromRole="QA" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__QA__UserAnswerID__787EE5A0" FromRole="QA" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="ToyStore2021Model.FK__QA__UserAskID__797309D9" FromRole="QA" ToRole="User" />
         </EntityType>
         <EntityType Name="Rating">
           <Key>
@@ -1258,7 +1257,6 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SEOKeyword" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_Supplier_SupplierID" FromRole="Supplier" ToRole="ImportCoupon" />
         </EntityType>
         <EntityType Name="User">
@@ -1280,14 +1278,14 @@
           <NavigationProperty Name="DiscountCodes" Relationship="ToyStore2021Model.FK_DiscountCode_User" FromRole="User" ToRole="DiscountCode" />
           <NavigationProperty Name="ImportCoupons" Relationship="ToyStore2021Model.FK_dbo_ImportCoupon_dbo_User_UserID" FromRole="User" ToRole="ImportCoupon" />
           <NavigationProperty Name="ItemCarts" Relationship="ToyStore2021Model.FK_dbo_Cart_dbo_User_UserID" FromRole="User" ToRole="ItemCart" />
-          <NavigationProperty Name="Messages" Relationship="ToyStore2021Model.FK__Message__FromUse__41C3AD93" FromRole="User" ToRole="Message" />
-          <NavigationProperty Name="Messages1" Relationship="ToyStore2021Model.FK__Message__ToUserI__42B7D1CC" FromRole="User" ToRole="Message" />
-          <NavigationProperty Name="Orders" Relationship="ToyStore2021Model.FK__Order__UserID__7E3E19AE" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Messages" Relationship="ToyStore2021Model.FK__Message__FromUse__6D0D32F4" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Messages1" Relationship="ToyStore2021Model.FK__Message__ToUserI__6E01572D" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Orders" Relationship="ToyStore2021Model.FK__Order__UserID__6EF57B66" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="ProductVieweds" Relationship="ToyStore2021Model.FK_dbo_ProductViewed_dbo_User_UserID" FromRole="User" ToRole="ProductViewed" />
-          <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK__QA__UserAnswerID__76C649C1" FromRole="User" ToRole="QA" />
-          <NavigationProperty Name="QAs1" Relationship="ToyStore2021Model.FK__QA__UserAskID__75D22588" FromRole="User" ToRole="QA" />
+          <NavigationProperty Name="QAs" Relationship="ToyStore2021Model.FK__QA__UserAnswerID__787EE5A0" FromRole="User" ToRole="QA" />
+          <NavigationProperty Name="QAs1" Relationship="ToyStore2021Model.FK__QA__UserAskID__797309D9" FromRole="User" ToRole="QA" />
           <NavigationProperty Name="Ratings" Relationship="ToyStore2021Model.FK_dbo_Rating_dbo_User_UserID" FromRole="User" ToRole="Rating" />
-          <NavigationProperty Name="UsersSpins" Relationship="ToyStore2021Model.FK__UsersSpin__UserI__02215726" FromRole="User" ToRole="UsersSpin" />
+          <NavigationProperty Name="UsersSpins" Relationship="ToyStore2021Model.FK__UsersSpin__UserI__00200768" FromRole="User" ToRole="UsersSpin" />
           <NavigationProperty Name="UserType" Relationship="ToyStore2021Model.FK_dbo_User_dbo_UserType_UserTypeID" FromRole="User" ToRole="UserType" />
           <NavigationProperty Name="UserDiscountCodes" Relationship="ToyStore2021Model.FK_UserDiscountCode_User" FromRole="User" ToRole="UserDiscountCode" />
         </EntityType>
@@ -1308,7 +1306,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="NumberOfSpins" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__UsersSpin__UserI__02215726" FromRole="UsersSpin" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="ToyStore2021Model.FK__UsersSpin__UserI__00200768" FromRole="UsersSpin" ToRole="User" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -1489,7 +1487,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Message__FromUse__41C3AD93">
+        <Association Name="FK__Message__FromUse__6D0D32F4">
           <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
           <End Type="ToyStore2021Model.Message" Role="Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1501,7 +1499,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Message__ToUserI__42B7D1CC">
+        <Association Name="FK__Message__ToUserI__6E01572D">
           <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
           <End Type="ToyStore2021Model.Message" Role="Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1513,7 +1511,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__UserID__7E3E19AE">
+        <Association Name="FK__Order__UserID__6EF57B66">
           <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1" />
           <End Type="ToyStore2021Model.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1651,7 +1649,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__QA__UserAnswerID__76C649C1">
+        <Association Name="FK__QA__UserAnswerID__787EE5A0">
           <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1" />
           <End Type="ToyStore2021Model.QA" Role="QA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1663,7 +1661,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__QA__UserAskID__75D22588">
+        <Association Name="FK__QA__UserAskID__797309D9">
           <End Type="ToyStore2021Model.User" Role="User" Multiplicity="1" />
           <End Type="ToyStore2021Model.QA" Role="QA" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1689,7 +1687,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsersSpin__UserI__02215726">
+        <Association Name="FK__UsersSpin__UserI__00200768">
           <End Type="ToyStore2021Model.User" Role="User" Multiplicity="0..1" />
           <End Type="ToyStore2021Model.UsersSpin" Role="UsersSpin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1971,7 +1969,6 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="ToyStore2021Model.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
-                <ScalarProperty Name="SEOKeyword" ColumnName="SEOKeyword" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />

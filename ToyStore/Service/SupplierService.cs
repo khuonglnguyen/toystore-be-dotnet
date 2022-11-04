@@ -38,7 +38,7 @@ namespace ToyStore.Service
         public Supplier AddSupplier(Supplier supplier)
         {
             supplier.TotalAmount = 0;
-            supplier.SEOKeyword = StringHelper.UrlFriendly(supplier.Name);
+            //supplier.SEOKeyword = StringHelper.UrlFriendly(supplier.Name);
             supplier.LastUpdatedDate = DateTime.Now;
             this.context.SupplierRepository.Insert(supplier);
             return supplier;
