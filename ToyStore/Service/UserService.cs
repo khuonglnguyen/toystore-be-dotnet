@@ -82,7 +82,7 @@ namespace ToyStore.Service
 
         public User Add(User user)
         {
-            user.UserTypeID = 1;
+            user.UserTypeID = 2;
             user.AmountPurchased = 0;
             user.IsDeleted = false;
             user.Avatar = "user.png";
